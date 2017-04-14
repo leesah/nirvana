@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="@string/pref_key_treatment_repeating_model_details"
+        android:title="Repeat N times">
+
+        <name.leesah.nirvana.ui.components.IntegerPreference
+            android:key="@string/pref_key_treatment_repeating_details_times"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Times (excluding the first cycle)"
+            app:maxValue="99"
+            app:minValue="1" />
+    </PreferenceCategory>
+</PreferenceScreen>

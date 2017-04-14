@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">Nevermind</string>
+    <string name="package_name">name.leesah.nirvana</string>
+    <string name="title_activity_main">Nevermind</string>
+    <string name="title_activity_edit_medication">Edit medication</string>
+    <string name="action_settings">Settings</string>
+    <string name="treatment_repeating_none">Not repeated</string>
+    <string name="treatment_repeating_n_times">Repeat N Times</string>
+    <string name="treatment_repeating_until_date">Repeat until date</string>
+    <string name="period_unit_text_days">Day(s)</string>
+    <string name="period_unit_text_weeks">Week(s)</string>
+    <string name="period_unit_text_months">Month(s)</string>
+    <string name="save">Save</string>
+
+    <string name="medication_repeating_everyday">Everyday</string>
+    <string name="medication_repeating_every_n_days">Every N days</string>
+    <string name="medication_repeating_days_of_week">Days of week</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dosage_form_tablets">Tablets</string>
+    <string name="dosage_form_injections">Injections</string>
+    <string name="action_snooze_reminder">Snooze</string>
+    <string name="action_confirm_reminder">Done</string>
+
+    <string name="medication_reminding_certain_hours">At certain hours</string>
+    <string name="medication_reminding_every_n_hours">Every N hours</string>
+    <string name="reminder_notification_title_template">Time to take %1$s</string>
+
+    <string name="reminder_notification_placeholder_text_template">Take %1$d tablet(s) with food at %2$s.</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="pref_title_medication_name">Name</string>
+    <string name="pref_title_medication_manufacturer">Manufacturer</string>
+    <string name="pref_header_treatment">Treatment</string>
+
+    <string name="pref_title_treatment_switch">Enable treatment support</string>
+    <string name="pref_description_treatment_support">Repeated treatment cycles, recommended for those who are having for example cytostatic treatments.</string>
+
+    <string name="pref_title_dosage_form">Form</string>
+
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_title_treatment_first_day">First Day</string>
+
+    <string name="pref_summary_days_template">%d day(s)</string>
+    <string name="pref_summary_weeks_template">%d week(s)</string>
+    <string name="pref_summary_months_template">%d month(s)</string>
+
+
+    <string name="dosage_form_value_tablets">TABLET</string>
+    <string name="dosage_form_value_capsules">CAPSULE</string>
+    <string name="dosage_form_value_injections">INJECTION</string>
+    <string name="pref_title_medication_enable_skip_first">Delay start date</string>
+    <string name="medication_skip_first_period">Period to delay</string>
+    <string name="pref_title_medication_repeating_model">On which days</string>
+    <string name="pref_title_medication_reminding_model">On which hours of day</string>
+    <string name="extra_reminding_model">REMINDING MODEL</string>
+    <string name="prefcat_title_medication_basics">Basics</string>
+    <string name="pref_title_medication_advanced">Advanced</string>
+    <string name="prefcat_title_medication_reminding_and_repeating">Intaking</string>
+    <string name="extra_repeating_model">REPEATING MODEL</string>
+    <string name="p0d">P0D</string>
+    <string name="monday_of_week">Mon</string>
+    <string name="tuesday_of_week">Tue</string>
+    <string name="wednesday_of_week">Wed</string>
+    <string name="thursday_of_week">Thu</string>
+    <string name="friday_of_week">Fri</string>
+    <string name="saturday_of_week">Sat</string>
+    <string name="sunday_of_week">Sun</string>
+    <string name="prefcat_title_details">Details</string>
+    <string name="err_dosage_already_added">Dosage already added for that time.</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="title_home">Home</string>
+    <string name="title_medications">Medicines</string>
+    <string name="title_reminders">Today</string>
+    <string name="prefcat_title_medication_reminding_model">Reminding model</string>
+    <string name="prefcat_title_medication_repeating_model">Repeating model</string>
+
+
+</resources>

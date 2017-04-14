@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cycle_repeating_models">
+        <item>@string/treatment_repeating_none</item>
+        <item>@string/treatment_repeating_n_times</item>
+        <item>@string/treatment_repeating_until_date</item>
+    </string-array>
+    <string-array name="cycle_repeating_model_list_preference_values">
+        <item>pref_treatment_repeating_none</item>
+        <item>pref_treatment_repeating_n_times</item>
+        <item>pref_treatment_repeating_until_date</item>
+    </string-array>
+
+    <string-array name="period_unit_displayed_texts">
+        <item>@string/period_unit_text_days</item>
+        <item>@string/period_unit_text_weeks</item>
+        <item>@string/period_unit_text_months</item>
+    </string-array>
+    <string-array name="medication_dosage_forms">
+        <item>@string/dosage_form_tablets</item>
+        <item>@string/dosage_form_capsules</item>
+        <item>@string/dosage_form_injections</item>
+    </string-array>
+    <string-array name="medication_dosage_form_values">
+        <item>@string/dosage_form_value_tablets</item>
+        <item>@string/dosage_form_value_capsules</item>
+        <item>@string/dosage_form_value_injections</item>
+    </string-array>
+    <string-array name="medication_repeating_models">
+        <item>@string/medication_repeating_everyday</item>
+        <item>@string/medication_repeating_every_n_days</item>
+        <item>@string/medication_repeating_days_of_week</item>
+    </string-array>
+
+    <string-array name="medication_reminding_models">
+        <item>@string/medication_reminding_certain_hours</item>
+        <item>@string/medication_reminding_every_n_hours</item>
+    </string-array>
+
+</resources>

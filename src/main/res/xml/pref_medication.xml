@@ -1,0 +1,66 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/prefcat_title_medication_basics">
+        <name.leesah.nirvana.ui.components.ValidatedEditTextPreference
+            android:capitalize="words"
+            android:inputType="textCapWords"
+            android:key="@string/pref_key_medication_name"
+            android:maxLines="1"
+            android:persistent="false"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_title_medication_name"
+            app:allowBlank="false" />
+
+        <name.leesah.nirvana.ui.components.ValidatedEditTextPreference
+            android:capitalize="words"
+            android:inputType="textCapWords"
+            android:key="@string/pref_key_medication_manufacturer"
+            android:maxLines="1"
+            android:persistent="false"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_title_medication_manufacturer"
+            app:allowBlank="true" />
+
+        <ListPreference
+            android:defaultValue="@string/dosage_form_value_tablets"
+            android:entries="@array/medication_dosage_forms"
+            android:entryValues="@array/medication_dosage_form_values"
+            android:key="@string/pref_key_medication_dosage_form"
+            android:negativeButtonText="@null"
+            android:persistent="false"
+            android:positiveButtonText="@null"
+            android:summary="%s"
+            android:title="@string/pref_title_dosage_form" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefcat_title_medication_reminding_and_repeating">
+        <Preference
+            android:key="@string/pref_key_medication_repeating_model"
+            android:title="@string/pref_title_medication_repeating_model" />
+
+        <Preference
+            android:key="@string/pref_key_medication_reminding_model"
+            android:title="@string/pref_title_medication_reminding_model" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_medication_advanced">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_enable_skipped_period"
+            android:persistent="false"
+            android:title="@string/pref_title_medication_enable_skip_first" />
+
+        <name.leesah.nirvana.ui.components.PeriodPreference
+            android:defaultValue="@string/p0d"
+            android:dependency="@string/pref_key_enable_skipped_period"
+            android:key="@string/pref_key_medication_skipped_period"
+            android:persistent="false"
+            android:title="@string/medication_skip_first_period" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

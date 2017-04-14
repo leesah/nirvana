@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_key_medication_skipped_period">Skip First</string>
+    <string name="pref_key_treatment_enabled">treatment_switch</string>
+    <string name="pref_key_treatment_first_day">treatment_first_day</string>
+    <string name="pref_key_treatment_cycle_length">treatment_cycle_length</string>
+    <string name="pref_key_treatment_repeating_model">treatment_repeating_model</string>
+    <string name="pref_key_treatment_repeating_model_details">treatment_repeating_model_details</string>
+    <string name="pref_key_treatment_repeating_details_times">pref_key_treatment_repeating_times</string>
+    <string name="pref_key_treatment_repeating_details_until_date">treatment_until_date</string>
+    <string name="pref_key_medication_name">name</string>
+    <string name="pref_key_medication_manufacturer">manufacturer</string>
+    <string name="pref_key_medication_dosage_form">form</string>
+    <string name="pref_key_enable_skipped_period">skipped_period_switch</string>
+    <string name="pref_key_medication_repeating_model">medication_repeating_model</string>
+    <string name="pref_key_medication_reminding_model">medication_reminding_model</string>
+
+</resources>

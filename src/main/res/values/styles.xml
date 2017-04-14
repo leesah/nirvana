@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/textViewStyle</item>
+        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItemStyle</item>
+
+        <item name="editTextStyle">@style/editTextStyle</item>
+        <item name="checkboxStyle">@style/checkboxStyle</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="textViewStyle" parent="android:Widget.DeviceDefault.TextView">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="spinnerItemStyle">
+        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="spinnerDropDownItemStyle">
+        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="editTextStyle" parent="android:Widget.DeviceDefault.EditText">
+        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+    </style>
+
+    <style name="checkboxStyle" parent="android:Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+    </style>
+
+</resources>

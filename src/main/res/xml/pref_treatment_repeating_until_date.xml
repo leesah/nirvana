@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="@string/pref_key_treatment_repeating_model_details"
+        android:title="Repeat until date">
+
+        <name.leesah.nirvana.ui.components.DatePreference
+            android:key="@string/pref_key_treatment_repeating_details_until_date"
+            android:title="Until no further than" />
+    </PreferenceCategory>
+</PreferenceScreen>

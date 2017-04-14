@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/prefcat_title_medication_repeating_model">
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/medication_repeating_models"
+            android:entryValues="@array/medication_repeating_models"
+            android:key="@string/pref_key_medication_repeating_model"
+            android:title="@string/pref_title_medication_repeating_model" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefcat_title_details">
+
+    </PreferenceCategory>
+</PreferenceScreen>
