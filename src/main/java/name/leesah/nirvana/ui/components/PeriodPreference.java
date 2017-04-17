@@ -2,23 +2,28 @@ package name.leesah.nirvana.ui.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.NumberPicker;
 
 import org.joda.time.Period;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.PeriodUnit;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
+import static java.lang.String.format;
 import static name.leesah.nirvana.model.PeriodUnit.DAY;
 import static name.leesah.nirvana.model.PeriodUnit.MONTH;
 import static name.leesah.nirvana.model.PeriodUnit.WEEK;
+import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
+import static name.leesah.nirvana.utils.DateTimeHelper.toPeriodAsString;
 
 /**
  * Created by sah on 2016-12-10.
@@ -26,15 +31,15 @@ import static name.leesah.nirvana.model.PeriodUnit.WEEK;
 
 public class PeriodPreference extends DialogPreference {
 
-    private static final String DEFAULT_VALUE = DateTimeHelper.PERIOD_FORMATTER.print(Period.months(1));
+    private static final String DEFAULT_VALUE = toPeriodAsString(1, DAY);
+    private final List<PeriodUnit> periodUnits = new ArrayList<>(EnumSet.allOf(PeriodUnit.class));
 
-    private EditText editText;
-    private Spinner spinner;
+    private NumberPicker number;
+    private NumberPicker unit;
     private String value = null;
 
     public PeriodPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         setDialogLayoutResource(R.layout.dialog_period_picker);
     }
 
@@ -42,9 +47,17 @@ public class PeriodPreference extends DialogPreference {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        editText = (EditText) view.findViewById(R.id.editText_number);
-        spinner = (Spinner) view.findViewById(R.id.spinner_unit);
-        updateWidgets(value);
+        number = (NumberPicker) view.findViewById(R.id.number);
+        number.setMinValue(1);
+        number.setMaxValue(99);
+
+        unit = (NumberPicker) view.findViewById(R.id.unit);
+        unit.setMinValue(0);
+        unit.setMaxValue(periodUnits.size() - 1);
+        unit.setDisplayedValues(getContext().getResources().getStringArray(R.array.period_unit_displayed_texts));
+
+        if (value != null)
+            updateWidgets(value);
     }
 
     @Override
@@ -52,13 +65,13 @@ public class PeriodPreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            int number = Integer.valueOf(editText.getText().toString());
-            PeriodUnit unit = Arrays.stream(PeriodUnit.values())
-                    .filter(u -> u.getPositionInSpinner() == spinner.getSelectedItemPosition())
-                    .findFirst().get();
-            String newValue = DateTimeHelper.toPeriodAsString(number, unit);
+            String newValue = toPeriodAsString(number.getMaxValue(), readUnit());
             onNewValue(newValue);
         }
+    }
+
+    private PeriodUnit readUnit() {
+        return periodUnits.get(unit.getValue());
     }
 
     public void setPeriod(Period period) {
@@ -75,7 +88,7 @@ public class PeriodPreference extends DialogPreference {
     }
 
     public Period getPeriod() {
-        return value == null ? null : DateTimeHelper.toPeriod(value);
+        return value == null ? null : toPeriod(value);
     }
 
     @Override
@@ -93,17 +106,19 @@ public class PeriodPreference extends DialogPreference {
     @Override
     public void setSummary(CharSequence original) {
         try {
-            Period period = DateTimeHelper.toPeriod(original);
+            Period period = toPeriod(original);
             int days = period.getDays();
-            int weeks = period.getWeeks();
-            int months = period.getMonths();
-            if (days != 0) {
+            if (days > 0)
                 super.setSummary(getContext().getString(R.string.pref_summary_days_template, days));
-            } else if (weeks != 0) {
+
+            int weeks = period.getWeeks();
+            if (weeks > 0)
                 super.setSummary(getContext().getString(R.string.pref_summary_weeks_template, weeks));
-            } else if (months != 0) {
+
+            int months = period.getMonths();
+            if (months > 0)
                 super.setSummary(getContext().getString(R.string.pref_summary_months_template, months));
-            }
+
         } catch (IllegalArgumentException e) {
             super.setSummary(original);
         }
@@ -111,25 +126,23 @@ public class PeriodPreference extends DialogPreference {
 
     private void updateWidgets(String value) {
         try {
-            Period period = DateTimeHelper.toPeriod(value);
+            Period period = toPeriod(value);
             int days = period.getDays();
+            if (days > 0) updateWidgets(days, periodUnits.indexOf(DAY));
+
             int weeks = period.getWeeks();
+            if (weeks > 0) updateWidgets(weeks, periodUnits.indexOf(WEEK));
+
             int months = period.getMonths();
-            if (days != 0) {
-                updateWidgets(days, DAY.getPositionInSpinner());
-            } else if (weeks != 0) {
-                updateWidgets(weeks, WEEK.getPositionInSpinner());
-            } else if (months != 0) {
-                updateWidgets(months, MONTH.getPositionInSpinner());
-            }
+            if (months > 0) updateWidgets(months, periodUnits.indexOf(MONTH));
         } catch (IllegalArgumentException e) {
             updateWidgets(0, 0);
         }
     }
 
-    private void updateWidgets(int numberInEditText, int positionInSpinner) {
-        editText.setText(String.valueOf(numberInEditText));
-        spinner.setSelection(positionInSpinner);
+    private void updateWidgets(int number, int unit) {
+        this.number.setValue(number);
+        this.unit.setValue(unit);
     }
 
 }

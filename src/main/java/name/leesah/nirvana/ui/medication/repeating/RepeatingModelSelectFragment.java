@@ -12,11 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
-import name.leesah.nirvana.model.medication.repeating.EveryNDays;
 import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
 import name.leesah.nirvana.ui.medication.MedicationEditActivity;
-import name.leesah.nirvana.ui.medication.reminding.RemindingModelEditFragment;
 
 /**
  * Created by sah on 2017-04-15.
@@ -33,7 +30,7 @@ public class RepeatingModelSelectFragment extends PreferenceFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.pref_repeating_model);
+        addPreferencesFromResource(R.xml.prefscr_repeating_model);
 
         ListPreference models = (ListPreference) findPreference(getString(R.string.pref_key_medication_repeating_model));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));

@@ -97,11 +97,11 @@ public class Therapist extends DataHolder {
         int resId = resources.getIdentifier(text, "xml", resources.getString(R.string.package_name));
         switch (resId) {
             default:
-            case R.xml.pref_treatment_repeating_none:
+            case R.xml.prefscr_treatment_repeating_none:
                 return new NotRepeating();
-            case R.xml.pref_treatment_repeating_n_times:
+            case R.xml.prefscr_treatment_repeating_n_times:
                 return loadRepeatingNTimes(sharedPreferences, resources);
-            case R.xml.pref_treatment_repeating_until_date:
+            case R.xml.prefscr_treatment_repeating_until_date:
                 return loadRepeatingUntilDate(sharedPreferences, resources);
         }
     }

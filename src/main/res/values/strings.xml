@@ -7,9 +7,9 @@
     <string name="treatment_repeating_none">Not repeated</string>
     <string name="treatment_repeating_n_times">Repeat N Times</string>
     <string name="treatment_repeating_until_date">Repeat until date</string>
-    <string name="period_unit_text_days">Day(s)</string>
-    <string name="period_unit_text_weeks">Week(s)</string>
-    <string name="period_unit_text_months">Month(s)</string>
+    <string name="days">Day(s)</string>
+    <string name="weeks">Week(s)</string>
+    <string name="months">Month(s)</string>
     <string name="save">Save</string>
 
     <string name="medication_repeating_everyday">Everyday</string>
@@ -35,14 +35,14 @@
 
     <string name="pref_title_medication_name">Name</string>
     <string name="pref_title_medication_manufacturer">Manufacturer</string>
-    <string name="pref_header_treatment">Treatment</string>
+    <string name="pref_title_treatment">Treatment cycles</string>
 
     <string name="pref_title_treatment_switch">Enable treatment support</string>
     <string name="pref_description_treatment_support">Repeated treatment cycles, recommended for those who are having for example cytostatic treatments.</string>
 
     <string name="pref_title_dosage_form">Form</string>
 
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_title_notifications">Notifications</string>
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 
@@ -81,11 +81,18 @@
     <string name="err_dosage_already_added">Dosage already added for that time.</string>
     <string name="add">Add</string>
     <string name="delete">Delete</string>
-    <string name="title_home">Home</string>
+    <string name="title_settings">Settings</string>
     <string name="title_medications">Medicines</string>
     <string name="title_reminders">Today</string>
     <string name="prefcat_title_medication_reminding_model">Reminding model</string>
     <string name="prefcat_title_medication_repeating_model">Repeating model</string>
+    <string name="no_reminders_for_today">No intake for today.</string>
+    <string name="no_medication">Start by adding a medicine.</string>
+    <string name="pref_summary_treatment">Enable and disable cycled treatment support.</string>
+    <string name="pref_summary_notifications">Ringtones, vibrations, etc.</string>
+    <string name="pref_title_website">Visit website</string>
+    <string name="pref_title_about">About</string>
+    <string name="prefcat_title_preferences">Preferences</string>
 
 
 </resources>

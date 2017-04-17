@@ -27,9 +27,9 @@ import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 public class MedicationEditActivity extends AppCompatActivity {
 
     private FloatingActionButton saveButton;
-    private BasicsFragment basicsFragment;
-    private RemindingModelSelectFragment remindingModelSelectFragment;
-    private RepeatingModelSelectFragment repeatingModelSelectFragment;
+    private BasicsFragment basicsFragment = new BasicsFragment();
+    private RemindingModelSelectFragment remindingModelSelectFragment = new RemindingModelSelectFragment();
+    private RepeatingModelSelectFragment repeatingModelSelectFragment = new RepeatingModelSelectFragment();
     private Preference remindingModelPreference;
     private Preference repeatingModelPreference;
     private boolean basicsValid = false;
@@ -40,10 +40,6 @@ public class MedicationEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication_edit);
-
-        basicsFragment = new BasicsFragment();
-        remindingModelSelectFragment = new RemindingModelSelectFragment();
-        repeatingModelSelectFragment = new RepeatingModelSelectFragment();
 
         basicsFragment.setRemindingModelListener(p -> startEditingRemindingModel());
         basicsFragment.setRepeatingModelListener(p -> startEditingRepeatingModel());
@@ -56,7 +52,9 @@ public class MedicationEditActivity extends AppCompatActivity {
         remindingModelSelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);
         repeatingModelSelectFragment.setValidityReportListener(this::onRepeatingModelReportValidity);
 
-        backToBasics();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_medication, basicsFragment)
+                .commit();
     }
 
     @Override

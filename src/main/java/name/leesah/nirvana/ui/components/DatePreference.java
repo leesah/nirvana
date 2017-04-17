@@ -29,6 +29,7 @@ public class DatePreference extends DialogPreference {
         super(context, attrs);
     }
 
+
     @Override
     protected View onCreateDialogView() {
         picker = new DatePicker(getContext());

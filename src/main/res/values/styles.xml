@@ -11,18 +11,10 @@
         <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItemStyle</item>
 
-        <item name="editTextStyle">@style/editTextStyle</item>
-        <item name="checkboxStyle">@style/checkboxStyle</item>
+        <item name="android:editTextStyle">@style/editTextStyle</item>
+        <item name="android:checkboxStyle">@style/checkboxStyle</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="textViewStyle" parent="android:Widget.DeviceDefault.TextView">
         <item name="android:gravity">center_vertical</item>

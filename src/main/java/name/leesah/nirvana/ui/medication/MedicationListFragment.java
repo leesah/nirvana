@@ -1,10 +1,10 @@
 package name.leesah.nirvana.ui.medication;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +30,13 @@ public class MedicationListFragment extends Fragment implements MedicationArrayA
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_medication_list, container, false);
+        View view = inflater.inflate(R.layout.medication_list, container, false);
 
-        arrayAdapter = new MedicationArrayAdapter(getContext(), R.layout.list_item_medication, medications, this);
+        arrayAdapter = new MedicationArrayAdapter(getContext(), R.layout.medication_list_item, medications, this);
 
         ListView listView = (ListView) view.findViewById(R.id.listView_medications);
         listView.setAdapter(arrayAdapter);
+        listView.setEmptyView(view.findViewById(R.id.empty_view));
 
         FloatingActionButton newMedicationButton = (FloatingActionButton) view.findViewById(R.id.fab_new_medication);
         newMedicationButton.setOnClickListener(this::newMedication);

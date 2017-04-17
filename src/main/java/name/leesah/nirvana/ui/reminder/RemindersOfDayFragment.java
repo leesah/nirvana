@@ -1,10 +1,10 @@
 package name.leesah.nirvana.ui.reminder;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,12 +53,13 @@ public class RemindersOfDayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_reminder_list, container, false);
+        View view = inflater.inflate(R.layout.reminder_list, container, false);
 
         ArrayAdapter arrayAdapter = new GroupedReminderArrayAdapter(getContext(), cards);
 
         ListView listView = (ListView) view.findViewById(R.id.listView_reminders);
         listView.setAdapter(arrayAdapter);
+        listView.setEmptyView(view.findViewById(R.id.empty_view));
 
         return view;
     }
@@ -75,9 +76,7 @@ public class RemindersOfDayFragment extends Fragment {
                 .sorted()
                 .collect(toList());
 
-        if (cards.isEmpty())
-            cards.add(SingleTitledCard.emptyDay());
-        else {
+        if (!cards.isEmpty()) {
             int indexOfNextCard = (int) cards.stream().filter(g -> g.time.isBefore(LocalTime.now())).count();
             if (indexOfNextCard == cards.size())
                 cards.add(SingleTitledCard.doneAll());
@@ -130,14 +129,11 @@ public class RemindersOfDayFragment extends Fragment {
             return new SingleTitledCard(LocalTime.now(), "No more intakes for the day.");
         }
 
-        private static SingleTitledCard emptyDay() {
-            return new SingleTitledCard(LocalTime.now(), "No intake for the day.");
-        }
     }
 
     private class GroupedReminderArrayAdapter extends ArrayAdapter<Card> {
-        private static final int RESOURCE_MULTIPLE = R.layout.list_item_reminders_card;
-        private static final int RESOURCE_SINGLE = R.layout.list_item_note_among_reminders_card;
+        private static final int RESOURCE_MULTIPLE = R.layout.reminders_list_item_card;
+        private static final int RESOURCE_SINGLE = R.layout.reminders_list_item_note_card;
 
         private GroupedReminderArrayAdapter(Context context, List<Card> objects) {
             super(context, RESOURCE_MULTIPLE, objects);

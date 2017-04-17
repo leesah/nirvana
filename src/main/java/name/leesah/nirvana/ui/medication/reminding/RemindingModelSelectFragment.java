@@ -27,7 +27,7 @@ public class RemindingModelSelectFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.pref_reminding_model);
+        addPreferencesFromResource(R.xml.prefscr_reminding_model);
 
         ListPreference models = (ListPreference) findPreference(getString(R.string.pref_key_medication_reminding_model));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));

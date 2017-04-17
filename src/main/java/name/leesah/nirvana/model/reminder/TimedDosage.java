@@ -16,8 +16,8 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
  */
 @Parcel
 public class TimedDosage{
-    private final LocalTime timeOfDay;
-    private final int amount;
+    final LocalTime timeOfDay;
+    final int amount;
 
     @ParcelConstructor
     public TimedDosage(LocalTime timeOfDay, int amount) {

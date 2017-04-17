@@ -33,7 +33,7 @@ public class BasicsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.pref_medication);
+        addPreferencesFromResource(R.xml.prefscr_medication);
 
         name = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_name));
         manufacturer = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_manufacturer));

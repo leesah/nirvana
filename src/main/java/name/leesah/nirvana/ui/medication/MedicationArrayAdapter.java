@@ -30,7 +30,7 @@ class MedicationArrayAdapter extends ArrayAdapter<Medication> {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.list_item_medication, null);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.medication_list_item, null);
         }
 
         ((TextView) view.findViewById(R.id.textView_name)).setText(getItem(position).getName());

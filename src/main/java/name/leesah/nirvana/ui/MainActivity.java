@@ -1,14 +1,17 @@
 package name.leesah.nirvana.ui;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.ui.medication.MedicationListFragment;
 import name.leesah.nirvana.ui.reminder.RemindersOfDayFragment;
+import name.leesah.nirvana.ui.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this::onNavigation);
+
+        showDefaultView();
+    }
+
+    private void showDefaultView() {
+        boolean newUser = Pharmacist.getInstance(this).getMedications().isEmpty();
+        navigation.setSelectedItemId(newUser ? R.id.navigation_medications : R.id.navigation_reminders);
     }
 
     @Override
@@ -44,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onNavigation(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.navigation_home:
-                replaceContent(new HomeFragment());
-                return true;
             case R.id.navigation_medications:
                 replaceContent(new MedicationListFragment());
                 return true;
-            case R.id.navigation_notifications:
+            case R.id.navigation_reminders:
                 replaceContent(new RemindersOfDayFragment());
+                return true;
+            case R.id.navigation_settings:
+                replaceContent(new SettingsFragment());
                 return true;
         }
         return false;

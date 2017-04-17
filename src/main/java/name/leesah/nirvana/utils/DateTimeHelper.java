@@ -1,9 +1,12 @@
 package name.leesah.nirvana.utils;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.Months;
 import org.joda.time.Period;
 import org.joda.time.ReadablePeriod;
+import org.joda.time.Weeks;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -27,7 +30,16 @@ public class DateTimeHelper {
     }
 
     public static Period toPeriod(int number, PeriodUnit unit) {
-        return unit.toPeriod(number).toPeriod();
+        switch (unit) {
+            case DAY:
+                return Days.days(number).toPeriod();
+            case WEEK:
+                return Weeks.weeks(number).toPeriod();
+            case MONTH:
+                return Months.months(number).toPeriod();
+            default:
+                return null;
+        }
     }
 
     public static String toPeriodAsString(int number, PeriodUnit unit) {

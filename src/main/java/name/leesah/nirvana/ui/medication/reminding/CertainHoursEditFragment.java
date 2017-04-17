@@ -10,8 +10,6 @@ import android.widget.NumberPicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
@@ -74,7 +72,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     private void initializeAdapter() {
-        adapter = new TimedDosageArrayAdapter(getContext(), R.layout.list_item_timed_dosage, R.id.textView_dosage, dosages);
+        adapter = new TimedDosageArrayAdapter(getContext(), R.layout.timed_dosage_list_item_card, R.id.textView_dosage, dosages);
         adapter.setOnSaveListener(this::onSaveDosage);
         adapter.setOnDeleteListener(this::onDeleteDosage);
     }
@@ -86,7 +84,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     private void initializeEmptyView(View view) {
-        emptyView = view.findViewById(R.id.dosage_list_empty);
+        emptyView = view.findViewById(R.id.empty_view);
         ((TimedDosageEditorCard) emptyView.findViewById(R.id.editor_card)).setOnSaveListener(this::onAddDosage);
     }
 

@@ -23,15 +23,6 @@
         </activity>
 
         <activity
-            android:name=".ui.settings.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".ui.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="name.leesah.nirvana.ui.MainActivity" />
-        </activity>
-
-        <activity
             android:name=".ui.medication.MedicationEditActivity"
             android:label="@string/title_activity_edit_medication"
             android:parentActivityName=".ui.MainActivity">

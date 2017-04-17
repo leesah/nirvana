@@ -27,10 +27,6 @@ public class ValidatedEditTextPreference extends EditTextPreference {
         this.blankAllowed = blankAllowed;
     }
 
-    public ValidatedEditTextPreference(Context context) {
-        this(context, null);
-    }
-
     public ValidatedEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
