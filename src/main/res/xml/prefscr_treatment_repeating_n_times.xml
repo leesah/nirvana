@@ -6,8 +6,8 @@
         android:key="@string/pref_key_treatment_repeating_model_details"
         android:title="Repeat N times">
 
-        <name.leesah.nirvana.ui.components.IntegerPreference
-            android:key="@string/pref_key_treatment_repeating_details_times"
+        <name.leesah.nirvana.ui.tweaks.IntegerPreference
+            android:key="@string/pref_key_treatment_repeating_model_times"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Times (excluding the first cycle)"

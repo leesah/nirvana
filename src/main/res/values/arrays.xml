@@ -11,12 +11,6 @@
         <item>pref_treatment_repeating_until_date</item>
     </string-array>
 
-    <string-array name="period_unit_displayed_texts">
-        <item>@string/days</item>
-        <item>@string/weeks</item>
-        <item>@string/months</item>
-    </string-array>
-
     <string-array name="medication_dosage_forms">
         <item>@string/dosage_form_tablets</item>
         <item>@string/dosage_form_capsules</item>

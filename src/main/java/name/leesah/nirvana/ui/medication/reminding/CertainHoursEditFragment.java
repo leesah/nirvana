@@ -19,7 +19,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.components.TimedDosageEditorCard;
+import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;
@@ -39,7 +39,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reminding_model_details_certain_hours, container, false);
+        return inflater.inflate(R.layout.medication_reminding_model_details_certain_hours, container, false);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     private void initializeAdapter() {
-        adapter = new TimedDosageArrayAdapter(getContext(), R.layout.timed_dosage_list_item_card, R.id.textView_dosage, dosages);
+        adapter = new TimedDosageArrayAdapter(getContext(), R.layout.timed_dosage_card, R.id.textView_dosage, dosages);
         adapter.setOnSaveListener(this::onSaveDosage);
         adapter.setOnDeleteListener(this::onDeleteDosage);
     }

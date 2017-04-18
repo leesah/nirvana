@@ -2,65 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/prefcat_title_preferences">
-        <PreferenceScreen
+        <Preference
+            android:key="@string/pref_key_treatment"
             android:summary="@string/pref_summary_treatment"
-            android:title="@string/pref_title_treatment">
+            android:title="@string/pref_title_treatment" />
 
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/pref_key_treatment_enabled"
-                android:summary="@string/pref_description_treatment_support"
-                android:title="@string/pref_title_treatment_switch" />
-
-            <name.leesah.nirvana.ui.components.DatePreference
-                android:dependency="@string/pref_key_treatment_enabled"
-                android:key="@string/pref_key_treatment_first_day"
-                android:title="@string/pref_title_treatment_first_day" />
-
-            <name.leesah.nirvana.ui.components.PeriodPreference
-                android:dependency="@string/pref_key_treatment_enabled"
-                android:key="@string/pref_key_treatment_cycle_length"
-                android:title="Length" />
-
-            <ListPreference
-                android:dependency="@string/pref_key_treatment_enabled"
-                android:entries="@array/cycle_repeating_models"
-                android:entryValues="@array/cycle_repeating_model_list_preference_values"
-                android:key="@string/pref_key_treatment_repeating_model"
-                android:summary="%s"
-                android:title="Repeating" />
-
-        </PreferenceScreen>
-
-        <PreferenceScreen
-            android:summary="@string/pref_summary_notifications"
-            android:title="@string/pref_title_notifications">
-
-            <SwitchPreference
-                android:defaultValue="true"
-                android:key="notifications_new_message"
-                android:title="@string/pref_title_new_message_notifications" />
-
-            <!--
-            <RingtonePreference
-                android:defaultValue="content://settings/system/notification_sound"
-                android:dependency="notifications_new_message"
-                android:key="notifications_new_message_ringtone"
-                android:ringtoneType="notification"
-                android:title="@string/pref_title_ringtone" />
--->
-            <SwitchPreference
-                android:defaultValue="true"
-                android:dependency="notifications_new_message"
-                android:key="notifications_new_message_vibrate"
-                android:title="@string/pref_title_vibrate" />
-
-        </PreferenceScreen>
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/pref_title_about">
-        <Preference android:title="@string/pref_title_website" />
-        <Preference android:title="@string/pref_title_about" />
+        <Preference
+            android:key="@string/pref_key_notification"
+            android:summary="@string/pref_summary_notification"
+            android:title="@string/pref_title_notification"
+            android:enabled="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

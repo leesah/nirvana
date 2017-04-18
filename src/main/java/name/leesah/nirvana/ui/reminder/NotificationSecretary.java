@@ -17,7 +17,7 @@ public class NotificationSecretary {
         return instance;
     }
 
-    private NotificationSecretary(Context context) {
+    public NotificationSecretary(Context context) {
         notificationManager = (NotificationManager) context.getSystemService(RemindingService.NOTIFICATION_SERVICE);
     }
 

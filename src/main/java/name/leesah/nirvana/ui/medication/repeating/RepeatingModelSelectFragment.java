@@ -14,12 +14,13 @@ import android.view.ViewGroup;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
 import name.leesah.nirvana.ui.medication.MedicationEditActivity;
+import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
 
 /**
  * Created by sah on 2017-04-15.
  */
 
-public class RepeatingModelSelectFragment extends PreferenceFragment{
+public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragment<RepeatingModelEditFragment> {
 
 
     private EverydayEditFragment everyday = new EverydayEditFragment();
@@ -34,11 +35,6 @@ public class RepeatingModelSelectFragment extends PreferenceFragment{
 
         ListPreference models = (ListPreference) findPreference(getString(R.string.pref_key_medication_repeating_model));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_model_with_details, container, false);
     }
 
     private boolean switchDetailsFragment(Preference preference, String choice) {
@@ -59,14 +55,6 @@ public class RepeatingModelSelectFragment extends PreferenceFragment{
 
     public RepeatingModel readModel() {
         return getCurrentFragment().readModel();
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.details_container, fragment).commit();
-    }
-
-    private RepeatingModelEditFragment getCurrentFragment() {
-        return (RepeatingModelEditFragment) getFragmentManager().findFragmentById(R.id.details_container);
     }
 
     public void setValidityReportListener(MedicationEditActivity.ValidityReportListener listener) {

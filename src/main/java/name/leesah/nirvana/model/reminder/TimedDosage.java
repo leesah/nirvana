@@ -1,12 +1,14 @@
 package name.leesah.nirvana.model.reminder;
 
-import android.os.Parcelable;
+import android.content.Context;
 
 import org.joda.time.LocalTime;
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
 
 import java.util.Comparator;
+
+import name.leesah.nirvana.R;
 
 import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
@@ -33,9 +35,8 @@ public class TimedDosage{
         return amount;
     }
 
-    @Override
-    public String toString() {
-        return format("%2d %s at %s.", amount, "unit(s)", toText(timeOfDay));
+    public String toString(Context context) {
+        return context.getResources().getQuantityString(R.plurals.to_string_timed_dosage, amount, amount, toText(timeOfDay));
     }
 
     public static final Comparator<TimedDosage> comparator = Comparator.comparingInt(td -> td.timeOfDay.getMillisOfDay());

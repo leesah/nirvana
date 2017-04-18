@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/prefcat_title_treatment_repeating_model">
+
+        <ListPreference
+            android:entries="@array/cycle_repeating_models"
+            android:entryValues="@array/cycle_repeating_models"
+            android:defaultValue="@string/treatment_repeating_none"
+            android:key="@string/pref_key_treatment_repeating_model"
+            android:summary="%s"
+            android:title="@string/pref_title_treatment_repeating_model" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

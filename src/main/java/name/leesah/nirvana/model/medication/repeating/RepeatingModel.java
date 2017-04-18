@@ -1,5 +1,7 @@
 package name.leesah.nirvana.model.medication.repeating;
 
+import android.content.Context;
+
 import org.joda.time.LocalDate;
 
 import name.leesah.nirvana.model.treatment.TreatmentCycle;
@@ -10,5 +12,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 public interface RepeatingModel {
 
     boolean matchesDate(TreatmentCycle currentCycle, LocalDate today);
+
+    String toString(Context context);
 
 }

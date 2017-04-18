@@ -1,8 +1,6 @@
 package name.leesah.nirvana.data;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -14,10 +12,13 @@ import name.leesah.nirvana.model.treatment.Treatment;
 import name.leesah.nirvana.model.treatment.TreatmentBuilder;
 import name.leesah.nirvana.model.treatment.TreatmentCycle;
 import name.leesah.nirvana.model.treatment.repeating.NotRepeating;
-import name.leesah.nirvana.model.treatment.repeating.RepeatingNTimes;
-import name.leesah.nirvana.model.treatment.repeating.RepeatingUntilDate;
+import name.leesah.nirvana.model.treatment.repeating.NTimes;
+import name.leesah.nirvana.model.treatment.repeating.UntilDate;
 import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRepeatingModel;
 import name.leesah.nirvana.utils.DateTimeHelper;
+
+import static java.lang.String.format;
+import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 
 /**
  * Created by sah on 2016-12-11.
@@ -56,73 +57,76 @@ public class Therapist extends DataHolder {
     private void loadTreatmentCache() {
         boolean treatmentSupportEnabled = preferences.getBoolean(resources.getString(R.string.pref_key_treatment_enabled), false);
         if (treatmentSupportEnabled) {
-            treatmentCache = loadTreatmentFromSharedPreferences(preferences, resources);
+            treatmentCache = loadTreatmentFromSharedPreferences();
         } else {
             treatmentCache = buildDummyTreatment();
         }
 
-        Log.d(TAG, String.format("Loaded treatment: %s", treatmentCache));
+        Log.d(TAG, format("Loaded treatment: %s", treatmentCache));
     }
 
-    private Treatment loadTreatmentFromSharedPreferences(SharedPreferences sharedPreferences, Resources resources) {
+    private Treatment loadTreatmentFromSharedPreferences() {
         return new TreatmentBuilder()
-                .setFirstDay(loadLocalDate(sharedPreferences, resources))
-                .setCycleLength(loadCycleLength(sharedPreferences, resources))
-                .setTreatmentCycleRepeatingModel(loadRepeatingModel(sharedPreferences, resources))
+                .setFirstDay(loadLocalDate())
+                .setCycleLength(loadCycleLength())
+                .setTreatmentCycleRepeatingModel(loadRepeatingModel())
                 .build();
     }
 
-    private LocalDate loadLocalDate(SharedPreferences sharedPreferences, Resources resources) {
+    private LocalDate loadLocalDate() {
         String key = resources.getString(R.string.pref_key_treatment_first_day);
-        String text = sharedPreferences.getString(key, null);
+        String text = preferences.getString(key, null);
         if (TextUtils.isEmpty(text))
-            throw new IllegalStateException(String.format("Value not found for key [%s].", key));
-        return DateTimeHelper.toDate(text);
+            throw new IllegalStateException(format("Value not found for key [%s].", key));
+        return toDate(text);
     }
 
-    private Period loadCycleLength(SharedPreferences sharedPreferences, Resources resources) {
+    private Period loadCycleLength() {
         String key = resources.getString(R.string.pref_key_treatment_cycle_length);
-        String text = sharedPreferences.getString(key, null);
+        String text = preferences.getString(key, null);
         if (TextUtils.isEmpty(text))
-            throw new IllegalStateException(String.format("Value not found for key [%s].", key));
+            throw new IllegalStateException(format("Value not found for key [%s].", key));
         return DateTimeHelper.toPeriod(text);
     }
 
-    private TreatmentCycleRepeatingModel loadRepeatingModel(SharedPreferences sharedPreferences, Resources resources) {
-        String key = resources.getString(R.string.pref_key_treatment_repeating_model);
-        String text = sharedPreferences.getString(key, null);
-        if (TextUtils.isEmpty(text))
-            throw new IllegalStateException(String.format("Value not found for key [%s].", key));
+    private TreatmentCycleRepeatingModel loadRepeatingModel() {
+        String text = preferences.getString(resources.getString(R.string.pref_key_treatment_repeating_model), "");
 
-        int resId = resources.getIdentifier(text, "xml", resources.getString(R.string.package_name));
-        switch (resId) {
-            default:
-            case R.xml.prefscr_treatment_repeating_none:
-                return new NotRepeating();
-            case R.xml.prefscr_treatment_repeating_n_times:
-                return loadRepeatingNTimes(sharedPreferences, resources);
-            case R.xml.prefscr_treatment_repeating_until_date:
-                return loadRepeatingUntilDate(sharedPreferences, resources);
+        if (text.equals(resources.getString(R.string.treatment_repeating_none)))
+            return new NotRepeating();
+        else if (text.equals(resources.getString(R.string.treatment_repeating_n_times)))
+            return loadRepeatingNTimes();
+        else if (text.equals(resources.getString(R.string.treatment_repeating_until_date)))
+            return loadRepeatingUntilDate();
+        else {
+            Log.wtf(TAG, format("Unexpected treatment repeating model: [%s]. Using [%s] as default.",
+                    text, NotRepeating.class.getSimpleName()));
+            return new NotRepeating();
         }
     }
 
-    private TreatmentCycleRepeatingModel loadRepeatingNTimes(SharedPreferences sharedPreferences, Resources resources) {
-        String key = resources.getString(R.string.pref_key_treatment_repeating_details_times);
-        int n = sharedPreferences.getInt(key, -1);
-        if (n < 0)
-            throw new IllegalStateException(String.format("Value not found for key [%s].", key));
 
-        return new RepeatingNTimes(n);
+    private TreatmentCycleRepeatingModel loadRepeatingNTimes() {
+        int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_repeating_model_times), -1);
+        if (n < 0) {
+            Log.wtf(TAG, format("Unexpected n for [%s]: [%d]. Using [%s] as default.",
+                    NTimes.class.getSimpleName(), n, NotRepeating.class.getSimpleName()));
+            return new NotRepeating();
+        }
+
+        return new NTimes(n);
     }
 
-    private TreatmentCycleRepeatingModel loadRepeatingUntilDate(SharedPreferences sharedPreferences, Resources resources) {
-        String key = resources.getString(R.string.pref_key_treatment_repeating_details_until_date);
-        String text = sharedPreferences.getString(key, null);
-        if (TextUtils.isEmpty(text))
-            throw new IllegalStateException(String.format("Value not found for key [%s].", key));
-        LocalDate lastDay = DateTimeHelper.toDate(text);
+    private TreatmentCycleRepeatingModel loadRepeatingUntilDate() {
+        String key = resources.getString(R.string.pref_key_treatment_repeating_model_until_date);
+        String text = preferences.getString(key, null);
+        if (TextUtils.isEmpty(text)) {
+            Log.wtf(TAG, format("Unexpected date for [%s]: [%s]. Using [%s] as default.",
+                    NTimes.class.getSimpleName(), text, NotRepeating.class.getSimpleName()));
+            return new NotRepeating();
+        }
 
-        return new RepeatingUntilDate(lastDay);
+        return new UntilDate(toDate(text));
     }
 
     private Treatment buildDummyTreatment() {

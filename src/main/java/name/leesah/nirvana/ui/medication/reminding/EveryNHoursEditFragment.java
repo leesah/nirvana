@@ -11,8 +11,6 @@ import android.widget.TimePicker;
 
 import org.joda.time.LocalTime;
 
-import java.sql.Time;
-
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
@@ -33,7 +31,7 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reminding_model_details_every_n_hours, container, false);
+        return inflater.inflate(R.layout.medication_reminding_model_details_every_n_hours, container, false);
     }
 
     @Override

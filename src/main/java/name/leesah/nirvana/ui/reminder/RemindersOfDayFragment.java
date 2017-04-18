@@ -57,7 +57,7 @@ public class RemindersOfDayFragment extends Fragment {
 
         ArrayAdapter arrayAdapter = new GroupedReminderArrayAdapter(getContext(), cards);
 
-        ListView listView = (ListView) view.findViewById(R.id.listView_reminders);
+        ListView listView = (ListView) view.findViewById(R.id.reminders);
         listView.setAdapter(arrayAdapter);
         listView.setEmptyView(view.findViewById(R.id.empty_view));
 
@@ -132,8 +132,8 @@ public class RemindersOfDayFragment extends Fragment {
     }
 
     private class GroupedReminderArrayAdapter extends ArrayAdapter<Card> {
-        private static final int RESOURCE_MULTIPLE = R.layout.reminders_list_item_card;
-        private static final int RESOURCE_SINGLE = R.layout.reminders_list_item_note_card;
+        private static final int RESOURCE_MULTIPLE = R.layout.reminder_card;
+        private static final int RESOURCE_SINGLE = R.layout.reminder_card_note;
 
         private GroupedReminderArrayAdapter(Context context, List<Card> objects) {
             super(context, RESOURCE_MULTIPLE, objects);

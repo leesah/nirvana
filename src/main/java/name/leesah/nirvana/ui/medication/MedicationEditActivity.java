@@ -46,7 +46,7 @@ public class MedicationEditActivity extends AppCompatActivity {
 
         saveButton = (FloatingActionButton) findViewById(R.id.save_button);
         saveButton.setEnabled(false);
-        saveButton.setBackgroundTintList(getColorStateList(R.color.fab_colors));
+        saveButton.setBackgroundTintList(getColorStateList(R.color.fab));
 
         basicsFragment.setValidityReportListener(this::onBasicsReportValidity);
         remindingModelSelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);
@@ -108,23 +108,23 @@ public class MedicationEditActivity extends AppCompatActivity {
 
     private boolean startEditingRemindingModel() {
         saveButton.setOnClickListener(v -> saveRemindingModel());
-        replaceFragment(this.remindingModelSelectFragment);
+        replaceFragmentAndAddToBackStack(this.remindingModelSelectFragment);
         return true;
     }
 
     private boolean startEditingRepeatingModel() {
         saveButton.setOnClickListener(v -> saveRepeatingModel());
-        replaceFragment(repeatingModelSelectFragment);
+        replaceFragmentAndAddToBackStack(repeatingModelSelectFragment);
         return true;
     }
 
     private void backToBasics() {
-        replaceFragment(basicsFragment);
+        replaceFragmentAndAddToBackStack(basicsFragment);
         saveButton.setOnClickListener(v -> saveMedication());
         enableSaveButtonInBasics();
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragmentAndAddToBackStack(Fragment fragment) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_medication, fragment)
                 .addToBackStack(fragment.getClass().getSimpleName())
@@ -136,8 +136,7 @@ public class MedicationEditActivity extends AppCompatActivity {
     }
 
     private void enableSaveButtonInBasics() {
-        boolean allValid = basicsValid && remindingModel !=null && repeatingModel != null;
-        saveButton.setBackgroundResource(allValid ? R.color.colorAccent : android.R.color.darker_gray);
+        saveButton.setEnabled(basicsValid && remindingModel !=null && repeatingModel != null);
     }
 
     private void onBasicsReportValidity(boolean valid) {

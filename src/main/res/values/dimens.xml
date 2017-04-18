@@ -9,4 +9,5 @@
     <dimen name="widget_padding_left">4dp</dimen>
     <dimen name="dosage_list_button_padding">8dp</dimen>
     <dimen name="text_size">16sp</dimen>
+    <dimen name="medication_icon_size">64dp</dimen>
 </resources>

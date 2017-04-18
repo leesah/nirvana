@@ -7,9 +7,6 @@
     <string name="treatment_repeating_none">Not repeated</string>
     <string name="treatment_repeating_n_times">Repeat N Times</string>
     <string name="treatment_repeating_until_date">Repeat until date</string>
-    <string name="days">Day(s)</string>
-    <string name="weeks">Week(s)</string>
-    <string name="months">Month(s)</string>
     <string name="save">Save</string>
 
     <string name="medication_repeating_everyday">Everyday</string>
@@ -42,9 +39,9 @@
 
     <string name="pref_title_dosage_form">Form</string>
 
-    <string name="pref_title_notifications">Notifications</string>
+    <string name="pref_title_notification">Notification</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_new_message_notification">New message notifications</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
@@ -52,24 +49,18 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_title_treatment_first_day">First Day</string>
 
-    <string name="pref_summary_days_template">%d day(s)</string>
-    <string name="pref_summary_weeks_template">%d week(s)</string>
-    <string name="pref_summary_months_template">%d month(s)</string>
 
 
     <string name="dosage_form_value_tablets">TABLET</string>
     <string name="dosage_form_value_capsules">CAPSULE</string>
     <string name="dosage_form_value_injections">INJECTION</string>
-    <string name="pref_title_medication_enable_skip_first">Delay start date</string>
-    <string name="medication_skip_first_period">Period to delay</string>
+    <string name="pref_title_medication_delay_enabled">Delay start date</string>
+    <string name="pref_title_medication_delay_period">Period to delay</string>
     <string name="pref_title_medication_repeating_model">On which days</string>
     <string name="pref_title_medication_reminding_model">On which hours of day</string>
-    <string name="extra_reminding_model">REMINDING MODEL</string>
     <string name="prefcat_title_medication_basics">Basics</string>
     <string name="pref_title_medication_advanced">Advanced</string>
     <string name="prefcat_title_medication_reminding_and_repeating">Intaking</string>
-    <string name="extra_repeating_model">REPEATING MODEL</string>
-    <string name="p0d">P0D</string>
     <string name="monday_of_week">Mon</string>
     <string name="tuesday_of_week">Tue</string>
     <string name="wednesday_of_week">Wed</string>
@@ -89,10 +80,31 @@
     <string name="no_reminders_for_today">No intake for today.</string>
     <string name="no_medication">Start by adding a medicine.</string>
     <string name="pref_summary_treatment">Enable and disable cycled treatment support.</string>
-    <string name="pref_summary_notifications">Ringtones, vibrations, etc.</string>
+    <string name="pref_summary_notification">Ringtones, vibrations, etc.</string>
     <string name="pref_title_website">Visit website</string>
     <string name="pref_title_about">About</string>
     <string name="prefcat_title_preferences">Preferences</string>
-
+    <string name="err_invalid_treatment">Treatment setting is incomplete. Treatment support disabled automatically.</string>
+    <string name="pref_title_treatment_cycle_length">Length of cycle</string>
+    <string name="pref_title_treatment_repeating_model">Repeating of cycle</string>
+    <string name="prefcat_title_treatment_repeating_model">Repeating of cycle</string>
+    <string name="prefcat_title_treatment_first_cycle">Treatment cycle</string>
+    <string name="pref_summary_website">https://leesah.github.io/nirvana</string>
+    <string name="prefcat_title_information">Information</string>
+    <string name="medication_repeating_every_var_days">every %d days</string>
+    <string name="medication_repeating_var_days_of_week">every week on %s</string>
+    <string name="comma_equivalent">", "</string>
+    <string name="to_string_every_n_hours_starting_at">starting from %s</string>
+    <string name="to_string_every_n_hours">%1$s %2$s, starting at %3$s</string>
+    <string name="to_string_everyday">everyday</string>
+    <plurals name="to_string_timed_dosage">
+        <item quantity="one">%1$d unit at %2$s</item>
+        <item quantity="other">%1$d units at %2$s</item>
+    </plurals>
+    <plurals name="to_string_every_n_hours_every_n_hours">
+        <item quantity="one">every hour</item>
+        <item quantity="other">every %d hours</item>
+    </plurals>
+    <plurals name="to_string_every_n_hours_doses" />
 
 </resources>

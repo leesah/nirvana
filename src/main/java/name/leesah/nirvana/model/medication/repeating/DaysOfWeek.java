@@ -1,19 +1,23 @@
 package name.leesah.nirvana.model.medication.repeating;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.DayOfWeek;
 import name.leesah.nirvana.model.treatment.TreatmentCycle;
 
 import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static org.apache.commons.lang3.StringUtils.join;
 
 /**
  * Created by sah on 2016-12-07.
@@ -23,18 +27,20 @@ public class DaysOfWeek implements RepeatingModel {
     private static final String TAG = DaysOfWeek.class.getSimpleName();
 
     private final EnumSet<DayOfWeek> daysOfWeek;
-    private final Set<Integer> daysOfWeekAsIntegers;
 
     public DaysOfWeek(EnumSet<DayOfWeek> daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
-        daysOfWeekAsIntegers = daysOfWeek.stream()
-                .map(this::getJodaTimeConstant)
-                .collect(toSet());
     }
 
     @Override
     public boolean matchesDate(TreatmentCycle currentCycle, LocalDate date) {
-        return daysOfWeekAsIntegers.contains(date.getDayOfWeek());
+        return asIntegers().contains(date.getDayOfWeek());
+    }
+
+    private Set<Integer> asIntegers() {
+        return daysOfWeek.stream()
+                .map(this::getJodaTimeConstant)
+                .collect(toSet());
     }
 
     private int getJodaTimeConstant(DayOfWeek day) {
@@ -60,5 +66,16 @@ public class DaysOfWeek implements RepeatingModel {
         }
     }
 
+    @Override
+    public String toString(Context context) {
+        String days = join(asStrings(), context.getString(R.string.comma_equivalent));
+        return context.getString(R.string.medication_repeating_var_days_of_week, days);
+    }
+
+    private List<String> asStrings() {
+        return daysOfWeek.stream()
+                .map(Enum::name)
+                .collect(toList());
+    }
 
 }

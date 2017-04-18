@@ -32,13 +32,13 @@ public class MedicationListFragment extends Fragment implements MedicationArrayA
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.medication_list, container, false);
 
-        arrayAdapter = new MedicationArrayAdapter(getContext(), R.layout.medication_list_item, medications, this);
+        arrayAdapter = new MedicationArrayAdapter(getContext(), R.layout.medication_card, medications, this);
 
-        ListView listView = (ListView) view.findViewById(R.id.listView_medications);
+        ListView listView = (ListView) view.findViewById(R.id.medications);
         listView.setAdapter(arrayAdapter);
         listView.setEmptyView(view.findViewById(R.id.empty_view));
 
-        FloatingActionButton newMedicationButton = (FloatingActionButton) view.findViewById(R.id.fab_new_medication);
+        FloatingActionButton newMedicationButton = (FloatingActionButton) view.findViewById(R.id.add_button);
         newMedicationButton.setOnClickListener(this::newMedication);
 
         reloadMedications();

@@ -12,7 +12,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
-import name.leesah.nirvana.ui.components.PeriodPreference;
+import name.leesah.nirvana.ui.tweaks.PeriodPreference;
 
 public class BasicsFragment extends PreferenceFragment {
 
@@ -38,8 +38,8 @@ public class BasicsFragment extends PreferenceFragment {
         name = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_name));
         manufacturer = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_manufacturer));
         dosageForm = (ListPreference) findPreference(getString(R.string.pref_key_medication_dosage_form));
-        delayed = (SwitchPreference) findPreference(getString(R.string.pref_key_enable_skipped_period));
-        delayedBy = (PeriodPreference) findPreference(getString(R.string.pref_key_medication_skipped_period));
+        delayed = (SwitchPreference) findPreference(getString(R.string.pref_key_medication_delay_enabled));
+        delayedBy = (PeriodPreference) findPreference(getString(R.string.pref_key_medication_delay_period));
         remindingModel = findPreference(getString(R.string.pref_key_medication_reminding_model));
         repeatingModel = findPreference(getString(R.string.pref_key_medication_repeating_model));
 

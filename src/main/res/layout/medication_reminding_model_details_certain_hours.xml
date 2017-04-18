@@ -1,0 +1,62 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="4dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardElevation="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/listPreferredItemHeightLarge"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textView_dosage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Add an intake."
+                        android:textAlignment="center"
+                        android:textColor="@android:color/darker_gray" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        </FrameLayout>
+
+        <name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard
+            android:id="@+id/editor_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mode="add" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView_dosages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:footerDividersEnabled="false"
+        tools:context=".ui.medication.reminding.CertainHoursEditFragment"
+        tools:listfooter="@layout/timed_dosage_editor_card"
+        tools:listitem="@layout/timed_dosage_card" />
+
+</FrameLayout>

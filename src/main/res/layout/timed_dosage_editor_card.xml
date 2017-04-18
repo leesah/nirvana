@@ -41,7 +41,7 @@
                     android:maxLines="1"
                     android:text="at" />
 
-                <name.leesah.nirvana.ui.components.LimitedMinutesTimePicker
+                <name.leesah.nirvana.ui.tweaks.LimitedMinutesTimePicker
                     android:id="@+id/timePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="160dp"

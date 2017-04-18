@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import java.util.List;
 
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.components.TimedDosageEditorCard;
+import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
 
 /**
  * Created by sah on 2016-12-11.

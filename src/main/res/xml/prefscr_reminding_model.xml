@@ -7,6 +7,7 @@
             android:entries="@array/medication_reminding_models"
             android:entryValues="@array/medication_reminding_models"
             android:key="@string/pref_key_medication_reminding_model"
+            android:summary="%s"
             android:title="@string/pref_title_medication_reminding_model" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefcat_title_details">

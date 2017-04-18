@@ -1,5 +1,6 @@
 package name.leesah.nirvana.model.medication.reminding;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.Set;
@@ -14,5 +15,7 @@ public interface RemindingModel {
 
     @NonNull
     Set<Reminder> getRemindersThroughDay(Medication medication);
+
+    String toString(Context context);
 
 }
