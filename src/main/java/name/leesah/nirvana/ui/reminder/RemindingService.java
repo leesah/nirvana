@@ -8,21 +8,13 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.joda.time.LocalDate;
-
-import java.util.EnumSet;
-
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.utils.IdentityHelper;
 
 import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.joining;
-import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
-import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;
-import static name.leesah.nirvana.model.reminder.Reminder.State.SNOOZED;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
-import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 
 /**
@@ -34,7 +26,7 @@ public class RemindingService extends IntentService {
 
     private static final String TAG = RemindingService.class.getSimpleName();
 
-    static final String ACTION_SHOW_REMINDER = "name.leesah.nirvana.ui.action.SHOW_REMINDER";
+    public static final String ACTION_SHOW_REMINDER = "name.leesah.nirvana.ui.action.SHOW_REMINDER";
     static final String ACTION_SNOOZE_REMINDER = "name.leesah.nirvana.ui.action.SNOOZE_REMINDER";
     static final String ACTION_CONFIRM_REMINDER = "name.leesah.nirvana.ui.action.CONFIRM_REMINDER";
 
@@ -78,7 +70,11 @@ public class RemindingService extends IntentService {
     }
 
     private void handleActionShowReminder(int reminderId) {
-        Reminder reminder = getValidatedReminder(reminderId, today(), EnumSet.of(PLANNED, SNOOZED));
+        Reminder reminder = nurse.getReminder(reminderId);
+        if (reminder == null) {
+            Log.w(TAG, "Reminder has expired.");
+            return;
+        }
 
         int notificationId = IdentityHelper.uniqueInt();
         Notification notification = new NotificationBuilder(this, reminder).build();
@@ -89,7 +85,11 @@ public class RemindingService extends IntentService {
     }
 
     private void handleActionSnoozeReminder(int reminderId) {
-        final Reminder reminder = getValidatedReminder(reminderId, today(), EnumSet.of(NOTIFIED));
+        final Reminder reminder = nurse.getReminder(reminderId);
+        if (reminder == null) {
+            Log.w(TAG, "Reminder has expired.");
+            return;
+        }
 
         notificationSecretary.dismiss(reminder.getNotificationId());
 
@@ -102,7 +102,11 @@ public class RemindingService extends IntentService {
     }
 
     private void handleActionConfirmReminder(int id) {
-        final Reminder reminder = getValidatedReminder(id, today(), EnumSet.of(NOTIFIED));
+        final Reminder reminder = nurse.getReminder(id);
+        if (reminder == null) {
+            Log.w(TAG, "Reminder has expired.");
+            return;
+        }
 
         notificationSecretary.dismiss(reminder.getNotificationId());
         nurse.setDone(reminder.getId());
@@ -116,27 +120,6 @@ public class RemindingService extends IntentService {
             throw new IllegalStateException("Reminder ID missing from Intent");
         }
         return intent.getIntExtra(EXTRA_REMINDER_ID, Integer.MIN_VALUE);
-    }
-
-    private Reminder getValidatedReminder(int id, LocalDate expectedDate, EnumSet<Reminder.State> expectedStates) {
-        final Reminder reminder = nurse.getReminder(id);
-
-        if (reminder == null) {
-            String message = String.format("Reminder ID [%d] doesn't exist.", id);
-            Log.wtf(TAG, message);
-            throw new IllegalStateException(message);
-        }
-
-        if (!expectedDate.equals(reminder.getDate())
-                || !expectedStates.contains(reminder.getState())) {
-            String message = String.format("Reminder [%d] is expected to be [%s] on [%s], but actually [%s] on [%s].", id
-                    , expectedStates.stream().map(Enum::name).collect(joining(", ")), toText(expectedDate)
-                    , reminder.getState().name(), toText(reminder.getDate()));
-            Log.wtf(TAG, message);
-            throw new IllegalStateException(message);
-        }
-
-        return reminder;
     }
 
     private void showToast(final String text) {

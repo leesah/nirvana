@@ -1,6 +1,7 @@
 package name.leesah.nirvana.data;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -83,25 +84,30 @@ public class Nurse extends DataHolder {
     }
 
     public void setNotified(int id, int notificationId) {
-        reminderBy(id).setNotified(notificationId);
+        Reminder reminder = reminderBy(id);
+        if (reminder == null) {
+            onReminderMissing(id);
+            return;
+        }
+        reminder.setNotified(notificationId);
         persistCache();
         Log.d(TAG, String.format("Reminder [%d] set to [NOTIFIED], with notificationId=[%d].", id, notificationId));
     }
 
     public void setDone(int id) {
-        reminderBy(id).setDone();
+        Reminder reminder = reminderBy(id);
+        if (reminder == null) {
+            onReminderMissing(id);
+            return;
+        }
+        reminder.setDone();
         persistCache();
         Log.d(TAG, String.format("Reminder [%d] set to [DONE].", id));
     }
 
+    @Nullable
     private Reminder reminderBy(int id) {
         loadCacheIfNeeded();
-        if (!cache.containsKey(id)) {
-            Log.wtf(TAG, String.format("Reminder not found by ID [%d].", id));
-            Log.d(TAG, String.format("Reminder(s) in cache: [%s]", itemsInCache()));
-            throw new IllegalStateException(String.format("Reminder [%d] is not found.", id));
-        }
-
         return cache.get(id);
     }
 
@@ -147,8 +153,19 @@ public class Nurse extends DataHolder {
         Log.i(TAG, String.format("%d reminder(s) persisted.", cache.size()));
     }
 
+    @Nullable
     public Reminder getReminder(int id) {
-        return new Reminder(reminderBy(id));
+        Reminder cached = reminderBy(id);
+        if (cached == null) {
+            onReminderMissing(id);
+            return null;
+        } else
+            return new Reminder(cached);
+    }
+
+    private void onReminderMissing(int id) {
+        Log.wtf(TAG, String.format("Reminder not found by ID [%d].", id));
+        Log.d(TAG, String.format("Reminder(s) in cache: [%s]", itemsInCache()));
     }
 
     private String itemsInCache() {

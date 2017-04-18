@@ -29,7 +29,7 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/textView_dosage"
+                        android:id="@+id/text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -50,7 +50,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listView_dosages"
+        android:id="@+id/dosages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"

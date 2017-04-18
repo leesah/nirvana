@@ -72,7 +72,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     private void initializeAdapter() {
-        adapter = new TimedDosageArrayAdapter(getContext(), R.layout.timed_dosage_card, R.id.textView_dosage, dosages);
+        adapter = new TimedDosageArrayAdapter(getContext(), dosages);
         adapter.setOnSaveListener(this::onSaveDosage);
         adapter.setOnDeleteListener(this::onDeleteDosage);
     }
@@ -89,7 +89,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     private void initializeListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.listView_dosages);
+        ListView listView = (ListView) view.findViewById(R.id.dosages);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((p, v, position, n) -> editRow(position));
         listView.addFooterView(footer);

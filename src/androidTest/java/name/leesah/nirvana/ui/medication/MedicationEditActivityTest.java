@@ -1,5 +1,8 @@
 package name.leesah.nirvana.ui.medication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.contrib.PickerActions;
@@ -18,14 +21,16 @@ import org.junit.Test;
 import java.util.Set;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.data.Nurse;
+import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.data.Nurse;
-import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.ui.reminder.RemindingService;
 
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -38,6 +43,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.ui.MoreViewActions.setNumber;
+import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
@@ -62,6 +68,7 @@ public class MedicationEditActivityTest {
 
     @After
     public void tearDown() throws Exception {
+        cancelAllAlarms();
         purgePreferences();
     }
 
@@ -165,6 +172,13 @@ public class MedicationEditActivityTest {
 
     private void clickOk() {
         onView(withText(android.R.string.ok)).perform(click());
+    }
+
+    private void cancelAllAlarms() {
+        Intent intent = new Intent(getTargetContext(), RemindingService.class)
+                .setAction(ACTION_SHOW_REMINDER);
+        PendingIntent pendingIntent = PendingIntent.getService(getTargetContext(), 0, intent, 0);
+        getTargetContext().getSystemService(AlarmManager.class).cancel(pendingIntent);
     }
 
     private static void purgePreferences() {

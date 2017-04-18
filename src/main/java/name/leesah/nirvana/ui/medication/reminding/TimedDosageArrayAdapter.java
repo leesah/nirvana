@@ -2,12 +2,15 @@ package name.leesah.nirvana.ui.medication.reminding;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
+import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
 
@@ -20,25 +23,36 @@ public class TimedDosageArrayAdapter extends ArrayAdapter<TimedDosage> {
     private OnSaveDosageListener onSaveListener;
     private OnDeleteDosageListener onDeleteListener;
 
-    TimedDosageArrayAdapter(Context context, int resource, int textViewResourceId, List<TimedDosage> objects) {
-        super(context, resource, textViewResourceId, objects);
+    TimedDosageArrayAdapter(Context context, List<TimedDosage> objects) {
+        super(context, 0, 0, objects);
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        TimedDosage dosage = getItem(position);
         if (isEditing(position)) {
-            TimedDosageEditorCard view = new TimedDosageEditorCard(getContext(), null);
+            TimedDosageEditorCard view = convertView instanceof TimedDosageEditorCard ? (TimedDosageEditorCard) convertView : new TimedDosageEditorCard(getContext(), null);
             view.setEditMode();
-            view.setDosage(getItem(position));
-            view.setOnSaveListener(dosage -> onSaveListener.onSaveDosage(position, dosage));
+            view.setDosage(dosage);
+            view.setOnSaveListener(d -> onSaveListener.onSaveDosage(position, d));
             view.setOnDeleteListener(() -> this.onDeleteListener.onDeleteDosage(position));
             return view;
-        } else if (convertView instanceof TimedDosageEditorCard) {
-            return super.getView(position, null, parent);
         } else {
-            return super.getView(position, convertView, parent);
+            View view = convertView == null ? LayoutInflater.from(getContext()).inflate(R.layout.timed_dosage_card, parent, false) : convertView;
+            ((TextView) view.findViewById(R.id.text)).setText(dosage.toString(getContext()));
+            return view;
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return isEditing(position) ? 1 : 0;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
     }
 
     private boolean isEditing(int position) {

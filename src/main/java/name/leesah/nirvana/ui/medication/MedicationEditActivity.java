@@ -96,13 +96,13 @@ public class MedicationEditActivity extends AppCompatActivity {
 
     private void saveRemindingModel() {
         remindingModel = remindingModelSelectFragment.readModel();
-        basicsFragment.setRemindingModelSummary(remindingModel.toString());
+        basicsFragment.setRemindingModelSummary(remindingModel.toString(this));
         backToBasics();
     }
 
     private void saveRepeatingModel() {
         repeatingModel = repeatingModelSelectFragment.readModel();
-        basicsFragment.setRepeatingModelSummary(repeatingModel.toString());
+        basicsFragment.setRepeatingModelSummary(repeatingModel.toString(this));
         backToBasics();
     }
 

@@ -34,7 +34,7 @@ public class AlarmSecretary {
 
     private AlarmSecretary(Context context) {
         this.context = context;
-        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager = context.getSystemService(AlarmManager.class);
     }
 
     static void setInstance(AlarmSecretary instance) {
