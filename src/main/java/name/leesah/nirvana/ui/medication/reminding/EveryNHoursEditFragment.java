@@ -16,6 +16,9 @@ import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
+import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_VALUES;
 import static org.parceler.Parcels.wrap;
 
 public class EveryNHoursEditFragment extends RemindingModelEditFragment {
@@ -23,15 +26,15 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
     public static final String KEY_AMOUNT = "amount";
     public static final String KEY_UNIT = "unit";
     public static final String KEY_EVERY_N = "every n";
-    public static final String[] EVERY_N_VALUES = {"4", "6", "8", "12"};
     private NumberPicker amount;
     private TextView unit;
-    private NumberPicker everyN;
+    private NumberPicker n;
     private TimePicker firstDoseTime;
+    private EveryNHours editingExsiting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.medication_reminding_model_details_every_n_hours, container, false);
+        return inflater.inflate(R.layout.every_n_hours, container, false);
     }
 
     @Override
@@ -39,15 +42,15 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
         super.onViewCreated(view, savedInstanceState);
         amount = (NumberPicker) view.findViewById(R.id.amount);
         unit = (TextView) view.findViewById(R.id.unit);
-        everyN = (NumberPicker) view.findViewById(R.id.every_n);
+        n = (NumberPicker) view.findViewById(R.id.every_n);
         firstDoseTime = (TimePicker) view.findViewById(R.id.first_dose_time);
 
         amount.setMinValue(1);
         amount.setMaxValue(99);
 
-        everyN.setMinValue(0);
-        everyN.setMaxValue(EVERY_N_VALUES.length - 1);
-        everyN.setDisplayedValues(EVERY_N_VALUES);
+        n.setMinValue(0);
+        n.setMaxValue(VALID_VALUES.size() - 1);
+        n.setDisplayedValues(VALID_VALUES.stream().map(String::valueOf).collect(toList()).toArray(new String[0]));
 
         reportValidity(true);
     }
@@ -58,8 +61,16 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
         if (savedInstanceState != null) {
             amount.setValue(savedInstanceState.getInt(KEY_AMOUNT, 1));
             unit.setText(savedInstanceState.getString(KEY_UNIT));
-            everyN.setValue(savedInstanceState.getInt(KEY_EVERY_N, 8));
+            n.setValue(savedInstanceState.getInt(KEY_EVERY_N, 8));
+        } else if (editingExsiting != null) {
+            TimedDosage firstDose = editingExsiting.getFirstDose();
+            amount.setValue(firstDose.getAmount());
+            n.setValue(editingExsiting.getN());
+            firstDoseTime.setHour(firstDose.getTimeOfDay().getHourOfDay());
+            firstDoseTime.setMinute(firstDose.getTimeOfDay().getMinuteOfHour());
         }
+
+
     }
 
     @Override
@@ -67,14 +78,17 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_AMOUNT, amount.getValue());
         outState.putString(KEY_UNIT, unit.getText().toString());
-        outState.putInt(KEY_EVERY_N, everyN.getValue());
+        outState.putInt(KEY_EVERY_N, n.getValue());
     }
 
     @Override
     public RemindingModel readModel() {
         LocalTime timeOfDay = new LocalTime(0).withHourOfDay(firstDoseTime.getHour()).withMinuteOfHour(firstDoseTime.getMinute());
-        Integer everyN = Integer.valueOf(EVERY_N_VALUES[this.everyN.getValue()]);
+        Integer everyN = VALID_VALUES.get(n.getValue());
         return new EveryNHours(new TimedDosage(timeOfDay, amount.getValue()), everyN);
     }
 
+    public void setEditingExsiting(EveryNHours editingExsiting) {
+        this.editingExsiting = editingExsiting;
+    }
 }

@@ -25,6 +25,7 @@ public class AdaptedGsonFactory {
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter())
                 .registerTypeAdapter(ReadablePeriod.class, new ReadablePeriodTypeAdapter())
+                .registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
                 .create();
     }
 }

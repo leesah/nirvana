@@ -26,9 +26,9 @@ public class RemindingService extends IntentService {
 
     private static final String TAG = RemindingService.class.getSimpleName();
 
-    public static final String ACTION_SHOW_REMINDER = "name.leesah.nirvana.ui.action.SHOW_REMINDER";
-    static final String ACTION_SNOOZE_REMINDER = "name.leesah.nirvana.ui.action.SNOOZE_REMINDER";
-    static final String ACTION_CONFIRM_REMINDER = "name.leesah.nirvana.ui.action.CONFIRM_REMINDER";
+    public static final String ACTION_SHOW_REMINDER = "name.leesah.nirvana:action:SHOW_REMINDER";
+    static final String ACTION_SNOOZE_REMINDER = "name.leesah.nirvana:action:SNOOZE_REMINDER";
+    static final String ACTION_CONFIRM_REMINDER = "name.leesah.nirvana:action:CONFIRM_REMINDER";
 
     static final String EXTRA_REMINDER_ID = "name.leesah.nirvana.ui.extra.REMINDER";
 

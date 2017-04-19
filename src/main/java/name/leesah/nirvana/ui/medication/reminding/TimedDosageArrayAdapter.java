@@ -24,7 +24,7 @@ public class TimedDosageArrayAdapter extends ArrayAdapter<TimedDosage> {
     private OnDeleteDosageListener onDeleteListener;
 
     TimedDosageArrayAdapter(Context context, List<TimedDosage> objects) {
-        super(context, 0, 0, objects);
+        super(context, 0, objects);
     }
 
     @NonNull

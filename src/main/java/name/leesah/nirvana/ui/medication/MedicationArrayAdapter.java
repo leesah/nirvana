@@ -1,6 +1,7 @@
 package name.leesah.nirvana.ui.medication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +15,16 @@ import java.util.List;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 
+import static name.leesah.nirvana.ui.medication.MedicationEditActivity.ACTION_EDIT_MEDICATION;
+import static name.leesah.nirvana.ui.medication.MedicationEditActivity.EXTRA_MEDICATION_ID;
+
 /**
  * Created by sah on 2016-12-11.
  */
 class MedicationArrayAdapter extends ArrayAdapter<Medication> {
 
-    private final RowActionsListener listener;
-
-    MedicationArrayAdapter(Context context, int resource, List<Medication> objects, @NonNull RowActionsListener listener) {
-        super(context, resource, objects);
-        this.listener = listener;
+    MedicationArrayAdapter(Context context, List<Medication> objects) {
+        super(context, 0, objects);
     }
 
     @NonNull
@@ -50,13 +51,15 @@ class MedicationArrayAdapter extends ArrayAdapter<Medication> {
         }
         dosageForm.setImageTintList(getContext().getColorStateList(R.color.dosage_form_icon));
 
+        view.setOnClickListener(v -> editMedication(medication.getId()));
         return view;
     }
 
-    interface RowActionsListener {
-        void onEditRow(int row);
-
-        void onDeleteRow(int row);
+    private void editMedication(int medicationId) {
+        Intent intent = new Intent(getContext(), MedicationEditActivity.class)
+                .setAction(ACTION_EDIT_MEDICATION)
+                .putExtra(EXTRA_MEDICATION_ID, medicationId);
+        getContext().startActivity(intent);
     }
 
 }

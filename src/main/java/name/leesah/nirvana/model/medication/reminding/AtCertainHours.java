@@ -3,6 +3,8 @@ package name.leesah.nirvana.model.medication.reminding;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +16,6 @@ import name.leesah.nirvana.model.reminder.TimedDosage;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toSet;
-import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 /**
  * Created by sah on 2016-12-11.
@@ -28,9 +29,9 @@ public class AtCertainHours implements RemindingModel {
 
     @NonNull
     @Override
-    public Set<Reminder> getRemindersThroughDay(Medication medication) {
+    public Set<Reminder> getRemindersThroughDay(Medication medication, LocalDate date) {
         return dosages.stream()
-                .map(d -> new Reminder(today(), d.getTimeOfDay(), medication.getId(), d.getAmount()))
+                .map(d -> new Reminder(date, d.getTimeOfDay(), medication.getId(), d.getAmount()))
                 .collect(toSet());
     }
 
@@ -39,5 +40,9 @@ public class AtCertainHours implements RemindingModel {
         return dosages.stream()
                 .map(dosage -> dosage.toString(context))
                 .collect(joining(context.getString(R.string.comma_equivalent)));
+    }
+
+    public List<TimedDosage> getDosages() {
+        return new ArrayList<>(dosages);
     }
 }

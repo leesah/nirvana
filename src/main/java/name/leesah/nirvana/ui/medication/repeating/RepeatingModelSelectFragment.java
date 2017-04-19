@@ -27,6 +27,7 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
     private DaysOfWeekEditFragment daysOfWeek = new DaysOfWeekEditFragment();
     private EveryNDaysEditFragment everyNDays = new EveryNDaysEditFragment();
     private FloatingActionButton saveButton;
+    private RepeatingModel editingExisting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,5 +62,9 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
         everyday.setValidityReportListener(listener);
         daysOfWeek.setValidityReportListener(listener);
         everyNDays.setValidityReportListener(listener);
+    }
+
+    public void setEditingExisting(RepeatingModel editingExisting) {
+        this.editingExisting = editingExisting;
     }
 }

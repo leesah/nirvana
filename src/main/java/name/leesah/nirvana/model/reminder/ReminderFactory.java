@@ -15,6 +15,8 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
 
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
+import static name.leesah.nirvana.utils.DateTimeHelper.today;
+import static org.joda.time.Days.days;
 
 public class ReminderFactory {
     private static final String TAG = ReminderFactory.class.getSimpleName();
@@ -55,8 +57,8 @@ public class ReminderFactory {
 
     private Set<Reminder> createReminders(Medication medication, TreatmentCycle cycle, LocalDate date) {
         if (medication.getRepeatingModel().matchesDate(cycle, date)
-                && !cycle.getFirstDay().plus(medication.getDelayedBy()).isAfter(date))
-            return medication.getRemindingModel().getRemindersThroughDay(medication);
+                && !cycle.getFirstDay().plus(medication.isDelayed() ? medication.getDelayedPeriod() : days(0)).isAfter(date))
+            return medication.getRemindingModel().getRemindersThroughDay(medication, today());
         else
             return new ArraySet<>();
     }

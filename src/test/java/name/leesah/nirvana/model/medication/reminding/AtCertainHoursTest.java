@@ -67,7 +67,7 @@ public class AtCertainHoursTest {
 
     @Test
     public void getRemindersThroughDay() throws Exception {
-        Set<Reminder> reminders = model.getRemindersThroughDay(medication);
+        Set<Reminder> reminders = model.getRemindersThroughDay(medication, today());
         assertEquals("Wrong number of reminders.", dosages.size(), reminders.size());
         reminders.forEach(this::assertContentsOfReminderCorrect);
 

@@ -6,45 +6,61 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
-
-        <item name="android:textViewStyle">@style/VerticallyCentered</item>
-        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
-        <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItemStyle</item>
-
-        <item name="android:editTextStyle">@style/editTextStyle</item>
-        <item name="android:checkboxStyle">@style/checkboxStyle</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:buttonStyle">@style/buttonStyle</item>
+        <item name="android:textViewStyle">@style/textViewStyle</item>
     </style>
 
-    <style name="VerticallyCentered" parent="android:Widget.DeviceDefault.TextView">
+    <style name="textViewStyle" parent="android:Widget.DeviceDefault.TextView">
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="spinnerItemStyle">
-        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    <style name="buttonStyle" parent="android:Widget.DeviceDefault.Button">
+        <item name="android:textColor">@color/accent</item>
     </style>
 
-    <style name="spinnerDropDownItemStyle">
-        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    <style name="textViewStyle.Primary">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
     </style>
 
-    <style name="editTextStyle" parent="android:Widget.DeviceDefault.EditText">
-        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+    <style name="textViewStyle.Secondary">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="checkboxStyle" parent="android:Widget.DeviceDefault.CompoundButton.CheckBox">
-        <item name="android:paddingLeft">@dimen/widget_padding_left</item>
+    <style name="textViewStyle.MedicationCard" />
+
+    <style name="textViewStyle.MedicationCard.Primary">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 
-    <style name="VerticallyCentered.Primary">
-        <item name="android:textAppearance">@android:style/TextAppearance.Material.Medium</item>
-        <item name="android:textColor">@color/primary_text</item>
+    <style name="textViewStyle.MedicationCard.Secondary">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="VerticallyCentered.Secondary">
-        <item name="android:textAppearance">@android:style/TextAppearance.Material.Small</item>
-        <item name="android:textColor">@color/secondary_text</item>
+    <style name="textViewStyle.ReminderCard" />
+
+    <style name="textViewStyle.ReminderCard.Primary">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+    </style>
+
+    <style name="textViewStyle.ReminderCard.Secondary">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSecondary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="textViewStyle.ReminderCard.Time">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="textViewStyle.ReminderCard.Primary.Note">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="textViewStyle.ReminderCard.Time.Note">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

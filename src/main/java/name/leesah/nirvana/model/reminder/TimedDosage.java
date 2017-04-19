@@ -56,4 +56,9 @@ public class TimedDosage{
         result = 31 * result + amount;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return format("%d unit(s) at %s", amount, toText(timeOfDay));
+    }
 }

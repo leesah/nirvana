@@ -29,6 +29,8 @@
 
         <ListPreference
             android:dependency="@string/pref_key_treatment_enabled"
+            android:entries="@array/cycle_repeating_models"
+            android:entryValues="@array/cycle_repeating_models"
             android:key="@string/pref_key_treatment_repeating_model"
             android:summary="%s"
             android:title="@string/pref_title_treatment_repeating_model" />

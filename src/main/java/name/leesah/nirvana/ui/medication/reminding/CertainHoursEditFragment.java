@@ -36,10 +36,11 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     private TimePicker timePicker;
     private TimedDosageEditorCard footer;
     private View emptyView;
+    private AtCertainHours editExisting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.medication_reminding_model_details_certain_hours, container, false);
+        return inflater.inflate(R.layout.timed_dosage_list, container, false);
     }
 
     @Override
@@ -57,6 +58,8 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey(KEY_DOSAGES)) {
             dosages.addAll(unwrap(savedInstanceState.getParcelable(KEY_DOSAGES)));
+        } else if (editExisting != null) {
+            dosages.addAll(editExisting.getDosages());
         }
     }
 
@@ -150,4 +153,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
                 .isEmpty();
     }
 
+    public void setEditingExisting(AtCertainHours editExisting) {
+        this.editExisting = editExisting;
+    }
 }

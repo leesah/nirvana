@@ -25,7 +25,6 @@
             app:allowBlank="true" />
 
         <ListPreference
-            android:defaultValue="@string/dosage_form_value_tablets"
             android:entries="@array/medication_dosage_forms"
             android:entryValues="@array/medication_dosage_form_values"
             android:key="@string/pref_key_medication_dosage_form"

@@ -82,7 +82,7 @@ public class PeriodPreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            String newValue = toPeriodAsString(number.getMaxValue(), readUnit());
+            String newValue = toPeriodAsString(number.getValue(), readUnit());
             onNewValue(newValue);
         }
     }

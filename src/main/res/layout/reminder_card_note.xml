@@ -11,7 +11,6 @@
         app:cardBackgroundColor="@color/cardview_dark_background"
         app:cardElevation="4dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,44 +18,44 @@
             android:minHeight="?attr/listPreferredItemHeightLarge"
             android:orientation="horizontal">
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="20"
-                android:gravity="center_vertical">
+                android:layout_weight="20">
 
                 <View
                     android:id="@+id/view_vertical_line"
                     android:layout_width="8dp"
                     android:layout_height="fill_parent"
-                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
                     android:background="@color/accent" />
 
-                <TextView
-                    android:id="@+id/textView_time"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/cardview_dark_background"
-                    android:padding="8dp"
-                    android:text="21:00"
-                    android:textAlignment="center"
-                    android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:textColor="@android:color/white"
-                    android:typeface="monospace" />
+                    android:layout_height="?attr/listPreferredItemHeightLarge">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView_time"
+                        style="@style/textViewStyle.ReminderCard.Time.Note"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/cardview_dark_background"
+                        android:padding="8dp"
+                        android:text="21:00"
+                        android:textAlignment="center" />
+                </FrameLayout>
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/textView_title"
+                style="@style/textViewStyle.ReminderCard.Primary.Note"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="80"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-                android:textColor="@android:color/white" />
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart" />
 
         </LinearLayout>
 

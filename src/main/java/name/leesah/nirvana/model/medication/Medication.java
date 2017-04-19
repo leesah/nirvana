@@ -1,6 +1,9 @@
 package name.leesah.nirvana.model.medication;
 
+import android.support.annotation.Nullable;
+
 import org.joda.time.Days;
+import org.joda.time.Period;
 import org.joda.time.ReadablePeriod;
 
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
@@ -18,11 +21,11 @@ public class Medication {
     private final String manufacturer;
     private final DosageForm form;
     private final boolean delayed;
-    private final ReadablePeriod delayedBy;
+    private final Period delayedBy;
     private RepeatingModel repeatingModel;
     private RemindingModel remindingModel;
 
-    public Medication(String name, String manufacturer, DosageForm form, boolean delayed, ReadablePeriod delayedBy, RepeatingModel repeatingModel, RemindingModel remindingModel) {
+    public Medication(String name, String manufacturer, DosageForm form, boolean delayed, Period delayedBy, RepeatingModel repeatingModel, RemindingModel remindingModel) {
         this.id = IdentityHelper.uniqueInt();
         this.name = name;
         this.manufacturer = manufacturer;
@@ -65,9 +68,12 @@ public class Medication {
         return remindingModel;
     }
 
-    public ReadablePeriod getDelayedBy() {
-        if (!delayed)
-            return Days.ZERO;
+    public boolean isDelayed() {
+        return delayed;
+    }
+
+    @Nullable
+    public Period getDelayedPeriod() {
         return delayedBy;
     }
 
