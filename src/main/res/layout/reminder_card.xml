@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -26,7 +27,7 @@
                 <View
                     android:id="@+id/view_vertical_line"
                     android:layout_width="8dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:background="@color/accent" />
 
@@ -35,26 +36,36 @@
                     android:layout_height="?attr/listPreferredItemHeightLarge">
 
                     <TextView
-                        android:id="@+id/textView_time"
+                        android:id="@+id/time"
                         style="@style/textViewStyle.ReminderCard.Time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:background="@color/cardview_light_background"
                         android:padding="8dp"
                         android:text="21:00"
-                        android:textAlignment="center"
-                        android:layout_gravity="center" />
+                        android:textAlignment="center" />
                 </FrameLayout>
 
             </FrameLayout>
 
-            <ListView
-                android:id="@+id/listView_titles"
-                android:layout_width="0dp"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="80"
-                android:divider="@null" />
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart">
 
+                <ListView
+                    android:id="@+id/tiled_reminders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:divider="@null"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/reminder_card_inner_list_item" />
+
+            </FrameLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

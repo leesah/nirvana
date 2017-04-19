@@ -63,4 +63,11 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="imageViewViewStyle"/>
+
+    <style name="imageViewViewStyle.ReminderCheck">
+        <item name="android:tint">@drawable/reminder_check_selector</item>
+    </style>
+
+
 </resources>

@@ -1,7 +1,11 @@
 package name.leesah.nirvana.model.reminder;
 
+import android.content.Context;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+
+import name.leesah.nirvana.R;
 
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;

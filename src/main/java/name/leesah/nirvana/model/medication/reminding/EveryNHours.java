@@ -71,7 +71,7 @@ public class EveryNHours implements RemindingModel {
 
     @Override
     public String toString(Context context) {
-        String doses = context.getResources().getQuantityString(R.plurals.to_string_every_n_hours_doses, firstDose.getAmount(), firstDose.getAmount());
+        String doses = context.getResources().getQuantityString(R.plurals.var_doses, firstDose.getAmount(), firstDose.getAmount());
         String everyNHours = context.getResources().getQuantityString(R.plurals.to_string_every_n_hours_every_n_hours, n, n);
         return context.getString(R.string.to_string_every_n_hours, doses, everyNHours, toText(firstDose.getTimeOfDay()));
     }

@@ -17,7 +17,6 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
-import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 /**
@@ -72,21 +71,21 @@ class NotificationBuilder extends Notification.Builder {
     private PendingIntent getShowDetailsIntent() {
         Intent intent = new Intent(context, ReminderDetailsActivity.class)
                 .setFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK)
-                .putExtra(EXTRA_REMINDER_ID, reminderId);
+                .putExtra(ReminderDetailsActivity.EXTRA_REMINDER_ID, reminderId);
         return PendingIntent.getActivity(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent getConfirmIntent() {
-        Intent intent = new Intent(context, SchedulingService.class)
+        Intent intent = new Intent(context, RemindingService.class)
                 .setAction(ACTION_CONFIRM_REMINDER)
-                .putExtra(EXTRA_REMINDER_ID, reminderId);
+                .putExtra(RemindingService.EXTRA_REMINDER_ID, reminderId);
         return PendingIntent.getService(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent getSnoozeIntent() {
-        Intent intent = new Intent(context, SchedulingService.class)
+        Intent intent = new Intent(context, RemindingService.class)
                 .setAction(ACTION_SNOOZE_REMINDER)
-                .putExtra(EXTRA_REMINDER_ID, reminderId);
+                .putExtra(RemindingService.EXTRA_REMINDER_ID, reminderId);
         return PendingIntent.getService(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
 

@@ -96,6 +96,9 @@
     <string name="to_string_every_n_hours_starting_at">starting from %s</string>
     <string name="to_string_every_n_hours">%1$s %2$s, starting at %3$s</string>
     <string name="to_string_everyday">everyday</string>
+    <string name="note_no_more_intakes">No more intakes for today.</string>
+    <string name="note_time_until_next_intake">%s until next intake.</string>
+    <string name="unknown_medication">Unknown Medication</string>
     <plurals name="to_string_timed_dosage">
         <item quantity="one">%1$d unit at %2$s</item>
         <item quantity="other">%1$d units at %2$s</item>
@@ -104,9 +107,9 @@
         <item quantity="one">every hour</item>
         <item quantity="other">every %d hours</item>
     </plurals>
-    <plurals name="to_string_every_n_hours_doses" >
-        <item quantity="one">%d unit</item>
-        <item quantity="other">%d units</item>
+    <plurals name="var_doses" >
+        <item quantity="one">%d dose</item>
+        <item quantity="other">%d doses</item>
     </plurals>
 
 </resources>

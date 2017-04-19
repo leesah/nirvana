@@ -24,7 +24,8 @@
                 android:layout_height="@dimen/medication_icon_size"
                 android:layout_margin="8dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_info_black_24dp" />
+                android:tint="@color/primary_dark"
+                app:srcCompat="@drawable/ic_capsule" />
 
             <LinearLayout
                 android:layout_width="match_parent"

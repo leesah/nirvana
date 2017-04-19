@@ -49,7 +49,6 @@ class MedicationArrayAdapter extends ArrayAdapter<Medication> {
                 dosageForm.setImageResource(R.drawable.ic_tablet);
                 break;
         }
-        dosageForm.setImageTintList(getContext().getColorStateList(R.color.dosage_form_icon));
 
         view.setOnClickListener(v -> editMedication(medication.getId()));
         return view;
