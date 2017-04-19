@@ -50,7 +50,8 @@
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_white" />
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_add" />
 
     </android.support.constraint.ConstraintLayout>
 

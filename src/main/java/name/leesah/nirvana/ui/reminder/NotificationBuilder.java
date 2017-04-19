@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Icon;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.data.Pharmacist;
@@ -41,8 +42,8 @@ class NotificationBuilder extends Notification.Builder {
         final String text = res.getString(R.string.reminder_notification_placeholder_text_template, reminder.getDosageAmount(), reminder.getTime().toString("HH:mm"));
 
         setDefaults(Notification.DEFAULT_ALL);
-        setSmallIcon(getNotificationSmallIcon());
-        setLargeIcon(getNotificationLargeIcon());
+        setSmallIcon(getNotificationIcon(medication.getForm()));
+        setLargeIcon(getNotificationIcon(medication.getForm()));
         setContentTitle(title);
         setContentText(text);
         setContentIntent(getShowDetailsIntent());
@@ -89,20 +90,23 @@ class NotificationBuilder extends Notification.Builder {
         return PendingIntent.getService(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
 
-    private Icon getNotificationSmallIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_check_white);
-    }
-
-    private Icon getNotificationLargeIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_schedule_black);
+    private Icon getNotificationIcon(DosageForm form) {
+        switch (form) {
+            case TABLET:
+                return Icon.createWithResource(context, R.drawable.ic_tablet);
+            case CAPSULE:
+                return Icon.createWithResource(context, R.drawable.ic_capsule);
+            default:
+                return Icon.createWithResource(context, R.drawable.ic_notification_default);
+        }
     }
 
     private Icon getConfirmIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_check_black);
+        return Icon.createWithResource(context, R.drawable.ic_check);
     }
 
     private Icon getSnoozeIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_snooze_black);
+        return Icon.createWithResource(context, R.drawable.ic_snooze);
     }
 
 }
