@@ -20,9 +20,12 @@
 
     <string name="medication_reminding_certain_hours">At certain hours</string>
     <string name="medication_reminding_every_n_hours">Every n hours</string>
-    <string name="reminder_notification_title_template">Time to take %1$s</string>
+    <string name="notification_title">Time to take %1$s</string>
 
-    <string name="reminder_notification_placeholder_text_template">Take %1$d tablet(s) with food at %2$s.</string>
+    <plurals name="notification_text">
+        <item quantity="one">Take %1$d dose at %2$s.</item>
+        <item quantity="other">Take %1$d doses at %2$s.</item>
+    </plurals>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

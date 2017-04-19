@@ -18,6 +18,7 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
+import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 /**
@@ -38,12 +39,11 @@ class NotificationBuilder extends Notification.Builder {
 
         final Resources res = context.getResources();
 
-        final String title = res.getString(R.string.reminder_notification_title_template, medication.getName());
-        final String text = res.getString(R.string.reminder_notification_placeholder_text_template, reminder.getDosageAmount(), reminder.getTime().toString("HH:mm"));
+        final String title = res.getString(R.string.notification_title, medication.getName());
+        final String text = res.getQuantityString(R.plurals.notification_text, reminder.getDosageAmount(), reminder.getDosageAmount(), toText(reminder.getTime()));
 
         setDefaults(Notification.DEFAULT_ALL);
         setSmallIcon(getNotificationIcon(medication.getForm()));
-        setLargeIcon(getNotificationIcon(medication.getForm()));
         setContentTitle(title);
         setContentText(text);
         setContentIntent(getShowDetailsIntent());
@@ -52,13 +52,8 @@ class NotificationBuilder extends Notification.Builder {
         setWhen(reminder.getTime().toDateTimeToday().getMillis());
         setAutoCancel(false);
         setOngoing(true);
-        addAction(getSnoozeAction(context));
         addAction(getConfirmAction(context));
-//        setStyle(new Notification.BigTextStyle()
-//                .bigText(text)
-//                .setBigContentTitle(title)
-//                .setSummaryText("Dummy summary text"));
-
+        addAction(getSnoozeAction(context));
     }
 
     private Notification.Action getConfirmAction(Context context) {
