@@ -21,15 +21,15 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:padding="8dp"
+                android:padding="16dp"
                 android:layout_weight="20">
 
                 <ImageView
                     android:id="@+id/icon"
+                    style="@style/imageViewViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:tint="@color/primary_dark"
                     app:srcCompat="@drawable/ic_capsule" />
             </FrameLayout>
 

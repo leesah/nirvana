@@ -24,6 +24,8 @@ import name.leesah.nirvana.ui.medication.repeating.RepeatingModelSelectFragment;
 import name.leesah.nirvana.utils.DateTimeHelper;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static java.lang.String.format;
 
 public class MedicationEditActivity extends AppCompatActivity {
@@ -34,6 +36,7 @@ public class MedicationEditActivity extends AppCompatActivity {
     public static final String ACTION_EDIT_MEDICATION = "name.leesah.nirvana:action:EDIT_MEDICATION";
     public static final String EXTRA_MEDICATION_ID = "name.leesah.nirvana:extra:MEDICATION_ID";
     private FloatingActionButton saveButton;
+    private FloatingActionButton deleteButton;
     private BasicsFragment basicsFragment = new BasicsFragment();
     private RemindingModelSelectFragment remindingModelSelectFragment = new RemindingModelSelectFragment();
     private RepeatingModelSelectFragment repeatingModelSelectFragment = new RepeatingModelSelectFragment();
@@ -62,11 +65,14 @@ public class MedicationEditActivity extends AppCompatActivity {
         saveButton = (FloatingActionButton) findViewById(R.id.save_button);
         saveButton.setEnabled(false);
 
+        deleteButton = (FloatingActionButton) findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(v -> deleteMedication());
+
         basicsFragment.setValidityReportListener(this::onBasicsReportValidity);
         remindingModelSelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);
         repeatingModelSelectFragment.setValidityReportListener(this::onRepeatingModelReportValidity);
 
-        reactToIntentAction();
+        initializeAccordingToAction();
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_medication, basicsFragment)
@@ -83,11 +89,11 @@ public class MedicationEditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void reactToIntentAction() {
+    private void initializeAccordingToAction() {
         String action = getIntent().getAction();
         switch (action) {
             case ACTION_ADD_MEDICATION:
-                setTitle(R.string.add_medication);
+                toAddMode();
                 break;
             case ACTION_EDIT_MEDICATION:
                 toEditMode();
@@ -98,6 +104,11 @@ public class MedicationEditActivity extends AppCompatActivity {
                 finish();
                 break;
         }
+    }
+
+    private void toAddMode() {
+        setTitle(R.string.add_medication);
+        deleteButton.setVisibility(GONE);
     }
 
     private void toEditMode() {
@@ -118,10 +129,16 @@ public class MedicationEditActivity extends AppCompatActivity {
         }
 
         setTitle(getString(R.string.edit_medication, medication.getName()));
-        setEditingExisting(medication);
+
+        editingExisting = medication;
+        remindingModel = medication.getRemindingModel();
+        repeatingModel = medication.getRepeatingModel();
+
         basicsFragment.setEditingExisting(medication);
         remindingModelSelectFragment.setEditingExisting(medication.getRemindingModel());
         repeatingModelSelectFragment.setEditingExisting(medication.getRepeatingModel());
+
+        backToBasics();
     }
 
     private void onNavigateBack() {
@@ -149,6 +166,14 @@ public class MedicationEditActivity extends AppCompatActivity {
         finish();
     }
 
+    private void deleteMedication() {
+        if (editingExisting != null)
+            pharmacist.removeMedication(editingExisting.getId());
+
+        setResult(RESULT_OK);
+        finish();
+    }
+
     private void saveRemindingModel() {
         remindingModel = remindingModelSelectFragment.readModel();
         basicsFragment.setRemindingModelSummary(remindingModel.toString(this));
@@ -163,12 +188,14 @@ public class MedicationEditActivity extends AppCompatActivity {
 
     private boolean startEditingRemindingModel() {
         saveButton.setOnClickListener(v -> saveRemindingModel());
+        deleteButton.setVisibility(GONE);
         replaceFragmentAndAddToBackStack(this.remindingModelSelectFragment);
         return true;
     }
 
     private boolean startEditingRepeatingModel() {
         saveButton.setOnClickListener(v -> saveRepeatingModel());
+        deleteButton.setVisibility(GONE);
         replaceFragmentAndAddToBackStack(repeatingModelSelectFragment);
         return true;
     }
@@ -176,6 +203,8 @@ public class MedicationEditActivity extends AppCompatActivity {
     private void backToBasics() {
         replaceFragmentAndAddToBackStack(basicsFragment);
         saveButton.setOnClickListener(v -> saveMedication());
+        if (editingExisting != null)
+            deleteButton.setVisibility(VISIBLE);
         enableSaveButtonInBasics();
     }
 
@@ -205,10 +234,6 @@ public class MedicationEditActivity extends AppCompatActivity {
 
     private void onRepeatingModelReportValidity(boolean valid) {
         saveButton.setEnabled(valid);
-    }
-
-    public void setEditingExisting(Medication editingExisting) {
-        this.editingExisting = editingExisting;
     }
 
     public interface ValidityReportListener {

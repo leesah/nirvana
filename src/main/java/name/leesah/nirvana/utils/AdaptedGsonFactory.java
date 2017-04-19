@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.Period;
 import org.joda.time.ReadablePeriod;
 
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
@@ -24,7 +25,7 @@ public class AdaptedGsonFactory {
                 .registerTypeAdapter(RemindingModel.class, new MetaKeyBasedGenericTypeAdapter<RemindingModel>())
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter())
-                .registerTypeAdapter(ReadablePeriod.class, new ReadablePeriodTypeAdapter())
+                .registerTypeAdapter(Period.class, new PeriodTypeAdapter())
                 .registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
                 .create();
     }

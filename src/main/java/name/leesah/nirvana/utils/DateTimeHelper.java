@@ -46,7 +46,7 @@ public class DateTimeHelper {
         return toText(toPeriod(number, unit));
     }
 
-    public static String toText(ReadablePeriod period) {
+    public static String toText(Period period) {
         return PERIOD_FORMATTER.print(period);
     }
 

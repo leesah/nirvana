@@ -16,6 +16,7 @@
 
     <style name="textViewStyle.Primary">
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="textViewStyle.Primary.Accent">
@@ -31,6 +32,7 @@
 
     <style name="textViewStyle.MedicationCard.Primary">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="textViewStyle.MedicationCard.Secondary">
@@ -42,6 +44,7 @@
 
     <style name="textViewStyle.ReminderCard.Primary">
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="textViewStyle.ReminderCard.Secondary">
@@ -64,7 +67,7 @@
 
     <style name="buttonStyle" parent="android:Widget.Material.Button.Borderless.Colored" />
 
-    <style name="buttonStyle.Raised" parent="android:Widget.DeviceDefault.Button" >
+    <style name="buttonStyle.Raised" parent="android:Widget.DeviceDefault.Button">
         <item name="android:elevation">4dp</item>
     </style>
 
@@ -78,11 +81,30 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="floatingActionButtonStyle" parent="Widget.Design.FloatingActionButton">
-        <item name="android:backgroundTint">@color/save_button</item>
+    <style name="floatingActionButtonStyle" parent="Widget.Design.FloatingActionButton" >
+        <item name="android:tint">@android:color/white</item>
+        <item name="android:layout_marginEnd">@dimen/fab_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fab_margin</item>
     </style>
 
-    <style name="imageViewViewStyle"/>
+    <style name="floatingActionButtonStyle.AddButton">
+        <item name="srcCompat">@drawable/ic_add</item>
+    </style>
+
+    <style name="floatingActionButtonStyle.SaveButton">
+        <item name="srcCompat">@drawable/ic_save</item>
+        <item name="backgroundTint">@color/save_button</item>
+    </style>
+
+    <style name="floatingActionButtonStyle.DeleteButton">
+        <item name="srcCompat">@drawable/ic_delete</item>
+        <item name="android:tint">?android:attr/colorAccent</item>
+        <item name="backgroundTint">@color/delete_button</item>
+    </style>
+
+    <style name="imageViewViewStyle">
+        <item name="android:tint">?android:attr/colorPrimaryDark</item>
+    </style>
 
     <style name="imageViewViewStyle.CheckMark">
         <item name="android:tint">@color/ic_check</item>

@@ -33,6 +33,8 @@ import static name.leesah.nirvana.ui.medication.MedicationEditActivity.EXTRA_MED
  */
 public class MedicationListFragment extends Fragment {
 
+    public static final int REQUEST_CODE_ADD_MEDICATION = 1000;
+    public static final int REQUEST_CODE_EDIT_MEDICATION = 2000;
     private final ArrayList<Medication> medications = new ArrayList<>();
     private ArrayAdapter<Medication> arrayAdapter;
 
@@ -59,13 +61,20 @@ public class MedicationListFragment extends Fragment {
     public void addMedication(View view) {
         Intent intent = new Intent(getContext(), MedicationEditActivity.class)
                 .setAction(ACTION_ADD_MEDICATION);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUEST_CODE_ADD_MEDICATION);
+    }
+
+    private void editMedication(int medicationId) {
+        Intent intent = new Intent(getContext(), MedicationEditActivity.class)
+                .setAction(ACTION_EDIT_MEDICATION)
+                .putExtra(EXTRA_MEDICATION_ID, medicationId);
+        startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICATION);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && data != null
-                && Arrays.asList(ACTION_ADD_MEDICATION, ACTION_EDIT_MEDICATION).contains(data.getAction()))
+        if (Arrays.asList(REQUEST_CODE_ADD_MEDICATION, REQUEST_CODE_EDIT_MEDICATION).contains(requestCode)
+                && resultCode == RESULT_OK)
             reloadMedications();
     }
 
@@ -78,7 +87,7 @@ public class MedicationListFragment extends Fragment {
     /**
      * Created by sah on 2016-12-11.
      */
-    static class MedicationArrayAdapter extends ArrayAdapter<Medication> {
+    class MedicationArrayAdapter extends ArrayAdapter<Medication> {
 
         MedicationArrayAdapter(Context context, List<Medication> objects) {
             super(context, 0, objects);
@@ -92,13 +101,6 @@ public class MedicationListFragment extends Fragment {
             view.setMedication(medication);
             view.setOnClickListener(v -> editMedication(medication.getId()));
             return view;
-        }
-
-        private void editMedication(int medicationId) {
-            Intent intent = new Intent(getContext(), MedicationEditActivity.class)
-                    .setAction(ACTION_EDIT_MEDICATION)
-                    .putExtra(EXTRA_MEDICATION_ID, medicationId);
-            getContext().startActivity(intent);
         }
 
     }

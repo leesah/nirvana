@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Nevermind</string>
     <string name="package_name">name.leesah.nirvana</string>
-    <string name="add_medication">Add medicine</string>
-    <string name="edit_medication">Edit medicine: %s</string>
+    <string name="add_medication">New medicine</string>
+    <string name="edit_medication">%s</string>
     <string name="treatment_repeating_none">Not repeating</string>
     <string name="treatment_repeating_n_times">For n Times</string>
     <string name="treatment_repeating_until_date">Until date</string>
