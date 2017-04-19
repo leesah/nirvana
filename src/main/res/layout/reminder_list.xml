@@ -30,8 +30,8 @@
         android:id="@+id/reminders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:divider="@null" />
+        android:divider="@null"
+        tools:listitem="@layout/reminder_card" />
 
 
 </FrameLayout>

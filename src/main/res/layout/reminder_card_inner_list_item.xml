@@ -32,7 +32,7 @@
 
     <ImageView
         android:id="@+id/check"
-        style="@style/imageViewViewStyle.ReminderCheck"
+        style="@style/imageViewViewStyle.CheckMark"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"

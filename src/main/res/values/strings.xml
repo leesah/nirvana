@@ -15,8 +15,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dosage_form_tablets">Tablets</string>
     <string name="dosage_form_injections">Injections</string>
-    <string name="action_snooze_reminder">Snooze</string>
-    <string name="action_confirm_reminder">Done</string>
+    <string name="snooze_reminder">Snooze</string>
+    <string name="confirm_reminder">Done</string>
 
     <string name="medication_reminding_certain_hours">At certain hours</string>
     <string name="medication_reminding_every_n_hours">Every n hours</string>
@@ -99,6 +99,8 @@
     <string name="note_no_more_intakes">No more intakes for today.</string>
     <string name="note_time_until_next_intake">%s until next intake.</string>
     <string name="unknown_medication">Unknown Medication</string>
+    <string name="reminder_details">Details</string>
+    <string name="ignore_reminder">Ignore</string>
     <plurals name="to_string_timed_dosage">
         <item quantity="one">%1$d unit at %2$s</item>
         <item quantity="other">%1$d units at %2$s</item>

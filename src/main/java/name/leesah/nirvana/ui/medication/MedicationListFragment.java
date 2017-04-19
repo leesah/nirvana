@@ -21,6 +21,7 @@ import java.util.List;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.ui.tweaks.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
 import static name.leesah.nirvana.ui.medication.MedicationEditActivity.ACTION_ADD_MEDICATION;
@@ -86,26 +87,9 @@ public class MedicationListFragment extends Fragment {
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            View view = convertView;
-            if (view == null)
-                view = LayoutInflater.from(getContext()).inflate(R.layout.medication_card, parent, false);
-
+            MedicationCard view = convertView == null ? new MedicationCard(getContext(), null) : (MedicationCard) convertView;
             Medication medication = getItem(position);
-            ((TextView) view.findViewById(R.id.name)).setText(medication.getName());
-            ((TextView) view.findViewById(R.id.manufacturer)).setText(medication.getManufacturer());
-            ((TextView) view.findViewById(R.id.repeating)).setText(medication.getRepeatingModel().toString(getContext()));
-            ((TextView) view.findViewById(R.id.reminding)).setText(medication.getRemindingModel().toString(getContext()));
-            ((TextView) view.findViewById(R.id.suggestions)).setText("");
-            ImageView dosageForm = (ImageView) view.findViewById(R.id.dosageForm);
-            switch (medication.getForm()) {
-                case CAPSULE:
-                    dosageForm.setImageResource(R.drawable.ic_capsule);
-                    break;
-                case TABLET:
-                    dosageForm.setImageResource(R.drawable.ic_tablet);
-                    break;
-            }
-
+            view.setMedication(medication);
             view.setOnClickListener(v -> editMedication(medication.getId()));
             return view;
         }

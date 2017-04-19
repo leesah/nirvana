@@ -12,6 +12,7 @@ import java.util.List;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.reminder.TimedDosage;
+import name.leesah.nirvana.ui.tweaks.TimedDosageCard;
 import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
 
 /**
@@ -39,8 +40,8 @@ public class TimedDosageArrayAdapter extends ArrayAdapter<TimedDosage> {
             view.setOnDeleteListener(() -> this.onDeleteListener.onDeleteDosage(position));
             return view;
         } else {
-            View view = convertView == null ? LayoutInflater.from(getContext()).inflate(R.layout.timed_dosage_card, parent, false) : convertView;
-            ((TextView) view.findViewById(R.id.text)).setText(dosage.toString(getContext()));
+            TimedDosageCard view = convertView instanceof TimedDosageCard ? (TimedDosageCard) convertView : new TimedDosageCard(getContext(), null);
+            view.setDosage(dosage);
             return view;
         }
     }

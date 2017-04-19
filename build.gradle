@@ -19,8 +19,8 @@ android {
         applicationId "name.leesah.nirvana"
         minSdkVersion 24
         targetSdkVersion 25
-        versionCode 9
-        versionName 'HRB9'
+        versionCode 10
+        versionName 'HRB10'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.freeConfig
     }

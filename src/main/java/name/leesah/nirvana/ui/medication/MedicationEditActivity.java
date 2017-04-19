@@ -61,7 +61,6 @@ public class MedicationEditActivity extends AppCompatActivity {
 
         saveButton = (FloatingActionButton) findViewById(R.id.save_button);
         saveButton.setEnabled(false);
-        saveButton.setBackgroundTintList(getColorStateList(R.color.fab));
 
         basicsFragment.setValidityReportListener(this::onBasicsReportValidity);
         remindingModelSelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);

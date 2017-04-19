@@ -31,7 +31,10 @@
                 android:value="name.leesah.nirvana.ui.MainActivity" />
         </activity>
 
-        <activity android:name=".ui.reminder.ReminderDetailsActivity" />
+        <activity
+            android:name=".ui.reminder.ReminderDetailsActivity"
+            android:label="@string/reminder_details"
+            android:theme="@style/AppTheme"/>
 
         <service
             android:name=".ui.reminder.SchedulingService"
