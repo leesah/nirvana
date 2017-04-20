@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toSet;
 public class Pharmacist extends DataHolder {
 
     private static final String TAG = Pharmacist.class.getSimpleName();
-    static final String PREFERENCE_KEY_MEDICATIONS = "name.leesah.nirvana.preferences.key.MEDICATIONS";
+    public static final String PREFERENCE_KEY_MEDICATIONS = "name.leesah.nirvana.preferences.key.MEDICATIONS";
 
     private static Pharmacist instance;
     private ArrayMap<Integer, Medication> cache;

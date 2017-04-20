@@ -3,7 +3,6 @@ package name.leesah.nirvana.ui.medication;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.core.deps.guava.collect.Sets;
@@ -48,6 +47,7 @@ import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.model.medication.reminding.EveryNHours.TWELVE;
 import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_VALUES;
 import static name.leesah.nirvana.ui.MoreViewActions.setNumber;
+import static name.leesah.nirvana.ui.LanternGenie.eraseEverything;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.Matchers.allOf;
@@ -71,7 +71,7 @@ public class MedicationActivityAddTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        purgePreferences();
+        eraseEverything();
     }
 
     @Before
@@ -85,7 +85,7 @@ public class MedicationActivityAddTest {
         cancelAllAlarms();
         Pharmacist.reset();
         Nurse.reset();
-        purgePreferences();
+        eraseEverything();
     }
 
     @Test
@@ -199,10 +199,6 @@ public class MedicationActivityAddTest {
                 .setAction(ACTION_SHOW_REMINDER);
         PendingIntent pendingIntent = PendingIntent.getService(getTargetContext(), 0, intent, 0);
         getTargetContext().getSystemService(AlarmManager.class).cancel(pendingIntent);
-    }
-
-    private static void purgePreferences() {
-        PreferenceManager.getDefaultSharedPreferences(getTargetContext()).edit().clear().apply();
     }
 
 }
