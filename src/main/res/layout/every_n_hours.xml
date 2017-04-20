@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="@string/dosage_form_tablets"
+            android:text="@string/tablet"
             tools:layout_editor_absoluteX="134dp"
             tools:layout_editor_absoluteY="70dp" />
 

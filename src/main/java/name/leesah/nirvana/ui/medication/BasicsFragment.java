@@ -77,12 +77,13 @@ public class BasicsFragment extends PreferenceFragment {
         } else if (editingExisting != null) {
             name.setText(editingExisting.getName());
             manufacturer.setText(editingExisting.getManufacturer());
-            dosageForm.setValue(editingExisting.getForm().name());
+            dosageForm.setValue(editingExisting.getForm().getName(getContext()));
             delayed.setChecked(editingExisting.isDelayed());
             if (editingExisting.getDelayedPeriod() != null)
                 delayedPeriod.setPeriod(editingExisting.getDelayedPeriod());
             remindingModel.setSummary(editingExisting.getRemindingModel().toString(getContext()));
             repeatingModel.setSummary(editingExisting.getRepeatingModel().toString(getContext()));
+            editingExisting = null;
         }
         reportValidity();
     }
@@ -113,7 +114,7 @@ public class BasicsFragment extends PreferenceFragment {
         return new MedicationBuilder()
                 .setName(name.getText())
                 .setManufacturer(manufacturer.getText())
-                .setForm(DosageForm.valueOf(dosageForm.getValue()))
+                .setForm(DosageForm.withName(getContext(), dosageForm.getValue()))
                 .setDelayed(delayed.isChecked())
                 .setDelayedBy(delayedPeriod.getPeriod())
                 .build();

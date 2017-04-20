@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tablet">Tablet</string>
+    <string name="injection">Injection</string>
+    <string name="capsule">Capsule</string>
+
+    <plurals name="tablet">
+        <item quantity="one">tablet</item>
+        <item quantity="other">tablets</item>
+    </plurals>
+    <plurals name="injection">
+        <item quantity="one">injection</item>
+        <item quantity="other">injections</item>
+    </plurals>
+    <plurals name="capsule">
+        <item quantity="one">capsule</item>
+        <item quantity="other">capsules</item>
+    </plurals>
+
+    <plurals name="tablet_dosage_formatter">
+        <item quantity="one">%1$d tablet</item>
+        <item quantity="other">%1$d tablets</item>
+    </plurals>
+    <plurals name="injection_dosage_formatter">
+        <item quantity="one">%1$d injection</item>
+        <item quantity="other">%1$d injections</item>
+    </plurals>
+    <plurals name="capsule_dosage_formatter">
+        <item quantity="one">%1$d capsule</item>
+        <item quantity="other">%1$d capsules</item>
+    </plurals>
+</resources>

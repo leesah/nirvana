@@ -1,21 +1,21 @@
 package name.leesah.nirvana.ui;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.core.deps.guava.collect.Sets;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
+import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
@@ -24,21 +24,17 @@ import name.leesah.nirvana.model.medication.reminding.RemindingModel;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.utils.AdaptedGsonFactory;
+import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.preference.PreferenceManager.*;
-import static android.support.test.InstrumentationRegistry.*;
-import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.core.deps.guava.collect.Sets.*;
 import static java.util.Collections.*;
-import static java.util.Collections.emptySet;
 import static java.util.Collections.singletonList;
 import static java.util.EnumSet.*;
 import static java.util.UUID.*;
-import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
-import static name.leesah.nirvana.data.Pharmacist.reset;
+import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.*;
 import static org.joda.time.LocalTime.now;
 
@@ -46,15 +42,22 @@ public class LanternGenie {
 
     private static SharedPreferences defaultSharedPreferences;
     private static Gson gson;
-
-    public static void eraseEverything() {
-        preferences().edit().clear().apply();
-    }
+    private static AlarmManager alarmManager;
 
     private static SharedPreferences preferences() {
         if (defaultSharedPreferences == null)
-            defaultSharedPreferences = getDefaultSharedPreferences(getTargetContext());
+            defaultSharedPreferences = getDefaultSharedPreferences(context());
         return defaultSharedPreferences;
+    }
+
+    private static AlarmManager alarmManager() {
+        if (alarmManager == null)
+            alarmManager = context().getSystemService(AlarmManager.class);
+        return alarmManager;
+    }
+
+    private static Context context() {
+        return getTargetContext();
     }
 
     private static Gson gson() {
@@ -95,7 +98,7 @@ public class LanternGenie {
     private static DosageForm randomForm() {
         List<DosageForm> forms = new ArrayList<>(allOf(DosageForm.class));
         shuffle(forms);
-         return forms.get(0);
+        return forms.get(0);
     }
 
     @NonNull
@@ -107,5 +110,21 @@ public class LanternGenie {
     private static RepeatingModel randomRepeatingModel() {
         return new Everyday();
     }
+
+    public static void everythingVanishesSilVousPlait() {
+        preferences().edit().clear().apply();
+        Pharmacist.reset();
+        Nurse.reset();
+        Therapist.reset();
+        cancelAllAlarms();
+    }
+
+    private static void cancelAllAlarms() {
+        Intent intent = new Intent(context(), RemindingService.class)
+                .setAction(ACTION_SHOW_REMINDER);
+        PendingIntent pendingIntent = PendingIntent.getService(context(), 0, intent, 0);
+        alarmManager().cancel(pendingIntent);
+    }
+
 
 }

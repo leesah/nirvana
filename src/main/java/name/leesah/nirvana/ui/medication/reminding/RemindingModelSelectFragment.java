@@ -18,10 +18,11 @@ import name.leesah.nirvana.ui.medication.MedicationActivity;
 
 public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragment<RemindingModelEditFragment> {
 
+    public static final String KEY_MODEL = "name.leesah.nirvana:key:MODEL";
     private CertainHoursEditFragment certainHours = new CertainHoursEditFragment();
     private EveryNHoursEditFragment everyNHours = new EveryNHoursEditFragment();
     private MedicationActivity.ValidityReportListener validityReportListener;
-    private RemindingModel editExisting;
+    private RemindingModel editingExisting;
     private ListPreference models;
 
     @Override
@@ -31,29 +32,30 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
 
         models = (ListPreference) findPreference(getString(R.string.pref_key_medication_reminding_model));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));
-
-        if (editExisting != null) {
-            if (editExisting instanceof AtCertainHours) {
-                models.setValue(getString(R.string.medication_reminding_certain_hours));
-                certainHours.setEditingExisting((AtCertainHours) editExisting);
-            }
-            if (editExisting instanceof EveryNHours) {
-                models.setValue(getString(R.string.medication_reminding_every_n_hours));
-                everyNHours.setEditingExsiting((EveryNHours)editExisting);
-            }
-        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //TODO
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_MODEL)) {
+            models.setValue(savedInstanceState.getString(KEY_MODEL));
+        } else if (editingExisting != null) {
+            if (editingExisting instanceof AtCertainHours) {
+                models.setValue(getString(R.string.medication_reminding_certain_hours));
+                certainHours.setEditingExisting((AtCertainHours) editingExisting);
+            }
+            if (editingExisting instanceof EveryNHours) {
+                models.setValue(getString(R.string.medication_reminding_every_n_hours));
+                everyNHours.setEditingExisting((EveryNHours) editingExisting);
+            }
+            editingExisting = null;
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("name.leesah.nirvana:key:MODEL", models.getValue());
+        outState.putString(KEY_MODEL, models.getValue());
     }
 
     private boolean switchDetailsFragment(Preference preference, String choice) {
@@ -79,6 +81,6 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
     }
 
     public void setEditingExisting(RemindingModel editExisting) {
-        this.editExisting = editExisting;
+        this.editingExisting = editExisting;
     }
 }

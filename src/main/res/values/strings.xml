@@ -13,8 +13,7 @@
     <string name="medication_repeating_days_of_week">Days of week</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="dosage_form_tablets">Tablets</string>
-    <string name="dosage_form_injections">Injections</string>
+
     <string name="snooze_reminder">Snooze</string>
     <string name="confirm_reminder">Done</string>
 
@@ -88,8 +87,8 @@
     <string name="prefcat_title_preferences">Preferences</string>
     <string name="err_invalid_treatment">Treatment setting is incomplete. Treatment support disabled automatically.</string>
     <string name="pref_title_treatment_cycle_length">Length of cycle</string>
-    <string name="pref_title_treatment_repeating_model">Repeating of cycle</string>
-    <string name="prefcat_title_treatment_repeating_model">Repeating of cycle</string>
+    <string name="pref_title_treatment_repeating_model">Treatment cycle repeating</string>
+    <string name="prefcat_title_treatment_repeating_model">Repeating</string>
     <string name="prefcat_title_treatment_first_cycle">Treatment cycle</string>
     <string name="pref_summary_website">https://leesah.github.io/nirvana</string>
     <string name="prefcat_title_information">Information</string>

@@ -72,11 +72,11 @@ public class MedicationActivity extends AppCompatActivity {
         remindingModelSelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);
         repeatingModelSelectFragment.setValidityReportListener(this::onRepeatingModelReportValidity);
 
-        initializeAccordingToAction();
-
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_medication, basicsFragment)
                 .commit();
+
+        initializeAccordingToAction();
     }
 
     @Override
@@ -201,7 +201,7 @@ public class MedicationActivity extends AppCompatActivity {
     }
 
     private void backToBasics() {
-        replaceFragmentAndAddToBackStack(basicsFragment);
+        getFragmentManager().popBackStackImmediate();
         saveButton.setOnClickListener(v -> saveMedication());
         if (editingExisting != null)
             deleteButton.setVisibility(VISIBLE);

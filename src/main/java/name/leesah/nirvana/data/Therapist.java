@@ -134,8 +134,8 @@ public class Therapist extends DataHolder {
                 .buildEverlastingTreatment();
     }
 
-    public static void setInstance(Therapist instance) {
-        Therapist.instance = instance;
+    public static void reset() {
+        Therapist.instance = null;
     }
 
 }

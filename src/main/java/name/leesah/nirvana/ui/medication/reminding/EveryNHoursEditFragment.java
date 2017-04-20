@@ -30,7 +30,7 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
     private TextView unit;
     private NumberPicker n;
     private TimePicker firstDoseTime;
-    private EveryNHours editingExsiting;
+    private EveryNHours editingExisting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,10 +62,10 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
             amount.setValue(savedInstanceState.getInt(KEY_AMOUNT, 1));
             unit.setText(savedInstanceState.getString(KEY_UNIT));
             n.setValue(savedInstanceState.getInt(KEY_EVERY_N, 8));
-        } else if (editingExsiting != null) {
-            TimedDosage firstDose = editingExsiting.getFirstDose();
+        } else if (editingExisting != null) {
+            TimedDosage firstDose = editingExisting.getFirstDose();
             amount.setValue(firstDose.getAmount());
-            n.setValue(editingExsiting.getN());
+            n.setValue(editingExisting.getN());
             firstDoseTime.setHour(firstDose.getTimeOfDay().getHourOfDay());
             firstDoseTime.setMinute(firstDose.getTimeOfDay().getMinuteOfHour());
         }
@@ -88,7 +88,7 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
         return new EveryNHours(new TimedDosage(timeOfDay, amount.getValue()), everyN);
     }
 
-    public void setEditingExsiting(EveryNHours editingExsiting) {
-        this.editingExsiting = editingExsiting;
+    public void setEditingExisting(EveryNHours existing) {
+        this.editingExisting = existing;
     }
 }

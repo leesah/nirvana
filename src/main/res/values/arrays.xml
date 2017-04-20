@@ -11,15 +11,10 @@
         <item>pref_treatment_repeating_until_date</item>
     </string-array>
 
-    <string-array name="medication_dosage_forms">
-        <item>@string/dosage_form_tablets</item>
-        <item>@string/dosage_form_capsules</item>
-        <item>@string/dosage_form_injections</item>
-    </string-array>
-    <string-array name="medication_dosage_form_values">
-        <item>@string/dosage_form_value_tablets</item>
-        <item>@string/dosage_form_value_capsules</item>
-        <item>@string/dosage_form_value_injections</item>
+    <string-array name="dosage_forms">
+        <item>@string/tablet</item>
+        <item>@string/capsule</item>
+        <item>@string/injection</item>
     </string-array>
     <string-array name="medication_repeating_models">
         <item>@string/medication_repeating_everyday</item>

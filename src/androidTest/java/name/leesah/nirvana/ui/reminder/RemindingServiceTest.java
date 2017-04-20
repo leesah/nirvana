@@ -99,7 +99,7 @@ public class RemindingServiceTest {
     public static void resetAll() {
         Pharmacist.reset();
         Nurse.reset();
-        Therapist.setInstance(null);
+        Therapist.reset();
         NotificationSecretary.setInstance(null);
         AlarmSecretary.setInstance(null);
         PreferenceManager.getDefaultSharedPreferences(getTargetContext()).edit().clear().apply();

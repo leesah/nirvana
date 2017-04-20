@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.joda.time.LocalTime;
@@ -29,14 +27,12 @@ import static org.parceler.Parcels.wrap;
 public class CertainHoursEditFragment extends RemindingModelEditFragment {
 
     private static final String TAG = CertainHoursEditFragment.class.getSimpleName();
-    public static final String KEY_DOSAGES = "dosages";
+    public static final String KEY_DOSAGES = "name.leesah.nirvana:key:DOSAGE";
     private final ArrayList<TimedDosage> dosages = new ArrayList<>();
     private TimedDosageArrayAdapter adapter;
-    private NumberPicker numberPicker;
-    private TimePicker timePicker;
     private TimedDosageEditorCard footer;
     private View emptyView;
-    private AtCertainHours editExisting;
+    private AtCertainHours editingExisting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,11 +42,24 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initializeAdapter();
-        initializeFooter();
-        initializeEmptyView(view);
-        initializeListView(view);
-        showListFooter();
+        adapter = new TimedDosageArrayAdapter(getContext(), dosages);
+        adapter.setOnSaveListener(this::onSaveDosage);
+        adapter.setOnDeleteListener(this::onDeleteDosage);
+
+        footer = new TimedDosageEditorCard(getContext(), null);
+        footer.setAddMode();
+        footer.setOnSaveListener(this::onAddDosage);
+
+        emptyView = view.findViewById(R.id.empty_view);
+        ((TimedDosageEditorCard) emptyView.findViewById(R.id.editor_card)).setOnSaveListener(this::onAddDosage);
+
+        ListView listView = (ListView) view.findViewById(R.id.dosages);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener((p, v, position, n) -> editRow(position));
+        listView.addFooterView(footer);
+        listView.setEmptyView(emptyView);
+
+        footer.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -58,8 +67,13 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.containsKey(KEY_DOSAGES)) {
             dosages.addAll(unwrap(savedInstanceState.getParcelable(KEY_DOSAGES)));
-        } else if (editExisting != null) {
-            dosages.addAll(editExisting.getDosages());
+            adapter.notifyDataSetChanged();
+            reportValidity(true);
+        } else if (editingExisting != null) {
+            dosages.addAll(editingExisting.getDosages());
+            adapter.notifyDataSetChanged();
+            reportValidity(true);
+            editingExisting = null;
         }
     }
 
@@ -72,35 +86,6 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     @Override
     public RemindingModel readModel() {
         return new AtCertainHours(dosages);
-    }
-
-    private void initializeAdapter() {
-        adapter = new TimedDosageArrayAdapter(getContext(), dosages);
-        adapter.setOnSaveListener(this::onSaveDosage);
-        adapter.setOnDeleteListener(this::onDeleteDosage);
-    }
-
-    private void initializeFooter() {
-        footer = new TimedDosageEditorCard(getContext(), null);
-        footer.setAddMode();
-        footer.setOnSaveListener(this::onAddDosage);
-    }
-
-    private void initializeEmptyView(View view) {
-        emptyView = view.findViewById(R.id.empty_view);
-        ((TimedDosageEditorCard) emptyView.findViewById(R.id.editor_card)).setOnSaveListener(this::onAddDosage);
-    }
-
-    private void initializeListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.dosages);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((p, v, position, n) -> editRow(position));
-        listView.addFooterView(footer);
-        listView.setEmptyView(emptyView);
-    }
-
-    private void showListFooter() {
-        footer.setVisibility(View.VISIBLE);
     }
 
     private void hideListFooter() {
@@ -135,14 +120,14 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         dosages.set(position, dosage);
         adapter.setEditingFinished();
         adapter.notifyDataSetChanged();
-        showListFooter();
+        footer.setVisibility(View.VISIBLE);
     }
 
     public void onDeleteDosage(int position) {
         dosages.remove(position);
         adapter.setEditingFinished();
         adapter.notifyDataSetChanged();
-        showListFooter();
+        footer.setVisibility(View.VISIBLE);
         reportValidity(false);
     }
 
@@ -153,7 +138,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
                 .isEmpty();
     }
 
-    public void setEditingExisting(AtCertainHours editExisting) {
-        this.editExisting = editExisting;
+    public void setEditingExisting(AtCertainHours existing) {
+        this.editingExisting = existing;
     }
 }

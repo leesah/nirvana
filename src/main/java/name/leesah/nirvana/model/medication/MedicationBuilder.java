@@ -1,5 +1,6 @@
 package name.leesah.nirvana.model.medication;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Period;
 import org.joda.time.ReadablePeriod;
 
@@ -19,7 +20,7 @@ public class MedicationBuilder {
     private Period delayedBy;
 
     public Medication build() {
-        return new Medication(name, manufacturer, form, delayed, delayedBy, repeatingModel, remindingModel);
+        return new Medication(name, manufacturer == null ? "" : manufacturer, form, delayed, delayedBy, repeatingModel, remindingModel);
     }
 
     public MedicationBuilder setName(String name) {
