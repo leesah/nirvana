@@ -13,7 +13,7 @@ import org.joda.time.LocalTime;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
 import static java.util.Arrays.stream;
@@ -82,7 +82,7 @@ public class EveryNHoursEditFragment extends RemindingModelEditFragment {
     }
 
     @Override
-    public RemindingModel readModel() {
+    public RemindingStrategy readModel() {
         LocalTime timeOfDay = new LocalTime(0).withHourOfDay(firstDoseTime.getHour()).withMinuteOfHour(firstDoseTime.getMinute());
         Integer everyN = VALID_VALUES.get(n.getValue());
         return new EveryNHours(new TimedDosage(timeOfDay, amount.getValue()), everyN);

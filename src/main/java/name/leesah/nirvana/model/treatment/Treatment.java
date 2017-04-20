@@ -1,13 +1,11 @@
 package name.leesah.nirvana.model.treatment;
 
-import android.text.TextUtils;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePeriod;
 
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRepeatingModel;
+import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
 
 import static java.lang.String.format;
 
@@ -19,15 +17,15 @@ public class Treatment {
 
     private LocalDate firstDay;
     private final ReadablePeriod cycleLength;
-    private TreatmentCycleRepeatingModel repeatingModel;
+    private TreatmentCycleRecurringStrategy repeatingModel;
 
-    Treatment(LocalDate firstDay, ReadablePeriod cycleLength, TreatmentCycleRepeatingModel repeatingModel) {
+    Treatment(LocalDate firstDay, ReadablePeriod cycleLength, TreatmentCycleRecurringStrategy repeatingModel) {
         this.firstDay = firstDay;
         this.cycleLength = cycleLength;
         this.repeatingModel = repeatingModel;
     }
 
-    public TreatmentCycleRepeatingModel getRepeatingModel() {
+    public TreatmentCycleRecurringStrategy getRepeatingModel() {
         return repeatingModel;
     }
 

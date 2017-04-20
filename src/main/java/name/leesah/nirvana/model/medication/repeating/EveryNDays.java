@@ -11,7 +11,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 /**
  * Created by sah on 2016-12-07.
  */
-public class EveryNDays implements RepeatingModel {
+public class EveryNDays implements RepeatingStrategy {
 
     private int n;
 

@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 public class NotRepeatingTest extends CycleRepeatingModelTest {
 
     @Override
-    protected TreatmentCycleRepeatingModel getModelInstance() {
+    protected TreatmentCycleRecurringStrategy getModelInstance() {
         return new NotRepeating();
     }
 

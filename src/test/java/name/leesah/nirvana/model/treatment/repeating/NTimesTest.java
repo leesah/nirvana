@@ -18,7 +18,7 @@ public class NTimesTest extends CycleRepeatingModelTest {
     private int n = 2 + new Random().nextInt(128);
 
     @Override
-    protected TreatmentCycleRepeatingModel getModelInstance() {
+    protected TreatmentCycleRecurringStrategy getModelInstance() {
         return new NTimes(n);
     }
 

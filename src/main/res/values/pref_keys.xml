@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Treatment -->
-    <string name="pref_key_treatment">treatment</string>
-    <string name="pref_key_treatment_enabled">treatment_enabled</string>
-    <string name="pref_key_treatment_first_day">treatment_first_day</string>
-    <string name="pref_key_treatment_cycle_length">treatment_cycle_length</string>
-    <string name="pref_key_treatment_repeating_model">treatment_repeating_model</string>
-    <string name="pref_key_treatment_repeating_model_details">treatment_repeating_model_details</string>
-    <string name="pref_key_treatment_repeating_model_times">treatment_repeating_model_times</string>
-    <string name="pref_key_treatment_repeating_model_until_date">treatment_repeating_model_until_date</string>
+    <string name="pref_key_treatment">name.leesah.nirvana:pref:key:TREATMENT</string>
+    <string name="pref_key_treatment_enabled">name.leesah.nirvana:pref:key:TREATMENT:ENABLED</string>
+    <string name="pref_key_treatment_first_day">name.leesah.nirvana:pref:key:TREATMENT:FIRST_DAY</string>
+    <string name="pref_key_treatment_cycle_length">name.leesah.nirvana:pref:key:TREATMENT:CYCLE_LENGTH</string>
+    <string name="pref_key_treatment_recurring">name.leesah.nirvana:pref:key:TREATMENT:RECURRING</string>
+    <string name="pref_key_treatment_recurring_details">name.leesah.nirvana:pref:key:TREATMENT:RECURRING:DETAILS</string>
+    <string name="pref_key_treatment_recurring_n_times">name.leesah.nirvana:pref:key:TREATMENT:RECURRING:N_TIMES</string>
+    <string name="pref_key_treatment_recurring_until_date">name.leesah.nirvana:pref:key:TREATMENT:RECURRING:UNTIL_DATE</string>
 
     <!-- Medication -->
-    <string name="pref_key_medication_name">medication_name</string>
-    <string name="pref_key_medication_manufacturer">medication_manufacturer</string>
-    <string name="pref_key_medication_dosage_form">medication_dosage_form</string>
-    <string name="pref_key_medication_repeating_model">medication_repeating_model</string>
-    <string name="pref_key_medication_reminding_model">medication_reminding_model</string>
-    <string name="pref_key_medication_delay_enabled">medication_delay_enabled</string>
-    <string name="pref_key_medication_delay_period">medication_delay_period</string>
-    <string name="pref_key_notification">notification</string>
-    <string name="pref_key_about">pref:key:about</string>
+    <string name="pref_key_medication_name">name.leesah.nirvana:pref:key:MEDICATION:NAME</string>
+    <string name="pref_key_medication_manufacturer">name.leesah.nirvana:pref:key:MEDICATION:MANUFACTURER</string>
+    <string name="pref_key_medication_dosage_form">name.leesah.nirvana:pref:key:MEDICATION:DOSAGE_FORM</string>
+    <string name="pref_key_medication_repeating">name.leesah.nirvana:pref:key:MEDICATION:REPEATING</string>
+    <string name="pref_key_medication_reminding">name.leesah.nirvana:pref:key:MEDICATION:REMINDING</string>
+    <string name="pref_key_medication_delay_enabled">name.leesah.nirvana:pref:key:MEDICATION:DELAY:ENABLED</string>
+    <string name="pref_key_medication_delay_period">name.leesah.nirvana:pref:key:MEDICATION:DELAY:PERIOD</string>
+    
+    <!-- Notification -->
+    <string name="pref_key_notification">name.leesah.nirvana:pref:key:NOTIFICATION</string>
+    
+    <!-- Others -->
+    <string name="pref_key_about">name.leesah.nirvana:pref:key:ABOUT</string>
 
 </resources>

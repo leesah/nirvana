@@ -2,7 +2,6 @@ package name.leesah.nirvana;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.ArraySet;
 import android.widget.Toast;
@@ -76,32 +75,32 @@ public class DebugTools {
                 setName("Valaciclovir").
                 setManufacturer("Teva").
                 setForm(DosageForm.TABLET).
-                setRepeatingModel(new Everyday()).
-                setRemindingModel(new AtCertainHours(Arrays.asList(new TimedDosage(NineAM, 1), new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
+                setRemindingStrategy(new AtCertainHours(Arrays.asList(new TimedDosage(NineAM, 1), new TimedDosage(NinePM, 1)))).
                 build();
 
         Medication folacin = new MedicationBuilder().
                 setName("Folacin").
                 setManufacturer("folsyra").
                 setForm(DosageForm.TABLET).
-                setRepeatingModel(new Everyday()).
-                setRemindingModel(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
+                setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
                 build();
 
         Medication probiMage = new MedicationBuilder().
                 setName("Probi Mage").
                 setManufacturer("Probi").
                 setForm(DosageForm.CAPSULE).
-                setRepeatingModel(new Everyday()).
-                setRemindingModel(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
+                setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
                 build();
 
         Medication manTabletter = new MedicationBuilder().
                 setName("Man tabletter").
                 setManufacturer("apoteket").
                 setForm(DosageForm.TABLET).
-                setRepeatingModel(new Everyday()).
-                setRemindingModel(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
+                setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
                 build();
 
         pharmacist.addMedication(valaciclovir);

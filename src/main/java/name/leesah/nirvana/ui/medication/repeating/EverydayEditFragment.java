@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 
 /**
@@ -31,7 +31,7 @@ public class EverydayEditFragment extends RepeatingModelEditFragment {
     }
 
     @Override
-    public RepeatingModel readModel() {
+    public RepeatingStrategy readModel() {
         return new Everyday();
     }
 

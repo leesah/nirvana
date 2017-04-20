@@ -15,8 +15,8 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
 import name.leesah.nirvana.ui.medication.reminding.RemindingModelSelectFragment;
@@ -41,8 +41,8 @@ public class MedicationActivity extends AppCompatActivity {
     private RemindingModelSelectFragment remindingModelSelectFragment = new RemindingModelSelectFragment();
     private RepeatingModelSelectFragment repeatingModelSelectFragment = new RepeatingModelSelectFragment();
     private boolean basicsValid = false;
-    private RemindingModel remindingModel;
-    private RepeatingModel repeatingModel;
+    private RemindingStrategy remindingStrategy;
+    private RepeatingStrategy repeatingStrategy;
     private Medication editingExisting;
     private Pharmacist pharmacist;
     private ReminderFactory reminderFactory;
@@ -131,12 +131,12 @@ public class MedicationActivity extends AppCompatActivity {
         setTitle(getString(R.string.edit_medication, medication.getName()));
 
         editingExisting = medication;
-        remindingModel = medication.getRemindingModel();
-        repeatingModel = medication.getRepeatingModel();
+        remindingStrategy = medication.getRemindingStrategy();
+        repeatingStrategy = medication.getRepeatingStrategy();
 
         basicsFragment.setEditingExisting(medication);
-        remindingModelSelectFragment.setEditingExisting(medication.getRemindingModel());
-        repeatingModelSelectFragment.setEditingExisting(medication.getRepeatingModel());
+        remindingModelSelectFragment.setEditingExisting(medication.getRemindingStrategy());
+        repeatingModelSelectFragment.setEditingExisting(medication.getRepeatingStrategy());
 
         backToBasics();
     }
@@ -151,8 +151,8 @@ public class MedicationActivity extends AppCompatActivity {
 
     private void saveMedication() {
         Medication medication = basicsFragment.readMedication();
-        medication.setRemindingModel(remindingModel);
-        medication.setRepeatingModel(repeatingModel);
+        medication.setRemindingStrategy(remindingStrategy);
+        medication.setRepeatingStrategy(repeatingStrategy);
         pharmacist.addMedication(medication);
 
         Set<Reminder> reminders = reminderFactory.createReminders(medication, DateTimeHelper.today());
@@ -175,14 +175,14 @@ public class MedicationActivity extends AppCompatActivity {
     }
 
     private void saveRemindingModel() {
-        remindingModel = remindingModelSelectFragment.readModel();
-        basicsFragment.setRemindingModelSummary(remindingModel.toString(this));
+        remindingStrategy = remindingModelSelectFragment.readModel();
+        basicsFragment.setRemindingModelSummary(remindingStrategy.toString(this));
         backToBasics();
     }
 
     private void saveRepeatingModel() {
-        repeatingModel = repeatingModelSelectFragment.readModel();
-        basicsFragment.setRepeatingModelSummary(repeatingModel.toString(this));
+        repeatingStrategy = repeatingModelSelectFragment.readModel();
+        basicsFragment.setRepeatingModelSummary(repeatingStrategy.toString(this));
         backToBasics();
     }
 
@@ -220,7 +220,7 @@ public class MedicationActivity extends AppCompatActivity {
     }
 
     private void enableSaveButtonInBasics() {
-        saveButton.setEnabled(basicsValid && remindingModel != null && repeatingModel != null);
+        saveButton.setEnabled(basicsValid && remindingStrategy != null && repeatingStrategy != null);
     }
 
     private void onBasicsReportValidity(boolean valid) {

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class EverydayTest {
 
-    private RepeatingModel model;
+    private RepeatingStrategy model;
     private TreatmentCycle random7DayCycle;
     private LocalDate firstDay;
 

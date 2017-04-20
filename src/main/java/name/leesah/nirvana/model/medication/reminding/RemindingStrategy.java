@@ -13,7 +13,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 /**
  * Created by sah on 2016-12-11.
  */
-public interface RemindingModel {
+public interface RemindingStrategy {
 
     @NonNull
     Set<Reminder> getRemindersThroughDay(Medication medication, LocalDate date);

@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.toSet;
 /**
  * Created by sah on 2016-12-11.
  */
-public class AtCertainHours implements RemindingModel {
+public class AtCertainHours implements RemindingStrategy {
     private final List<TimedDosage> dosages = new ArrayList<>();
 
     public AtCertainHours(List<TimedDosage> dosages) {

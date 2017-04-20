@@ -44,7 +44,7 @@ public abstract class CycleRepeatingModelTest {
         assertNull(getModelInstance().getCycleForDate(firstCycle, getAVeryLateDate()));
     }
 
-    protected abstract TreatmentCycleRepeatingModel getModelInstance();
+    protected abstract TreatmentCycleRecurringStrategy getModelInstance();
 
     protected abstract LocalDate getAVeryLateDate();
 

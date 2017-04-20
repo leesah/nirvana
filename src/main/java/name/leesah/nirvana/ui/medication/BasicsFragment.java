@@ -50,8 +50,8 @@ public class BasicsFragment extends PreferenceFragment {
         dosageForm = (ListPreference) findPreference(getString(R.string.pref_key_medication_dosage_form));
         delayed = (SwitchPreference) findPreference(getString(R.string.pref_key_medication_delay_enabled));
         delayedPeriod = (PeriodPreference) findPreference(getString(R.string.pref_key_medication_delay_period));
-        remindingModel = findPreference(getString(R.string.pref_key_medication_reminding_model));
-        repeatingModel = findPreference(getString(R.string.pref_key_medication_repeating_model));
+        remindingModel = findPreference(getString(R.string.pref_key_medication_reminding));
+        repeatingModel = findPreference(getString(R.string.pref_key_medication_repeating));
 
         name.setOnPreferenceChangeListener((p, v) -> reportValidity());
         dosageForm.setOnPreferenceChangeListener((p, v) -> reportValidity());
@@ -81,8 +81,8 @@ public class BasicsFragment extends PreferenceFragment {
             delayed.setChecked(editingExisting.isDelayed());
             if (editingExisting.getDelayedPeriod() != null)
                 delayedPeriod.setPeriod(editingExisting.getDelayedPeriod());
-            remindingModel.setSummary(editingExisting.getRemindingModel().toString(getContext()));
-            repeatingModel.setSummary(editingExisting.getRepeatingModel().toString(getContext()));
+            remindingModel.setSummary(editingExisting.getRemindingStrategy().toString(getContext()));
+            repeatingModel.setSummary(editingExisting.getRepeatingStrategy().toString(getContext()));
             editingExisting = null;
         }
         reportValidity();

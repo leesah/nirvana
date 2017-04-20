@@ -3,7 +3,6 @@ package name.leesah.nirvana.model.treatment.repeating;
 import org.joda.time.LocalDate;
 
 import name.leesah.nirvana.model.treatment.TreatmentCycle;
-import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
@@ -12,7 +11,7 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
  * Created by sah on 2016-12-03.
  */
 
-public class UntilDate implements TreatmentCycleRepeatingModel {
+public class UntilDate implements TreatmentCycleRecurringStrategy {
 
     private LocalDate lastDay;
 

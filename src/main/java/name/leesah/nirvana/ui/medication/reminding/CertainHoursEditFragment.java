@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
@@ -84,7 +84,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     @Override
-    public RemindingModel readModel() {
+    public RemindingStrategy readModel() {
         return new AtCertainHours(dosages);
     }
 

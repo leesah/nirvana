@@ -35,18 +35,18 @@
             android:title="@string/pref_title_dosage_form" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefcat_title_medication_reminding_and_repeating">
+    <PreferenceCategory android:title="@string/prefcat_title_medication_strategies">
         <Preference
-            android:key="@string/pref_key_medication_repeating_model"
-            android:title="@string/pref_title_medication_repeating_model" />
+            android:key="@string/pref_key_medication_repeating"
+            android:title="@string/pref_title_medication_repeating" />
 
         <Preference
-            android:key="@string/pref_key_medication_reminding_model"
-            android:title="@string/pref_title_medication_reminding_model" />
+            android:key="@string/pref_key_medication_reminding"
+            android:title="@string/pref_title_medication_reminding" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_title_medication_advanced">
+    <PreferenceCategory android:title="@string/prefcat_title_medication_advanced">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_medication_delay_enabled"

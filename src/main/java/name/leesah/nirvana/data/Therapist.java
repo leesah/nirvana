@@ -14,7 +14,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 import name.leesah.nirvana.model.treatment.repeating.NotRepeating;
 import name.leesah.nirvana.model.treatment.repeating.NTimes;
 import name.leesah.nirvana.model.treatment.repeating.UntilDate;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRepeatingModel;
+import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
@@ -69,7 +69,7 @@ public class Therapist extends DataHolder {
         return new TreatmentBuilder()
                 .setFirstDay(loadLocalDate())
                 .setCycleLength(loadCycleLength())
-                .setTreatmentCycleRepeatingModel(loadRepeatingModel())
+                .setTreatmentCycleRecurringStrategy(loadRepeatingModel())
                 .build();
     }
 
@@ -89,14 +89,14 @@ public class Therapist extends DataHolder {
         return DateTimeHelper.toPeriod(text);
     }
 
-    private TreatmentCycleRepeatingModel loadRepeatingModel() {
-        String text = preferences.getString(resources.getString(R.string.pref_key_treatment_repeating_model), "");
+    private TreatmentCycleRecurringStrategy loadRepeatingModel() {
+        String text = preferences.getString(resources.getString(R.string.pref_key_treatment_recurring), "");
 
-        if (text.equals(resources.getString(R.string.treatment_repeating_none)))
+        if (text.equals(resources.getString(R.string.treatment_recurring_none)))
             return new NotRepeating();
-        else if (text.equals(resources.getString(R.string.treatment_repeating_n_times)))
+        else if (text.equals(resources.getString(R.string.treatment_recurring_n_times)))
             return loadRepeatingNTimes();
-        else if (text.equals(resources.getString(R.string.treatment_repeating_until_date)))
+        else if (text.equals(resources.getString(R.string.treatment_recurring_until_date)))
             return loadRepeatingUntilDate();
         else {
             Log.wtf(TAG, format("Unexpected treatment repeating model: [%s]. Using [%s] as default.",
@@ -106,8 +106,8 @@ public class Therapist extends DataHolder {
     }
 
 
-    private TreatmentCycleRepeatingModel loadRepeatingNTimes() {
-        int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_repeating_model_times), -1);
+    private TreatmentCycleRecurringStrategy loadRepeatingNTimes() {
+        int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), -1);
         if (n < 0) {
             Log.wtf(TAG, format("Unexpected n for [%s]: [%d]. Using [%s] as default.",
                     NTimes.class.getSimpleName(), n, NotRepeating.class.getSimpleName()));
@@ -117,8 +117,8 @@ public class Therapist extends DataHolder {
         return new NTimes(n);
     }
 
-    private TreatmentCycleRepeatingModel loadRepeatingUntilDate() {
-        String key = resources.getString(R.string.pref_key_treatment_repeating_model_until_date);
+    private TreatmentCycleRecurringStrategy loadRepeatingUntilDate() {
+        String key = resources.getString(R.string.pref_key_treatment_recurring_until_date);
         String text = preferences.getString(key, null);
         if (TextUtils.isEmpty(text)) {
             Log.wtf(TAG, format("Unexpected date for [%s]: [%s]. Using [%s] as default.",

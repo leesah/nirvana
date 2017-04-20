@@ -9,7 +9,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 /**
  * Created by sah on 2016-12-07.
  */
-public interface RepeatingModel {
+public interface RepeatingStrategy {
 
     boolean matchesDate(TreatmentCycle currentCycle, LocalDate today);
 

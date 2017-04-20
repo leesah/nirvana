@@ -20,9 +20,9 @@ import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
@@ -85,8 +85,8 @@ public class LanternGenie {
         return new MedicationBuilder()
                 .setName(randomString())
                 .setForm(randomForm())
-                .setRemindingModel(randomRemindingModel())
-                .setRepeatingModel(randomRepeatingModel())
+                .setRemindingStrategy(randomRemindingModel())
+                .setRepeatingStrategy(randomRepeatingModel())
                 .build();
     }
 
@@ -102,12 +102,12 @@ public class LanternGenie {
     }
 
     @NonNull
-    private static RemindingModel randomRemindingModel() {
+    private static RemindingStrategy randomRemindingModel() {
         return new AtCertainHours(singletonList(new TimedDosage(now(), 1)));
     }
 
     @NonNull
-    private static RepeatingModel randomRepeatingModel() {
+    private static RepeatingStrategy randomRepeatingModel() {
         return new Everyday();
     }
 

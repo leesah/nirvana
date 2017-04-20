@@ -24,7 +24,7 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
  * Created by sah on 2017-04-16.
  */
 
-public class EveryNHours implements RemindingModel {
+public class EveryNHours implements RemindingStrategy {
 
     public static final int FOUR = 4;
     public static final int SIX = 6;

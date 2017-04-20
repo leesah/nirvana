@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRepeatingModel;
+import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
 import name.leesah.nirvana.ui.tweaks.DatePreference;
 import name.leesah.nirvana.ui.tweaks.PeriodPreference;
 
@@ -27,7 +27,7 @@ public class TreatmentSettingsFragment extends PreferenceFragment {
     private PeriodPreference lengthPreference;
     private Preference repeatingModelPreference;
     private Preference.OnPreferenceClickListener repeatingModelListener;
-    private TreatmentCycleRepeatingModel repeatingModel;
+    private TreatmentCycleRecurringStrategy repeatingModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class TreatmentSettingsFragment extends PreferenceFragment {
 
         firstDayPreference = (DatePreference) findPreference(getString(R.string.pref_key_treatment_first_day));
         lengthPreference = (PeriodPreference) findPreference(getString(R.string.pref_key_treatment_cycle_length));
-        repeatingModelPreference = findPreference(getString(R.string.pref_key_treatment_repeating_model));
+        repeatingModelPreference = findPreference(getString(R.string.pref_key_treatment_recurring));
 
         if (firstDayPreference.getDate() == null)
             firstDayPreference.setDate(today());
@@ -45,8 +45,8 @@ public class TreatmentSettingsFragment extends PreferenceFragment {
             lengthPreference.setPeriod(TWO_WEEKS);
 
         SharedPreferences sharedPreferences = getPreferenceManager().getSharedPreferences();
-        if (!sharedPreferences.contains(getString(R.string.pref_key_treatment_repeating_model)))
-            sharedPreferences.edit().putString(getString(R.string.pref_key_treatment_repeating_model), getString(R.string.treatment_repeating_none)).apply();
+        if (!sharedPreferences.contains(getString(R.string.pref_key_treatment_recurring)))
+            sharedPreferences.edit().putString(getString(R.string.pref_key_treatment_recurring), getString(R.string.treatment_recurring_none)).apply();
         repeatingModelPreference.setOnPreferenceClickListener(repeatingModelListener);
     }
 

@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class DaysOfWeekTest {
 
-    private RepeatingModel model;
+    private RepeatingStrategy model;
     private TreatmentCycle following7Days;
     private LocalDate today;
 

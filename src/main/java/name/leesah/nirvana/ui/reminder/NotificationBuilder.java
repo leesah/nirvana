@@ -57,11 +57,11 @@ class NotificationBuilder extends Notification.Builder {
     }
 
     private Notification.Action getConfirmAction(Context context) {
-        return new Notification.Action.Builder(getConfirmIcon(), context.getString(R.string.confirm_reminder), getConfirmIntent()).build();
+        return new Notification.Action.Builder(getConfirmIcon(), context.getString(R.string.done), getConfirmIntent()).build();
     }
 
     private Notification.Action getSnoozeAction(Context context) {
-        return new Notification.Action.Builder(getSnoozeIcon(), context.getString(R.string.snooze_reminder), getSnoozeIntent()).build();
+        return new Notification.Action.Builder(getSnoozeIcon(), context.getString(R.string.snooze), getSnoozeIntent()).build();
     }
 
     private PendingIntent getShowDetailsIntent() {

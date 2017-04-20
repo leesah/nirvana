@@ -72,13 +72,13 @@ abstract class MedicationActivityDataOperationsTest {
 
     @Test
     public void deleteButtonIsAbsentInRemindingModel() throws Exception {
-        onView(withText(R.string.pref_title_medication_reminding_model)).perform(click());
+        onView(withText(R.string.pref_title_medication_reminding)).perform(click());
         onView(withId(R.id.delete_button)).check(matches(withEffectiveVisibility(GONE)));
     }
 
     @Test
     public void deleteButtonIsAbsentInRepeatingModel() throws Exception {
-        onView(withText(R.string.pref_title_medication_repeating_model)).perform(click());
+        onView(withText(R.string.pref_title_medication_repeating)).perform(click());
         onView(withId(R.id.delete_button)).check(matches(withEffectiveVisibility(GONE)));
     }
 
@@ -101,17 +101,17 @@ abstract class MedicationActivityDataOperationsTest {
             onView(withText(TABLET.getName(getTargetContext()))).perform(click());
         }
         { // Edit repeating model
-            onView(withText(R.string.pref_title_medication_repeating_model)).perform(click());
+            onView(withText(R.string.pref_title_medication_repeating)).perform(click());
             { // Select repeating model: Everyday
-                onView(withText(R.string.pref_title_medication_repeating_model)).perform(click());
+                onView(withText(R.string.pref_title_medication_repeating)).perform(click());
                 onView(withText(R.string.medication_repeating_everyday)).perform(click());
                 onView(allOf(withId(R.id.save_button), withClassName(endsWith(FloatingActionButton.class.getSimpleName())))).perform(click());
             }
         }
         { // Edit reminding model
-            onView(withText(R.string.pref_title_medication_reminding_model)).perform(click());
+            onView(withText(R.string.pref_title_medication_reminding)).perform(click());
             { // Select reminding model: At certain hours
-                onView(withText(R.string.pref_title_medication_reminding_model)).perform(click());
+                onView(withText(R.string.pref_title_medication_reminding)).perform(click());
                 onView(withText(R.string.medication_reminding_certain_hours)).perform(click());
             }
             { // Delete existing doses, if any
@@ -148,8 +148,8 @@ abstract class MedicationActivityDataOperationsTest {
         assertThat(medication.getName(), equalTo("Valaciclovir"));
         assertThat(medication.getManufacturer(), equalTo("Bluefish"));
         assertThat(medication.getForm(), equalTo(TABLET));
-        assertThat(medication.getRepeatingModel(), instanceOf(Everyday.class));
-        assertThat(medication.getRemindingModel(), instanceOf(AtCertainHours.class));
+        assertThat(medication.getRepeatingStrategy(), instanceOf(Everyday.class));
+        assertThat(medication.getRemindingStrategy(), instanceOf(AtCertainHours.class));
 
         // Verify: 2 reminders found at nurse's
         Set<Reminder> reminders = Nurse.getInstance(getTargetContext()).getReminders(today());

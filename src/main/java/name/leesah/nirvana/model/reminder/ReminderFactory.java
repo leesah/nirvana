@@ -56,9 +56,9 @@ public class ReminderFactory {
     }
 
     private Set<Reminder> createReminders(Medication medication, TreatmentCycle cycle, LocalDate date) {
-        if (medication.getRepeatingModel().matchesDate(cycle, date)
+        if (medication.getRepeatingStrategy().matchesDate(cycle, date)
                 && !cycle.getFirstDay().plus(medication.isDelayed() ? medication.getDelayedPeriod() : days(0)).isAfter(date))
-            return medication.getRemindingModel().getRemindersThroughDay(medication, today());
+            return medication.getRemindingStrategy().getRemindersThroughDay(medication, today());
         else
             return new ArraySet<>();
     }

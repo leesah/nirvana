@@ -78,7 +78,7 @@ public class MainActivityBackwardsNavigationTest {
         onView(withId(R.id.navigation_settings)).perform(click());
         {
             onData(withTitle(R.string.pref_title_treatment)).perform(click());
-            onData(withTitle(R.string.pref_title_treatment_switch)).perform(click());
+            onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
             {
                 onData(withTitle(R.string.pref_title_treatment_first_day)).perform(click());
                 onView(withClassName(is(DatePicker.class.getCanonicalName()))).check(matches(isDisplayed()));
@@ -95,7 +95,7 @@ public class MainActivityBackwardsNavigationTest {
         onView(withId(R.id.navigation_settings)).perform(click());
         {
             onData(withTitle(R.string.pref_title_treatment)).perform(click());
-            onData(withTitle(R.string.pref_title_treatment_switch)).perform(click());
+            onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
             {
                 onData(withTitle(R.string.pref_title_treatment_cycle_length)).perform(click());
                 onView(allOf(withClassName(is(NumberPicker.class.getCanonicalName())), withId(R.id.number))).check(matches(isDisplayed()));
@@ -113,9 +113,9 @@ public class MainActivityBackwardsNavigationTest {
         onView(withId(R.id.navigation_settings)).perform(click());
         {
             onData(withTitle(R.string.pref_title_treatment)).perform(click());
-            onData(withTitle(R.string.pref_title_treatment_switch)).perform(click());
+            onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_treatment_repeating_model)).perform(click());
+                onData(withTitle(R.string.pref_title_treatment_repeating)).perform(click());
                 onView(withId(R.id.details_container)).check(matches(not(doesNotExist())));
                 pressBack();
             }
@@ -132,7 +132,7 @@ public class MainActivityBackwardsNavigationTest {
             onView(withId(R.id.navigation_settings)).perform(click());
             { // First round
                 onData(withTitle(R.string.pref_title_treatment)).perform(click());
-                onData(withTitle(R.string.pref_title_treatment_switch)).perform(click());
+                onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
                 {
                     onData(withTitle(R.string.pref_title_treatment_first_day)).perform(click());
                     onView(withClassName(is(DatePicker.class.getCanonicalName()))).check(matches(isDisplayed()));
@@ -145,7 +145,7 @@ public class MainActivityBackwardsNavigationTest {
                     pressBack();
                 }
                 {
-                    onData(withTitle(R.string.pref_title_treatment_repeating_model)).perform(click());
+                    onData(withTitle(R.string.pref_title_treatment_repeating)).perform(click());
                     onView(withId(R.id.details_container)).check(matches(not(doesNotExist())));
                     pressBack();
                 }
@@ -170,7 +170,7 @@ public class MainActivityBackwardsNavigationTest {
                     pressBack();
                 }
                 {
-                    onData(withTitle(R.string.pref_title_treatment_repeating_model)).perform(click());
+                    onData(withTitle(R.string.pref_title_treatment_repeating)).perform(click());
                     onView(withId(R.id.details_container)).check(matches(not(doesNotExist())));
                     pressBack();
                 }

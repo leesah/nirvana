@@ -16,7 +16,7 @@ import java.util.Set;
 
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
@@ -33,7 +33,7 @@ import static org.mockito.Mockito.mock;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class AtCertainHoursTest {
-    private RemindingModel model;
+    private RemindingStrategy model;
     private ArrayMap<String, TimedDosage> dosages;
     private Random random;
     private Medication medication;
@@ -52,8 +52,8 @@ public class AtCertainHoursTest {
                 .setName("Foo")
                 .setManufacturer("Bar")
                 .setForm(CAPSULE)
-                .setRepeatingModel(mock(RepeatingModel.class))
-                .setRemindingModel(model)
+                .setRepeatingStrategy(mock(RepeatingStrategy.class))
+                .setRemindingStrategy(model)
                 .build();
     }
 

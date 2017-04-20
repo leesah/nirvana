@@ -4,8 +4,8 @@
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_key_treatment_enabled"
-        android:summary="@string/pref_description_treatment_support"
-        android:title="@string/pref_title_treatment_switch" />
+        android:summary="@string/pref_summary_treatment_enabled"
+        android:title="@string/pref_title_treatment_enabled" />
 
     <PreferenceCategory
         android:dependency="@string/pref_key_treatment_enabled"
@@ -25,12 +25,12 @@
 
     <PreferenceCategory
         android:dependency="@string/pref_key_treatment_enabled"
-        android:title="@string/prefcat_title_treatment_repeating_model">
+        android:title="@string/prefcat_title_treatment_recurring">
 
         <Preference
             android:dependency="@string/pref_key_treatment_enabled"
-            android:key="@string/pref_key_treatment_repeating_model"
-            android:title="@string/pref_title_treatment_repeating_model" />
+            android:key="@string/pref_key_treatment_recurring"
+            android:title="@string/pref_title_treatment_repeating" />
 
     </PreferenceCategory>
 

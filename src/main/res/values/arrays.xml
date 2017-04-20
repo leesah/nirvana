@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cycle_repeating_models">
-        <item>@string/treatment_repeating_none</item>
-        <item>@string/treatment_repeating_n_times</item>
-        <item>@string/treatment_repeating_until_date</item>
+        <item>@string/treatment_recurring_none</item>
+        <item>@string/treatment_recurring_n_times</item>
+        <item>@string/treatment_recurring_until_date</item>
     </string-array>
     <string-array name="cycle_repeating_model_list_preference_values">
         <item>pref_treatment_repeating_none</item>

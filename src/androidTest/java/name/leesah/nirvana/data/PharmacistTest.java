@@ -130,8 +130,8 @@ public class PharmacistTest {
                 .setName(randomString())
                 .setManufacturer(randomString())
                 .setForm(randomDosageForm())
-                .setRemindingModel(null)
-                .setRepeatingModel(null)
+                .setRemindingStrategy(null)
+                .setRepeatingStrategy(null)
                 .build();
     }
 

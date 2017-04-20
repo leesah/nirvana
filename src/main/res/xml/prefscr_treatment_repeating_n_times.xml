@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="@string/pref_key_treatment_repeating_model_details"
+        android:key="@string/pref_key_treatment_recurring_details"
         android:title="Repeat N times">
 
         <name.leesah.nirvana.ui.tweaks.IntegerPreference
-            android:key="@string/pref_key_treatment_repeating_model_times"
+            android:key="@string/pref_key_treatment_recurring_n_times"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Times (excluding the first cycle)"

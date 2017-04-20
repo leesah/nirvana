@@ -16,7 +16,7 @@ import java.util.Random;
 import name.leesah.nirvana.model.treatment.repeating.NotRepeating;
 import name.leesah.nirvana.model.treatment.repeating.NTimes;
 import name.leesah.nirvana.model.treatment.repeating.UntilDate;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRepeatingModel;
+import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertSame;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
  */
 public class MetaKeyBasedGenericTypeAdapterTest {
 
-    private MetaKeyBasedGenericTypeAdapter<TreatmentCycleRepeatingModel> adapter;
+    private MetaKeyBasedGenericTypeAdapter<TreatmentCycleRecurringStrategy> adapter;
 
     private JsonSerializationContext jsonSerializationContext;
     private JsonDeserializationContext jsonDeerializationContext;
@@ -69,10 +69,10 @@ public class MetaKeyBasedGenericTypeAdapterTest {
         doTestSerialize(new UntilDate(LocalDate.now()));
     }
 
-    private void doTestSerialize(TreatmentCycleRepeatingModel model) {
+    private void doTestSerialize(TreatmentCycleRecurringStrategy model) {
         when(jsonSerializationContext.serialize(same(model), eq(model.getClass()))).thenReturn(jsonElement);
 
-        JsonElement actual = adapter.serialize(model, TreatmentCycleRepeatingModel.class, jsonSerializationContext);
+        JsonElement actual = adapter.serialize(model, TreatmentCycleRecurringStrategy.class, jsonSerializationContext);
 
         assertSame(jsonElement, actual);
         assertEquals(model.getClass().getCanonicalName(), jsonObject.get(CLASS_META_KEY).getAsString());
@@ -93,10 +93,10 @@ public class MetaKeyBasedGenericTypeAdapterTest {
         doTestDeserialize(new UntilDate(LocalDate.now()));
     }
 
-    private void doTestDeserialize(TreatmentCycleRepeatingModel model) {
+    private void doTestDeserialize(TreatmentCycleRecurringStrategy model) {
         jsonObject.addProperty(CLASS_META_KEY, model.getClass().getCanonicalName());
         when(jsonDeerializationContext.deserialize(jsonElement, model.getClass())).thenReturn(model);
-        TreatmentCycleRepeatingModel actual = adapter.deserialize(jsonElement, NTimes.class, jsonDeerializationContext);
+        TreatmentCycleRecurringStrategy actual = adapter.deserialize(jsonElement, NTimes.class, jsonDeerializationContext);
 
         assertSame(model, actual);
     }

@@ -11,7 +11,7 @@ import static java.lang.String.format;
  * Created by sah on 2016-12-03.
  */
 
-public class NTimes implements TreatmentCycleRepeatingModel {
+public class NTimes implements TreatmentCycleRecurringStrategy {
 
     private int n;
 

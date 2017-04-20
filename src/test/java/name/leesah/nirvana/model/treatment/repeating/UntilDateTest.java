@@ -21,7 +21,7 @@ public class UntilDateTest extends CycleRepeatingModelTest {
     }
 
     @Override
-    protected TreatmentCycleRepeatingModel getModelInstance() {
+    protected TreatmentCycleRecurringStrategy getModelInstance() {
         return new UntilDate(untilDate);
     }
 

@@ -7,11 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
-import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.repeating.EveryNDays;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
 
@@ -26,7 +24,7 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
     private DaysOfWeekEditFragment daysOfWeek = new DaysOfWeekEditFragment();
     private EveryNDaysEditFragment everyNDays = new EveryNDaysEditFragment();
     private FloatingActionButton saveButton;
-    private RepeatingModel editingExisting;
+    private RepeatingStrategy editingExisting;
     private ListPreference models;
 
     @Override
@@ -34,7 +32,7 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefscr_repeating_model);
 
-        models = (ListPreference) findPreference(getString(R.string.pref_key_medication_repeating_model));
+        models = (ListPreference) findPreference(getString(R.string.pref_key_medication_repeating));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));
     }
 
@@ -78,7 +76,7 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
         return false;
     }
 
-    public RepeatingModel readModel() {
+    public RepeatingStrategy readModel() {
         return getCurrentFragment().readModel();
     }
 
@@ -88,7 +86,7 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
         everyNDays.setValidityReportListener(listener);
     }
 
-    public void setEditingExisting(RepeatingModel editingExisting) {
+    public void setEditingExisting(RepeatingStrategy editingExisting) {
         this.editingExisting = editingExisting;
     }
 }

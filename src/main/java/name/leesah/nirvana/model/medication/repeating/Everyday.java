@@ -10,7 +10,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 /**
  * Created by sah on 2016-12-07.
  */
-public class Everyday implements RepeatingModel {
+public class Everyday implements RepeatingStrategy {
 
     @Override
     public boolean matchesDate(TreatmentCycle currentCycle, LocalDate today) {

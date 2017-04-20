@@ -97,11 +97,11 @@ abstract class MedicationActivityBackwardsNavigationTest {
             pressBack();
         }
         {
-            onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
             pressBack();
         }
         {
-            onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
             pressBack();
         }
         pressBack();
@@ -122,11 +122,11 @@ abstract class MedicationActivityBackwardsNavigationTest {
                 pressBack();
             }
             {
-                onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
                 pressBack();
             }
             {
-                onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
                 pressBack();
             }
         }
@@ -142,11 +142,11 @@ abstract class MedicationActivityBackwardsNavigationTest {
                 pressBack();
             }
             {
-                onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
                 pressBack();
             }
             {
-                onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
                 pressBack();
             }
         }
@@ -157,9 +157,9 @@ abstract class MedicationActivityBackwardsNavigationTest {
     @Test(expected = NoActivityResumedException.class)
     public void medication_EditRepeatingModel_SelectModel_AllTheWayBack() throws Exception {
         {
-            onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
                 pressBack();
             }
             pressBack();
@@ -172,12 +172,12 @@ abstract class MedicationActivityBackwardsNavigationTest {
     @Ignore("Not yet implemented.")
     public void medication_EditRepeatingModel_SelectModel_InputDetails_AllTheWayBack() throws Exception {
         {
-            onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
                 onData((withText(R.string.medication_repeating_every_n_days))).perform(click());
                 {
-                    onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+                    onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
                     pressBack();
                 }
             }
@@ -190,9 +190,9 @@ abstract class MedicationActivityBackwardsNavigationTest {
     @Test(expected = NoActivityResumedException.class)
     public void medication_EditRemindingModel_SelectModel_AllTheWayBack() throws Exception {
         {
-            onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
                 pressBack();
             }
             pressBack();
@@ -204,15 +204,15 @@ abstract class MedicationActivityBackwardsNavigationTest {
     @Test(expected = NoActivityResumedException.class)
     public void medication_EditRemindingModel_SelectModel_InputDetails_AllTheWayBack() throws Exception {
         {
-            onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+                onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
                 onView(withText(R.string.medication_reminding_certain_hours)).perform(click());
                 onView(allOf(withId(R.id.numberPicker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
                 onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE))).perform(setTime(9, 0));
                 onView(allOf(withText(R.string.add), withEffectiveVisibility(VISIBLE))).perform(click());
                 {
-                    onData(withTitle(R.string.pref_title_medication_reminding_model)).inAdapterView(withId(android.R.id.list)).perform(click());
+                    onData(withTitle(R.string.pref_title_medication_reminding)).inAdapterView(withId(android.R.id.list)).perform(click());
                     pressBack();
                 }
             }

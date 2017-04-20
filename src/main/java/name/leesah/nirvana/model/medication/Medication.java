@@ -2,12 +2,10 @@ package name.leesah.nirvana.model.medication;
 
 import android.support.annotation.Nullable;
 
-import org.joda.time.Days;
 import org.joda.time.Period;
-import org.joda.time.ReadablePeriod;
 
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.utils.IdentityHelper;
 
 /**
@@ -22,26 +20,26 @@ public class Medication {
     private final DosageForm form;
     private final boolean delayed;
     private final Period delayedBy;
-    private RepeatingModel repeatingModel;
-    private RemindingModel remindingModel;
+    private RepeatingStrategy repeatingStrategy;
+    private RemindingStrategy remindingStrategy;
 
-    public Medication(String name, String manufacturer, DosageForm form, boolean delayed, Period delayedBy, RepeatingModel repeatingModel, RemindingModel remindingModel) {
+    public Medication(String name, String manufacturer, DosageForm form, boolean delayed, Period delayedBy, RepeatingStrategy repeatingStrategy, RemindingStrategy remindingStrategy) {
         this.id = IdentityHelper.uniqueInt();
         this.name = name;
         this.manufacturer = manufacturer;
         this.form = form;
         this.delayed = delayed;
         this.delayedBy = delayedBy;
-        this.repeatingModel = repeatingModel;
-        this.remindingModel = remindingModel;
+        this.repeatingStrategy = repeatingStrategy;
+        this.remindingStrategy = remindingStrategy;
     }
 
-    public void setRemindingModel(RemindingModel remindingModel) {
-        this.remindingModel = remindingModel;
+    public void setRemindingStrategy(RemindingStrategy remindingStrategy) {
+        this.remindingStrategy = remindingStrategy;
     }
 
-    public void setRepeatingModel(RepeatingModel repeatingModel) {
-        this.repeatingModel = repeatingModel;
+    public void setRepeatingStrategy(RepeatingStrategy repeatingStrategy) {
+        this.repeatingStrategy = repeatingStrategy;
     }
 
     public int getId() {
@@ -60,12 +58,12 @@ public class Medication {
         return form;
     }
 
-    public RepeatingModel getRepeatingModel() {
-        return repeatingModel;
+    public RepeatingStrategy getRepeatingStrategy() {
+        return repeatingStrategy;
     }
 
-    public RemindingModel getRemindingModel() {
-        return remindingModel;
+    public RemindingStrategy getRemindingStrategy() {
+        return remindingStrategy;
     }
 
     public boolean isDelayed() {

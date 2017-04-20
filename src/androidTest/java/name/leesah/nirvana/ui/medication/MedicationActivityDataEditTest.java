@@ -23,7 +23,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withSummary;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withSummaryText;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
-import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -35,7 +34,6 @@ import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_M
 import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.isEmptyString;
 import static org.junit.Assert.*;
@@ -85,38 +83,38 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
                     withSummaryText(containsString(existing.getForm().getName(getTargetContext()))))
             ).check(matches(isDisplayed()));
             onData(allOf(
-                    withTitle(R.string.pref_title_medication_repeating_model),
-                    withSummaryText(existing.getRepeatingModel().toString(getTargetContext())))
+                    withTitle(R.string.pref_title_medication_repeating),
+                    withSummaryText(existing.getRepeatingStrategy().toString(getTargetContext())))
             ).check(matches(isDisplayed()));
             onData(allOf(
-                    withTitle(R.string.pref_title_medication_reminding_model),
-                    withSummaryText(existing.getRemindingModel().toString(getTargetContext()))
+                    withTitle(R.string.pref_title_medication_reminding),
+                    withSummaryText(existing.getRemindingStrategy().toString(getTargetContext()))
             )).check(matches(isDisplayed()));
         }
         { // Repeating model
-            onData(withTitle(R.string.pref_title_medication_repeating_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
             int expectedModelName = 0;
-            if (existing.getRepeatingModel() instanceof Everyday)
+            if (existing.getRepeatingStrategy() instanceof Everyday)
                 expectedModelName = R.string.medication_repeating_everyday;
-            else if (existing.getRepeatingModel() instanceof EveryNDays)
+            else if (existing.getRepeatingStrategy() instanceof EveryNDays)
                 expectedModelName = R.string.medication_repeating_every_n_days;
-            else if (existing.getRepeatingModel() instanceof DaysOfWeek)
+            else if (existing.getRepeatingStrategy() instanceof DaysOfWeek)
                 expectedModelName = R.string.medication_repeating_days_of_week;
             onData(allOf(
-                    withTitle(R.string.pref_title_medication_repeating_model),
+                    withTitle(R.string.pref_title_medication_repeating),
                     withSummary(expectedModelName))
             ).check(matches(isDisplayed()));
             pressBack();
         }
         { // Reminding model
-            onData(withTitle(R.string.pref_title_medication_reminding_model)).perform(click());
+            onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
             int expectedModelName = 0;
-            if (existing.getRemindingModel() instanceof AtCertainHours)
+            if (existing.getRemindingStrategy() instanceof AtCertainHours)
                 expectedModelName = R.string.medication_reminding_certain_hours;
-            else if (existing.getRemindingModel() instanceof EveryNHours)
+            else if (existing.getRemindingStrategy() instanceof EveryNHours)
                 expectedModelName = R.string.medication_reminding_every_n_hours;
             onData(allOf(
-                    withTitle(R.string.pref_title_medication_reminding_model),
+                    withTitle(R.string.pref_title_medication_reminding),
                     withSummary(expectedModelName))
             ).check(matches(isDisplayed()));
             pressBack();

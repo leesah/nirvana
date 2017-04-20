@@ -54,15 +54,15 @@ public class RemindingServiceTest {
             setName("Folacin").
             setManufacturer("folsyra").
             setForm(TABLET).
-            setRepeatingModel(new Everyday()).
-            setRemindingModel(new AtCertainHours(singletonList(new TimedDosage(NINE_AM, 1)))).
+            setRepeatingStrategy(new Everyday()).
+            setRemindingStrategy(new AtCertainHours(singletonList(new TimedDosage(NINE_AM, 1)))).
             build();
     private static final Medication VALACICLOVIR = new MedicationBuilder().
             setName("Valaciclovir").
             setManufacturer("Teva").
             setForm(TABLET).
-            setRepeatingModel(new Everyday()).
-            setRemindingModel(new AtCertainHours(Arrays.asList(new TimedDosage(NINE_AM, 1), new TimedDosage(NINE_PM, 1)))).
+            setRepeatingStrategy(new Everyday()).
+            setRemindingStrategy(new AtCertainHours(Arrays.asList(new TimedDosage(NINE_AM, 1), new TimedDosage(NINE_PM, 1)))).
             build();
 
     private RemindingServiceWrapper service;

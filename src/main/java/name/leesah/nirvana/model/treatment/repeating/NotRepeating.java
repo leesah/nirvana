@@ -8,7 +8,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
  * Created by sah on 2016-12-03.
  */
 
-public class NotRepeating implements TreatmentCycleRepeatingModel {
+public class NotRepeating implements TreatmentCycleRecurringStrategy {
 
     @Override
     public TreatmentCycle getCycleForDate(final TreatmentCycle firstCycle, final LocalDate date) {

@@ -38,8 +38,8 @@ public class MedicationCard extends FrameLayout {
     public void setMedication(@NonNull Medication medication) {
         name.setText(medication.getName());
         manufacturer.setText(medication.getManufacturer());
-        reminding.setText(medication.getRemindingModel().toString(getContext()));
-        repeating.setText(medication.getRepeatingModel().toString(getContext()));
+        reminding.setText(medication.getRemindingStrategy().toString(getContext()));
+        repeating.setText(medication.getRepeatingStrategy().toString(getContext()));
         switch (medication.getForm()) {
             case CAPSULE:
                 dosageForm.setImageResource(R.drawable.ic_capsule);

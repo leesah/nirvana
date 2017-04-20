@@ -1,11 +1,9 @@
 package name.leesah.nirvana.model.medication;
 
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Period;
-import org.joda.time.ReadablePeriod;
 
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 
 /**
  * Created by sah on 2016-12-07.
@@ -15,12 +13,12 @@ public class MedicationBuilder {
     private String manufacturer;
     private DosageForm form;
     private boolean delayed = false;
-    private RepeatingModel repeatingModel;
-    private RemindingModel remindingModel;
+    private RepeatingStrategy repeatingStrategy;
+    private RemindingStrategy remindingStrategy;
     private Period delayedBy;
 
     public Medication build() {
-        return new Medication(name, manufacturer == null ? "" : manufacturer, form, delayed, delayedBy, repeatingModel, remindingModel);
+        return new Medication(name, manufacturer == null ? "" : manufacturer, form, delayed, delayedBy, repeatingStrategy, remindingStrategy);
     }
 
     public MedicationBuilder setName(String name) {
@@ -48,13 +46,13 @@ public class MedicationBuilder {
         return this;
     }
 
-    public MedicationBuilder setRepeatingModel(RepeatingModel repeatingModel) {
-        this.repeatingModel = repeatingModel;
+    public MedicationBuilder setRepeatingStrategy(RepeatingStrategy repeatingStrategy) {
+        this.repeatingStrategy = repeatingStrategy;
         return this;
     }
 
-    public MedicationBuilder setRemindingModel(RemindingModel remindingModel) {
-        this.remindingModel = remindingModel;
+    public MedicationBuilder setRemindingStrategy(RemindingStrategy remindingStrategy) {
+        this.remindingStrategy = remindingStrategy;
         return this;
     }
 

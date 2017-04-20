@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.StringUtils.join;
 /**
  * Created by sah on 2016-12-07.
  */
-public class DaysOfWeek implements RepeatingModel {
+public class DaysOfWeek implements RepeatingStrategy {
 
     private static final String TAG = DaysOfWeek.class.getSimpleName();
 

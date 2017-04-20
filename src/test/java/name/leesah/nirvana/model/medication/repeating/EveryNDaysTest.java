@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class EveryNDaysTest {
 
-    private RepeatingModel model;
+    private RepeatingStrategy model;
     private TreatmentCycle random30DayCycle;
     private LocalDate firstDay;
     private int n;

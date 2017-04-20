@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 
@@ -22,7 +22,7 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
     private CertainHoursEditFragment certainHours = new CertainHoursEditFragment();
     private EveryNHoursEditFragment everyNHours = new EveryNHoursEditFragment();
     private MedicationActivity.ValidityReportListener validityReportListener;
-    private RemindingModel editingExisting;
+    private RemindingStrategy editingExisting;
     private ListPreference models;
 
     @Override
@@ -30,7 +30,7 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefscr_reminding_model);
 
-        models = (ListPreference) findPreference(getString(R.string.pref_key_medication_reminding_model));
+        models = (ListPreference) findPreference(getString(R.string.pref_key_medication_reminding));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));
     }
 
@@ -71,7 +71,7 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
         return false;
     }
 
-    public RemindingModel readModel() {
+    public RemindingStrategy readModel() {
         return getCurrentFragment().readModel();
     }
 
@@ -80,7 +80,7 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
         everyNHours.setValidityReportListener(listener);
     }
 
-    public void setEditingExisting(RemindingModel editExisting) {
+    public void setEditingExisting(RemindingStrategy editExisting) {
         this.editingExisting = editExisting;
     }
 }

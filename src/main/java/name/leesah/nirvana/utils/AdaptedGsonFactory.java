@@ -6,11 +6,10 @@ import com.google.gson.GsonBuilder;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
-import org.joda.time.ReadablePeriod;
 
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRepeatingModel;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
 
 /**
  * Created by sah on 2016-12-07.
@@ -20,9 +19,9 @@ public class AdaptedGsonFactory {
 
     public static Gson getGson() {
         return new GsonBuilder()
-                .registerTypeAdapter(TreatmentCycleRepeatingModel.class, new MetaKeyBasedGenericTypeAdapter<TreatmentCycleRepeatingModel>())
-                .registerTypeAdapter(RepeatingModel.class, new MetaKeyBasedGenericTypeAdapter<RepeatingModel>())
-                .registerTypeAdapter(RemindingModel.class, new MetaKeyBasedGenericTypeAdapter<RemindingModel>())
+                .registerTypeAdapter(TreatmentCycleRecurringStrategy.class, new MetaKeyBasedGenericTypeAdapter<TreatmentCycleRecurringStrategy>())
+                .registerTypeAdapter(RepeatingStrategy.class, new MetaKeyBasedGenericTypeAdapter<RepeatingStrategy>())
+                .registerTypeAdapter(RemindingStrategy.class, new MetaKeyBasedGenericTypeAdapter<RemindingStrategy>())
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
                 .registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter())
                 .registerTypeAdapter(Period.class, new PeriodTypeAdapter())
