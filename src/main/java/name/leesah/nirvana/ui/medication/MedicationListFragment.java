@@ -10,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +22,9 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.ui.tweaks.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
-import static name.leesah.nirvana.ui.medication.MedicationEditActivity.ACTION_ADD_MEDICATION;
-import static name.leesah.nirvana.ui.medication.MedicationEditActivity.ACTION_EDIT_MEDICATION;
-import static name.leesah.nirvana.ui.medication.MedicationEditActivity.EXTRA_MEDICATION_ID;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -59,13 +57,13 @@ public class MedicationListFragment extends Fragment {
     }
 
     public void addMedication(View view) {
-        Intent intent = new Intent(getContext(), MedicationEditActivity.class)
+        Intent intent = new Intent(getContext(), MedicationActivity.class)
                 .setAction(ACTION_ADD_MEDICATION);
         startActivityForResult(intent, REQUEST_CODE_ADD_MEDICATION);
     }
 
     private void editMedication(int medicationId) {
-        Intent intent = new Intent(getContext(), MedicationEditActivity.class)
+        Intent intent = new Intent(getContext(), MedicationActivity.class)
                 .setAction(ACTION_EDIT_MEDICATION)
                 .putExtra(EXTRA_MEDICATION_ID, medicationId);
         startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICATION);

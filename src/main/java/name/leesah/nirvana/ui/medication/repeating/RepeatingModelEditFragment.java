@@ -3,7 +3,7 @@ package name.leesah.nirvana.ui.medication.repeating;
 import android.app.Fragment;
 
 import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
-import name.leesah.nirvana.ui.medication.MedicationEditActivity;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
 
 /**
  * Created by sah on 2017-04-16.
@@ -11,11 +11,11 @@ import name.leesah.nirvana.ui.medication.MedicationEditActivity;
 
 abstract class RepeatingModelEditFragment extends Fragment{
 
-    private MedicationEditActivity.ValidityReportListener validityReportListener;
+    private MedicationActivity.ValidityReportListener validityReportListener;
 
     public abstract RepeatingModel readModel();
 
-    public void setValidityReportListener(MedicationEditActivity.ValidityReportListener listener) {
+    public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
         this.validityReportListener = listener;
     }
 

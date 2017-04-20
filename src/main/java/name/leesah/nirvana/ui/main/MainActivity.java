@@ -1,4 +1,4 @@
-package name.leesah.nirvana.ui;
+package name.leesah.nirvana.ui.main;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import name.leesah.nirvana.ui.reminder.RemindersOfDayFragment;
 import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
 import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentRepeatingModelSelectFragment;
-import name.leesah.nirvana.ui.settings.TreatmentSettingsFragment;
+import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 

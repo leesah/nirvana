@@ -28,9 +28,9 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static java.lang.String.format;
 
-public class MedicationEditActivity extends AppCompatActivity {
+public class MedicationActivity extends AppCompatActivity {
 
-    private static final String TAG = MedicationEditActivity.class.getSimpleName();
+    private static final String TAG = MedicationActivity.class.getSimpleName();
 
     public static final String ACTION_ADD_MEDICATION = "name.leesah.nirvana:action:ADD_MEDICATION";
     public static final String ACTION_EDIT_MEDICATION = "name.leesah.nirvana:action:EDIT_MEDICATION";

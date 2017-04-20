@@ -1,19 +1,13 @@
 package name.leesah.nirvana.ui.medication.repeating;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
-import name.leesah.nirvana.ui.medication.MedicationEditActivity;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
 
 /**
@@ -58,7 +52,7 @@ public class RepeatingModelSelectFragment extends ListAndDetailsPreferenceFragme
         return getCurrentFragment().readModel();
     }
 
-    public void setValidityReportListener(MedicationEditActivity.ValidityReportListener listener) {
+    public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
         everyday.setValidityReportListener(listener);
         daysOfWeek.setValidityReportListener(listener);
         everyNDays.setValidityReportListener(listener);

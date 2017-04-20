@@ -3,18 +3,18 @@ package name.leesah.nirvana.ui.medication.reminding;
 import android.app.Fragment;
 
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
-import name.leesah.nirvana.ui.medication.MedicationEditActivity;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
 
 /**
  * Created by sah on 2016-12-11.
  */
 public abstract class RemindingModelEditFragment extends Fragment {
 
-    private MedicationEditActivity.ValidityReportListener validityReportListener;
+    private MedicationActivity.ValidityReportListener validityReportListener;
 
     public abstract RemindingModel readModel();
 
-    public void setValidityReportListener(MedicationEditActivity.ValidityReportListener listener) {
+    public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
         this.validityReportListener = listener;
     }
 

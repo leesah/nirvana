@@ -26,12 +26,10 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
-import name.leesah.nirvana.model.medication.reminding.RemindingModel;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
-import name.leesah.nirvana.model.medication.repeating.RepeatingModel;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.MainActivity;
+import name.leesah.nirvana.ui.main.MainActivity;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
@@ -63,7 +61,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by sah on 2017-04-06.
  */
-public class AddMedicationTest {
+public class MedicationActivityAddTest {
     private static final TimedDosage MORNING_DOSE = new TimedDosage(new LocalTime(0).withHourOfDay(9).withMinuteOfHour(15), 1);
     private static final TimedDosage EVENING_DOSE = new TimedDosage(new LocalTime(0).withHourOfDay(21).withMinuteOfHour(15), 1);
     @Rule
@@ -120,17 +118,16 @@ public class AddMedicationTest {
     }
 
     private void inputBasics() {
-        typeIntoEditTextPreference(R.string.pref_title_medication_name, "Valaciclovir");
-        typeIntoEditTextPreference(R.string.pref_title_medication_manufacturer, "Bluefish");
+        onView(withText(R.string.pref_title_medication_name)).perform(click());
+        onView(withClassName(is(EditText.class.getName()))).perform(typeText("Valaciclovir"));
+        clickOk();
+
+        onView(withText(R.string.pref_title_medication_manufacturer)).perform(click());
+        onView(withClassName(is(EditText.class.getName()))).perform(typeText("Bluefish"));
+        clickOk();
 
         onView(withText(R.string.pref_title_dosage_form)).perform(click());
         onView(withText(R.string.dosage_form_tablets)).perform(click());
-    }
-
-    private void typeIntoEditTextPreference(int prefTitle, String text) {
-        onView(withText(prefTitle)).perform(click());
-        onView(withClassName(is(EditText.class.getName()))).perform(typeText(text));
-        clickOk();
     }
 
     private void selectEveryday() {

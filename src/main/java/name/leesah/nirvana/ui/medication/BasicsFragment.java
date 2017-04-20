@@ -35,7 +35,7 @@ public class BasicsFragment extends PreferenceFragment {
     private PeriodPreference delayedPeriod;
     private Preference remindingModel;
     private Preference repeatingModel;
-    private MedicationEditActivity.ValidityReportListener validityReportListener;
+    private MedicationActivity.ValidityReportListener validityReportListener;
     private String remindingModelSummary;
     private String repeatingModelSummary;
     private Medication editingExisting;
@@ -97,7 +97,7 @@ public class BasicsFragment extends PreferenceFragment {
         outState.putString(KEY_DELAYED_PERIOD, toText(delayedPeriod.getPeriod()));
     }
 
-    public void setValidityReportListener(MedicationEditActivity.ValidityReportListener listener) {
+    public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
         this.validityReportListener = listener;
     }
 

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * Created by sah on 2017-04-20.
  */
 @Ignore("Not yet implemented.")
-public class SchedulingServiceTest {
+public class ReminderIntegrationTest {
     @Before
     public void setUp() throws Exception {
     }
@@ -21,7 +21,22 @@ public class SchedulingServiceTest {
     }
 
     @Test
-    public void runAtMidnight() throws Exception {
+    public void showReminder() throws Exception {
+
+    }
+
+    @Test
+    public void snoozeReminder() throws Exception {
+
+    }
+
+    @Test
+    public void confirmReminder() throws Exception {
+
+    }
+
+    @Test
+    public void showReminderDetails() throws Exception {
 
     }
 }

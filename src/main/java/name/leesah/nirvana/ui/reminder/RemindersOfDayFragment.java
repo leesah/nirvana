@@ -23,7 +23,7 @@ import name.leesah.nirvana.data.Nurse;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static name.leesah.nirvana.ui.reminder.ReminderCard.*;
+import static name.leesah.nirvana.ui.reminder.ReminderCardData.*;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.LocalTime.now;
 
@@ -39,7 +39,7 @@ public class RemindersOfDayFragment extends Fragment {
             .appendMinutes()
             .appendSuffix(" minute", " minutes")
             .toFormatter();
-    private List<ReminderCard> cards = new ArrayList<>();
+    private List<ReminderCardData> cards = new ArrayList<>();
 
     @Nullable
     @Override
@@ -63,16 +63,16 @@ public class RemindersOfDayFragment extends Fragment {
                 .getReminders(today()).stream()
                 .collect(groupingBy(Reminder::getTime, toList()))
                 .entrySet().stream()
-                .map(entry -> new TiledRemindersCard(entry.getKey(), entry.getValue()))
+                .map(entry -> new TiledReminders(entry.getKey(), entry.getValue()))
                 .sorted()
                 .collect(toList());
 
         if (!cards.isEmpty()) {
             int indexOfFirstCardInTheFuture = (int) cards.stream().filter(card -> card.time.isBefore(now())).count();
             if (indexOfFirstCardInTheFuture == cards.size())
-                cards.add(new NoteCard(now(), getString(R.string.note_no_more_intakes)));
+                cards.add(new NoteAmongReminders(now(), getString(R.string.note_no_more_intakes)));
             else
-                cards.add(indexOfFirstCardInTheFuture, new NoteCard(now(), getString(R.string.note_time_until_next_intake, new Period(now(), cards.get(indexOfFirstCardInTheFuture).time).plus(Minutes.ONE).toString(PERIOD_FORMATTER))));
+                cards.add(indexOfFirstCardInTheFuture, new NoteAmongReminders(now(), getString(R.string.note_time_until_next_intake, new Period(now(), cards.get(indexOfFirstCardInTheFuture).time).plus(Minutes.ONE).toString(PERIOD_FORMATTER))));
         }
     }
 

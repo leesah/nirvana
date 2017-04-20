@@ -10,7 +10,7 @@ import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingModel;
 import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
-import name.leesah.nirvana.ui.medication.MedicationEditActivity;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
 
 /**
  * Created by sah on 2017-04-15.
@@ -20,7 +20,7 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
 
     private CertainHoursEditFragment certainHours = new CertainHoursEditFragment();
     private EveryNHoursEditFragment everyNHours = new EveryNHoursEditFragment();
-    private MedicationEditActivity.ValidityReportListener validityReportListener;
+    private MedicationActivity.ValidityReportListener validityReportListener;
     private RemindingModel editExisting;
     private ListPreference models;
 
@@ -73,7 +73,7 @@ public class RemindingModelSelectFragment extends ListAndDetailsPreferenceFragme
         return getCurrentFragment().readModel();
     }
 
-    public void setValidityReportListener(MedicationEditActivity.ValidityReportListener listener) {
+    public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
         certainHours.setValidityReportListener(listener);
         everyNHours.setValidityReportListener(listener);
     }

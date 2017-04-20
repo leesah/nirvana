@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * Created by sah on 2017-04-20.
  */
 @Ignore("Not yet implemented.")
-public class SchedulingServiceTest {
+public class NotificationSecretaryTest {
     @Before
     public void setUp() throws Exception {
     }
@@ -21,7 +21,11 @@ public class SchedulingServiceTest {
     }
 
     @Test
-    public void runAtMidnight() throws Exception {
-
+    public void display() throws Exception {
     }
+
+    @Test
+    public void dismiss() throws Exception {
+    }
+
 }

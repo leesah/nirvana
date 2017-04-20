@@ -1,4 +1,4 @@
-package name.leesah.nirvana.ui.settings;
+package name.leesah.nirvana.ui.settings.treatment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

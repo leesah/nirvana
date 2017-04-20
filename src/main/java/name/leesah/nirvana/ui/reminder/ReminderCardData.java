@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,44 +30,44 @@ import static name.leesah.nirvana.model.reminder.Reminder.State.DONE;
 /**
  * Created by sah on 2017-04-19.
  */
-class ReminderCard implements Comparable<ReminderCard> {
-    private static final String TAG = ReminderCard.class.getSimpleName();
+class ReminderCardData implements Comparable<ReminderCardData> {
+    private static final String TAG = ReminderCardData.class.getSimpleName();
 
     protected final LocalTime time;
 
-    ReminderCard(LocalTime time) {
+    ReminderCardData(LocalTime time) {
         this.time = time;
     }
 
     @Override
-    public int compareTo(@NonNull ReminderCard that) {
+    public int compareTo(@NonNull ReminderCardData that) {
         return this.time.compareTo(that.time);
     }
 
-    public static class TiledRemindersCard extends ReminderCard {
+    public static class TiledReminders extends ReminderCardData {
         final private List<Reminder> reminders;
 
-        public TiledRemindersCard(LocalTime time, List<Reminder> reminders) {
+        public TiledReminders(LocalTime time, List<Reminder> reminders) {
             super(time);
             this.reminders = reminders;
         }
 
     }
 
-    public static class NoteCard extends ReminderCard {
+    public static class NoteAmongReminders extends ReminderCardData {
         private final String title;
 
-        public NoteCard(LocalTime time, String title) {
+        public NoteAmongReminders(LocalTime time, String title) {
             super(time);
             this.title = title;
         }
     }
 
-    static class ReminderCardArrayAdapter extends ArrayAdapter<ReminderCard> {
+    static class ReminderCardArrayAdapter extends ArrayAdapter<ReminderCardData> {
         private static final int REMINDERS_CARD_LAYOUT = R.layout.reminder_card;
         private static final int NOTE_CARD_LAYOUT = R.layout.reminder_card_note;
 
-        public ReminderCardArrayAdapter(Context context, List<ReminderCard> objects) {
+        public ReminderCardArrayAdapter(Context context, List<ReminderCardData> objects) {
             super(context, 0, objects);
         }
 
@@ -78,13 +77,13 @@ class ReminderCard implements Comparable<ReminderCard> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View view;
 
-            ReminderCard item = getItem(position);
+            ReminderCardData item = getItem(position);
             assert item != null;
 
-            if (item instanceof TiledRemindersCard) {
+            if (item instanceof TiledReminders) {
                 view = inflater.inflate(REMINDERS_CARD_LAYOUT, parent, false);
 
-                TiledRemindersCard card = (TiledRemindersCard) item;
+                TiledReminders card = (TiledReminders) item;
                 ListView remindersListView = (ListView) view.findViewById(R.id.tiled_reminders);
                 remindersListView.setAdapter(new ReminderArrayAdapter(getContext(), card.reminders));
                 refreshListViewHeight(remindersListView);
@@ -92,7 +91,7 @@ class ReminderCard implements Comparable<ReminderCard> {
             } else {
                 view = inflater.inflate(NOTE_CARD_LAYOUT, parent, false);
 
-                NoteCard card = (NoteCard) item;
+                NoteAmongReminders card = (NoteAmongReminders) item;
                 TextView textViewTitle = (TextView) view.findViewById(R.id.note);
                 textViewTitle.setText(card.title);
             }
@@ -103,7 +102,7 @@ class ReminderCard implements Comparable<ReminderCard> {
 
         @Override
         public int getItemViewType(int position) {
-            return getItem(position) instanceof TiledRemindersCard ? 0 : 1;
+            return getItem(position) instanceof TiledReminders ? 0 : 1;
         }
 
         @Override
