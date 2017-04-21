@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.treatment.repeating;
+package name.leesah.nirvana.model.treatment.recurring;
 
 import org.joda.time.LocalDate;
 
@@ -21,7 +21,7 @@ public class UntilDateTest extends CycleRepeatingModelTest {
     }
 
     @Override
-    protected TreatmentCycleRecurringStrategy getModelInstance() {
+    protected RecurringStrategy getModelInstance() {
         return new UntilDate(untilDate);
     }
 

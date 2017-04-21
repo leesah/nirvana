@@ -9,7 +9,7 @@ import org.joda.time.Period;
 
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
 /**
  * Created by sah on 2016-12-07.
@@ -19,7 +19,7 @@ public class AdaptedGsonFactory {
 
     public static Gson getGson() {
         return new GsonBuilder()
-                .registerTypeAdapter(TreatmentCycleRecurringStrategy.class, new MetaKeyBasedGenericTypeAdapter<TreatmentCycleRecurringStrategy>())
+                .registerTypeAdapter(RecurringStrategy.class, new MetaKeyBasedGenericTypeAdapter<RecurringStrategy>())
                 .registerTypeAdapter(RepeatingStrategy.class, new MetaKeyBasedGenericTypeAdapter<RepeatingStrategy>())
                 .registerTypeAdapter(RemindingStrategy.class, new MetaKeyBasedGenericTypeAdapter<RemindingStrategy>())
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())

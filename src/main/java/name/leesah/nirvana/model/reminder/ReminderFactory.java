@@ -7,13 +7,15 @@ import android.util.Log;
 import org.joda.time.LocalDate;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
+import name.leesah.nirvana.model.medication.Medication;
+import name.leesah.nirvana.model.treatment.TreatmentCycle;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
+import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.Days.days;
@@ -43,13 +45,13 @@ public class ReminderFactory {
         TreatmentCycle cycle = therapist.getTreatmentCycle(date);
         if (cycle == null) {
             Log.i(TAG, "Not in a treatment cycle. Not creating reminders.");
-            return new ArraySet<>();
+            return emptySet();
         }
 
         Set<Medication> medications = pharmacist.getMedications();
         Set<Reminder> reminders = medications.stream()
                 .flatMap(medication -> createReminders(medication, cycle, date).stream())
-                .collect(Collectors.toSet());
+                .collect(toSet());
 
         Log.i(TAG, String.format("Created %d reminder(s) for %s.", reminders.size(), toText(date)));
         return reminders;
@@ -60,7 +62,7 @@ public class ReminderFactory {
                 && !cycle.getFirstDay().plus(medication.isDelayed() ? medication.getDelayedPeriod() : days(0)).isAfter(date))
             return medication.getRemindingStrategy().getRemindersThroughDay(medication, today());
         else
-            return new ArraySet<>();
+            return emptySet();
     }
 
 }

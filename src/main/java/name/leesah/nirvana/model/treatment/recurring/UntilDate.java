@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.treatment.repeating;
+package name.leesah.nirvana.model.treatment.recurring;
 
 import org.joda.time.LocalDate;
 
@@ -11,7 +11,7 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
  * Created by sah on 2016-12-03.
  */
 
-public class UntilDate implements TreatmentCycleRecurringStrategy {
+public class UntilDate implements RecurringStrategy {
 
     private LocalDate lastDay;
 

@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.treatment.repeating;
+package name.leesah.nirvana.model.treatment.recurring;
 
 import org.joda.time.LocalDate;
 
@@ -9,6 +9,6 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 /**
  * Created by sah on 2016-12-06.
  */
-public interface TreatmentCycleRecurringStrategy extends Serializable {
+public interface RecurringStrategy extends Serializable {
     TreatmentCycle getCycleForDate(TreatmentCycle firstCycle, LocalDate date);
 }

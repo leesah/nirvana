@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.treatment.repeating;
+package name.leesah.nirvana.model.treatment.recurring;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 public class NotRepeatingTest extends CycleRepeatingModelTest {
 
     @Override
-    protected TreatmentCycleRecurringStrategy getModelInstance() {
+    protected RecurringStrategy getModelInstance() {
         return new NotRepeating();
     }
 

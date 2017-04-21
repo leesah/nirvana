@@ -11,10 +11,10 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.Treatment;
 import name.leesah.nirvana.model.treatment.TreatmentBuilder;
 import name.leesah.nirvana.model.treatment.TreatmentCycle;
-import name.leesah.nirvana.model.treatment.repeating.NotRepeating;
-import name.leesah.nirvana.model.treatment.repeating.NTimes;
-import name.leesah.nirvana.model.treatment.repeating.UntilDate;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.NotRepeating;
+import name.leesah.nirvana.model.treatment.recurring.NTimes;
+import name.leesah.nirvana.model.treatment.recurring.UntilDate;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
@@ -69,7 +69,7 @@ public class Therapist extends DataHolder {
         return new TreatmentBuilder()
                 .setFirstDay(loadLocalDate())
                 .setCycleLength(loadCycleLength())
-                .setTreatmentCycleRecurringStrategy(loadRepeatingModel())
+                .setRecurringStrategy(loadRepeatingModel())
                 .build();
     }
 
@@ -89,7 +89,7 @@ public class Therapist extends DataHolder {
         return DateTimeHelper.toPeriod(text);
     }
 
-    private TreatmentCycleRecurringStrategy loadRepeatingModel() {
+    private RecurringStrategy loadRepeatingModel() {
         String text = preferences.getString(resources.getString(R.string.pref_key_treatment_recurring), "");
 
         if (text.equals(resources.getString(R.string.treatment_recurring_none)))
@@ -106,7 +106,7 @@ public class Therapist extends DataHolder {
     }
 
 
-    private TreatmentCycleRecurringStrategy loadRepeatingNTimes() {
+    private RecurringStrategy loadRepeatingNTimes() {
         int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), -1);
         if (n < 0) {
             Log.wtf(TAG, format("Unexpected n for [%s]: [%d]. Using [%s] as default.",
@@ -117,7 +117,7 @@ public class Therapist extends DataHolder {
         return new NTimes(n);
     }
 
-    private TreatmentCycleRecurringStrategy loadRepeatingUntilDate() {
+    private RecurringStrategy loadRepeatingUntilDate() {
         String key = resources.getString(R.string.pref_key_treatment_recurring_until_date);
         String text = preferences.getString(key, null);
         if (TextUtils.isEmpty(text)) {

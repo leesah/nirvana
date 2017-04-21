@@ -5,7 +5,7 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePeriod;
 
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
 import static java.lang.String.format;
 
@@ -17,15 +17,15 @@ public class Treatment {
 
     private LocalDate firstDay;
     private final ReadablePeriod cycleLength;
-    private TreatmentCycleRecurringStrategy repeatingModel;
+    private RecurringStrategy repeatingModel;
 
-    Treatment(LocalDate firstDay, ReadablePeriod cycleLength, TreatmentCycleRecurringStrategy repeatingModel) {
+    Treatment(LocalDate firstDay, ReadablePeriod cycleLength, RecurringStrategy repeatingModel) {
         this.firstDay = firstDay;
         this.cycleLength = cycleLength;
         this.repeatingModel = repeatingModel;
     }
 
-    public TreatmentCycleRecurringStrategy getRepeatingModel() {
+    public RecurringStrategy getRepeatingModel() {
         return repeatingModel;
     }
 

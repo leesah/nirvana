@@ -4,7 +4,7 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePeriod;
 
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
 /**
  * Created by sah on 2016-12-07.
@@ -12,10 +12,10 @@ import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStra
 public class TreatmentBuilder {
     private LocalDate firstDay;
     private ReadablePeriod cycleLength;
-    private TreatmentCycleRecurringStrategy treatmentCycleRecurringStrategy;
+    private RecurringStrategy recurringStrategy;
 
     public Treatment build() {
-        return new Treatment(firstDay, cycleLength, treatmentCycleRecurringStrategy);
+        return new Treatment(firstDay, cycleLength, recurringStrategy);
     }
 
     public TreatmentBuilder setFirstDay(LocalDate firstDay) {
@@ -23,8 +23,8 @@ public class TreatmentBuilder {
         return this;
     }
 
-    public TreatmentBuilder setTreatmentCycleRecurringStrategy(TreatmentCycleRecurringStrategy treatmentCycleRecurringStrategy) {
-        this.treatmentCycleRecurringStrategy = treatmentCycleRecurringStrategy;
+    public TreatmentBuilder setRecurringStrategy(RecurringStrategy recurringStrategy) {
+        this.recurringStrategy = recurringStrategy;
         return this;
     }
 

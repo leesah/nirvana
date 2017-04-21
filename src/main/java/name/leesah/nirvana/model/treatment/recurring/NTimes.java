@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.treatment.repeating;
+package name.leesah.nirvana.model.treatment.recurring;
 
 import org.joda.time.LocalDate;
 
@@ -11,7 +11,7 @@ import static java.lang.String.format;
  * Created by sah on 2016-12-03.
  */
 
-public class NTimes implements TreatmentCycleRecurringStrategy {
+public class NTimes implements RecurringStrategy {
 
     private int n;
 

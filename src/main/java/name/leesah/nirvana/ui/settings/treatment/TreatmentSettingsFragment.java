@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.treatment.repeating.TreatmentCycleRecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 import name.leesah.nirvana.ui.tweaks.DatePreference;
 import name.leesah.nirvana.ui.tweaks.PeriodPreference;
 
@@ -27,7 +27,7 @@ public class TreatmentSettingsFragment extends PreferenceFragment {
     private PeriodPreference lengthPreference;
     private Preference repeatingModelPreference;
     private Preference.OnPreferenceClickListener repeatingModelListener;
-    private TreatmentCycleRecurringStrategy repeatingModel;
+    private RecurringStrategy repeatingModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

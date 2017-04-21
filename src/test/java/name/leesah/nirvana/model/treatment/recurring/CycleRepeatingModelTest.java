@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.treatment.repeating;
+package name.leesah.nirvana.model.treatment.recurring;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -44,7 +44,7 @@ public abstract class CycleRepeatingModelTest {
         assertNull(getModelInstance().getCycleForDate(firstCycle, getAVeryLateDate()));
     }
 
-    protected abstract TreatmentCycleRecurringStrategy getModelInstance();
+    protected abstract RecurringStrategy getModelInstance();
 
     protected abstract LocalDate getAVeryLateDate();
 
