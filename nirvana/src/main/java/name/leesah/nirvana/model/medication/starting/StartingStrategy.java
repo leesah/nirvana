@@ -1,4 +1,4 @@
-package name.leesah.nirvana.model.medication.stopping;
+package name.leesah.nirvana.model.medication.starting;
 
 import android.content.Context;
 
@@ -10,10 +10,9 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
  * Created by sah on 2017-04-21.
  */
 
-public interface StoppingStrategy {
+public interface StartingStrategy {
 
-    LocalDate getLastDay(LocalDate firstDay);
+    LocalDate getFirstDay(TreatmentCycle cycle);
 
     String toString(Context context);
-
 }

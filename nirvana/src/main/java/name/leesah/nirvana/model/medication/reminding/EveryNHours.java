@@ -17,6 +17,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
 import static java.lang.String.format;
+import static java.util.Collections.*;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
@@ -47,7 +48,7 @@ public class EveryNHours implements RemindingStrategy {
     @NonNull
     @Override
     public Set<Reminder> getRemindersThroughDay(Medication medication, LocalDate date) {
-        List<Integer> hours = calculateHoursTillMidnight(firstDose.getTimeOfDay().getHourOfDay(), n, Collections.emptyList());
+        List<Integer> hours = calculateHoursTillMidnight(firstDose.getTimeOfDay().getHourOfDay(), n, emptyList());
         return hours.stream()
                 .map(h -> new Reminder(date, firstDose.getTimeOfDay().withHourOfDay(h), medication.getId(), firstDose.getAmount()))
                 .collect(toSet());

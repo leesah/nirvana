@@ -11,6 +11,8 @@ import java.util.Set;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.model.treatment.TreatmentCycle;
 
 import static java.util.Collections.emptyList;
@@ -59,10 +61,15 @@ public class ReminderFactory {
 
     private Set<Reminder> createReminders(Medication medication, TreatmentCycle cycle, LocalDate date) {
         if (medication.getRepeatingStrategy().matchesDate(cycle, date)
-                && !cycle.getFirstDay().plus(medication.isDelayed() ? medication.getDelayedPeriod() : days(0)).isAfter(date))
-            return medication.getRemindingStrategy().getRemindersThroughDay(medication, today());
+                && trim(cycle, medication.getStartingStrategy(), medication.getStoppingStrategy()).contains(date))
+            return medication.getRemindingStrategy().getRemindersThroughDay(medication, date);
         else
             return emptySet();
+    }
+
+    private TreatmentCycle trim(TreatmentCycle cycle, StartingStrategy startingStrategy, StoppingStrategy stoppingStrategy) {
+        LocalDate firstDay = startingStrategy.getFirstDay(cycle);
+        return new TreatmentCycle(firstDay, stoppingStrategy.getLastDay(firstDay));
     }
 
 }

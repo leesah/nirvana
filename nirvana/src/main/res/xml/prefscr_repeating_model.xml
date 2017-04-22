@@ -4,8 +4,8 @@
         <ListPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/medication_repeating_models"
-            android:entryValues="@array/medication_repeating_models"
+            android:entries="@array/medication_repeating_strategies"
+            android:entryValues="@array/medication_repeating_strategies"
             android:key="@string/pref_key_medication_repeating"
             android:summary="%s"
             android:title="@string/pref_title_medication_repeating" />

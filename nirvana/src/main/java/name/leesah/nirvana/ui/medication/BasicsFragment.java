@@ -48,8 +48,8 @@ public class BasicsFragment extends PreferenceFragment {
         name = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_name));
         manufacturer = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_manufacturer));
         dosageForm = (ListPreference) findPreference(getString(R.string.pref_key_medication_dosage_form));
-        delayed = (SwitchPreference) findPreference(getString(R.string.pref_key_medication_delay_enabled));
-        delayedPeriod = (PeriodPreference) findPreference(getString(R.string.pref_key_medication_delay_period));
+        delayed = (SwitchPreference) findPreference(getString(R.string.pref_key_medication_starting_delay_enabled));
+        delayedPeriod = (PeriodPreference) findPreference(getString(R.string.pref_key_medication_starting_delay_period));
         remindingModel = findPreference(getString(R.string.pref_key_medication_reminding));
         repeatingModel = findPreference(getString(R.string.pref_key_medication_repeating));
 

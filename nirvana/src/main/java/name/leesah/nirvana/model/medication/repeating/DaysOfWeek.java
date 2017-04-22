@@ -69,7 +69,7 @@ public class DaysOfWeek implements RepeatingStrategy {
     @Override
     public String toString(Context context) {
         String days = join(asStrings(), context.getString(R.string.comma_equivalent));
-        return context.getString(R.string.medication_repeating_var_days_of_week, days);
+        return context.getString(R.string.to_string_medication_repeating_days_of_week, days);
     }
 
     private List<String> asStrings() {
