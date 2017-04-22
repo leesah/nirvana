@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_treatment_enabled"
+        android:summary="@string/pref_summary_treatment_enabled"
+        android:title="@string/pref_title_treatment_enabled" />
+
+    <PreferenceCategory
+        android:dependency="@string/pref_key_treatment_enabled"
+        android:title="@string/prefcat_title_treatment_first_cycle">
+
+        <name.leesah.nirvana.ui.tweaks.DatePreference
+            android:dependency="@string/pref_key_treatment_enabled"
+            android:key="@string/pref_key_treatment_first_day"
+            android:title="@string/pref_title_treatment_first_day" />
+
+        <name.leesah.nirvana.ui.tweaks.PeriodPreference
+            android:dependency="@string/pref_key_treatment_enabled"
+            android:key="@string/pref_key_treatment_cycle_length"
+            android:title="@string/pref_title_treatment_cycle_length" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="@string/pref_key_treatment_enabled"
+        android:title="@string/prefcat_title_treatment_recurring">
+
+        <Preference
+            android:dependency="@string/pref_key_treatment_enabled"
+            android:key="@string/pref_key_treatment_recurring"
+            android:title="@string/pref_title_treatment_repeating" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightLarge"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20">
+
+                <View
+                    android:id="@+id/view_vertical_line"
+                    android:layout_width="8dp"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/accent" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightLarge">
+
+                    <TextView
+                        android:id="@+id/time"
+                        style="@style/textViewStyle.ReminderCard.Time.Note"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/cardview_dark_background"
+                        android:padding="8dp"
+                        android:text="21:00"
+                        android:textAlignment="center" />
+                </FrameLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart">
+
+                <TextView
+                    android:id="@+id/note"
+                    style="@style/textViewStyle.ReminderCard.Primary.Note"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="No more intakes today." />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
