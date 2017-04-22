@@ -1,20 +1,8 @@
 apply plugin: 'com.android.application'
 
-def keystorePropertiesFile = file("/home/sah/.android/freeSigning.properties");
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
-    signingConfigs {
-        freeConfig {
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-        }
-    }
     defaultConfig {
         applicationId "name.leesah.nirvana"
         minSdkVersion 24
@@ -22,26 +10,16 @@ android {
         versionCode 12
         versionName 'HRB12'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.freeConfig
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.freeConfig
-        }
-        debug {
-            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.freeConfig
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    productFlavors {
     }
 }
 
