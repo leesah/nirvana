@@ -26,6 +26,6 @@ public class EveryNDays implements RepeatingStrategy {
 
     @Override
     public String toString(Context context) {
-        return context.getString(R.string.medication_repeating_every_var_days, n);
+        return context.getString(R.string.to_string_medication_repeating_every_n_days, n);
     }
 }

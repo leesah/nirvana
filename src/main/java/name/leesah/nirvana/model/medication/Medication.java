@@ -6,6 +6,8 @@ import org.joda.time.Period;
 
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.utils.IdentityHelper;
 
 /**
@@ -22,6 +24,8 @@ public class Medication {
     private final Period delayedBy;
     private RepeatingStrategy repeatingStrategy;
     private RemindingStrategy remindingStrategy;
+    private StartingStrategy startingStrategy;
+    private StoppingStrategy stoppingStrategy;
 
     public Medication(String name, String manufacturer, DosageForm form, boolean delayed, Period delayedBy, RepeatingStrategy repeatingStrategy, RemindingStrategy remindingStrategy) {
         this.id = IdentityHelper.uniqueInt();
@@ -66,11 +70,12 @@ public class Medication {
         return remindingStrategy;
     }
 
+    @Deprecated
     public boolean isDelayed() {
         return delayed;
     }
 
-    @Nullable
+    @Nullable @Deprecated
     public Period getDelayedPeriod() {
         return delayedBy;
     }
@@ -80,4 +85,11 @@ public class Medication {
         return String.format("Medication {id=[%d], n=[%s]}", id, name);
     }
 
+    public StartingStrategy getStartingStrategy() {
+        return startingStrategy;
+    }
+
+    public StoppingStrategy getStoppingStrategy() {
+        return stoppingStrategy;
+    }
 }

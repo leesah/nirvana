@@ -3,8 +3,8 @@
     <PreferenceCategory android:title="@string/prefcat_title_treatment_recurring">
 
         <ListPreference
-            android:entries="@array/cycle_repeating_models"
-            android:entryValues="@array/cycle_repeating_models"
+            android:entries="@array/cycle_recurring_strategies"
+            android:entryValues="@array/cycle_recurring_strategies"
             android:defaultValue="@string/treatment_recurring_none"
             android:key="@string/pref_key_treatment_recurring"
             android:summary="%s"

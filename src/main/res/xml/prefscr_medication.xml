@@ -26,7 +26,6 @@
 
         <ListPreference
             android:entries="@array/dosage_forms"
-            android:entryValues="@array/dosage_forms"
             android:key="@string/pref_key_medication_dosage_form"
             android:negativeButtonText="@null"
             android:persistent="false"
@@ -36,13 +35,32 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefcat_title_medication_strategies">
+        <SwitchPreference
+            android:key="@string/pref_key_medication_starting"
+            android:persistent="false"
+            android:title="@string/pref_title_medication_starting" />
+        <name.leesah.nirvana.ui.tweaks.PeriodPreference
+            android:dependency="@string/pref_key_medication_starting"
+            android:key="@string/pref_key_medication_starting_delay_period"
+            android:persistent="false"
+            android:title="@string/pref_title_medication_starting" />
+
         <Preference
             android:key="@string/pref_key_medication_repeating"
             android:title="@string/pref_title_medication_repeating" />
-
         <Preference
             android:key="@string/pref_key_medication_reminding"
             android:title="@string/pref_title_medication_reminding" />
+
+        <SwitchPreference
+            android:key="@string/pref_key_medication_stopping"
+            android:persistent="false"
+            android:title="@string/pref_title_medication_stopping" />
+        <name.leesah.nirvana.ui.tweaks.PeriodPreference
+            android:dependency="@string/pref_key_medication_stopping"
+            android:key="@string/pref_key_medication_stopping_after_period"
+            android:persistent="false"
+            android:title="@string/pref_title_medication_stopping" />
 
     </PreferenceCategory>
 
