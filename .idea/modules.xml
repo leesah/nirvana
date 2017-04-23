@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Nevermind.iml" filepath="$PROJECT_DIR$/Nevermind.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nirvana/nirvana.iml" filepath="$PROJECT_DIR$/nirvana/nirvana.iml" />
+    </modules>
+  </component>
+</project>
