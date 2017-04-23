@@ -21,8 +21,8 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
 import name.leesah.nirvana.ui.medication.reminding.RemindingModelSelectFragment;
 import name.leesah.nirvana.ui.medication.repeating.RepeatingModelSelectFragment;
-import name.leesah.nirvana.utils.DateTimeHelper;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
+import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;

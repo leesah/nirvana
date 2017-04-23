@@ -16,10 +16,8 @@ import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
-import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
 import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_VALUES;
-import static org.parceler.Parcels.wrap;
 
 public class EveryNHoursEditFragment extends RemindingModelEditFragment {
 

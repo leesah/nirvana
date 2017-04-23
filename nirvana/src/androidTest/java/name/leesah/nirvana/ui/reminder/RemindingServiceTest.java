@@ -14,6 +14,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Set;
 
+import name.leesah.nirvana.data.Nurse;
+import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
@@ -21,9 +24,6 @@ import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.data.Nurse;
-import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.data.Therapist;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;

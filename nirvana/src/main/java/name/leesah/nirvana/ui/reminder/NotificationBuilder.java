@@ -8,10 +8,10 @@ import android.content.res.Resources;
 import android.graphics.drawable.Icon;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.data.Pharmacist;
 
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;

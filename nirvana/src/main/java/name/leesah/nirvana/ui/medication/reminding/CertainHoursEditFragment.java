@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
+import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
 
-import static java.lang.String.format;
-import static java.util.stream.Collectors.joining;
 import static org.parceler.Parcels.unwrap;
 import static org.parceler.Parcels.wrap;
 

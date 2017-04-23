@@ -1,11 +1,11 @@
 package name.leesah.nirvana.ui.medication;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.ui.tweaks.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;

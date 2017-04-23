@@ -14,9 +14,9 @@ import org.joda.time.LocalDate;
 
 import java.util.Set;
 
+import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
-import name.leesah.nirvana.data.Nurse;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;

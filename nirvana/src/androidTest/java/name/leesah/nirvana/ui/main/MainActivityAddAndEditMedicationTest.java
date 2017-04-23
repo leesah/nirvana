@@ -4,8 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by sah on 2017-04-20.
  */

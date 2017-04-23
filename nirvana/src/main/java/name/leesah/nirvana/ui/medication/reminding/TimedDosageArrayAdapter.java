@@ -2,15 +2,12 @@ package name.leesah.nirvana.ui.medication.reminding;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import java.util.List;
 
-import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.tweaks.TimedDosageCard;
 import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;

@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
+import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 
 /**
  * Created by sah on 2017-03-15.

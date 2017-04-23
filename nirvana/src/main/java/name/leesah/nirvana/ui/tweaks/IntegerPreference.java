@@ -6,12 +6,9 @@ import android.preference.DialogPreference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.NumberPicker;
 
 import name.leesah.nirvana.R;
-
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Created by sah on 2016-12-10.

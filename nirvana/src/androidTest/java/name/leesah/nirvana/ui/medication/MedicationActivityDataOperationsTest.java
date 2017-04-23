@@ -49,13 +49,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 
 /**
  * Created by sah on 2017-04-20.
  */
 
-abstract class MedicationActivityDataOperationsTest {
+public abstract class MedicationActivityDataOperationsTest {
 
     @Rule
     public ActivityTestRule<MedicationActivity> mActivityRule = new ActivityTestRule<>(MedicationActivity.class, false, false);

@@ -12,7 +12,6 @@ import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
-import static android.content.Context.ALARM_SERVICE;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;

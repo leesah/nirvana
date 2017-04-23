@@ -8,13 +8,11 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.data.Nurse;
+import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.utils.IdentityHelper;
 
 import static java.util.Collections.singleton;
-import static java.util.stream.Collectors.joining;
-import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 
 /**

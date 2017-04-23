@@ -11,7 +11,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -26,20 +28,23 @@ import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
-import static android.preference.PreferenceManager.*;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.core.deps.guava.collect.Sets.*;
-import static java.util.Collections.*;
+import static android.support.test.espresso.core.deps.guava.collect.Sets.newHashSet;
+import static java.util.Collections.shuffle;
 import static java.util.Collections.singletonList;
-import static java.util.EnumSet.*;
-import static java.util.UUID.*;
+import static java.util.EnumSet.allOf;
+import static java.util.stream.IntStream.range;
 import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
-import static name.leesah.nirvana.utils.AdaptedGsonFactory.*;
+import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
 import static org.joda.time.LocalTime.now;
 
 public class LanternGenie {
 
+    private static final Random random = new Random();
     private static SharedPreferences defaultSharedPreferences;
     private static Gson gson;
     private static AlarmManager alarmManager;
@@ -91,7 +96,9 @@ public class LanternGenie {
     }
 
     private static String randomString() {
-        return randomUUID().toString();
+        return range(0, random.nextInt(3))
+                .mapToObj(i -> capitalizeFully(randomAlphabetic(2, 8)))
+                .collect(Collectors.joining(" "));
     }
 
     @NonNull

@@ -24,7 +24,6 @@ import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static android.view.View.MeasureSpec.UNSPECIFIED;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
-import static java.lang.String.format;
 import static name.leesah.nirvana.model.reminder.Reminder.State.DONE;
 
 /**

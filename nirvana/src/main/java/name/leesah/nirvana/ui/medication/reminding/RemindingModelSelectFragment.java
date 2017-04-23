@@ -9,8 +9,8 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
-import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
+import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
 
 /**
  * Created by sah on 2017-04-15.

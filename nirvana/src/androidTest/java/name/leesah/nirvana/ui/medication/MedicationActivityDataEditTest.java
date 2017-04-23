@@ -27,7 +27,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISI
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.ui.LanternGenie.everythingVanishesSilVousPlait;
 import static name.leesah.nirvana.ui.LanternGenie.oneRandomMedicationSilVousPlait;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
@@ -36,7 +35,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.isEmptyString;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by sah on 2017-04-20.
