@@ -54,12 +54,14 @@ public class LimitedMinutesTimePicker extends TimePicker {
     }
 
     @TargetApi(24)
+    @SuppressWarnings("deprecation")
     @Override
     public void setCurrentMinute(@NonNull Integer currentMinute) {
         setMinute(currentMinute);
     }
 
     @TargetApi(24)
+    @SuppressWarnings("deprecation")
     @NonNull
     @Override
     public Integer getCurrentMinute() {

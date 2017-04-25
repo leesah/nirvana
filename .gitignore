@@ -43,6 +43,9 @@ captures/
 # Keystore files
 *.jks
 
+# Signing information
+keystore.properties
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
@@ -53,3 +56,6 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+# Google Play Plublish API authentication key for gradle-play-publisher plugin 
+play-publish-auth-key.json

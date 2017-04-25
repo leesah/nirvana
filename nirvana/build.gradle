@@ -1,20 +1,43 @@
+import groovy.time.TimeCategory
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
+
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(rootProject.file('keystore.properties')))
+
+def DAY0 = Date.parse('yyyy-MM-dd', '2017-04-07')
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    playAccountConfigs {
+        defaultAccountConfig {
+            jsonFile = file('play-publish-auth-key.json')
+        }
+    }
     defaultConfig {
         applicationId 'name.leesah.nirvana'
         minSdkVersion 24
         targetSdkVersion 25
-        versionCode 13
-        versionName 'HRB13'
+        versionCode use(TimeCategory) {(new Date() - DAY0).days}
+        versionName sprintf('%s%d', 'HRB', versionCode)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
+    }
+    signingConfigs {
+        config {
+            storeFile rootProject.file('keystore/release.jks')
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     productFlavors {
@@ -23,6 +46,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+play {
+    track = 'alpha'
+    userFraction = 1
 }
 
 dependencies {

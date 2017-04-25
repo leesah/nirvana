@@ -1,6 +1,6 @@
-# Nevermind [![Build Status](https://www.bitrise.io/app/4b251a85022074f5.svg?token=saUTExD042nwwaCBQtM4Zg)](https://www.bitrise.io/app/4b251a85022074f5)
+# Nevermind [![build status](https://gitlab.com/sah/nirvana/badges/master/build.svg)](https://gitlab.com/sah/nirvana/commits/master) [![coverage report](https://gitlab.com/sah/nirvana/badges/master/coverage.svg)](https://gitlab.com/sah/nirvana/commits/master)
 
-A medication reminder with cycled treatment support 
+A medication reminder with cycled treatment support
 
 ## Introduction
 
