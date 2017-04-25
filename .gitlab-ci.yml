@@ -130,10 +130,12 @@ test:robo:api25:
 # Collect code coverage
 jacoco:
   stage: coverage
+  when: always
   dependencies:
     - test:unit
   script:
-    - cat "${JACOCO_REPORT_DIR}/index.html"
+    - test -f "${JACOCO_REPORT_DIR}/index.html" && cat "${JACOCO_REPORT_DIR}/index.html"
+  coverage: /'Total.*?([0-9]{1,3})%'/
 
 # Release to Google Play alpha track
 release:alpha:
