@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import java.util.stream.IntStream;
-
 import name.leesah.nirvana.R;
 
 import static java.util.stream.IntStream.*;
@@ -24,16 +22,14 @@ public class CheckableDialogPreference extends DialogPreference {
     private boolean checked;
     private String switchTextOn;
     private String switchTextOff;
+    private String summaryOn;
     private String summaryOff;
     private String valueOff;
-    private boolean checkedByDefault;
 
     private View iconFrame;
     private View textFrame;
     private CharSequence savedSummary;
     private Switch switchWidget;
-    private View title;
-    private View summary;
 
     public CheckableDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,43 +43,37 @@ public class CheckableDialogPreference extends DialogPreference {
         try {
             switchTextOn = a.getString(R.styleable.CheckableDialogPreference_switchTextOn);
             switchTextOff = a.getString(R.styleable.CheckableDialogPreference_switchTextOff);
+            summaryOn = a.getString(R.styleable.CheckableDialogPreference_summaryOn);
             summaryOff = a.getString(R.styleable.CheckableDialogPreference_summaryOff);
             valueOff = a.getString(R.styleable.CheckableDialogPreference_valueOff);
-            checkedByDefault = a.getBoolean(R.styleable.CheckableDialogPreference_checked, false);
+            checked = a.getBoolean(R.styleable.CheckableDialogPreference_checked, false);
         } finally {
             a.recycle();
         }
+
+        updateSummary();
     }
 
     @Override
     protected void onBindView(View view) {
-        super.onBindView(view);
+        view.setClickable(false);
+
+        iconFrame = view.findViewById(android.R.id.icon_frame);
+        textFrame = view.findViewById(R.id.text_frame);
+        textFrame.setOnClickListener(v -> showDialog(null));
+
+        switchWidget = (Switch) view.findViewById(android.R.id.switch_widget);
+        switchWidget.setClickable(true);
+        switchWidget.setTextOn(switchTextOn);
+        switchWidget.setTextOff(switchTextOff);
+
         switchWidget.setOnCheckedChangeListener(null);
         switchWidget.setChecked(checked);
         switchWidget.setOnCheckedChangeListener(this::onCheckedChange);
-        setChildViewsEnabled(checked);
-    }
+        setViewTreeEnabled(iconFrame, checked);
+        setViewTreeEnabled(textFrame, checked);
 
-    @Override
-    protected View onCreateView(ViewGroup parent) {
-        View rootView = super.onCreateView(parent);
-        rootView.setClickable(false);
-
-        iconFrame = rootView.findViewById(android.R.id.icon_frame);
-        textFrame = rootView.findViewById(R.id.text_frame);
-        switchWidget = (Switch) rootView.findViewById(android.R.id.switch_widget);
-
-        textFrame.setOnClickListener(v -> showDialog(null));
-
-        switchWidget.setClickable(true);
-
-        switchWidget.setTextOn(switchTextOn);
-        switchWidget.setTextOff(switchTextOff);
-        switchWidget.setChecked(checkedByDefault);
-        if (!switchWidget.isChecked())
-            setSummary(summaryOff);
-
-        return rootView;
+        super.onBindView(view);
     }
 
     @Override
@@ -99,20 +89,20 @@ public class CheckableDialogPreference extends DialogPreference {
         }
 
         this.checked = checked;
-        if (checked) {
-            setSummary(savedSummary);
-        } else {
-            savedSummary = getSummary();
-            setSummary(summaryOff);
-        }
-        setChildViewsEnabled(checked);
+        updateSummary();
+        setViewTreeEnabled(iconFrame, checked);
+        setViewTreeEnabled(textFrame, checked);
 
         onSwitchStateChange(checked);
     }
 
-    private void setChildViewsEnabled(boolean enabled) {
-        setViewTreeEnabled(iconFrame, enabled);
-        setViewTreeEnabled(textFrame, enabled);
+    private void updateSummary() {
+        if (checked) {
+            super.setSummary(savedSummary == null ? summaryOn : savedSummary);
+        } else {
+            savedSummary = getSummary();
+            super.setSummary(summaryOff);
+        }
     }
 
     private void setViewTreeEnabled(View view, boolean enabled) {
@@ -156,14 +146,6 @@ public class CheckableDialogPreference extends DialogPreference {
 
     public void setValueOff(String valueOff) {
         this.valueOff = valueOff;
-    }
-
-    public boolean isCheckedByDefault() {
-        return checkedByDefault;
-    }
-
-    public void setCheckedByDefault(boolean checkedByDefault) {
-        this.checkedByDefault = checkedByDefault;
     }
 
     protected void onSwitchStateChange(boolean checked) {

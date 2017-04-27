@@ -10,7 +10,6 @@
             android:persistent="false"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="@string/pref_summary_medication_name"
             android:title="@string/pref_title_medication_name"
             app:allowBlank="false" />
 
@@ -22,7 +21,6 @@
             android:persistent="false"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="@string/pref_summary_medication_manufacturer"
             android:title="@string/pref_title_medication_manufacturer"
             app:allowBlank="true" />
 
@@ -46,12 +44,13 @@
             android:key="@string/pref_key_medication_reminding"
             android:summary="@string/pref_summary_medication_reminding"
             android:title="@string/pref_title_medication_reminding" />
-        <SwitchPreference android:title="SwitchPreference" />
+
         <name.leesah.nirvana.ui.tweaks.CheckablePeriodPreference
             android:key="@string/pref_key_medication_starting_delay_period"
             android:persistent="false"
             android:title="@string/pref_title_medication_starting_delay_period"
             app:checked="false"
+            app:summaryOn="@string/medication_starting_summary_on"
             app:summaryOff="@string/medication_starting_summary_off"
             app:switchTextOff="@string/medication_starting_switch_text_off"
             app:switchTextOn="@string/medication_starting_switch_text_on"
@@ -62,6 +61,7 @@
             android:persistent="false"
             android:title="@string/pref_title_medication_stopping_enabled"
             app:checked="false"
+            app:summaryOn="@string/medication_stopping_summary_on"
             app:summaryOff="@string/medication_stopping_summary_off"
             app:switchTextOff="@string/medication_stopping_switch_text_off"
             app:switchTextOn="@string/medication_stopping_switch_text_on" />

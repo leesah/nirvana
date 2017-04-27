@@ -53,7 +53,11 @@ public class CheckablePeriodPreference extends CheckableDialogPreference {
 
     @Nullable
     public Period getPeriod() {
-        return isChecked() ? delegate.getPeriod() : toPeriod(getValueOff());
+        return isChecked() ?
+                delegate.getPeriod() :
+                (getValueOff() == null ?
+                        null :
+                        toPeriod(getValueOff()));
     }
 
 }
