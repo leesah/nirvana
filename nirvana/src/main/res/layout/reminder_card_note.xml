@@ -35,7 +35,7 @@
 
                     <TextView
                         android:id="@+id/time"
-                        style="@style/textViewStyle.ReminderCard.Time.Note"
+                        style="@style/VerticallyCentralText.ReminderCard.Time.Note"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -56,7 +56,7 @@
 
                 <TextView
                     android:id="@+id/note"
-                    style="@style/textViewStyle.ReminderCard.Primary.Note"
+                    style="@style/VerticallyCentralText.ReminderCard.Primary.Note"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="No more intakes today." />

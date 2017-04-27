@@ -14,7 +14,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/save_button"
-        style="@style/floatingActionButtonStyle.SaveButton"
+        style="@style/FloatingActionButton.SaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -22,7 +22,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/delete_button"
-        style="@style/floatingActionButtonStyle.DeleteButton"
+        style="@style/FloatingActionButton.DeleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/save_button"

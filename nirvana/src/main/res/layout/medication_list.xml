@@ -40,7 +40,7 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_button"
-            style="@style/floatingActionButtonStyle.AddButton"
+            style="@style/FloatingActionButton.AddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

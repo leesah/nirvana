@@ -120,6 +120,12 @@
     <string name="unknown_medication">Unknown Medication</string>
     <string name="reminder_details">Details</string>
     <string name="ignore_reminder">Ignore</string>
+    <string name="medication_starting_switch_text_on" />
+    <string name="medication_starting_switch_text_off" />
+    <string name="medication_starting_summary_off">Not delayed</string>
+    <string name="medication_stopping_summary_off" />
+    <string name="medication_stopping_switch_text_off" />
+    <string name="medication_stopping_switch_text_on">Don\'t stop (or stop when treatment ends)</string>
     <plurals name="to_string_timed_dosage">
         <item quantity="one">%1$d unit at %2$s</item>
         <item quantity="other">%1$d units at %2$s</item>

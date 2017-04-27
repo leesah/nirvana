@@ -1,5 +1,7 @@
 package name.leesah.nirvana.utils;
 
+import android.util.Log;
+
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -15,18 +17,27 @@ import org.joda.time.format.PeriodFormatter;
 
 import name.leesah.nirvana.model.PeriodUnit;
 
+import static java.lang.String.format;
+
 /**
  * Created by sah on 2016-12-14.
  */
 
 public class DateTimeHelper {
 
-    public static final PeriodFormatter PERIOD_FORMATTER = ISOPeriodFormat.standard();
+    private static final String TAG = DateTimeHelper.class.getSimpleName();
+
+    private static final PeriodFormatter PERIOD_FORMATTER = ISOPeriodFormat.standard();
     private static final DateTimeFormatter DATE_FORMATTER = ISODateTimeFormat.date();
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormat.forPattern("HH:mm");
 
     public static Period toPeriod(CharSequence text) {
-        return PERIOD_FORMATTER.parsePeriod(text.toString());
+        try {
+            return PERIOD_FORMATTER.parsePeriod(text.toString());
+        } catch (IllegalArgumentException e) {
+            Log.wtf(TAG, format("Unrecognizable period: [%s].", text), e);
+            throw e;
+        }
     }
 
     public static Period toPeriod(int number, PeriodUnit unit) {

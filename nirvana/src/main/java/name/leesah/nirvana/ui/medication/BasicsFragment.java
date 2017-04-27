@@ -13,10 +13,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
-import name.leesah.nirvana.ui.tweaks.PeriodPreference;
-
-import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
-import static name.leesah.nirvana.utils.DateTimeHelper.toText;
+import name.leesah.nirvana.ui.tweaks.CheckableDialogPreference;
 
 public class BasicsFragment extends PreferenceFragment {
 
@@ -32,7 +29,7 @@ public class BasicsFragment extends PreferenceFragment {
     private EditTextPreference manufacturer;
     private ListPreference dosageForm;
     private SwitchPreference delayed;
-    private PeriodPreference delayedPeriod;
+    private CheckableDialogPreference delayedPeriod;
     private Preference remindingModel;
     private Preference repeatingModel;
     private MedicationActivity.ValidityReportListener validityReportListener;
@@ -49,7 +46,7 @@ public class BasicsFragment extends PreferenceFragment {
         manufacturer = (EditTextPreference) findPreference(getString(R.string.pref_key_medication_manufacturer));
         dosageForm = (ListPreference) findPreference(getString(R.string.pref_key_medication_dosage_form));
         delayed = (SwitchPreference) findPreference(getString(R.string.pref_key_medication_starting_delay_enabled));
-        delayedPeriod = (PeriodPreference) findPreference(getString(R.string.pref_key_medication_starting_delay_period));
+        delayedPeriod = (CheckableDialogPreference) findPreference(getString(R.string.pref_key_medication_starting_delay_period));
         remindingModel = findPreference(getString(R.string.pref_key_medication_reminding));
         repeatingModel = findPreference(getString(R.string.pref_key_medication_repeating));
 
@@ -72,15 +69,15 @@ public class BasicsFragment extends PreferenceFragment {
             manufacturer.setText(savedInstanceState.getString(KEY_MANUFACTURER));
             dosageForm.setValue(savedInstanceState.getString(KEY_DOSAGE_FORM));
             delayed.setChecked(savedInstanceState.getBoolean(KEY_DELAYED));
-            if (savedInstanceState.containsKey(KEY_DELAYED_PERIOD))
-                delayedPeriod.setPeriod(toPeriod(savedInstanceState.getString(KEY_DELAYED_PERIOD)));
+            //if (savedInstanceState.containsKey(KEY_DELAYED_PERIOD))
+                //delayedPeriod.setPeriod(toPeriod(savedInstanceState.getString(KEY_DELAYED_PERIOD)));
         } else if (editingExisting != null) {
             name.setText(editingExisting.getName());
             manufacturer.setText(editingExisting.getManufacturer());
             dosageForm.setValue(editingExisting.getForm().getName(getContext()));
             delayed.setChecked(editingExisting.isDelayed());
-            if (editingExisting.getDelayedPeriod() != null)
-                delayedPeriod.setPeriod(editingExisting.getDelayedPeriod());
+            //if (editingExisting.getDelayedPeriod() != null)
+                //delayedPeriod.setPeriod(editingExisting.getDelayedPeriod());
             remindingModel.setSummary(editingExisting.getRemindingStrategy().toString(getContext()));
             repeatingModel.setSummary(editingExisting.getRepeatingStrategy().toString(getContext()));
             editingExisting = null;
@@ -95,7 +92,7 @@ public class BasicsFragment extends PreferenceFragment {
         outState.putString(KEY_MANUFACTURER, manufacturer.getText());
         outState.putString(KEY_DOSAGE_FORM, dosageForm.getValue());
         outState.putBoolean(KEY_DELAYED, delayed.isChecked());
-        outState.putString(KEY_DELAYED_PERIOD, toText(delayedPeriod.getPeriod()));
+        //outState.putString(KEY_DELAYED_PERIOD, toText(delayedPeriod.getPeriod()));
     }
 
     public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
@@ -106,7 +103,7 @@ public class BasicsFragment extends PreferenceFragment {
         validityReportListener.onValidityReport(
                 !TextUtils.isEmpty(name.getText()) &&
                         !TextUtils.isEmpty(dosageForm.getValue()) &&
-                        (!delayed.isChecked() || delayedPeriod.getPeriod() != null));
+                        (!delayed.isChecked() /*|| delayedPeriod.getPeriod() != null*/));
         return true;
     }
 
@@ -116,7 +113,7 @@ public class BasicsFragment extends PreferenceFragment {
                 .setManufacturer(manufacturer.getText())
                 .setForm(DosageForm.withName(getContext(), dosageForm.getValue()))
                 .setDelayed(delayed.isChecked())
-                .setDelayedBy(delayedPeriod.getPeriod())
+                //.setDelayedBy(delayedPeriod.getPeriod())
                 .build();
     }
 

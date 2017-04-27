@@ -11,4 +11,11 @@
             <enum name="edit" value="1"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="CheckableDialogPreference">
+        <attr name="checked" format="boolean" />
+        <attr name="switchTextOn" format="string" />
+        <attr name="switchTextOff" format="string" />
+        <attr name="summaryOff" format="string" />
+        <attr name="valueOff" format="string" />
+    </declare-styleable>
 </resources>

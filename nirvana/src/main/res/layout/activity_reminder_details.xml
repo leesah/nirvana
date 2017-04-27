@@ -18,7 +18,7 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall">
 
         <TextView
-            style="@style/textViewStyle.Primary.Accent"
+            style="@style/VerticallyCentralText.Primary.Accent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -35,7 +35,7 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall">
 
         <TextView
-            style="@style/textViewStyle.Primary.Accent"
+            style="@style/VerticallyCentralText.Primary.Accent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -52,7 +52,7 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall">
 
         <TextView
-            style="@style/textViewStyle.Primary.Accent"
+            style="@style/VerticallyCentralText.Primary.Accent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -67,7 +67,7 @@
 
         <Button
             android:id="@+id/done_button"
-            style="@style/buttonStyle.Raised.Primary"
+            style="@style/Button.Raised.Primary"
             android:layout_width="106dp"
             android:layout_height="wrap_content"
             android:elevation="4dp"
@@ -83,7 +83,7 @@
 
         <Button
             android:id="@+id/snooze_button"
-            style="@style/buttonStyle.Raised.Secondary"
+            style="@style/Button.Raised.Secondary"
             android:layout_width="107dp"
             android:layout_height="wrap_content"
             android:text="@string/snooze"
@@ -97,7 +97,7 @@
 
         <Button
             android:id="@+id/ignore_button"
-            style="@style/buttonStyle.Raised.Secondary"
+            style="@style/Button.Raised.Secondary"
             android:layout_width="107dp"
             android:layout_height="wrap_content"
             android:text="@string/ignore_reminder"

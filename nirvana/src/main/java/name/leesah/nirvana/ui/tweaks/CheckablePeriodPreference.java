@@ -2,7 +2,6 @@ package name.leesah.nirvana.ui.tweaks;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -10,20 +9,20 @@ import android.view.View;
 
 import org.joda.time.Period;
 
-import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
 
 /**
  * Created by sah on 2016-12-10.
  */
 
-public class PeriodPreference extends DialogPreference {
+public class CheckablePeriodPreference extends CheckableDialogPreference {
 
     private PeriodPreferenceDelegate delegate;
 
-    public PeriodPreference(Context context, AttributeSet attrs) {
+    public CheckablePeriodPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         delegate = new PeriodPreferenceDelegate(this);
+
     }
 
     @Override
@@ -54,7 +53,7 @@ public class PeriodPreference extends DialogPreference {
 
     @Nullable
     public Period getPeriod() {
-        return delegate.getPeriod();
+        return isChecked() ? delegate.getPeriod() : toPeriod(getValueOff());
     }
 
 }

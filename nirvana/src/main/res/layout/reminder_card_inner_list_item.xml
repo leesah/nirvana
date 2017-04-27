@@ -17,14 +17,14 @@
 
         <TextView
             android:id="@+id/medication"
-            style="@style/textViewStyle.ReminderCard.Primary"
+            style="@style/VerticallyCentralText.ReminderCard.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Folacin" />
 
         <TextView
             android:id="@+id/dosage"
-            style="@style/textViewStyle.ReminderCard.Secondary"
+            style="@style/VerticallyCentralText.ReminderCard.Secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1 tablet" />
@@ -32,7 +32,7 @@
 
     <ImageView
         android:id="@+id/check"
-        style="@style/imageViewViewStyle.CheckMark"
+        style="@style/ImageView.CheckMark"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
