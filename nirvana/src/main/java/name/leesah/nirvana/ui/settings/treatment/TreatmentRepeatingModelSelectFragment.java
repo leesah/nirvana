@@ -6,7 +6,7 @@ import android.preference.Preference;
 import android.support.annotation.Nullable;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.ui.tweaks.ListAndDetailsPreferenceFragment;
+import name.leesah.nirvana.ui.widget.ListAndDetailsPreferenceFragment;
 
 /**
  * Created by sah on 2017-04-17.

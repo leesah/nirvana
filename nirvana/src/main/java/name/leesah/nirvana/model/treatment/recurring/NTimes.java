@@ -1,8 +1,11 @@
 package name.leesah.nirvana.model.treatment.recurring;
 
-import org.joda.time.LocalDate;
+import android.support.annotation.IntRange;
 
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+
+import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
 
@@ -15,26 +18,30 @@ public class NTimes implements RecurringStrategy {
 
     private int n;
 
-    public NTimes(int n) {
+    public NTimes(@IntRange(from = 1) int n) {
         this.n = n;
     }
 
     @Override
-    public TreatmentCycle getCycleForDate(TreatmentCycle firstCycle, LocalDate date) {
-        return getCycleForDate(firstCycle, date, n + 1);
+    public boolean hasNext(LocalDate dayZero, Period length, LocalDate date) {
+        return hasNext(0, dayZero, length, date);
     }
 
-    private TreatmentCycle getCycleForDate(TreatmentCycle cycle, LocalDate date, int timesLeft) {
-        if (timesLeft == 0)
-            return null;
-        else if (cycle.contains(date))
-            return cycle;
+    private boolean hasNext(int i, LocalDate dayZero, Period length, LocalDate date) {
+        if (i == n - 1)
+            return false;
+        else if (DateTimeHelper.dateFallsInDuration(date, dayZero, length))
+            return true;
         else
-            return getCycleForDate(TreatmentCycle.makeNext(cycle), date, timesLeft - 1);
+            return hasNext(i + 1, dayZero.plus(length), length, date);
     }
 
     @Override
     public String toString() {
         return format("Repeating for %d times", n);
+    }
+
+    public int getN() {
+        return n;
     }
 }

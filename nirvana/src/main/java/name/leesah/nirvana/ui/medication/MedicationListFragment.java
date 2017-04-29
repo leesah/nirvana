@@ -19,7 +19,7 @@ import java.util.List;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.ui.tweaks.MedicationCard;
+import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;

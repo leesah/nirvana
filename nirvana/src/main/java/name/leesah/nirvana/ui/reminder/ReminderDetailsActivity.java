@@ -10,8 +10,8 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.tweaks.MedicationCard;
-import name.leesah.nirvana.ui.tweaks.TimedDosageCard;
+import name.leesah.nirvana.ui.widget.MedicationCard;
+import name.leesah.nirvana.ui.widget.TimedDosageCard;
 
 import static java.lang.String.format;
 

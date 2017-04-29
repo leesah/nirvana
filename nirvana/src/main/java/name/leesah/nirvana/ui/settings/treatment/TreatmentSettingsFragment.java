@@ -10,8 +10,8 @@ import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
-import name.leesah.nirvana.ui.tweaks.DatePreference;
-import name.leesah.nirvana.ui.tweaks.PeriodPreference;
+import name.leesah.nirvana.ui.preference.DatePreference;
+import name.leesah.nirvana.ui.preference.PeriodPreference;
 
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.Period.weeks;

@@ -26,12 +26,12 @@ import static java.util.stream.Collectors.toSet;
 public class Nurse extends DataHolder {
 
     private static final String TAG = Nurse.class.getSimpleName();
-    static final String PREFERENCE_KEY_DAILY_REMINDERS = "name.leesah.nirvana.preferences.key.REMINDERS";
+    public static final String PREFERENCE_KEY_REMINDERS = "name.leesah.nirvana.pref:key:REMINDERS";
 
     private static Nurse instance;
     private Map<Integer, Reminder> cache = null;
 
-    Nurse(Context context) {
+    private Nurse(Context context) {
         super(context);
     }
 
@@ -125,7 +125,7 @@ public class Nurse extends DataHolder {
             return;
         }
 
-        Set<String> stringSet = preferences.getStringSet(PREFERENCE_KEY_DAILY_REMINDERS, emptySet());
+        Set<String> stringSet = preferences.getStringSet(PREFERENCE_KEY_REMINDERS, emptySet());
         if (stringSet.isEmpty()) {
             cache = new ArrayMap<>();
             Log.d(TAG, "Nothing loaded from Shared Preferences.");
@@ -149,7 +149,7 @@ public class Nurse extends DataHolder {
         Set<String> stringSet = cache.values().stream()
                 .map(gson::toJson)
                 .collect(toSet());
-        preferences.edit().putStringSet(PREFERENCE_KEY_DAILY_REMINDERS, stringSet).apply();
+        preferences.edit().putStringSet(PREFERENCE_KEY_REMINDERS, stringSet).apply();
         Log.i(TAG, String.format("%d reminder(s) persisted.", cache.size()));
     }
 

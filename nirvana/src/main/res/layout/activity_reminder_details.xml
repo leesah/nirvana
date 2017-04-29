@@ -25,7 +25,7 @@
             android:text="Medication details" />
     </FrameLayout>
 
-    <name.leesah.nirvana.ui.tweaks.MedicationCard
+    <name.leesah.nirvana.ui.widget.MedicationCard
         android:id="@+id/medication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -42,7 +42,7 @@
             android:text="Intake details" />
     </FrameLayout>
 
-    <name.leesah.nirvana.ui.tweaks.TimedDosageCard
+    <name.leesah.nirvana.ui.widget.TimedDosageCard
         android:id="@+id/dosage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

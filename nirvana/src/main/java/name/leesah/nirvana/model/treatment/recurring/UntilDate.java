@@ -1,8 +1,11 @@
 package name.leesah.nirvana.model.treatment.recurring;
 
-import org.joda.time.LocalDate;
+import android.support.annotation.NonNull;
 
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+
+import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
@@ -13,24 +16,25 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 public class UntilDate implements RecurringStrategy {
 
-    private LocalDate lastDay;
+    private LocalDate until;
 
-    public UntilDate(LocalDate lastDay) {
-        this.lastDay = lastDay;
+    public UntilDate(@NonNull LocalDate until) {
+        this.until = until;
     }
 
     @Override
-    public TreatmentCycle getCycleForDate(TreatmentCycle cycle, LocalDate date) {
-        if (cycle.getFirstDay().isAfter(lastDay))
-            return null;
-        else if (cycle.contains(date))
-            return cycle;
+    public boolean hasNext(LocalDate dayZero, Period length, LocalDate date) {
+        if (!date.isBefore(until))
+            return false;
+        else if (DateTimeHelper.dateFallsInDuration(date, dayZero, length))
+            return true;
         else
-            return getCycleForDate(TreatmentCycle.makeNext(cycle), date);
+            return hasNext(dayZero.plus(length), length, date);
     }
 
     @Override
     public String toString() {
-        return format("Repeating until %s", toText(lastDay));
+        return format("Repeating until %s", toText(until));
     }
+
 }

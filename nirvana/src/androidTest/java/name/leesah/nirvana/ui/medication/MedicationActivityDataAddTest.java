@@ -14,7 +14,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static name.leesah.nirvana.ui.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -31,7 +31,7 @@ public class MedicationActivityDataAddTest extends MedicationActivityDataOperati
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait();
+        everythingVanishesSilVousPlait(getTargetContext());
     }
 
     @Test

@@ -17,7 +17,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard;
+import name.leesah.nirvana.ui.widget.TimedDosageEditorCard;
 
 import static org.parceler.Parcels.unwrap;
 import static org.parceler.Parcels.wrap;

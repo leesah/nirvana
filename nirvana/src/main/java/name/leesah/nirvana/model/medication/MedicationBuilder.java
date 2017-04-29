@@ -4,6 +4,8 @@ import org.joda.time.Period;
 
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 
 /**
  * Created by sah on 2016-12-07.
@@ -12,13 +14,18 @@ public class MedicationBuilder {
     private String name;
     private String manufacturer;
     private DosageForm form;
-    private boolean delayed = false;
-    private RepeatingStrategy repeatingStrategy;
     private RemindingStrategy remindingStrategy;
-    private Period delayedBy;
+    private RepeatingStrategy repeatingStrategy;
+    private StartingStrategy startingStrategy;
+    private StoppingStrategy stoppingStrategy;
 
     public Medication build() {
-        return new Medication(name, manufacturer == null ? "" : manufacturer, form, delayed, delayedBy, repeatingStrategy, remindingStrategy);
+        if (name == null || form == null
+                //|| remindingStrategy == null || repeatingStrategy == null
+                || startingStrategy == null || stoppingStrategy == null)
+            throw new IllegalArgumentException("Premature invocation on builder.");
+        return new Medication(name, manufacturer == null ? "" : manufacturer, form,
+                remindingStrategy, repeatingStrategy, startingStrategy, stoppingStrategy);
     }
 
     public MedicationBuilder setName(String name) {
@@ -36,13 +43,8 @@ public class MedicationBuilder {
         return this;
     }
 
-    public MedicationBuilder setDelayed(boolean delayed) {
-        this.delayed = delayed;
-        return this;
-    }
-
-    public MedicationBuilder setDelayedBy(Period period) {
-        this.delayedBy = period;
+    public MedicationBuilder setRemindingStrategy(RemindingStrategy remindingStrategy) {
+        this.remindingStrategy = remindingStrategy;
         return this;
     }
 
@@ -51,9 +53,13 @@ public class MedicationBuilder {
         return this;
     }
 
-    public MedicationBuilder setRemindingStrategy(RemindingStrategy remindingStrategy) {
-        this.remindingStrategy = remindingStrategy;
+    public MedicationBuilder setStartingStrategy(StartingStrategy startingStrategy) {
+        this.startingStrategy = startingStrategy;
         return this;
     }
 
+    public MedicationBuilder setStoppingStrategy(StoppingStrategy stoppingStrategy) {
+        this.stoppingStrategy = stoppingStrategy;
+        return this;
+    }
 }

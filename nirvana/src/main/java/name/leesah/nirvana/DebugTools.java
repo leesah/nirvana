@@ -3,6 +3,7 @@ package name.leesah.nirvana;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.util.ArraySet;
 import android.widget.Toast;
 
@@ -17,11 +18,14 @@ import java.util.stream.Collectors;
 
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.MedicationBuilder;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
+import name.leesah.nirvana.model.medication.starting.Immediately;
+import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.reminder.NotificationSecretary;
@@ -50,7 +54,10 @@ public class DebugTools {
     }
 
     public void clearAllData() {
-
+        defaultSharedPreferences.edit().clear().apply();
+        Pharmacist.reset();
+        Nurse.reset();
+        Therapist.reset();
     }
 
     public void injectTestData() {
@@ -77,6 +84,8 @@ public class DebugTools {
                 setForm(DosageForm.TABLET).
                 setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new AtCertainHours(Arrays.asList(new TimedDosage(NineAM, 1), new TimedDosage(NinePM, 1)))).
+                setStartingStrategy(new Immediately()).
+                setStoppingStrategy(new Never()).
                 build();
 
         Medication folacin = new MedicationBuilder().
@@ -85,6 +94,8 @@ public class DebugTools {
                 setForm(DosageForm.TABLET).
                 setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setStartingStrategy(new Immediately()).
+                setStoppingStrategy(new Never()).
                 build();
 
         Medication probiMage = new MedicationBuilder().
@@ -93,6 +104,8 @@ public class DebugTools {
                 setForm(DosageForm.CAPSULE).
                 setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setStartingStrategy(new Immediately()).
+                setStoppingStrategy(new Never()).
                 build();
 
         Medication manTabletter = new MedicationBuilder().
@@ -101,6 +114,8 @@ public class DebugTools {
                 setForm(DosageForm.TABLET).
                 setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setStartingStrategy(new Immediately()).
+                setStoppingStrategy(new Never()).
                 build();
 
         pharmacist.addMedication(valaciclovir);

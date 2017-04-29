@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 
 import name.leesah.nirvana.utils.AdaptedGsonFactory;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 /**
  * Created by sah on 2016-12-14.
  */
@@ -19,7 +21,7 @@ abstract class DataHolder {
 
     DataHolder(Context context) {
         resources = context.getResources();
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences = getDefaultSharedPreferences(context);
         gson = AdaptedGsonFactory.getGson();
     }
 

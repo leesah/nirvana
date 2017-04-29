@@ -1,10 +1,13 @@
 package name.leesah.nirvana.ui.medication;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.PerformException;
 import android.support.test.rule.ActivityTestRule;
+import android.view.View;
 import android.widget.EditText;
 
+import org.hamcrest.Matcher;
 import org.joda.time.LocalTime;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -18,6 +21,8 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
+import name.leesah.nirvana.model.medication.starting.ExactDate;
+import name.leesah.nirvana.model.medication.stopping.InPeriod;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
@@ -27,20 +32,25 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.PickerActions.setTime;
 import static android.support.test.espresso.core.deps.guava.collect.Iterables.getOnlyElement;
 import static android.support.test.espresso.core.deps.guava.collect.Sets.newHashSet;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE;
+import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.stream.Collectors.toSet;
+import static name.leesah.nirvana.model.PeriodUnit.MONTH;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
-import static name.leesah.nirvana.ui.LanternGenie.everythingVanishesSilVousPlait;
-import static name.leesah.nirvana.ui.MoreViewActions.setNumber;
+import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.ui.NumberPickerActions.setNumber;
+import static name.leesah.nirvana.ui.preference.PeriodPreferenceDelegate.*;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
@@ -48,6 +58,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.joda.time.Period.*;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -61,7 +72,7 @@ public abstract class MedicationActivityDataOperationsTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        everythingVanishesSilVousPlait();
+        everythingVanishesSilVousPlait(getTargetContext());
     }
 
     @Test
@@ -99,14 +110,6 @@ public abstract class MedicationActivityDataOperationsTest {
             onView(withText(R.string.pref_title_dosage_form)).perform(click());
             onView(withText(TABLET.getName(getTargetContext()))).perform(click());
         }
-        { // Edit repeating model
-            onView(withText(R.string.pref_title_medication_repeating)).perform(click());
-            { // Select repeating model: Everyday
-                onView(withText(R.string.pref_title_medication_repeating)).perform(click());
-                onView(withText(R.string.medication_repeating_everyday)).perform(click());
-                onView(allOf(withId(R.id.save_button), withClassName(endsWith(FloatingActionButton.class.getSimpleName())))).perform(click());
-            }
-        }
         { // Edit reminding model
             onView(withText(R.string.pref_title_medication_reminding)).perform(click());
             { // Select reminding model: At certain hours
@@ -135,6 +138,31 @@ public abstract class MedicationActivityDataOperationsTest {
             }
             onView(allOf(withId(R.id.save_button), withClassName(endsWith(FloatingActionButton.class.getSimpleName())))).perform(click());
         }
+        { // Edit repeating model
+            onView(withText(R.string.pref_title_medication_repeating)).perform(click());
+            { // Select repeating model: Everyday
+                onView(withText(R.string.pref_title_medication_repeating)).perform(click());
+                onView(withText(R.string.medication_repeating_everyday)).perform(click());
+                onView(allOf(withId(R.id.save_button), withClassName(endsWith(FloatingActionButton.class.getSimpleName())))).perform(click());
+            }
+        }
+/*        { // Edit starting model
+            ensureCustomStartingSwitchedOn();
+            onView(withText(R.string.pref_title_medication_starting_delay_period)).perform(click());
+            onView(withId(R.id.number)).perform(setNumber(2));
+            onView(withId(R.id.unit)).perform(setNumber(PERIOD_UNITS.indexOf(DAY)));
+            onView(withText(android.R.string.ok)).perform(click());
+        }*/
+        { // Starting model is invisible
+            onView(withText(R.string.pref_title_medication_starting)).check(doesNotExist());
+        }
+        { // Edit stopping model
+            ensureCustomStoppingSwitchOn();
+            onView(withText(R.string.pref_title_medication_stopping_after_period)).perform(click());
+            onView(withId(R.id.number)).perform(setNumber(6));
+            onView(withId(R.id.unit)).perform(setNumber(PERIOD_UNITS.indexOf(MONTH)));
+            onView(withText(android.R.string.ok)).perform(click());
+        }
         // Save
         onView(allOf(withId(R.id.save_button), withClassName(endsWith(FloatingActionButton.class.getSimpleName())))).perform(click());
 
@@ -149,6 +177,8 @@ public abstract class MedicationActivityDataOperationsTest {
         assertThat(medication.getForm(), equalTo(TABLET));
         assertThat(medication.getRepeatingStrategy(), instanceOf(Everyday.class));
         assertThat(medication.getRemindingStrategy(), instanceOf(AtCertainHours.class));
+        assertThat(medication.getStartingStrategy(), equalTo(new ExactDate(today())));
+        assertThat(medication.getStoppingStrategy(), equalTo(new InPeriod(months(6))));
 
         // Verify: 2 reminders found at nurse's
         Set<Reminder> reminders = Nurse.getInstance(getTargetContext()).getReminders(today());
@@ -161,4 +191,27 @@ public abstract class MedicationActivityDataOperationsTest {
                 new TimedDosage(new LocalTime(0).withHourOfDay(9).withMinuteOfHour(15), 1),
                 new TimedDosage(new LocalTime(0).withHourOfDay(21).withMinuteOfHour(15), 1))));
     }
+
+    protected void ensureCustomStartingSwitchedOn() {
+        onView(switchWidgetBesidesTitle(R.string.pref_title_medication_starting)).perform(click());
+    }
+
+    protected void ensureCustomStoppingSwitchOn() {
+        onView(switchWidgetBesidesTitle(R.string.pref_title_medication_stopping_after_period)).perform(click());
+    }
+
+    @NonNull
+    private Matcher<View> switchWidgetBesidesTitle(int prefTitleResId) {
+        return allOf(
+                withId(android.R.id.switch_widget),
+                withParent(allOf(
+                        withId(android.R.id.widget_frame),
+                        withParent(withChild(allOf(
+                                withId(R.id.text_frame),
+                                withChild(allOf(
+                                        withId(android.R.id.title),
+                                        withText(prefTitleResId))))))))
+        );
+    }
+
 }

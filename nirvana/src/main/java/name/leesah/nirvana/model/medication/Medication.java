@@ -10,6 +10,8 @@ import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.utils.IdentityHelper;
 
+import static name.leesah.nirvana.utils.IdentityHelper.*;
+
 /**
  * Created by sah on 2016-12-07.
  */
@@ -20,22 +22,20 @@ public class Medication {
     private final String name;
     private final String manufacturer;
     private final DosageForm form;
-    private final boolean delayed;
-    private final Period delayedBy;
     private RepeatingStrategy repeatingStrategy;
     private RemindingStrategy remindingStrategy;
     private StartingStrategy startingStrategy;
     private StoppingStrategy stoppingStrategy;
 
-    public Medication(String name, String manufacturer, DosageForm form, boolean delayed, Period delayedBy, RepeatingStrategy repeatingStrategy, RemindingStrategy remindingStrategy) {
-        this.id = IdentityHelper.uniqueInt();
+    public Medication(String name, String manufacturer, DosageForm form, RemindingStrategy remindingStrategy, RepeatingStrategy repeatingStrategy, StartingStrategy startingStrategy, StoppingStrategy stoppingStrategy) {
+        this.id = uniqueInt();
         this.name = name;
         this.manufacturer = manufacturer;
         this.form = form;
-        this.delayed = delayed;
-        this.delayedBy = delayedBy;
         this.repeatingStrategy = repeatingStrategy;
         this.remindingStrategy = remindingStrategy;
+        this.startingStrategy = startingStrategy;
+        this.stoppingStrategy = stoppingStrategy;
     }
 
     public void setRemindingStrategy(RemindingStrategy remindingStrategy) {
@@ -70,21 +70,6 @@ public class Medication {
         return remindingStrategy;
     }
 
-    @Deprecated
-    public boolean isDelayed() {
-        return delayed;
-    }
-
-    @Nullable @Deprecated
-    public Period getDelayedPeriod() {
-        return delayedBy;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Medication {id=[%d], n=[%s]}", id, name);
-    }
-
     public StartingStrategy getStartingStrategy() {
         return startingStrategy;
     }
@@ -92,4 +77,10 @@ public class Medication {
     public StoppingStrategy getStoppingStrategy() {
         return stoppingStrategy;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Medication {id=[%d], n=[%s]}", id, name);
+    }
+
 }

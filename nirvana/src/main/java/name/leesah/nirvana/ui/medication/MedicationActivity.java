@@ -19,8 +19,8 @@ import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
-import name.leesah.nirvana.ui.medication.reminding.RemindingModelSelectFragment;
-import name.leesah.nirvana.ui.medication.repeating.RepeatingModelSelectFragment;
+import name.leesah.nirvana.ui.medication.reminding.RemindingStrategySelectFragment;
+import name.leesah.nirvana.ui.medication.repeating.RepeatingStrategySelectFragment;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
@@ -38,8 +38,8 @@ public class MedicationActivity extends AppCompatActivity {
     private FloatingActionButton saveButton;
     private FloatingActionButton deleteButton;
     private BasicsFragment basicsFragment = new BasicsFragment();
-    private RemindingModelSelectFragment remindingModelSelectFragment = new RemindingModelSelectFragment();
-    private RepeatingModelSelectFragment repeatingModelSelectFragment = new RepeatingModelSelectFragment();
+    private RemindingStrategySelectFragment remindingStrategySelectFragment = new RemindingStrategySelectFragment();
+    private RepeatingStrategySelectFragment repeatingStrategySelectFragment = new RepeatingStrategySelectFragment();
     private boolean basicsValid = false;
     private RemindingStrategy remindingStrategy;
     private RepeatingStrategy repeatingStrategy;
@@ -69,8 +69,8 @@ public class MedicationActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(v -> deleteMedication());
 
         basicsFragment.setValidityReportListener(this::onBasicsReportValidity);
-        remindingModelSelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);
-        repeatingModelSelectFragment.setValidityReportListener(this::onRepeatingModelReportValidity);
+        remindingStrategySelectFragment.setValidityReportListener(this::onRemindingModelReportValidity);
+        repeatingStrategySelectFragment.setValidityReportListener(this::onRepeatingModelReportValidity);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.content_medication, basicsFragment)
@@ -135,8 +135,8 @@ public class MedicationActivity extends AppCompatActivity {
         repeatingStrategy = medication.getRepeatingStrategy();
 
         basicsFragment.setEditingExisting(medication);
-        remindingModelSelectFragment.setEditingExisting(medication.getRemindingStrategy());
-        repeatingModelSelectFragment.setEditingExisting(medication.getRepeatingStrategy());
+        remindingStrategySelectFragment.setEditingExisting(medication.getRemindingStrategy());
+        repeatingStrategySelectFragment.setEditingExisting(medication.getRepeatingStrategy());
 
         backToBasics();
     }
@@ -175,13 +175,13 @@ public class MedicationActivity extends AppCompatActivity {
     }
 
     private void saveRemindingModel() {
-        remindingStrategy = remindingModelSelectFragment.readModel();
+        remindingStrategy = remindingStrategySelectFragment.readModel();
         basicsFragment.setRemindingModelSummary(remindingStrategy.toString(this));
         backToBasics();
     }
 
     private void saveRepeatingModel() {
-        repeatingStrategy = repeatingModelSelectFragment.readModel();
+        repeatingStrategy = repeatingStrategySelectFragment.readModel();
         basicsFragment.setRepeatingModelSummary(repeatingStrategy.toString(this));
         backToBasics();
     }
@@ -189,14 +189,14 @@ public class MedicationActivity extends AppCompatActivity {
     private boolean startEditingRemindingModel() {
         saveButton.setOnClickListener(v -> saveRemindingModel());
         deleteButton.setVisibility(GONE);
-        replaceFragmentAndAddToBackStack(this.remindingModelSelectFragment);
+        replaceFragmentAndAddToBackStack(this.remindingStrategySelectFragment);
         return true;
     }
 
     private boolean startEditingRepeatingModel() {
         saveButton.setOnClickListener(v -> saveRepeatingModel());
         deleteButton.setVisibility(GONE);
-        replaceFragmentAndAddToBackStack(repeatingModelSelectFragment);
+        replaceFragmentAndAddToBackStack(repeatingStrategySelectFragment);
         return true;
     }
 

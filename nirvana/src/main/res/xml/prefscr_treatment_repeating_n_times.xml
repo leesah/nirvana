@@ -6,7 +6,7 @@
         android:key="@string/pref_key_treatment_recurring_details"
         android:title="Repeat N times">
 
-        <name.leesah.nirvana.ui.tweaks.IntegerPreference
+        <name.leesah.nirvana.ui.preference.IntegerPreference
             android:key="@string/pref_key_treatment_recurring_n_times"
             android:selectAllOnFocus="true"
             android:singleLine="true"

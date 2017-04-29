@@ -5,7 +5,7 @@
         android:key="@string/pref_key_treatment_recurring_details"
         android:title="Repeat until date">
 
-        <name.leesah.nirvana.ui.tweaks.DatePreference
+        <name.leesah.nirvana.ui.preference.DatePreference
             android:key="@string/pref_key_treatment_recurring_until_date"
             android:title="Until no further than" />
     </PreferenceCategory>

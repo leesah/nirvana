@@ -3,57 +3,54 @@ package name.leesah.nirvana.model.medication.repeating;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.Random;
-import java.util.stream.Stream;
 
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.treatment.Treatment;
 
-import static java.util.stream.IntStream.range;
-import static junit.framework.Assert.assertFalse;
-import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.junit.Assert.assertTrue;
+import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
+import static org.hamcrest.CoreMatchers.is;
+import static org.joda.time.Days.daysBetween;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
- * Created by sah on 2016-12-08.
+ * Created by sah on 2017-04-29.
  */
 public class EveryNDaysTest {
 
-    private RepeatingStrategy model;
-    private TreatmentCycle random30DayCycle;
-    private LocalDate firstDay;
-    private int n;
+    private static final int N = 10;
+
+    @Mock(name = "A nice treatment")
+    private Treatment treatment;
+    @Mock(name = "A good strategy")
+    private StartingStrategy startingStrategy;
+    private LocalDate realStartDate;
 
     @Before
     public void setUp() throws Exception {
-        n = new Random().nextInt(10) + 1;
-        model = new EveryNDays(n);
-        firstDay = today().plusDays(new Random().nextInt(365));
-        random30DayCycle = new TreatmentCycle(firstDay, firstDay.plusDays(29));
+        initMocks(this);
+        realStartDate = randomDay();
+        when(treatment.contains(notNull())).thenReturn(true);
     }
 
     @Test
-    public void multiplesOfN() throws Exception {
-        Stream.of(0, n, n * 2).forEach(x -> assertMatches(firstDay.plusDays(x)));
+    public void matches() throws Exception {
+        LocalDate date = realStartDate.plusDays((new Random().nextInt(10) + 1) * 10);
+        when(startingStrategy.getRealStartDate(same(treatment), same(date))).thenReturn(realStartDate);
+        assertThat(new EveryNDays(N).matches(treatment, startingStrategy, date), is(true));
     }
 
     @Test
-    public void between0AndN() throws Exception {
-        range(1, n).forEach(x -> assertMatchesNot(firstDay.plusDays(x)));
+    public void matchesNot() throws Exception {
+        LocalDate date = realStartDate.plusDays(N + 1);
+        when(startingStrategy.getRealStartDate(same(treatment), same(date))).thenReturn(realStartDate);
+        assertThat(new EveryNDays(N).matches(treatment, startingStrategy, date), is(false));
     }
-
-    @Test
-    public void beforeFirstDayOfCycle() throws Exception {
-        assertMatchesNot(firstDay.minusDays(n));
-    }
-
-    private void assertMatches(LocalDate date) {
-        assertTrue(String.format("Date [%s] failed to match Cycle [%s] by Model [every %d days].", date, random30DayCycle, n), model.matchesDate(random30DayCycle, date));
-    }
-
-    private void assertMatchesNot(LocalDate date) {
-        assertFalse(String.format("Date [%s] matched Cycle [%s] by Model [every %d days] when it was not supposed to.", date, random30DayCycle, n), model.matchesDate(random30DayCycle, date));
-    }
-
 
 }

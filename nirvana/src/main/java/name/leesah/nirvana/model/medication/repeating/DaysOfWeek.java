@@ -12,7 +12,8 @@ import java.util.Set;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.DayOfWeek;
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.treatment.Treatment;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
@@ -33,7 +34,7 @@ public class DaysOfWeek implements RepeatingStrategy {
     }
 
     @Override
-    public boolean matchesDate(TreatmentCycle currentCycle, LocalDate date) {
+    public boolean matches(Treatment treatment, StartingStrategy startingStrategy, LocalDate date) {
         return asIntegers().contains(date.getDayOfWeek());
     }
 

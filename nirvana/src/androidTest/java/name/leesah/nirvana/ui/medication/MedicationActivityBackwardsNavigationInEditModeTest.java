@@ -7,8 +7,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 
-import static name.leesah.nirvana.ui.LanternGenie.everythingVanishesSilVousPlait;
-import static name.leesah.nirvana.ui.LanternGenie.oneRandomMedicationSilVousPlait;
+import static android.support.test.InstrumentationRegistry.getTargetContext;
+import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
 
@@ -22,14 +23,14 @@ public class MedicationActivityBackwardsNavigationInEditModeTest {
 
     @Before
     public void setUp() throws Exception {
-        everythingVanishesSilVousPlait();
-        int id = oneRandomMedicationSilVousPlait().getId();
+        everythingVanishesSilVousPlait(getTargetContext());
+        int id = oneRandomMedicationSilVousPlait(getTargetContext(), true).getId();
         mActivityRule.launchActivity(new Intent(ACTION_EDIT_MEDICATION).putExtra(EXTRA_MEDICATION_ID, id));
     }
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait();
+        everythingVanishesSilVousPlait(getTargetContext());
     }
 
 }

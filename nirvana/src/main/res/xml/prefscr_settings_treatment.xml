@@ -11,12 +11,12 @@
         android:dependency="@string/pref_key_treatment_enabled"
         android:title="@string/prefcat_title_treatment_first_cycle">
 
-        <name.leesah.nirvana.ui.tweaks.DatePreference
+        <name.leesah.nirvana.ui.preference.DatePreference
             android:dependency="@string/pref_key_treatment_enabled"
             android:key="@string/pref_key_treatment_first_day"
             android:title="@string/pref_title_treatment_first_day" />
 
-        <name.leesah.nirvana.ui.tweaks.PeriodPreference
+        <name.leesah.nirvana.ui.preference.PeriodPreference
             android:dependency="@string/pref_key_treatment_enabled"
             android:key="@string/pref_key_treatment_cycle_length"
             android:title="@string/pref_title_treatment_cycle_length" />

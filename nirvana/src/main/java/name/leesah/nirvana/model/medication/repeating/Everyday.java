@@ -5,7 +5,8 @@ import android.content.Context;
 import org.joda.time.LocalDate;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.treatment.Treatment;
 
 /**
  * Created by sah on 2016-12-07.
@@ -13,8 +14,8 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 public class Everyday implements RepeatingStrategy {
 
     @Override
-    public boolean matchesDate(TreatmentCycle currentCycle, LocalDate today) {
-        return true;
+    public boolean matches(Treatment treatment, StartingStrategy startingStrategy, LocalDate date) {
+        return treatment.contains(date);
     }
 
     @Override

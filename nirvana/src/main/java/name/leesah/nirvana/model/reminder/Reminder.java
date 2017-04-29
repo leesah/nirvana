@@ -1,12 +1,18 @@
 package name.leesah.nirvana.model.reminder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+import java.util.Locale;
+import java.util.Objects;
+
 import name.leesah.nirvana.R;
 
+import static java.lang.String.*;
+import static java.util.Locale.US;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;
 import static name.leesah.nirvana.model.reminder.Reminder.State.SNOOZED;
@@ -96,8 +102,24 @@ public class Reminder {
         return new Reminder(uniqueInt(), date, time, this.medicationId, this.dosageAmount, SNOOZED, null);
     }
 
+    @Override
     public String toString() {
-        return String.format("Reminder {id=[%d], mid=[%d], d=[%s], t=[%s]}", id, medicationId, toText(date), toText(time));
+        return format(US,"[Reminder #%d (%s: %s %s, m#%d x %d)]", id, state.name(), toText(date), toText(time), medicationId, dosageAmount);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reminder reminder = (Reminder) o;
+        return medicationId == reminder.medicationId &&
+                dosageAmount == reminder.dosageAmount &&
+                Objects.equals(date, reminder.date) &&
+                Objects.equals(time, reminder.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, time, medicationId, dosageAmount);
+    }
 }

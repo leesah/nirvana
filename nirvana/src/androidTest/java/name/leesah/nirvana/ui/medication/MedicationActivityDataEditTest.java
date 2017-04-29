@@ -13,6 +13,8 @@ import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.repeating.DaysOfWeek;
 import name.leesah.nirvana.model.medication.repeating.EveryNDays;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
+import name.leesah.nirvana.model.medication.starting.Immediately;
+import name.leesah.nirvana.model.medication.stopping.Never;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
@@ -27,8 +29,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISI
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static name.leesah.nirvana.ui.LanternGenie.everythingVanishesSilVousPlait;
-import static name.leesah.nirvana.ui.LanternGenie.oneRandomMedicationSilVousPlait;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
 import static org.hamcrest.Matchers.allOf;
@@ -46,14 +49,14 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
 
     @Before
     public void setUp() throws Exception {
-        everythingVanishesSilVousPlait();
-        existing = oneRandomMedicationSilVousPlait();
+        everythingVanishesSilVousPlait(getTargetContext());
+        existing = oneRandomMedicationSilVousPlait(getTargetContext(), true);
         mActivityRule.launchActivity(new Intent(ACTION_EDIT_MEDICATION).putExtra(EXTRA_MEDICATION_ID, existing.getId()));
     }
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait();
+        everythingVanishesSilVousPlait(getTargetContext());
     }
 
     @Test
@@ -118,5 +121,17 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
             ).check(matches(isDisplayed()));
             pressBack();
         }
+    }
+
+    @Override
+    protected void ensureCustomStartingSwitchedOn() {
+        if (existing.getStartingStrategy() instanceof Immediately)
+            super.ensureCustomStartingSwitchedOn();
+    }
+
+    @Override
+    protected void ensureCustomStoppingSwitchOn() {
+        if (existing.getStoppingStrategy() instanceof Never)
+            super.ensureCustomStoppingSwitchOn();
     }
 }

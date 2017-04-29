@@ -26,7 +26,7 @@
 
         </FrameLayout>
 
-        <name.leesah.nirvana.ui.tweaks.TimedDosageEditorCard
+        <name.leesah.nirvana.ui.widget.TimedDosageEditorCard
             android:id="@+id/editor_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

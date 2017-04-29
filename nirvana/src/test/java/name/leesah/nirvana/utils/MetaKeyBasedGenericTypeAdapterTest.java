@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 
 import java.util.Random;
 
-import name.leesah.nirvana.model.treatment.recurring.NotRepeating;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
@@ -55,11 +54,6 @@ public class MetaKeyBasedGenericTypeAdapterTest {
     }
 
     @Test
-    public void serializeNotRepeatingModel() throws Exception {
-        doTestSerialize(new NotRepeating());
-    }
-
-    @Test
     public void serializeRepeatingNTimesModel() throws Exception {
         doTestSerialize(new NTimes(new Random().nextInt()));
     }
@@ -76,11 +70,6 @@ public class MetaKeyBasedGenericTypeAdapterTest {
 
         assertSame(jsonElement, actual);
         assertEquals(model.getClass().getCanonicalName(), jsonObject.get(CLASS_META_KEY).getAsString());
-    }
-
-    @Test
-    public void deserializeNotRepeating() throws Exception {
-        doTestDeserialize(new NotRepeating());
     }
 
     @Test

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <name.leesah.nirvana.ui.preference.CheckableDatePreference
+        android:key="@string/pref_key_medication_starting"
+        android:persistent="false"
+        android:title="@string/pref_title_medication_starting"
+        app:checked="false"
+        app:summaryOff="@string/medication_starting_exact_date_summary_off"
+        app:summaryOn="@string/medication_starting_exact_date_summary_on" />
+
+</PreferenceScreen>

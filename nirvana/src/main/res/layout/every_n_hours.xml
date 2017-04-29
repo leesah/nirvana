@@ -83,7 +83,7 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="70dp" />
 
-        <name.leesah.nirvana.ui.tweaks.LimitedMinutesTimePicker
+        <name.leesah.nirvana.ui.widget.LimitedMinutesTimePicker
             android:id="@+id/first_dose_time"
             android:layout_width="wrap_content"
             android:layout_height="160dp"

@@ -1,23 +1,24 @@
 package name.leesah.nirvana.data;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.model.treatment.EverlastingTreatment;
+import name.leesah.nirvana.model.treatment.RecurringTreatment;
 import name.leesah.nirvana.model.treatment.Treatment;
-import name.leesah.nirvana.model.treatment.TreatmentBuilder;
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
-import name.leesah.nirvana.model.treatment.recurring.NotRepeating;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
-import name.leesah.nirvana.utils.DateTimeHelper;
 
+import static android.text.TextUtils.*;
 import static java.lang.String.format;
+import static name.leesah.nirvana.utils.DateTimeHelper.*;
 import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 
 /**
@@ -27,9 +28,12 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 public class Therapist extends DataHolder {
 
     private static final String TAG = Therapist.class.getSimpleName();
+    public static final LocalDate DEFAULT_DAY_ZERO = new LocalDate(0);
 
     private static Therapist instance;
-    private Treatment treatmentCache;
+    private Treatment treatment;
+    private boolean cycleSupportEnabled;
+    private boolean cacheUpToDate = false;
 
     private Therapist(Context context) {
         super(context);
@@ -41,97 +45,92 @@ public class Therapist extends DataHolder {
         return instance;
     }
 
+    public boolean isCycleSupportEnabled() {
+        loadCache();
+        return cycleSupportEnabled;
+    }
+
+    @NonNull
     public Treatment getTreatment() {
-        if (treatmentCache == null)
-            loadTreatmentCache();
-        return treatmentCache;
+        loadCache();
+        return treatment;
     }
 
-    public TreatmentCycle getTreatmentCycle(LocalDate today) {
-        Treatment treatment = getTreatment();
-        return treatment
-                .getRepeatingModel()
-                .getCycleForDate(treatment.getFirstCycle(), today);
-    }
-
-    private void loadTreatmentCache() {
-        boolean treatmentSupportEnabled = preferences.getBoolean(resources.getString(R.string.pref_key_treatment_enabled), false);
-        if (treatmentSupportEnabled) {
-            treatmentCache = loadTreatmentFromSharedPreferences();
-        } else {
-            treatmentCache = buildDummyTreatment();
+    public void invalidate() {
+        synchronized (this) {
+            cacheUpToDate = false;
         }
-
-        Log.d(TAG, format("Loaded treatment: %s", treatmentCache));
     }
 
-    private Treatment loadTreatmentFromSharedPreferences() {
-        return new TreatmentBuilder()
-                .setFirstDay(loadLocalDate())
-                .setCycleLength(loadCycleLength())
-                .setRecurringStrategy(loadRepeatingModel())
-                .build();
+    private void loadCache() {
+        synchronized (this) {
+            if (cacheUpToDate)
+                return;
+            loadFromSharedPreferences();
+            cacheUpToDate = true;
+            Log.d(TAG, format("Loaded treatment: %s", treatment));
+        }
     }
 
-    private LocalDate loadLocalDate() {
-        String key = resources.getString(R.string.pref_key_treatment_first_day);
-        String text = preferences.getString(key, null);
-        if (TextUtils.isEmpty(text))
-            throw new IllegalStateException(format("Value not found for key [%s].", key));
-        return toDate(text);
+    private void loadFromSharedPreferences() {
+        cycleSupportEnabled = preferences.getBoolean(resources.getString(R.string.pref_key_treatment_enabled), false);
+        treatment =  cycleSupportEnabled ?
+                new RecurringTreatment(loadDayZero(), loadLength(), loadRecurring()) :
+                new EverlastingTreatment(loadDayZero(toText(DEFAULT_DAY_ZERO)));
     }
 
-    private Period loadCycleLength() {
+    private LocalDate loadDayZero() {
+        LocalDate dayZero = loadDayZero(null);
+        if (dayZero == null)
+            throw new IllegalStateException("Day zero is not set.");
+        return dayZero;
+    }
+
+    private LocalDate loadDayZero(String defaultValue) {
+        return toDate(preferences.getString(resources.getString(R.string.pref_key_treatment_first_day), defaultValue));
+    }
+
+    private Period loadLength() {
         String key = resources.getString(R.string.pref_key_treatment_cycle_length);
         String text = preferences.getString(key, null);
-        if (TextUtils.isEmpty(text))
-            throw new IllegalStateException(format("Value not found for key [%s].", key));
-        return DateTimeHelper.toPeriod(text);
+        if (isEmpty(text))
+            throw new IllegalStateException("Length is not set.");
+        return toPeriod(text);
     }
 
-    private RecurringStrategy loadRepeatingModel() {
+    private RecurringStrategy loadRecurring() {
         String text = preferences.getString(resources.getString(R.string.pref_key_treatment_recurring), "");
 
-        if (text.equals(resources.getString(R.string.treatment_recurring_none)))
-            return new NotRepeating();
-        else if (text.equals(resources.getString(R.string.treatment_recurring_n_times)))
+        if (text.equals(resources.getString(R.string.treatment_recurring_n_times)))
             return loadRepeatingNTimes();
         else if (text.equals(resources.getString(R.string.treatment_recurring_until_date)))
             return loadRepeatingUntilDate();
         else {
-            Log.wtf(TAG, format("Unexpected treatment repeating model: [%s]. Using [%s] as default.",
-                    text, NotRepeating.class.getSimpleName()));
-            return new NotRepeating();
+            throw new IllegalStateException(format("Unexpected treatment recurring strategy: [%s].", text));
         }
     }
 
 
-    private RecurringStrategy loadRepeatingNTimes() {
+    private NTimes loadRepeatingNTimes() {
         int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), -1);
         if (n < 0) {
-            Log.wtf(TAG, format("Unexpected n for [%s]: [%d]. Using [%s] as default.",
-                    NTimes.class.getSimpleName(), n, NotRepeating.class.getSimpleName()));
-            return new NotRepeating();
+            String msg = format("Unexpected n for [%s]: [%d].", NTimes.class.getSimpleName(), n);
+            Log.wtf(TAG, msg);
+            throw new IllegalStateException(msg);
         }
-
         return new NTimes(n);
     }
 
-    private RecurringStrategy loadRepeatingUntilDate() {
+    private UntilDate loadRepeatingUntilDate() {
         String key = resources.getString(R.string.pref_key_treatment_recurring_until_date);
         String text = preferences.getString(key, null);
-        if (TextUtils.isEmpty(text)) {
-            Log.wtf(TAG, format("Unexpected date for [%s]: [%s]. Using [%s] as default.",
-                    NTimes.class.getSimpleName(), text, NotRepeating.class.getSimpleName()));
-            return new NotRepeating();
+        if (isEmpty(text)) {
+            String msg = format("Unexpected date for [%s]: [%s].", UntilDate.class.getSimpleName(), text);
+            Log.wtf(TAG, msg);
+            throw new IllegalStateException(msg);
         }
 
         return new UntilDate(toDate(text));
-    }
-
-    private Treatment buildDummyTreatment() {
-        return new TreatmentBuilder()
-                .buildEverlastingTreatment();
     }
 
     public static void reset() {

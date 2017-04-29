@@ -13,12 +13,11 @@
     </string-array>
 
     <string-array name="medication_starting_strategies" >
-        <item>@string/medication_starting_immediately</item>
-        <item>@string/medication_starting_after_period</item>
+        <item>@string/medication_starting_relative_immediately</item>
+        <item>@string/medication_starting_relative_by_period</item>
     </string-array>
 
     <string-array name="medication_repeating_strategies">
-        <item>@string/medication_repeating_everyday</item>
         <item>@string/medication_repeating_every_n_days</item>
         <item>@string/medication_repeating_days_of_week</item>
     </string-array>

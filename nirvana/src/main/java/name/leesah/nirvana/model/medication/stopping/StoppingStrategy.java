@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.joda.time.LocalDate;
 
-import name.leesah.nirvana.model.treatment.TreatmentCycle;
+import name.leesah.nirvana.model.treatment.Treatment;
 
 /**
  * Created by sah on 2017-04-21.
@@ -12,7 +12,7 @@ import name.leesah.nirvana.model.treatment.TreatmentCycle;
 
 public interface StoppingStrategy {
 
-    LocalDate getLastDay(LocalDate firstDay);
+    boolean hasStopped(Treatment treatment, LocalDate date);
 
     String toString(Context context);
 
