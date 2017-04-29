@@ -9,7 +9,7 @@ import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 

@@ -7,17 +7,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
-
 import name.leesah.nirvana.BuildConfig;
-import name.leesah.nirvana.model.medication.Medication;
 
-import static name.leesah.nirvana.LanternGenie.randomPositiveInt;
-import static name.leesah.nirvana.LanternGenie.severalRandomMedicationsSilVousPlait;
-import static org.junit.Assert.*;
 import static org.robolectric.RuntimeEnvironment.application;
 
 /**

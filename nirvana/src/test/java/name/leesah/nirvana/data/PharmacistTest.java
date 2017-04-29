@@ -10,9 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.robolectric.RuntimeEnvironment.*;
+import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2017-04-06.

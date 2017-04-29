@@ -12,7 +12,7 @@ import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDayAfter;
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDayBefore;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**

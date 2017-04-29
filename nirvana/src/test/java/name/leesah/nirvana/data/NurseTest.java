@@ -2,7 +2,6 @@ package name.leesah.nirvana.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -13,19 +12,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 
 import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.model.reminder.Reminder;
 
-import static android.preference.PreferenceManager.*;
-import static java.util.Collections.*;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
@@ -39,10 +36,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.joda.time.LocalTime.now;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.robolectric.RuntimeEnvironment.*;
+import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2017-04-06.

@@ -3,18 +3,14 @@ package name.leesah.nirvana.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.BuildConfig;
@@ -26,13 +22,12 @@ import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.joda.time.Period.months;
 import static org.junit.Assert.assertThat;
-import static org.robolectric.RuntimeEnvironment.*;
+import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2016-12-14.

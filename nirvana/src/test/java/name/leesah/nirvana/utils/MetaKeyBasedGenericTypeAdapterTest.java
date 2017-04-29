@@ -14,8 +14,8 @@ import org.mockito.Mockito;
 import java.util.Random;
 
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
-import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertSame;

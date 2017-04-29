@@ -6,19 +6,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.EnumSet;
-
-import name.leesah.nirvana.model.DayOfWeek;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static java.util.EnumSet.*;
+import static java.util.EnumSet.of;
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static name.leesah.nirvana.model.DayOfWeek.MONDAY;
 import static name.leesah.nirvana.model.DayOfWeek.TUESDAY;
 import static name.leesah.nirvana.model.DayOfWeek.WEDNESDAY;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;

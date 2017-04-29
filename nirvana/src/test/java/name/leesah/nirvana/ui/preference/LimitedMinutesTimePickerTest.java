@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import name.leesah.nirvana.ui.widget.LimitedMinutesTimePicker;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**

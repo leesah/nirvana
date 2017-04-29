@@ -1,19 +1,16 @@
 package name.leesah.nirvana.model.medication.repeating;
 
-import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import name.leesah.nirvana.DateTimeRelatedTestHelper;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.*;
-import static name.leesah.nirvana.utils.DateTimeHelper.today;
+import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
