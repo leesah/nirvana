@@ -10,7 +10,7 @@ def DAY0 = Date.parse('yyyy-MM-dd', '2017-04-07')
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.0 rc1'
+    buildToolsVersion '25.0.2'
     playAccountConfigs {
         defaultAccountConfig {
             jsonFile = file('play-publish-auth-key.json')

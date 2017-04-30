@@ -28,6 +28,7 @@ stages:
     # Install Android SDK
     - wget --quiet --output-document=/tmp/android-sdk.zip https://dl.google.com/android/repository/tools_r${ANDROID_SDK_VERSION}-linux.zip
     - unzip -q /tmp/android-sdk.zip -d ${ANDROID_SDK_ROOT}
+    - echo "count=0" > ~/.android/repositories.cfg
     # Install "platforms;android-${TARGET_SDK}"
     - mkdir --parents ${ANDROID_SDK_ROOT}/licenses/ && touch ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
     - echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
