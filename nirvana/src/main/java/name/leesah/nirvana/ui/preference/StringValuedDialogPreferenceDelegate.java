@@ -14,8 +14,10 @@ import static android.text.TextUtils.isEmpty;
  */
 
 abstract class StringValuedDialogPreferenceDelegate {
-    protected final DialogPreference preference;
-    String value;
+
+    private final DialogPreference preference;
+
+    private String value;
 
     StringValuedDialogPreferenceDelegate(DialogPreference preference) {
         this.preference = preference;
@@ -29,7 +31,7 @@ abstract class StringValuedDialogPreferenceDelegate {
         value = restoreValue ? getPersistedString() : defaultValue.toString();
         if (value != null) {
             persistString(value);
-            setSummary(value);
+            preference.setSummary(value);
         }
     }
 
@@ -71,18 +73,18 @@ abstract class StringValuedDialogPreferenceDelegate {
         return preference.getKey();
     }
 
-    public void setSummary(CharSequence original) {
-        preference.setSummary(translateSummary(original));
-    }
-
     protected abstract String translateSummary(CharSequence original);
 
     void updateValue(String newValue) {
         if (callChangeListener(newValue)) {
             value = newValue;
-            setSummary(value);
+            preference.setSummary(value);
             persistString(newValue);
         }
+    }
+
+    protected String getValue() {
+        return value;
     }
 
     private boolean callChangeListener(String newValue) {

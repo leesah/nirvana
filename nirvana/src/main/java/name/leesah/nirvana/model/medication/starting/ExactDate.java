@@ -4,6 +4,8 @@ import android.content.Context;
 
 import org.joda.time.LocalDate;
 
+import java.util.Objects;
+
 import name.leesah.nirvana.model.treatment.Treatment;
 
 /**
@@ -21,6 +23,19 @@ public class ExactDate implements StartingStrategy {
     @Override
     public LocalDate getRealStartDate(Treatment treatment, LocalDate date) {
         return startDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExactDate exactDate = (ExactDate) o;
+        return Objects.equals(startDate, exactDate.startDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startDate);
     }
 
     @Override

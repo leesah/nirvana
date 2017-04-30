@@ -45,7 +45,7 @@ public class IntegerPreference extends DialogPreference {
         picker = (NumberPicker) view.findViewById(R.id.numberPicker);
         picker.setMinValue(minValue);
         picker.setMaxValue(maxValue);
-        picker.setValue(minValue < value && value < maxValue ? value : minValue);
+        picker.setValue(minValue <= value && value <= maxValue ? value : minValue);
 
         super.onBindDialogView(view);
     }
@@ -86,4 +86,11 @@ public class IntegerPreference extends DialogPreference {
         return value;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
 }

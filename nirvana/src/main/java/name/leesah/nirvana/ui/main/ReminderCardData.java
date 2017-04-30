@@ -1,4 +1,4 @@
-package name.leesah.nirvana.ui.reminder;
+package name.leesah.nirvana.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
+import name.leesah.nirvana.ui.reminder.ReminderDetailsActivity;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static android.view.View.MeasureSpec.UNSPECIFIED;

@@ -26,8 +26,8 @@ public class DatePreferenceDelegate extends StringValuedDialogPreferenceDelegate
 
     protected void onBindDialogView(View view) {
         picker = (DatePicker) view.findViewById(R.id.datePicker);
-        if (!isEmpty(value)) {
-            LocalDate date = toDate(value);
+        if (!isEmpty(getValue())) {
+            LocalDate date = toDate(getValue());
             picker.updateDate(date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth());
         }
     }
@@ -58,7 +58,7 @@ public class DatePreferenceDelegate extends StringValuedDialogPreferenceDelegate
 
     @Nullable
     public LocalDate getDate() {
-        return value == null ? null : toDate(value);
+        return getValue() == null ? null : toDate(getValue());
     }
 
 }

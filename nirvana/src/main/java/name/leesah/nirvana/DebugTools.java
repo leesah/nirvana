@@ -1,10 +1,6 @@
 package name.leesah.nirvana;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.util.ArraySet;
 import android.widget.Toast;
 
 import org.joda.time.LocalTime;
@@ -13,8 +9,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -26,12 +20,10 @@ import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.stopping.Never;
-import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.SchedulingService;
 
-import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
+import static android.preference.PreferenceManager.*;
 
 /**
  * Created by sah on 2017-04-18.
@@ -39,40 +31,17 @@ import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 
 public class DebugTools {
 
-    private final Context context;
-    private final Pharmacist pharmacist;
-    private final Nurse nurse;
-    private final NotificationSecretary notificationSecretary;
-    private final SharedPreferences defaultSharedPreferences;
-
-    public DebugTools(Context context) {
-        this.context = context;
-        pharmacist = Pharmacist.getInstance(context);
-        nurse = Nurse.getInstance(context);
-        notificationSecretary = new NotificationSecretary(context);
-        defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    public void clearAllData() {
-        defaultSharedPreferences.edit().clear().apply();
+    public static void clearAllData(Context context) {
+        getDefaultSharedPreferences(context).edit().clear().apply();
         Pharmacist.reset();
         Nurse.reset();
         Therapist.reset();
     }
 
-    public void injectTestData() {
-        Set<Reminder> old = nurse.replace(reminder -> true, new ArraySet<>());
-        old.stream()
-                .filter(r -> r.getState().equals(NOTIFIED))
-                .forEach(r -> notificationSecretary.dismiss(r.getNotificationId()));
-        Toast.makeText(context, "Reminders cleared.", Toast.LENGTH_SHORT).show();
+    public static void injectTestData(Context context) {
+        clearAllData(context);
 
-        Set<Integer> medicationIds = pharmacist.getMedications().stream().map(Medication::getId).collect(Collectors.toSet());
-        medicationIds.forEach(pharmacist::removeMedication);
-        Toast.makeText(context, "Medications cleared.", Toast.LENGTH_SHORT).show();
-
-        defaultSharedPreferences.edit().clear().apply();
-        Toast.makeText(context, "Other preferences cleared.", Toast.LENGTH_SHORT).show();
+        Pharmacist pharmacist = Pharmacist.getInstance(context);
 
         DateTimeFormatter formatterHHmm = DateTimeFormat.forPattern("HH:mm");
         LocalTime NineAM = LocalTime.parse("09:00", formatterHHmm);
@@ -98,16 +67,6 @@ public class DebugTools {
                 setStoppingStrategy(new Never()).
                 build();
 
-        Medication probiMage = new MedicationBuilder().
-                setName("Probi Mage").
-                setManufacturer("Probi").
-                setForm(DosageForm.CAPSULE).
-                setRepeatingStrategy(new Everyday()).
-                setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
-                setStartingStrategy(new Immediately()).
-                setStoppingStrategy(new Never()).
-                build();
-
         Medication manTabletter = new MedicationBuilder().
                 setName("Man tabletter").
                 setManufacturer("apoteket").
@@ -120,7 +79,6 @@ public class DebugTools {
 
         pharmacist.addMedication(valaciclovir);
         pharmacist.addMedication(folacin);
-        pharmacist.addMedication(probiMage);
         pharmacist.addMedication(manTabletter);
         Toast.makeText(context, "Medications injected.", Toast.LENGTH_SHORT).show();
 

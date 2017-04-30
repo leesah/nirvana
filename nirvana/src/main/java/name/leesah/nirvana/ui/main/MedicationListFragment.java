@@ -1,4 +1,4 @@
-package name.leesah.nirvana.ui.medication;
+package name.leesah.nirvana.ui.main;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -19,6 +19,7 @@ import java.util.List;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;

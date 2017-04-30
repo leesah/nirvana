@@ -74,13 +74,6 @@ public class CheckablePreferenceDelegate {
     }
 
     void onCheckedChange(CompoundButton buttonView, boolean checked) {
-        if (!callChangeListener(checked)) {
-            // Listener didn't like it, change it back.
-            // CompoundButton will make sure we don't recurse.
-            buttonView.setChecked(!checked);
-            return;
-        }
-
         this.checked = checked;
         updateSummary();
         setViewTreeEnabled(iconFrame, checked);

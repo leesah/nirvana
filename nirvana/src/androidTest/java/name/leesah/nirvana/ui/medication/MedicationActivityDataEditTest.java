@@ -13,8 +13,6 @@ import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.repeating.DaysOfWeek;
 import name.leesah.nirvana.model.medication.repeating.EveryNDays;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
-import name.leesah.nirvana.model.medication.starting.Immediately;
-import name.leesah.nirvana.model.medication.stopping.Never;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
@@ -25,6 +23,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withSummary;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withSummaryText;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
+import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -32,6 +31,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
 import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
+import static name.leesah.nirvana.ui.MoreViewActions.setChecked;
+import static name.leesah.nirvana.ui.MoreViewMatchers.switchWidgetBesidesTitle;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
 import static org.hamcrest.Matchers.allOf;
@@ -65,8 +66,20 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
     }
 
     @Test
-    public void deleteButtonIsAbsent() throws Exception {
+    public void deleteButtonIsPresentInBasics() throws Exception {
         onView(withId(R.id.delete_button)).check(matches(withEffectiveVisibility(VISIBLE)));
+    }
+
+    @Test
+    public void deleteButtonIsAbsentInReminding() throws Exception {
+        onView(withText(R.string.pref_title_medication_reminding)).perform(click());
+        onView(withId(R.id.delete_button)).check(matches(withEffectiveVisibility(GONE)));
+    }
+
+    @Test
+    public void deleteButtonIsAbsentInRepeating() throws Exception {
+        onView(withText(R.string.pref_title_medication_repeating)).perform(click());
+        onView(withId(R.id.delete_button)).check(matches(withEffectiveVisibility(GONE)));
     }
 
     @Test
@@ -93,45 +106,7 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
                     withSummaryText(existing.getRemindingStrategy().toString(getTargetContext()))
             )).check(matches(isDisplayed()));
         }
-        { // Repeating model
-            onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
-            int expectedModelName = 0;
-            if (existing.getRepeatingStrategy() instanceof Everyday)
-                expectedModelName = R.string.medication_repeating_everyday;
-            else if (existing.getRepeatingStrategy() instanceof EveryNDays)
-                expectedModelName = R.string.medication_repeating_every_n_days;
-            else if (existing.getRepeatingStrategy() instanceof DaysOfWeek)
-                expectedModelName = R.string.medication_repeating_days_of_week;
-            onData(allOf(
-                    withTitle(R.string.pref_title_medication_repeating),
-                    withSummary(expectedModelName))
-            ).check(matches(isDisplayed()));
-            pressBack();
-        }
-        { // Reminding model
-            onData(withTitle(R.string.pref_title_medication_reminding)).perform(click());
-            int expectedModelName = 0;
-            if (existing.getRemindingStrategy() instanceof AtCertainHours)
-                expectedModelName = R.string.medication_reminding_certain_hours;
-            else if (existing.getRemindingStrategy() instanceof EveryNHours)
-                expectedModelName = R.string.medication_reminding_every_n_hours;
-            onData(allOf(
-                    withTitle(R.string.pref_title_medication_reminding),
-                    withSummary(expectedModelName))
-            ).check(matches(isDisplayed()));
-            pressBack();
-        }
+        // TODO: verify the values in the strategies.
     }
 
-    @Override
-    protected void ensureCustomStartingSwitchedOn() {
-        if (existing.getStartingStrategy() instanceof Immediately)
-            super.ensureCustomStartingSwitchedOn();
-    }
-
-    @Override
-    protected void ensureCustomStoppingSwitchOn() {
-        if (existing.getStoppingStrategy() instanceof Never)
-            super.ensureCustomStoppingSwitchOn();
-    }
 }

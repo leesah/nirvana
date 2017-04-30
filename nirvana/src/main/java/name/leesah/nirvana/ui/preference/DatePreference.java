@@ -52,7 +52,7 @@ public class DatePreference extends DialogPreference {
 
     @Override
     public void setSummary(CharSequence original) {
-        delegate.setSummary(original);
+        super.setSummary(delegate.translateSummary(original));
     }
 
     public void setDate(@NonNull LocalDate date) {

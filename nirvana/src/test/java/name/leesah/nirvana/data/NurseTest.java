@@ -26,7 +26,7 @@ import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomPositiveInt;
+import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
 import static name.leesah.nirvana.LanternGenie.severalRandomRemindersSilVousPlait;
 import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
@@ -64,7 +64,7 @@ public class NurseTest {
 
     @Test
     public void addXRemindersWhen0Existing() throws Exception {
-        Set<Reminder> newReminders = severalRandomRemindersSilVousPlait(context, randomPositiveInt(10), false);
+        Set<Reminder> newReminders = severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(10), false);
 
         nurse.add(newReminders);
 
@@ -83,8 +83,8 @@ public class NurseTest {
 
     @Test
     public void addXRemindersWhenYExisting() throws Exception {
-        Set<Reminder> existingReminders = severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), true);
-        Set<Reminder> newReminders = severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), false);
+        Set<Reminder> existingReminders = severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), true);
+        Set<Reminder> newReminders = severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), false);
 
         nurse.add(newReminders);
 
@@ -97,7 +97,7 @@ public class NurseTest {
 
     @Test
     public void add0ReminderWhenYExisting() throws Exception {
-        Set<Reminder> existingReminders = severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), true);
+        Set<Reminder> existingReminders = severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), true);
 
         nurse.add(emptySet());
 
@@ -110,7 +110,7 @@ public class NurseTest {
 
     @Test
     public void replace() throws Exception {
-        Set<Reminder> existingReminders = severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), true);
+        Set<Reminder> existingReminders = severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), true);
         Set<Reminder> existingRemindersWithOddMedicationids = existingReminders.stream()
                 .filter(reminder -> reminder.getMedicationId() % 2 != 0)
                 .collect(toSet());
@@ -136,7 +136,7 @@ public class NurseTest {
     @Test
     public void setNotified() throws Exception {
         Reminder firstReminder = new ArrayList<>(
-                severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), true)
+                severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), true)
         ).get(0);
         int notificationId = uniqueInt();
 
@@ -153,7 +153,7 @@ public class NurseTest {
     @Test
     public void setDone() throws Exception {
         Reminder firstReminder = new ArrayList<>(
-                severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), true)
+                severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), true)
         ).get(0);
         int notificationId = uniqueInt();
 
@@ -169,7 +169,7 @@ public class NurseTest {
     @Test
     public void getReminders() throws Exception {
         LocalDate date = new ArrayList<>(
-                severalRandomRemindersSilVousPlait(context, randomPositiveInt(128), true)
+                severalRandomRemindersSilVousPlait(context, randomPositiveIntSilVousPlait(128), true)
         ).get(0).getDate();
 
         Set<Reminder> reminders = nurse.getReminders(date);

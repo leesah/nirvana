@@ -30,7 +30,7 @@ public class RepeatingStrategySelectFragment extends ListAndDetailsPreferenceFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.prefscr_repeating_model);
+        addPreferencesFromResource(R.xml.prefscr_medication_repeating);
 
         models = (ListPreference) findPreference(getString(R.string.pref_key_medication_repeating));
         models.setOnPreferenceChangeListener((p, v) -> switchDetailsFragment(p, v.toString()));
@@ -48,7 +48,7 @@ public class RepeatingStrategySelectFragment extends ListAndDetailsPreferenceFra
             }
             if (editingExisting instanceof EveryNDays) {
                 models.setValue(getString(R.string.medication_repeating_every_n_days));
-                everyNDays.setEditingExsiting((EveryNDays) editingExisting);
+                everyNDays.setEditingExisting((EveryNDays) editingExisting);
             }
             editingExisting = null;
         }

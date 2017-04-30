@@ -4,6 +4,7 @@ import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.view.View;
 import android.widget.NumberPicker;
+import android.widget.Switch;
 
 import org.hamcrest.Matcher;
 
@@ -15,7 +16,7 @@ import static org.hamcrest.Matchers.allOf;
  * Created by sah on 2017-04-06.
  */
 
-public class NumberPickerActions {
+public class MoreViewActions {
 
     public static ViewAction setNumber(int n) {
         return new ViewAction() {
@@ -36,4 +37,24 @@ public class NumberPickerActions {
             }
         };
     }
+
+    public static ViewAction setChecked(boolean checked) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return allOf(isAssignableFrom(Switch.class), isDisplayed());
+            }
+
+            @Override
+            public String getDescription() {
+                return "set checked state in a Switch";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                ((Switch) view).setChecked(checked);
+            }
+        };
+    }
+
 }

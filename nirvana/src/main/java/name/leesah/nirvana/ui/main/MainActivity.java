@@ -10,8 +10,6 @@ import android.view.MenuItem;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.ui.medication.MedicationListFragment;
-import name.leesah.nirvana.ui.reminder.RemindersOfDayFragment;
 import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
 import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentRepeatingModelSelectFragment;

@@ -9,6 +9,9 @@ import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.DebugTools;
 import name.leesah.nirvana.R;
 
+import static name.leesah.nirvana.DebugTools.clearAllData;
+import static name.leesah.nirvana.DebugTools.injectTestData;
+
 /**
  * Created by sah on 2017-04-17.
  */
@@ -19,7 +22,6 @@ public class SettingsFragment extends PreferenceFragment {
     private Preference notification;
     private Preference.OnPreferenceClickListener treatmentListener;
     private Preference.OnPreferenceClickListener notificationListener;
-    private DebugTools debugTools;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,13 +46,12 @@ public class SettingsFragment extends PreferenceFragment {
 
     private void initializeDebugToolsSection() {
         addPreferencesFromResource(R.xml.prefscr_debug_tools);
-        debugTools = new DebugTools(getContext());
         findPreference("debug: inject").setOnPreferenceClickListener(preference -> {
-            debugTools.injectTestData();
+            injectTestData(getContext());
             return true;
         });
         findPreference("debug: clear").setOnPreferenceClickListener(preference -> {
-            debugTools.clearAllData();
+            clearAllData(getContext());
             return true;
         });
     }

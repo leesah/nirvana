@@ -14,9 +14,13 @@ import java.util.Set;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
+import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.medication.starting.ExactDate;
+import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
 import name.leesah.nirvana.ui.medication.reminding.RemindingStrategySelectFragment;
@@ -27,6 +31,7 @@ import name.leesah.nirvana.utils.DateTimeHelper;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static java.lang.String.format;
+import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 public class MedicationActivity extends AppCompatActivity {
 
@@ -109,6 +114,9 @@ public class MedicationActivity extends AppCompatActivity {
     private void toAddMode() {
         setTitle(R.string.add_medication);
         deleteButton.setVisibility(GONE);
+
+        repeatingStrategy = new Everyday();
+        basicsFragment.setRepeatingModelSummary(repeatingStrategy.toString(this));
     }
 
     private void toEditMode() {
@@ -155,7 +163,7 @@ public class MedicationActivity extends AppCompatActivity {
         medication.setRepeatingStrategy(repeatingStrategy);
         pharmacist.addMedication(medication);
 
-        Set<Reminder> reminders = reminderFactory.createReminders(medication, DateTimeHelper.today());
+        Set<Reminder> reminders = reminderFactory.createReminders(medication, today());
         nurse.replace(reminder -> reminder.getMedicationId() == ((editingExisting == null ? medication : editingExisting).getId()), reminders);
         reminders.forEach(alarmSecretary::setAlarm);
 

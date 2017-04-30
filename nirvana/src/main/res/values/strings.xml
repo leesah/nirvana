@@ -58,13 +58,14 @@
     <string name="medication_stopping_summary_off" >Do not stop (until treatment ends)</string>
     <string name="medication_stopping_switch_text_off" />
     <string name="medication_stopping_switch_text_on" />
-    <string name="to_string_everyday">everyday</string>
-    <string name="to_string_medication_repeating_every_n_days">every %d days</string>
-    <string name="to_string_medication_repeating_days_of_week">every week on %s</string>
+    <string name="to_string_everyday">@string/medication_repeating_everyday</string>
+    <string name="to_string_medication_repeating_every_n_days">Every %d days</string>
+    <string name="to_string_medication_repeating_days_of_week">Every week on %s</string>
     <string name="to_string_starting_immediately">Do not delay</string>
     <string name="to_string_stopping_after_period">Stop in %s</string>
 
     <!-- Medication preference titles & summaries-->
+    <!--   * Basics -->
     <string name="prefcat_title_medication_basics">Information</string>
     <string name="pref_title_medication_name">Name</string>
     <string name="pref_summary_medication_name">Displayed in notifications</string>
@@ -74,20 +75,26 @@
     <string name="pref_summary_dosage_form">The form of the medicine doses</string>
     <string name="prefcat_title_medication_strategies">Intakes</string>
     <string name="prefcat_summary_medication_strategies">The intake patterns</string>
-    <string name="pref_title_medication_repeating">Days</string>
-    <string name="pref_summary_medication_repeating">On which days is the medicine taken</string>
+    <!--   * Reminding -->
     <string name="pref_title_medication_reminding">Hours of day</string>
     <string name="pref_summary_medication_reminding">On which hours of day is the medicine taken</string>
+    <string name="prefcat_title_medication_reminding">Reminding model</string>
+    <!--   * Repeating -->
+    <string name="pref_title_medication_repeating">Days</string>
+    <string name="pref_summary_medication_repeating">On which days is the medicine taken</string>
+    <string name="prefcat_title_medication_repeating">Repeating model</string>
+    <string name="pref_title_medication_repeating_every_n_days">Interval (in days)</string>
+    <!--   * Starting -->
     <string name="pref_title_medication_starting_enabled">Delayed starting</string>
     <string name="pref_summary_medication_starting_enabled">Enable if you want to delay the start date of a medicine in each cycle. Available when "Treatment cycles" is enabled in Settings.</string>
     <string name="pref_title_medication_starting">Delayed starting</string>
     <string name="pref_summary_medication_starting_delay_period">The period to delay</string>
+    <!--   * Stopping -->
     <string name="pref_title_medication_stopping_enabled">Stopping</string>
     <string name="pref_summary_medication_stopping_enabled">Enable if you want to customize the stop date of a medicine in each cycle. When disabled, the intake lasts forever, or ends when the treatment ends if "Treatment cycles" is enabled in Settings.</string>
     <string name="pref_title_medication_stopping_after_period">Stopping</string>
     <string name="pref_summary_medication_stopping_after_period">For how long will the intake last</string>
-    <string name="prefcat_title_medication_repeating">Repeating model</string>
-    <string name="prefcat_title_medication_reminding">Reminding model</string>
+
     <string name="prefcat_title_details">Details</string>
 
     <!-- Notification -->

@@ -20,6 +20,7 @@ import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.medication.stopping.InPeriod;
 import name.leesah.nirvana.model.medication.stopping.Never;
+import name.leesah.nirvana.ui.medication.MedicationActivity.ValidityReportListener;
 import name.leesah.nirvana.ui.preference.CheckableDatePreference;
 import name.leesah.nirvana.ui.preference.CheckableNonDialogPreference;
 import name.leesah.nirvana.ui.preference.CheckablePeriodPreference;
@@ -30,6 +31,7 @@ import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
+import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 public class BasicsFragment extends PreferenceFragment {
 
@@ -48,7 +50,7 @@ public class BasicsFragment extends PreferenceFragment {
     private CheckableNonDialogPreference repeating;
     private CheckablePreference starting;
     private CheckablePeriodPreference stopping;
-    private MedicationActivity.ValidityReportListener validityReportListener;
+    private ValidityReportListener validityReportListener;
     private String remindingModelSummary;
     private String repeatingModelSummary;
     private Medication editingExisting;
@@ -71,14 +73,14 @@ public class BasicsFragment extends PreferenceFragment {
         starting = (CheckablePreference) findPreference(getString(R.string.pref_key_medication_starting));
         stopping = (CheckablePeriodPreference) findPreference(getString(R.string.pref_key_medication_stopping_after_period));
 
-        name.setOnPreferenceChangeListener((p, v) -> reportValidity());
-        dosageForm.setOnPreferenceChangeListener((p, v) -> reportValidity());
+        name.setOnPreferenceChangeListener(this::reportValidity);
+        dosageForm.setOnPreferenceChangeListener(this::reportValidity);
 
         reminding.setSummary(remindingModelSummary);
         reminding.setOnPreferenceClickListener(remindingModelListener);
         repeating.setOnPreferenceClickListener(repeatingModelListener);
-        starting.setOnPreferenceChangeListener((p, v) -> reportValidity());
-        stopping.setOnPreferenceChangeListener((p, v) -> reportValidity());
+        starting.setOnPreferenceChangeListener(this::reportValidity);
+        stopping.setOnPreferenceChangeListener(this::reportValidity);
 
     }
 
@@ -130,7 +132,7 @@ public class BasicsFragment extends PreferenceFragment {
 
             editingExisting = null;
         }
-        reportValidity();
+        reportValidity(null, null);
     }
 
     @Override
@@ -148,23 +150,24 @@ public class BasicsFragment extends PreferenceFragment {
             outState.putString(KEY_STOPPING, toText(stopping.getValue()));
     }
 
-    public void setValidityReportListener(MedicationActivity.ValidityReportListener listener) {
+    public void setValidityReportListener(ValidityReportListener listener) {
         this.validityReportListener = listener;
     }
 
-    private boolean reportValidity() {
-        validityReportListener.onValidityReport(isValid());
+    private boolean reportValidity(Preference preference, Object newValue) {
+        validityReportListener.onValidityReport(isValid(preference, newValue));
         return true;
     }
 
-    private boolean isValid() {
-        return !isEmpty(name.getText()) && !isEmpty(dosageForm.getValue())
-                && (!starting.isChecked() || starting.getValue() != null)
-                && (!stopping.isChecked() || stopping.getValue() != null);
+    private boolean isValid(Preference preference, Object newValue) {
+        return (preference == name || !isEmpty(name.getText())) &&
+                (preference == dosageForm || !isEmpty(dosageForm.getValue())) &&
+                (preference == starting || !starting.isChecked() || starting.getValue() != null) &&
+                (preference == stopping || !stopping.isChecked() || stopping.getValue() != null);
     }
 
     Medication readMedication() {
-        if (!isValid())
+        if (!isValid(null, null))
             throw new IllegalStateException("Premature invocation on readMedication().");
 
         return new MedicationBuilder()
@@ -178,14 +181,13 @@ public class BasicsFragment extends PreferenceFragment {
 
     @NonNull
     private StartingStrategy readStartingStrategy() {
-        if (!starting.isChecked())
-            return new Immediately();
-        else if (starting instanceof CheckablePeriodPreference)
-            return new Delayed(((CheckablePeriodPreference)starting).getValue());
-        else if (starting instanceof CheckableDatePreference)
-            return new ExactDate(((CheckableDatePreference)starting).getValue());
-        else
-            throw new IllegalStateException(format("Unexpected starting strategy: [%s].", starting.getClass().getSimpleName()));
+        return Therapist.getInstance(getContext()).isCycleSupportEnabled() ?
+                starting.isChecked() ?
+                        new Delayed(((CheckablePeriodPreference) starting).getValue()) :
+                        new Immediately() :
+                starting.isChecked() ?
+                        new ExactDate(((CheckableDatePreference) starting).getValue()) :
+                        new ExactDate(today());
     }
 
     public void setRemindingModelListener(Preference.OnPreferenceClickListener listener) {

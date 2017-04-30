@@ -1,4 +1,4 @@
-package name.leesah.nirvana.ui.reminder;
+package name.leesah.nirvana.ui.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -23,9 +23,9 @@ import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static name.leesah.nirvana.ui.reminder.ReminderCardData.NoteAmongReminders;
-import static name.leesah.nirvana.ui.reminder.ReminderCardData.ReminderCardArrayAdapter;
-import static name.leesah.nirvana.ui.reminder.ReminderCardData.TiledReminders;
+import static name.leesah.nirvana.ui.main.ReminderCardData.NoteAmongReminders;
+import static name.leesah.nirvana.ui.main.ReminderCardData.ReminderCardArrayAdapter;
+import static name.leesah.nirvana.ui.main.ReminderCardData.TiledReminders;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.LocalTime.now;
 

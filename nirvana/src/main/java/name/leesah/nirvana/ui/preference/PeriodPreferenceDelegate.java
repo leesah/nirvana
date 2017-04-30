@@ -18,6 +18,7 @@ import java.util.List;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.PeriodUnit;
 
+import static android.text.TextUtils.isEmpty;
 import static java.lang.String.format;
 import static name.leesah.nirvana.model.PeriodUnit.DAY;
 import static name.leesah.nirvana.model.PeriodUnit.MONTH;
@@ -34,7 +35,6 @@ public class PeriodPreferenceDelegate extends StringValuedDialogPreferenceDelega
 
     private NumberPicker number;
     private NumberPicker unit;
-    private String value = null;
 
     PeriodPreferenceDelegate(DialogPreference preference) {
         super(preference);
@@ -52,7 +52,7 @@ public class PeriodPreferenceDelegate extends StringValuedDialogPreferenceDelega
 
     @Nullable
     Period getPeriod() {
-        return value == null ? null : toPeriod(value);
+        return getValue() == null ? null : toPeriod(getValue());
     }
 
     void setPeriod(@Nullable Period period) {
@@ -71,8 +71,8 @@ public class PeriodPreferenceDelegate extends StringValuedDialogPreferenceDelega
         unit.setMaxValue(PERIOD_UNITS.size() - 1);
         unit.setDisplayedValues(displayedValuesSingular);
 
-        if (value != null)
-            updateWidgets(value);
+        if (!isEmpty(getValue()))
+            updateWidgets(getValue());
     }
 
     void onDialogClosed(boolean positiveResult) {

@@ -1,11 +1,9 @@
 package name.leesah.nirvana.ui.medication;
 
 import android.content.Intent;
-import android.support.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
@@ -16,10 +14,7 @@ import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICAT
 /**
  * Created by sah on 2017-04-20.
  */
-public class MedicationActivityBackwardsNavigationInEditModeTest {
-
-    @Rule
-    public ActivityTestRule<MedicationActivity> mActivityRule = new ActivityTestRule<>(MedicationActivity.class, false, false);
+public class MedicationActivityBackwardsNavigationInEditModeTest extends MedicationActivityBackwardsNavigationTest{
 
     @Before
     public void setUp() throws Exception {

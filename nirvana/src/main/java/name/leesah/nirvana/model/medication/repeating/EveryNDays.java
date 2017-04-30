@@ -4,6 +4,8 @@ import android.content.Context;
 
 import org.joda.time.LocalDate;
 
+import java.util.Objects;
+
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
@@ -29,7 +31,24 @@ public class EveryNDays implements RepeatingStrategy {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EveryNDays that = (EveryNDays) o;
+        return n == that.n;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(n);
+    }
+
+    @Override
     public String toString(Context context) {
         return context.getString(R.string.to_string_medication_repeating_every_n_days, n);
+    }
+
+    public int getN() {
+        return n;
     }
 }
