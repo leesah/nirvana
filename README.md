@@ -16,11 +16,13 @@ However, with Nevermind, such type of "on-and-off" scheduling becomes simpler.
 
 When enabled, starting and stopping date of a medicine are scheduled according to cycle settings.
 
-A treatment can be set to recur either for certain times, or until certain date
+A treatment can be set to recur either for certain times, or until a certain date.
 
-### Starting of the intake of a medicine
+### Starting and stopping of the intake of a medicine
 
-When Treatment cycle is enabled, intake starts on the first day of a cycle by default. Or it can be set to start after delaying for certain period in each cycle. 
+When Treatment cycle is enabled, intake starts on the first day of a cycle by default. Or it can be set to start after delaying for certain period in each cycle.
+
+The stopping date, on the other hand, is the same day as the cycle ends by default, or set to be in a certain period after starting.
 
 ### Which days, which hours
 
@@ -28,7 +30,7 @@ A medicine can be scheduled by:
   - Certain hours of day
   - Certain times a day (coming soon)
   - Every n hours (coming soon)
-  
+
 , on
   - Everyday
   - Every n days
