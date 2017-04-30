@@ -6,7 +6,7 @@ A medicine reminder with cycled treatment support
 
 Nevermind provides more advanced ways of scheduling your medicine intakes with the innovative treatment cycle support.
 
-If you ever got yourself into in a treatment that has e.g. six two-week cycles, where you're instructed to take medicine A for the first two days of each cycle, B for the following eight days, C every other day and D everyday, I bet you'll need some extra aspirins against the headache it causes to schedule all these with Google Calendar.
+If you ever got yourself into a treatment that has e.g. six two-week cycles, where you're instructed to take medicine A for the first two days of each cycle, B for the following eight days, C every other day and D everyday, I bet you'll need some extra aspirins against the headache it causes to schedule all these with Google Calendar.
 
 However, with Nevermind, such type of "on-and-off" scheduling becomes simpler.
 
