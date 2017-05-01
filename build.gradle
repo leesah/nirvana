@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.4.0-alpha6'
+        classpath 'com.android.tools.build:gradle:2.4.0-alpha7'
         classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
         classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.6.0'
 

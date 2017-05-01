@@ -18,7 +18,7 @@ When enabled, starting and stopping date of a medicine are scheduled according t
 
 A treatment can be set to recur either for certain times, or until a certain date.
 
-### Starting and stopping of the intake of a medicine
+### Starting and stopping of the intake
 
 When Treatment cycle is enabled, intake starts on the first day of a cycle by default. Or it can be set to start after delaying for certain period in each cycle.
 
