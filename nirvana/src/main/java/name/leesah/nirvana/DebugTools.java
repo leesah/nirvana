@@ -15,15 +15,14 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.model.medication.MedicationBuilder;
-import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
+import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.reminder.SchedulingService;
 
-import static android.preference.PreferenceManager.*;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 /**
  * Created by sah on 2017-04-18.
@@ -47,39 +46,39 @@ public class DebugTools {
         LocalTime NineAM = LocalTime.parse("09:00", formatterHHmm);
         LocalTime NinePM = LocalTime.parse("21:00", formatterHHmm);
 
-        Medication valaciclovir = new MedicationBuilder().
+        Medication valaciclovir = new Medication.Builder().
                 setName("Valaciclovir").
                 setManufacturer("Teva").
                 setForm(DosageForm.TABLET).
                 setRepeatingStrategy(new Everyday()).
-                setRemindingStrategy(new AtCertainHours(Arrays.asList(new TimedDosage(NineAM, 1), new TimedDosage(NinePM, 1)))).
+                setRemindingStrategy(new CertainHours(Arrays.asList(new TimedDosage(NineAM, 1), new TimedDosage(NinePM, 1)))).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
                 build();
 
-        Medication folacin = new MedicationBuilder().
+        Medication folacin = new Medication.Builder().
                 setName("Folacin").
                 setManufacturer("folsyra").
                 setForm(DosageForm.TABLET).
                 setRepeatingStrategy(new Everyday()).
-                setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRemindingStrategy(new CertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
                 build();
 
-        Medication manTabletter = new MedicationBuilder().
+        Medication manTabletter = new Medication.Builder().
                 setName("Man tabletter").
                 setManufacturer("apoteket").
                 setForm(DosageForm.TABLET).
                 setRepeatingStrategy(new Everyday()).
-                setRemindingStrategy(new AtCertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRemindingStrategy(new CertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
                 build();
 
-        pharmacist.addMedication(valaciclovir);
-        pharmacist.addMedication(folacin);
-        pharmacist.addMedication(manTabletter);
+        pharmacist.save(valaciclovir);
+        pharmacist.save(folacin);
+        pharmacist.save(manTabletter);
         Toast.makeText(context, "Medications injected.", Toast.LENGTH_SHORT).show();
 
         SchedulingService.inCaseNotRunToday(context);

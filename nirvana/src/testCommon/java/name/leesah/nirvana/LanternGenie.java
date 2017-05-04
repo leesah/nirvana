@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,8 +21,7 @@ import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.model.medication.MedicationBuilder;
-import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
+import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.EveryNDays;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
@@ -42,12 +45,11 @@ import static java.util.Collections.singletonList;
 import static java.util.EnumSet.allOf;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDayBefore;
 import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
+import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
@@ -56,6 +58,7 @@ import static org.joda.time.Period.*;
 
 public class LanternGenie {
 
+    public static final Period YEAR = days(365);
     private static final Random random = new Random();
 
     public static void everythingVanishesSilVousPlait(Context context) {
@@ -95,7 +98,7 @@ public class LanternGenie {
     }
 
     public static Reminder oneRandomReminderSilVousPlait(Context context, boolean handToNurse) {
-        Reminder reminder = new Reminder(randomDay(), now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
+        Reminder reminder = new Reminder(randomDaySilVousPlait(), now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
         if (handToNurse)
             handThisToNurseSilVousPlait(context, reminder);
         return reminder;
@@ -122,9 +125,32 @@ public class LanternGenie {
         return random.nextInt(maximum) + 1;
     }
 
+
+    public static LocalDate randomDaySilVousPlait() {
+        return randomDaySilVousPlaitAfter(randomDaySilVousPlaitBefore(today()));
+    }
+
+    @NonNull
+    public static LocalDate randomDaySilVousPlaitBefore(LocalDate date) {
+        return date.minus(randomPeriodSilVousPlait());
+    }
+
+    public static LocalDate randomDaySilVousPlaitAfter(LocalDate date) {
+        return date.plus(randomPeriodSilVousPlait());
+    }
+
+    @NonNull
+    public static Period randomPeriodSilVousPlait() {
+        return randomPeriodSilVousPlait(YEAR);
+    }
+
+    @NonNull
+    public static Period randomPeriodSilVousPlait(Period maximum) {
+        return days(random.nextInt(maximum.getDays())).plus(Days.ONE);
+    }
     @NonNull
     private static Medication randomMedication(Context context) {
-        return new MedicationBuilder()
+        return new Medication.Builder()
                 .setName(randomStringSilVousPlait())
                 .setForm(randomForm())
                 .setRemindingStrategy(randomRemindingStrategy())
@@ -143,7 +169,7 @@ public class LanternGenie {
                 takeAChance() < 20 ?
                         new Immediately() :
                         new Delayed(days(random.nextInt(365))) :
-                new ExactDate(randomDay());
+                new ExactDate(randomDaySilVousPlait());
     }
 
     @NonNull
@@ -155,7 +181,7 @@ public class LanternGenie {
 
     @NonNull
     private static RemindingStrategy randomRemindingStrategy() {
-        return new AtCertainHours(singletonList(new TimedDosage(now(), 1)));
+        return new CertainHours(singletonList(new TimedDosage(now(), 1)));
     }
 
     @NonNull
@@ -175,6 +201,5 @@ public class LanternGenie {
     private static int takeAChance() {
         return random.nextInt(MAX_VALUE) % 100;
     }
-
 
 }

@@ -1,17 +1,11 @@
 package name.leesah.nirvana.model.reminder;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import java.util.Locale;
 import java.util.Objects;
 
-import name.leesah.nirvana.R;
-
-import static java.lang.String.*;
+import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;

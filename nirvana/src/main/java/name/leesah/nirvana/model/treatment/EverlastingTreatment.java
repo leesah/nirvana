@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 
 import org.joda.time.LocalDate;
 
-import name.leesah.nirvana.model.treatment.Treatment;
-
 /**
  * Created by sah on 2017-04-29.
  */

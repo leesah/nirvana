@@ -1,6 +1,7 @@
 package name.leesah.nirvana.ui.medication.reminding;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +15,17 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
+import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
+import name.leesah.nirvana.ui.medication.StrategyEditFragment;
 import name.leesah.nirvana.ui.widget.TimedDosageEditorCard;
 
-import static org.parceler.Parcels.unwrap;
-import static org.parceler.Parcels.wrap;
+public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
-public class CertainHoursEditFragment extends RemindingModelEditFragment {
-
-    private static final String TAG = CertainHoursEditFragment.class.getSimpleName();
-    public static final String KEY_DOSAGES = "name.leesah.nirvana:key:DOSAGE";
     private final ArrayList<TimedDosage> dosages = new ArrayList<>();
     private TimedDosageArrayAdapter adapter;
     private TimedDosageEditorCard footer;
-    private View emptyView;
-    private AtCertainHours editingExisting;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +43,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         footer.setAddMode();
         footer.setOnSaveListener(this::onAddDosage);
 
-        emptyView = view.findViewById(R.id.empty_view);
+        View emptyView = view.findViewById(R.id.empty_view);
         ((TimedDosageEditorCard) emptyView.findViewById(R.id.editor_card)).setOnSaveListener(this::onAddDosage);
 
         ListView listView = (ListView) view.findViewById(R.id.dosages);
@@ -56,34 +51,18 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         listView.setOnItemClickListener((p, v, position, n) -> editRow(position));
         listView.addFooterView(footer);
         listView.setEmptyView(emptyView);
+    }
 
-        footer.setVisibility(View.VISIBLE);
+
+    @Override
+    @NonNull
+    protected CertainHours readStrategy() {
+        return new CertainHours(dosages);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_DOSAGES)) {
-            dosages.addAll(unwrap(savedInstanceState.getParcelable(KEY_DOSAGES)));
-            adapter.notifyDataSetChanged();
-            reportValidity(true);
-        } else if (editingExisting != null) {
-            dosages.addAll(editingExisting.getDosages());
-            adapter.notifyDataSetChanged();
-            reportValidity(true);
-            editingExisting = null;
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(KEY_DOSAGES, wrap(dosages));
-    }
-
-    @Override
-    public RemindingStrategy readModel() {
-        return new AtCertainHours(dosages);
+    protected void updateView(RemindingStrategy strategy) {
+        dosages.addAll(((CertainHours)strategy).getDosages());
     }
 
     private void hideListFooter() {
@@ -91,7 +70,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
     }
 
     public void editRow(int position) {
-        reportValidity(false);
+        setSaveButtonEnabled(false);
         hideListFooter();
         adapter.setEditing(position);
         adapter.notifyDataSetChanged();
@@ -106,7 +85,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         dosages.add(dosage);
         dosages.sort(TimedDosage.comparator);
         adapter.notifyDataSetChanged();
-        reportValidity(true);
+        setSaveButtonEnabled(true);
     }
 
     public void onSaveDosage(int position, TimedDosage dosage) {
@@ -126,7 +105,7 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
         adapter.setEditingFinished();
         adapter.notifyDataSetChanged();
         footer.setVisibility(View.VISIBLE);
-        reportValidity(false);
+        setSaveButtonEnabled(false);
     }
 
     private boolean dosageExists(LocalTime timeOfDay) {
@@ -136,7 +115,4 @@ public class CertainHoursEditFragment extends RemindingModelEditFragment {
                 .isEmpty();
     }
 
-    public void setEditingExisting(AtCertainHours existing) {
-        this.editingExisting = existing;
-    }
 }

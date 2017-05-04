@@ -8,6 +8,7 @@ import org.joda.time.Period;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
+import static java.util.Locale.US;
 
 
 /**
@@ -38,7 +39,7 @@ public class NTimes implements RecurringStrategy {
 
     @Override
     public String toString() {
-        return format("Repeating for %d times", n);
+        return format(US, "Repeating for %d times", n);
     }
 
     public int getN() {

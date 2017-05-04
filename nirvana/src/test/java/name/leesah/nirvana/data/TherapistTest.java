@@ -20,7 +20,7 @@ import name.leesah.nirvana.model.treatment.RecurringTreatment;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -65,7 +65,7 @@ public class TherapistTest {
 
     @Test
     public void loadRecurringFromCache() throws Exception {
-        LocalDate dayZero = randomDay();
+        LocalDate dayZero = randomDaySilVousPlait();
         Period length = months(6);
         int n = 4;
 

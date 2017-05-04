@@ -9,7 +9,6 @@ import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
 import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
 
 /**
  * Created by sah on 2017-04-20.
@@ -20,7 +19,7 @@ public class MedicationActivityBackwardsNavigationInEditModeTest extends Medicat
     public void setUp() throws Exception {
         everythingVanishesSilVousPlait(getTargetContext());
         int id = oneRandomMedicationSilVousPlait(getTargetContext(), true).getId();
-        mActivityRule.launchActivity(new Intent(ACTION_EDIT_MEDICATION).putExtra(EXTRA_MEDICATION_ID, id));
+        mActivityRule.launchActivity(new Intent(ACTION_EDIT_MEDICATION));
     }
 
     @After

@@ -11,11 +11,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
+import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
@@ -31,7 +33,8 @@ import static name.leesah.nirvana.utils.DateTimeHelper.today;
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-public class AtCertainHoursTest {
+@Config(constants = BuildConfig.class, sdk = {24, 25})
+public class CertainHoursTest {
     private RemindingStrategy model;
     private ArrayMap<String, TimedDosage> dosages;
     private Random random;
@@ -47,7 +50,7 @@ public class AtCertainHoursTest {
 
         dosages = new ArrayMap<>();
         range(0, random.nextInt(4)).forEach(x -> addRandomDosage());
-        model = new AtCertainHours(new ArrayList<>(dosages.values()));
+        model = new CertainHours(new ArrayList<>(dosages.values()));
 
         medication = oneRandomMedicationSilVousPlait(context, false);
     }

@@ -39,9 +39,4 @@ public class MedicationActivityDataAddTest extends MedicationActivityDataOperati
         assertThat(mActivityRule.getActivity().getTitle(), equalTo(getTargetContext().getString(R.string.add_medication)));
     }
 
-    @Test
-    public void deleteButtonIsAbsentInBasics() throws Exception {
-        onView(withId(R.id.delete_button)).check(matches(withEffectiveVisibility(GONE)));
-    }
-
 }

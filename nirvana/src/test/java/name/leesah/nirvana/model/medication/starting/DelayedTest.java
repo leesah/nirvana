@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDayBefore;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomPeriod;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitBefore;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -23,9 +23,9 @@ public class DelayedTest {
 
     @Mock
     private Treatment treatment;
-    private Period delayedFor = randomPeriod();
-    private LocalDate date = randomDay();
-    private LocalDate startDate = randomDayBefore(date);
+    private Period delayedFor = LanternGenie.randomPeriodSilVousPlait();
+    private LocalDate date = randomDaySilVousPlait();
+    private LocalDate startDate = randomDaySilVousPlaitBefore(date);
 
     @Before
     public void setUp() throws Exception {

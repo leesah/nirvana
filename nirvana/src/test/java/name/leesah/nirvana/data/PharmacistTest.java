@@ -83,7 +83,7 @@ public class PharmacistTest {
         Set<Medication> givenExisting = givenExistingMedications(randomNonZeroInteger());
 
         Medication newMedication = oneRandomMedicationSilVousPlait(context, false);
-        pharmacist.addMedication(newMedication);
+        pharmacist.save(newMedication);
 
         Set<Medication> all = new ArraySet<>();
         all.addAll(givenExisting);

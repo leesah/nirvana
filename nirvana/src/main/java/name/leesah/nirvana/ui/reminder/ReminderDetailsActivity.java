@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.Locale;
+
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -14,6 +16,7 @@ import name.leesah.nirvana.ui.widget.MedicationCard;
 import name.leesah.nirvana.ui.widget.TimedDosageCard;
 
 import static java.lang.String.format;
+import static java.util.Locale.US;
 
 public class ReminderDetailsActivity extends AppCompatActivity {
 
@@ -37,7 +40,7 @@ public class ReminderDetailsActivity extends AppCompatActivity {
         Reminder reminder = Nurse.getInstance(this).getReminder(reminderId);
 
         if (reminder == null) {
-            Log.wtf(TAG, format("Reminder ID [%d] not recognized by nurse. Closing.", reminderId));
+            Log.wtf(TAG, format(US, "Reminder ID [%d] not recognized by nurse. Closing.", reminderId));
             setResult(RESULT_CANCELED);
             finish();
             return;
@@ -45,7 +48,7 @@ public class ReminderDetailsActivity extends AppCompatActivity {
 
         Medication medication = Pharmacist.getInstance(this).getMedication(reminder.getMedicationId());
         if (medication == null) {
-            Log.wtf(TAG, format("Medication ID [%d] not recognized by pharmacist. Closing.", reminder.getMedicationId()));
+            Log.wtf(TAG, format(US, "Medication ID [%d] not recognized by pharmacist. Closing.", reminder.getMedicationId()));
             setResult(RESULT_CANCELED);
             finish();
             return;

@@ -9,7 +9,6 @@ import name.leesah.nirvana.model.treatment.Treatment;
 /**
  * Created by sah on 2017-04-21.
  */
-
 public interface StoppingStrategy {
 
     boolean hasStopped(Treatment treatment, LocalDate date);

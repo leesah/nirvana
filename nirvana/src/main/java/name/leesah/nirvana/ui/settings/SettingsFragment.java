@@ -6,7 +6,6 @@ import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 
 import name.leesah.nirvana.BuildConfig;
-import name.leesah.nirvana.DebugTools;
 import name.leesah.nirvana.R;
 
 import static name.leesah.nirvana.DebugTools.clearAllData;

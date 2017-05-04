@@ -7,7 +7,6 @@
             android:inputType="textCapWords"
             android:key="@string/pref_key_medication_name"
             android:maxLines="1"
-            android:persistent="false"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_medication_name"
@@ -18,7 +17,6 @@
             android:inputType="textCapWords"
             android:key="@string/pref_key_medication_manufacturer"
             android:maxLines="1"
-            android:persistent="false"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_medication_manufacturer"
@@ -29,7 +27,6 @@
             android:entryValues="@array/dosage_forms"
             android:key="@string/pref_key_medication_dosage_form"
             android:negativeButtonText="@null"
-            android:persistent="false"
             android:positiveButtonText="@null"
             android:summary="%s"
             android:title="@string/pref_title_dosage_form" />
@@ -37,17 +34,31 @@
 
     <PreferenceCategory android:title="@string/prefcat_title_medication_strategies">
 
-        <Preference
+        <name.leesah.nirvana.ui.medication.reminding.RemindingStrategyPreference
             android:key="@string/pref_key_medication_reminding"
             android:summary="@string/pref_summary_medication_reminding"
             android:title="@string/pref_title_medication_reminding" />
 
-        <name.leesah.nirvana.ui.preference.CheckableNonDialogPreference
+        <name.leesah.nirvana.ui.medication.repeating.RepeatingStrategyPreference
             android:key="@string/pref_key_medication_repeating"
             android:title="@string/pref_title_medication_repeating"
             app:checked="false"
             app:summaryOff="@string/medication_repeating_everyday"
             app:summaryOn="@string/pref_summary_medication_repeating" />
+
+        <name.leesah.nirvana.ui.medication.StartingStrategyPreference
+            android:key="@string/pref_key_medication_starting"
+            android:title="@string/pref_title_medication_starting"
+            app:checked="false"
+            app:summaryOff="@string/medication_starting_exact_date_summary_off"
+            app:summaryOn="@string/medication_starting_exact_date_summary_on" />
+
+        <name.leesah.nirvana.ui.medication.StoppingStrategyPreference
+            android:key="@string/pref_key_medication_stopping_after_period"
+            android:title="@string/pref_title_medication_stopping_after_period"
+            app:checked="false"
+            app:summaryOff="@string/medication_stopping_summary_off"
+            app:summaryOn="@string/medication_stopping_summary_on" />
 
     </PreferenceCategory>
 

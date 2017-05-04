@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initSettingsFragment();
+        initializeSettingsFragment();
 
         fragmentManager = getFragmentManager();
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void initSettingsFragment() {
+    private void initializeSettingsFragment() {
         settingsFragment.setTreatmentListener(preference -> showTreatmentSettings());
         settingsFragment.setNotificationListener(preference -> showNotificationsSettings());
         treatmentSettingsFragment.setRepeatingModelListener(preference -> showRepeatingModelSettings());

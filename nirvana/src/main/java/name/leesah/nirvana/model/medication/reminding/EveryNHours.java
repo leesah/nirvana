@@ -7,7 +7,6 @@ import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +16,8 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
 import static java.lang.String.format;
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
+import static java.util.Locale.US;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
@@ -38,7 +38,7 @@ public class EveryNHours implements RemindingStrategy {
     public EveryNHours(TimedDosage firstDose, int n) {
         if (!VALID_VALUES.contains(n)
                 || firstDose.getTimeOfDay().minusHours(n).isBefore(firstDose.getTimeOfDay()))
-            throw new IllegalArgumentException(format("Illogical values for %s model: firstDosage=[%s], n=[%d].",
+            throw new IllegalArgumentException(format(US, "Illogical values for %s model: firstDosage=[%s], n=[%d].",
                     EveryNHours.class.getSimpleName(), firstDose, n));
 
         this.firstDose = firstDose;

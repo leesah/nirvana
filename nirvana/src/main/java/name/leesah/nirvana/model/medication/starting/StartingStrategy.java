@@ -9,7 +9,6 @@ import name.leesah.nirvana.model.treatment.Treatment;
 /**
  * Created by sah on 2017-04-21.
  */
-
 public interface StartingStrategy {
 
     default boolean hasStarted(Treatment treatment, LocalDate date) {

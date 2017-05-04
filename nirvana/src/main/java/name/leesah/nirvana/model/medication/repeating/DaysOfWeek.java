@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.DayOfWeek;
+import name.leesah.nirvana.model.Weekday;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
@@ -27,9 +27,9 @@ public class DaysOfWeek implements RepeatingStrategy {
 
     private static final String TAG = DaysOfWeek.class.getSimpleName();
 
-    private final EnumSet<DayOfWeek> daysOfWeek;
+    private final EnumSet<Weekday> daysOfWeek;
 
-    public DaysOfWeek(EnumSet<DayOfWeek> daysOfWeek) {
+    public DaysOfWeek(EnumSet<Weekday> daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
 
@@ -44,7 +44,7 @@ public class DaysOfWeek implements RepeatingStrategy {
                 .collect(toSet());
     }
 
-    private int getJodaTimeConstant(DayOfWeek day) {
+    private int getJodaTimeConstant(Weekday day) {
         switch (day) {
             case MONDAY:
                 return DateTimeConstants.MONDAY;

@@ -137,6 +137,12 @@
     <string name="unknown_medication">Unknown Medication</string>
     <string name="reminder_details">Details</string>
     <string name="ignore_reminder">Ignore</string>
+    <string name="alert_abort_medication_title">Abort</string>
+    <string name="alert_abort_medication_message">Do you want to abort the change?</string>
+    <string name="err_medication_name_empty">Name cannot be empty.</string>
+    <string name="err_medication_form_empty">Dosage form cannot be empty.</string>
+    <string name="err_medication_reminding_empty">Reminding strategy cannot be empty.</string>
+    <string name="err_medication_repeating_empty">Repeating strategy cannot be empty</string>
     <plurals name="to_string_timed_dosage">
         <item quantity="one">%1$d unit at %2$s</item>
         <item quantity="other">%1$d units at %2$s</item>

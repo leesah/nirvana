@@ -38,6 +38,7 @@ public abstract class MedicationActivityBackwardsNavigationTest {
     @Test(expected = NoActivityResumedException.class)
     public void medication_BackImmediately() throws Exception {
         pressBack();
+        onView(withText(android.R.string.ok)).perform(click());
         fail("Activity should be closed.");
     }
 
@@ -69,6 +70,7 @@ public abstract class MedicationActivityBackwardsNavigationTest {
             }
         });
         pressBack();
+        onView(withText(android.R.string.ok)).perform(click());
         fail("Activity should be closed.");
     }
 

@@ -74,6 +74,11 @@ public class CheckablePreferenceDelegate {
     }
 
     void onCheckedChange(CompoundButton buttonView, boolean checked) {
+        if (!callChangeListener(checked)) {
+            buttonView.setChecked(!checked);
+            return;
+        }
+
         this.checked = checked;
         updateSummary();
         setViewTreeEnabled(iconFrame, checked);

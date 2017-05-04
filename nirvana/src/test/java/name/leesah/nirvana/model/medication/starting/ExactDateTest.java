@@ -7,7 +7,7 @@ import org.mockito.Mock;
 
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -24,12 +24,12 @@ public class ExactDateTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        when(treatment.getStartDateOf(date)).thenReturn(randomDay());
+        when(treatment.getStartDateOf(date)).thenReturn(randomDaySilVousPlait());
     }
 
     @Test
     public void getRealStartDate() throws Exception {
-        LocalDate realStartDate = randomDay();
+        LocalDate realStartDate = randomDaySilVousPlait();
         assertThat(new ExactDate(realStartDate).getRealStartDate(treatment, date), equalTo(realStartDate));
     }
 

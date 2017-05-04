@@ -3,19 +3,11 @@ package name.leesah.nirvana.model.medication;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
-import android.widget.DatePicker;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
 
 import static java.lang.String.format;
-import static java.util.Arrays.*;
 import static java.util.EnumSet.allOf;
-import static org.apache.commons.lang3.text.WordUtils.*;
 
 /**
  * Created by sah on 2016-12-07.

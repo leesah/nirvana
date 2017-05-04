@@ -10,10 +10,10 @@ import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 import static java.util.EnumSet.of;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
-import static name.leesah.nirvana.model.DayOfWeek.MONDAY;
-import static name.leesah.nirvana.model.DayOfWeek.TUESDAY;
-import static name.leesah.nirvana.model.DayOfWeek.WEDNESDAY;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.model.Weekday.MONDAY;
+import static name.leesah.nirvana.model.Weekday.TUESDAY;
+import static name.leesah.nirvana.model.Weekday.WEDNESDAY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.same;
@@ -28,8 +28,8 @@ public class DaysOfWeekTest {
     private Treatment treatment;
     @Mock
     private StartingStrategy startingStrategy;
-    private LocalDate date = randomDay().withDayOfWeek(DateTimeConstants.MONDAY);
-    private LocalDate realStartDate = randomDay();
+    private LocalDate date = randomDaySilVousPlait().withDayOfWeek(DateTimeConstants.MONDAY);
+    private LocalDate realStartDate = randomDaySilVousPlait();
 
     @Before
     public void setUp() throws Exception {

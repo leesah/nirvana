@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
+import static java.util.Locale.US;
 
 /**
  * Created by sah on 2016-12-10.
@@ -70,13 +71,15 @@ public class LimitedMinutesTimePicker extends TimePicker {
 
     private void limitDisplayedMinutes() {
         try {
-            Class<?> classForid = Class.forName("com.android.internal.R$id");
-            Field field = classForid.getField("minute");
+            Class<?> classForId = Class.forName("com.android.internal.R$id");
+            Field field = classForId.getField("minute");
             NumberPicker minutePicker = (NumberPicker) findViewById(field.getInt(null));
             minutePicker.setMinValue(0);
             minutePicker.setMaxValue(DISPLAYED_MINUTES.length - 1);
 
-            List<String> displayedValues = Stream.of(DISPLAYED_MINUTES).map(minute -> format("%02d", minute)).collect(Collectors.toList());
+            List<String> displayedValues = Stream.of(DISPLAYED_MINUTES)
+                    .map(minute -> format(US, "%02d", minute))
+                    .collect(Collectors.toList());
             minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
             minutePicker.setWrapSelectorWheel(true);
 

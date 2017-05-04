@@ -10,7 +10,8 @@
     <string name="pref_key_treatment_recurring_n_times">name.leesah.nirvana:pref:key:TREATMENT:RECURRING:N_TIMES</string>
     <string name="pref_key_treatment_recurring_until_date">name.leesah.nirvana:pref:key:TREATMENT:RECURRING:UNTIL_DATE</string>
 
-    <!-- Medication -->
+    <!-- Medication staging -->
+    <string name="pref_key_medication_id">name.leesah.nirvana:pref:key:MEDICATION:ID</string>
     <string name="pref_key_medication_name">name.leesah.nirvana:pref:key:MEDICATION:NAME</string>
     <string name="pref_key_medication_manufacturer">name.leesah.nirvana:pref:key:MEDICATION:MANUFACTURER</string>
     <string name="pref_key_medication_dosage_form">name.leesah.nirvana:pref:key:MEDICATION:DOSAGE_FORM</string>
@@ -27,5 +28,6 @@
     
     <!-- Others -->
     <string name="pref_key_about">name.leesah.nirvana:pref:key:ABOUT</string>
+    <string name="pref_key_strategies">name.leesah.name:pref:key:STRATEGIES</string>
 
 </resources>

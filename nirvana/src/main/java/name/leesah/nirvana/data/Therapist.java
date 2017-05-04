@@ -2,7 +2,6 @@ package name.leesah.nirvana.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.joda.time.LocalDate;
@@ -13,13 +12,15 @@ import name.leesah.nirvana.model.treatment.EverlastingTreatment;
 import name.leesah.nirvana.model.treatment.RecurringTreatment;
 import name.leesah.nirvana.model.treatment.Treatment;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
-import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
+import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 
-import static android.text.TextUtils.*;
+import static android.text.TextUtils.isEmpty;
 import static java.lang.String.format;
-import static name.leesah.nirvana.utils.DateTimeHelper.*;
+import static java.util.Locale.US;
 import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
+import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
+import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 /**
  * Created by sah on 2016-12-11.
@@ -73,7 +74,8 @@ public class Therapist extends DataHolder {
     }
 
     private void loadFromSharedPreferences() {
-        cycleSupportEnabled = preferences.getBoolean(resources.getString(R.string.pref_key_treatment_enabled), false);
+        cycleSupportEnabled = preferences.getBoolean(
+                resources.getString(R.string.pref_key_treatment_enabled), false);
         treatment =  cycleSupportEnabled ?
                 new RecurringTreatment(loadDayZero(), loadLength(), loadRecurring()) :
                 new EverlastingTreatment(loadDayZero(toText(DEFAULT_DAY_ZERO)));
@@ -114,7 +116,7 @@ public class Therapist extends DataHolder {
     private NTimes loadRepeatingNTimes() {
         int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), -1);
         if (n < 0) {
-            String msg = format("Unexpected n for [%s]: [%d].", NTimes.class.getSimpleName(), n);
+            String msg = format(US, "Unexpected n for [%s]: [%d].", NTimes.class.getSimpleName(), n);
             Log.wtf(TAG, msg);
             throw new IllegalStateException(msg);
         }

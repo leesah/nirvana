@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import name.leesah.nirvana.R;
@@ -20,10 +21,10 @@ import static java.util.stream.Collectors.toSet;
 /**
  * Created by sah on 2016-12-11.
  */
-public class AtCertainHours implements RemindingStrategy {
+public class CertainHours implements RemindingStrategy {
     private final List<TimedDosage> dosages = new ArrayList<>();
 
-    public AtCertainHours(List<TimedDosage> dosages) {
+    public CertainHours(List<TimedDosage> dosages) {
         this.dosages.addAll(dosages);
     }
 
@@ -33,6 +34,19 @@ public class AtCertainHours implements RemindingStrategy {
         return dosages.stream()
                 .map(d -> new Reminder(date, d.getTimeOfDay(), medication.getId(), d.getAmount()))
                 .collect(toSet());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CertainHours that = (CertainHours) o;
+        return Objects.equals(dosages, that.dosages);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dosages);
     }
 
     @Override

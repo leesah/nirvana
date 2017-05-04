@@ -1,6 +1,5 @@
 package name.leesah.nirvana.ui.medication;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.PerformException;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.DatePicker;
@@ -17,7 +16,7 @@ import java.util.Set;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
+import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.repeating.EveryNDays;
 import name.leesah.nirvana.model.medication.starting.ExactDate;
 import name.leesah.nirvana.model.medication.stopping.InPeriod;
@@ -32,7 +31,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.PickerActions.setDate;
 import static android.support.test.espresso.contrib.PickerActions.setTime;
 import static android.support.test.espresso.core.deps.guava.collect.Iterables.getOnlyElement;
-import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
@@ -45,7 +43,7 @@ import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.ui.MoreViewActions.setChecked;
 import static name.leesah.nirvana.ui.MoreViewActions.setNumber;
 import static name.leesah.nirvana.ui.MoreViewMatchers.switchWidgetBesidesTitle;
-import static name.leesah.nirvana.ui.preference.PeriodPreferenceDelegate.PERIOD_UNITS;
+import static name.leesah.nirvana.ui.preference.PeriodPreference.PERIOD_UNITS;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.endsWith;
@@ -70,7 +68,7 @@ public abstract class MedicationActivityDataOperationsTest {
 
     @Test
     public void saveButtonIsPresent() throws Exception {
-        onView(withId(R.id.save_button)).check(matches(withEffectiveVisibility(VISIBLE)));
+        onView(withText(R.string.save)).check(matches(withEffectiveVisibility(VISIBLE)));
     }
 
     @Test
@@ -120,10 +118,7 @@ public abstract class MedicationActivityDataOperationsTest {
                 onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE))).perform(setTime(21, 15));
                 onView(allOf(withText(R.string.add), withEffectiveVisibility(VISIBLE))).perform(click());
             }
-            onView(allOf(
-                    withId(R.id.save_button),
-                    withClassName(endsWith(FloatingActionButton.class.getSimpleName()))
-            )).perform(click());
+            onView(withText(R.string.save)).perform(click());
         }
         { // Edit repeating model
             onView(switchWidgetBesidesTitle(R.string.pref_title_medication_repeating)).perform(setChecked(true));
@@ -136,7 +131,7 @@ public abstract class MedicationActivityDataOperationsTest {
                     onView(withClassName(equalTo(NumberPicker.class.getCanonicalName()))).perform(setNumber(4));
                     onView(withText(android.R.string.ok)).perform(click());
                 }
-                onView(allOf(withId(R.id.save_button), withClassName(endsWith(FloatingActionButton.class.getSimpleName())))).perform(click());
+                onView(withText(R.string.save)).perform(click());
             }
         }
         { // Edit starting model
@@ -155,10 +150,7 @@ public abstract class MedicationActivityDataOperationsTest {
             onView(withText(android.R.string.ok)).perform(click());
         }
         // Save
-        onView(allOf(
-                withId(R.id.save_button),
-                withClassName(endsWith(FloatingActionButton.class.getSimpleName()))
-        )).perform(click());
+        onView(withText(R.string.save)).perform(click());
 
         // Verify: 1 medication found at pharmacist's
         Set<Medication> medications = Pharmacist.getInstance(getTargetContext()).getMedications();
@@ -170,7 +162,7 @@ public abstract class MedicationActivityDataOperationsTest {
         assertThat(medication.getManufacturer(), equalTo("Bluefish"));
         assertThat(medication.getForm(), equalTo(TABLET));
         assertThat(medication.getRepeatingStrategy(), equalTo(new EveryNDays(4)));
-        assertThat(medication.getRemindingStrategy(), instanceOf(AtCertainHours.class));
+        assertThat(medication.getRemindingStrategy(), instanceOf(CertainHours.class));
         assertThat(medication.getStartingStrategy(), equalTo(new ExactDate(new LocalDate(0).withYear(2016).withMonthOfYear(8).withDayOfMonth(10))));
         assertThat(medication.getStoppingStrategy(), equalTo(new InPeriod(months(6))));
     }

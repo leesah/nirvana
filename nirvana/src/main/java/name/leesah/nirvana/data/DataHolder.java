@@ -3,7 +3,6 @@ package name.leesah.nirvana.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 

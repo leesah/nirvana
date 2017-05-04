@@ -24,8 +24,8 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
 import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
 import static name.leesah.nirvana.LanternGenie.severalRandomRemindersSilVousPlait;
 import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
@@ -114,7 +114,7 @@ public class NurseTest {
         Set<Reminder> existingRemindersWithOddMedicationids = existingReminders.stream()
                 .filter(reminder -> reminder.getMedicationId() % 2 != 0)
                 .collect(toSet());
-        Set<Reminder> newReminders = singleton(new Reminder(randomDay(), now(), uniqueInt() * 2 + 1, 1));
+        Set<Reminder> newReminders = singleton(new Reminder(randomDaySilVousPlait(), now(), uniqueInt() * 2 + 1, 1));
 
         nurse.replace(
                 reminder -> reminder.getMedicationId() % 2 == 0,

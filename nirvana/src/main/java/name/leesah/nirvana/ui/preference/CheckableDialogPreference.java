@@ -30,7 +30,7 @@ public class CheckableDialogPreference extends DialogPreference {
         delegate.onClick();
     }
 
-    public boolean isChecked() {
+    boolean isChecked() {
         return delegate.isChecked();
     }
 
@@ -38,36 +38,8 @@ public class CheckableDialogPreference extends DialogPreference {
         delegate.setChecked(checked);
     }
 
-    public String getSwitchTextOn() {
-        return delegate.getSwitchTextOn();
-    }
-
-    public void setSwitchTextOn(String switchTextOn) {
-        delegate.setSwitchTextOn(switchTextOn);
-    }
-
-    public String getSwitchTextOff() {
-        return delegate.getSwitchTextOff();
-    }
-
-    public void setSwitchTextOff(String switchTextOff) {
-        delegate.setSwitchTextOff(switchTextOff);
-    }
-
-    public String getSummaryOff() {
-        return delegate.getSummaryOff();
-    }
-
-    public void setSummaryOff(String summaryOff) {
-        delegate.setSummaryOff(summaryOff);
-    }
-
-    public String getValueOff() {
+    String getValueOff() {
         return delegate.getValueOff();
-    }
-
-    public void setValueOff(String valueOff) {
-        delegate.setValueOff(valueOff);
     }
 
 }

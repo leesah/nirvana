@@ -18,8 +18,7 @@ import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.model.medication.MedicationBuilder;
-import name.leesah.nirvana.model.medication.reminding.AtCertainHours;
+import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
@@ -50,19 +49,19 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 public class RemindingServiceTest {
     private static final LocalTime NINE_AM = new LocalTime(0).withHourOfDay(9);
     private static final LocalTime NINE_PM = new LocalTime(0).withHourOfDay(21);
-    private static final Medication FOLACIN = new MedicationBuilder().
+    private static final Medication FOLACIN = new Medication.Builder().
             setName("Folacin").
             setManufacturer("folsyra").
             setForm(TABLET).
             setRepeatingStrategy(new Everyday()).
-            setRemindingStrategy(new AtCertainHours(singletonList(new TimedDosage(NINE_AM, 1)))).
+            setRemindingStrategy(new CertainHours(singletonList(new TimedDosage(NINE_AM, 1)))).
             build();
-    private static final Medication VALACICLOVIR = new MedicationBuilder().
+    private static final Medication VALACICLOVIR = new Medication.Builder().
             setName("Valaciclovir").
             setManufacturer("Teva").
             setForm(TABLET).
             setRepeatingStrategy(new Everyday()).
-            setRemindingStrategy(new AtCertainHours(Arrays.asList(new TimedDosage(NINE_AM, 1), new TimedDosage(NINE_PM, 1)))).
+            setRemindingStrategy(new CertainHours(Arrays.asList(new TimedDosage(NINE_AM, 1), new TimedDosage(NINE_PM, 1)))).
             build();
 
     private RemindingServiceWrapper service;
@@ -85,7 +84,7 @@ public class RemindingServiceTest {
         alarmSecretry = mock(AlarmSecretary.class);
         AlarmSecretary.setInstance(alarmSecretry);
 
-        newHashSet(VALACICLOVIR, FOLACIN).forEach(m -> pharmacist.addMedication(m));
+        newHashSet(VALACICLOVIR, FOLACIN).forEach(m -> pharmacist.save(m));
         reminders = new ReminderFactory(context).createReminders(today());
         nurse.add(reminders);
     }

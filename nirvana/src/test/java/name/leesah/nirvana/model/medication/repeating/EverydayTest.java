@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.DateTimeRelatedTestHelper.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.same;
@@ -23,8 +23,8 @@ public class EverydayTest {
     private Treatment treatment;
     @Mock
     private StartingStrategy startingStrategy;
-    private LocalDate date = randomDay();
-    private LocalDate realStartDate = randomDay();
+    private LocalDate date = randomDaySilVousPlait();
+    private LocalDate realStartDate = randomDaySilVousPlait();
 
     @Before
     public void setUp() throws Exception {

@@ -13,6 +13,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.utils.IdentityHelper;
 
 import static java.util.Collections.singleton;
+import static java.util.Locale.US;
 
 
 /**
@@ -95,7 +96,7 @@ public class RemindingService extends IntentService {
         alarmSecretary.setAlarm(snoozed);
         nurse.replace(r -> r.getId() == reminderId, singleton(snoozed));
 
-        showToast(String.format("Snoozed for %d minutes.", SNOOZE_FOR_MINUTES));
+        showToast(String.format(US, "Snoozed for %d minutes.", SNOOZE_FOR_MINUTES));
         Log.d(TAG, String.format("Reminder snoozed [%s].", reminder));
     }
 

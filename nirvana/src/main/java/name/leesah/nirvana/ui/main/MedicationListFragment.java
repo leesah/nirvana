@@ -23,17 +23,14 @@ import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.EXTRA_MEDICATION_ID;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MedicationListFragment extends Fragment {
 
-    public static final int REQUEST_CODE_ADD_MEDICATION = 1000;
-    public static final int REQUEST_CODE_EDIT_MEDICATION = 2000;
     private final ArrayList<Medication> medications = new ArrayList<>();
     private ArrayAdapter<Medication> arrayAdapter;
 
@@ -51,23 +48,10 @@ public class MedicationListFragment extends Fragment {
         listView.setEmptyView(view.findViewById(R.id.empty_view));
 
         FloatingActionButton addButton = (FloatingActionButton) view.findViewById(R.id.add_button);
-        addButton.setOnClickListener(this::addMedication);
+        addButton.setOnClickListener(v -> MedicationActivity.add(getActivity()));
 
         reloadMedications();
         return view;
-    }
-
-    public void addMedication(View view) {
-        Intent intent = new Intent(getContext(), MedicationActivity.class)
-                .setAction(ACTION_ADD_MEDICATION);
-        startActivityForResult(intent, REQUEST_CODE_ADD_MEDICATION);
-    }
-
-    private void editMedication(int medicationId) {
-        Intent intent = new Intent(getContext(), MedicationActivity.class)
-                .setAction(ACTION_EDIT_MEDICATION)
-                .putExtra(EXTRA_MEDICATION_ID, medicationId);
-        startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICATION);
     }
 
     @Override
@@ -98,7 +82,7 @@ public class MedicationListFragment extends Fragment {
             MedicationCard view = convertView == null ? new MedicationCard(getContext(), null) : (MedicationCard) convertView;
             Medication medication = getItem(position);
             view.setMedication(medication);
-            view.setOnClickListener(v -> editMedication(medication.getId()));
+            view.setOnClickListener(v -> MedicationActivity.edit(getActivity(), medication));
             return view;
         }
 

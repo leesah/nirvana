@@ -51,7 +51,7 @@ public class Pharmacist extends DataHolder {
         return cache.get(id);
     }
 
-    public void addMedication(@NonNull Medication medication) {
+    public void save(@NonNull Medication medication) {
         Log.d(TAG, String.format("Saving medication [%s].", medication.getName()));
 
         loadMedicationsCacheIfNeeded();

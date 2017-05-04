@@ -3,25 +3,22 @@ package name.leesah.nirvana.model.reminder;
 import android.content.Context;
 
 import org.joda.time.LocalTime;
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
 
 import java.util.Comparator;
 
 import name.leesah.nirvana.R;
 
 import static java.lang.String.format;
+import static java.util.Locale.US;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 /**
  * Created by sah on 2016-12-11.
  */
-@Parcel
 public class TimedDosage{
-    final LocalTime timeOfDay;
-    final int amount;
+    private final LocalTime timeOfDay;
+    private final int amount;
 
-    @ParcelConstructor
     public TimedDosage(LocalTime timeOfDay, int amount) {
         this.timeOfDay = timeOfDay;
         this.amount = amount;
@@ -59,6 +56,6 @@ public class TimedDosage{
 
     @Override
     public String toString() {
-        return format("%d unit(s) at %s", amount, toText(timeOfDay));
+        return format(US, "%d unit(s) at %s", amount, toText(timeOfDay));
     }
 }

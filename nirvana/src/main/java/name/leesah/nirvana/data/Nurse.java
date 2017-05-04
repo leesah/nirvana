@@ -8,6 +8,7 @@ import android.util.Log;
 import org.joda.time.LocalDate;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.Collections.emptySet;
+import static java.util.Locale.*;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
@@ -164,8 +166,8 @@ public class Nurse extends DataHolder {
     }
 
     private void onReminderMissing(int id) {
-        Log.wtf(TAG, String.format("Reminder not found by ID [%d].", id));
-        Log.d(TAG, String.format("Reminder(s) in cache: [%s]", itemsInCache()));
+        Log.wtf(TAG, String.format(US, "Reminder not found by ID [%d].", id));
+        Log.d(TAG, String.format(US, "Reminder(s) in cache: [%s]", itemsInCache()));
     }
 
     private String itemsInCache() {

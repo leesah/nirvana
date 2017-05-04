@@ -10,7 +10,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static org.joda.time.Days.*;
+import static org.joda.time.Days.daysBetween;
 
 /**
  * Created by sah on 2016-12-07.

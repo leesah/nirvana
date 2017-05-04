@@ -1,34 +1,37 @@
 package name.leesah.nirvana.model.medication;
 
-import android.support.annotation.Nullable;
+import android.content.Context;
+import android.content.SharedPreferences;
 
-import org.joda.time.Period;
-
+import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
-import name.leesah.nirvana.utils.IdentityHelper;
 
-import static name.leesah.nirvana.utils.IdentityHelper.*;
+import static android.content.Context.MODE_PRIVATE;
+import static java.lang.String.format;
+import static java.util.Locale.US;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
+import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
+import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 /**
  * Created by sah on 2016-12-07.
  */
-
 public class Medication {
 
     private final int id;
     private final String name;
     private final String manufacturer;
     private final DosageForm form;
-    private RepeatingStrategy repeatingStrategy;
-    private RemindingStrategy remindingStrategy;
-    private StartingStrategy startingStrategy;
-    private StoppingStrategy stoppingStrategy;
+    private final RepeatingStrategy repeatingStrategy;
+    private final RemindingStrategy remindingStrategy;
+    private final StartingStrategy startingStrategy;
+    private final StoppingStrategy stoppingStrategy;
 
-    public Medication(String name, String manufacturer, DosageForm form, RemindingStrategy remindingStrategy, RepeatingStrategy repeatingStrategy, StartingStrategy startingStrategy, StoppingStrategy stoppingStrategy) {
-        this.id = uniqueInt();
+    private Medication(int id, String name, String manufacturer, DosageForm form, RemindingStrategy remindingStrategy, RepeatingStrategy repeatingStrategy, StartingStrategy startingStrategy, StoppingStrategy stoppingStrategy) {
+        this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
         this.form = form;
@@ -36,14 +39,6 @@ public class Medication {
         this.remindingStrategy = remindingStrategy;
         this.startingStrategy = startingStrategy;
         this.stoppingStrategy = stoppingStrategy;
-    }
-
-    public void setRemindingStrategy(RemindingStrategy remindingStrategy) {
-        this.remindingStrategy = remindingStrategy;
-    }
-
-    public void setRepeatingStrategy(RepeatingStrategy repeatingStrategy) {
-        this.repeatingStrategy = repeatingStrategy;
     }
 
     public int getId() {
@@ -80,7 +75,93 @@ public class Medication {
 
     @Override
     public String toString() {
-        return String.format("Medication {id=[%d], n=[%s]}", id, name);
+        return format(US, "Medication {id=[%d], n=[%s]}", id, name);
     }
 
+    /**
+     * Created by sah on 2016-12-07.
+     */
+    public static class Builder {
+        public static final int INVALID_ID = 0;
+        private int id = uniqueInt();
+        private String name;
+        private String manufacturer;
+        private DosageForm form;
+        private RemindingStrategy remindingStrategy;
+        private RepeatingStrategy repeatingStrategy;
+        private StartingStrategy startingStrategy;
+        private StoppingStrategy stoppingStrategy;
+
+        public Medication build() {
+            if (id == INVALID_ID || name == null || form == null ||
+                    remindingStrategy == null || repeatingStrategy == null ||
+                    startingStrategy == null || stoppingStrategy == null)
+                throw new IllegalArgumentException("Premature invocation on builder.");
+
+            return new Medication(
+                    id, name, manufacturer == null ? "" : manufacturer, form,
+                    remindingStrategy, repeatingStrategy, startingStrategy, stoppingStrategy);
+        }
+
+        private void setId(int id) {
+            this.id = id;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setManufacturer(String manufacturer) {
+            this.manufacturer = manufacturer;
+            return this;
+        }
+
+        public Builder setForm(DosageForm form) {
+            this.form = form;
+            return this;
+        }
+
+        public Builder setRemindingStrategy(RemindingStrategy remindingStrategy) {
+            this.remindingStrategy = remindingStrategy;
+            return this;
+        }
+
+        public Builder setRepeatingStrategy(RepeatingStrategy repeatingStrategy) {
+            this.repeatingStrategy = repeatingStrategy;
+            return this;
+        }
+
+        public Builder setStartingStrategy(StartingStrategy startingStrategy) {
+            this.startingStrategy = startingStrategy;
+            return this;
+        }
+
+        public Builder setStoppingStrategy(StoppingStrategy stoppingStrategy) {
+            this.stoppingStrategy = stoppingStrategy;
+            return this;
+        }
+
+        public Medication buildFromStaged(Context context) {
+            SharedPreferences sp = context.getSharedPreferences(STAGING, MODE_PRIVATE);
+            setId(
+                    sp.getInt(context.getString(R.string.pref_key_medication_id), INVALID_ID));
+            setName(
+                    sp.getString(context.getString(R.string.pref_key_medication_name), null));
+            setManufacturer(
+                    sp.getString(context.getString(R.string.pref_key_medication_manufacturer), null));
+            setForm(DosageForm.withName(context,
+                    sp.getString(context.getString(R.string.pref_key_medication_dosage_form), null)));
+            setRemindingStrategy(getGson().fromJson(
+                    sp.getString(context.getString(R.string.pref_key_medication_reminding), null), RemindingStrategy.class));
+            setRepeatingStrategy(getGson().fromJson(
+                    sp.getString(context.getString(R.string.pref_key_medication_repeating), null), RepeatingStrategy.class));
+            setStartingStrategy(getGson().fromJson(
+                    sp.getString(context.getString(R.string.pref_key_medication_starting), null), StartingStrategy.class));
+            setStoppingStrategy(getGson().fromJson(
+                    sp.getString(context.getString(R.string.pref_key_medication_stopping), null), StoppingStrategy.class));
+            return build();
+        }
+
+    }
 }
