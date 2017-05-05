@@ -1,12 +1,10 @@
 package name.leesah.nirvana.ui.medication;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.BaseAdapter;
 
 import java.util.Set;
 
@@ -20,7 +18,6 @@ import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -31,29 +28,18 @@ public class MedicationFragment extends PreferenceFragment {
 
     private boolean saveButtonEnabled;
     private MenuItem saveButton;
-    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesName(STAGING);
-        sharedPreferences = getPreferenceManager().getSharedPreferences();
-        setHasOptionsMenu(true);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+        setHasOptionsMenu(true);
+
+        getPreferenceManager().setSharedPreferencesName(STAGING);
         getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(refreshSavedButtonEnabled);
 
-    }
-
-    @Override
-    public void onPause() {
-        getPreferenceManager().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(refreshSavedButtonEnabled);
-        super.onPause();
+        addPreferencesFromResource(R.xml.prefscr_medication);
     }
 
     @Override
@@ -72,14 +58,6 @@ public class MedicationFragment extends PreferenceFragment {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            ((BaseAdapter) getPreferenceScreen().getRootAdapter()).notifyDataSetChanged();
         }
     }
 
@@ -107,14 +85,14 @@ public class MedicationFragment extends PreferenceFragment {
     }
 
     private void refreshSaveButtonEnabled() {
-        SharedPreferences preferences = getContext().getSharedPreferences(STAGING, MODE_PRIVATE);
-        setSaveButtonEnabled(preferences.contains(getString(R.string.pref_key_medication_name)) &&
-                preferences.contains(getString(R.string.pref_key_medication_dosage_form)) &&
-                preferences.contains(getString(R.string.pref_key_medication_reminding)) &&
-                preferences.contains(getString(R.string.pref_key_medication_repeating)) &&
-                preferences.contains(getString(R.string.pref_key_medication_starting)) &&
-                preferences.contains(getString(R.string.pref_key_medication_stopping))
-        );
+        SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
+        boolean name = preferences.contains(getString(R.string.pref_key_medication_name));
+        boolean form = preferences.contains(getString(R.string.pref_key_medication_dosage_form));
+        boolean reminding = preferences.contains(getString(R.string.pref_key_medication_reminding));
+        boolean repeating = preferences.contains(getString(R.string.pref_key_medication_repeating));
+        boolean starting = preferences.contains(getString(R.string.pref_key_medication_starting));
+        boolean stopping = preferences.contains(getString(R.string.pref_key_medication_stopping));
+        setSaveButtonEnabled(name && form && reminding && repeating && starting && stopping);
     }
 
     private void setSaveButtonEnabled(boolean enabled) {

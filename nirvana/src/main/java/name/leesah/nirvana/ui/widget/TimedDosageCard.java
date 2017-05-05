@@ -20,7 +20,7 @@ public class TimedDosageCard extends FrameLayout {
     public TimedDosageCard(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.timed_dosage_card, this);
-        text = (TextView)findViewById(R.id.text);
+        text = (TextView) findViewById(R.id.text);
     }
 
     public void setDosage(TimedDosage dosage) {

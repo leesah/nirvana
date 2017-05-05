@@ -15,7 +15,7 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 /**
  * Created by sah on 2016-12-11.
  */
-public class TimedDosage{
+public class TimedDosage {
     private final LocalTime timeOfDay;
     private final int amount;
 

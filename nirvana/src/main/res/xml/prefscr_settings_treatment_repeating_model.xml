@@ -8,7 +8,7 @@
             android:defaultValue="@string/treatment_recurring_none"
             android:key="@string/pref_key_treatment_recurring"
             android:summary="%s"
-            android:title="@string/pref_title_treatment_repeating" />
+            android:title="@string/pref_title_treatment_recurring" />
 
     </PreferenceCategory>
 

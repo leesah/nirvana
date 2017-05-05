@@ -39,7 +39,7 @@ public class ValidatedEditTextPreference extends EditTextPreference {
                 0, 0);
         try {
             blankAllowed = a.getBoolean(R.styleable.ValidatedEditTextPreference_allowBlank, false);
-        }finally {
+        } finally {
             a.recycle();
         }
 

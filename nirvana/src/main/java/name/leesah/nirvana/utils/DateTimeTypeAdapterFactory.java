@@ -14,9 +14,9 @@ import org.joda.time.Period;
 
 import java.io.IOException;
 
-import static java.lang.Class.forName;
-import static java.util.Arrays.stream;
-import static name.leesah.nirvana.utils.DateTimeHelper.*;
+import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
+import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
+import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 /**
  * Created by sah on 2017-04-19.

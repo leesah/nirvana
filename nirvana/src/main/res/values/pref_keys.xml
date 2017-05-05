@@ -15,13 +15,11 @@
     <string name="pref_key_medication_name">name.leesah.nirvana:pref:key:MEDICATION:NAME</string>
     <string name="pref_key_medication_manufacturer">name.leesah.nirvana:pref:key:MEDICATION:MANUFACTURER</string>
     <string name="pref_key_medication_dosage_form">name.leesah.nirvana:pref:key:MEDICATION:DOSAGE_FORM</string>
-    <string name="pref_key_medication_starting_delay_enabled">name.leesah.nirvana:pref:key:MEDICATION:STARTING</string>
-    <string name="pref_key_medication_starting">name.leesah.nirvana:pref:key:MEDICATION:STARTING:DELAY_PERIOD</string>
+    <string name="pref_key_medication_reminding">name.leesah.nirvana:pref:key:MEDICATION:REMINDING</string>
     <string name="pref_key_medication_repeating">name.leesah.nirvana:pref:key:MEDICATION:REPEATING</string>
     <string name="pref_key_medication_repeating_every_n_days" >name.leesah.nirvana:pref:key:MEDICATION:REPEATING:EVERY_N_DAYS</string>
-    <string name="pref_key_medication_reminding">name.leesah.nirvana:pref:key:MEDICATION:REMINDING</string>
+    <string name="pref_key_medication_starting">name.leesah.nirvana:pref:key:MEDICATION:STARTING</string>
     <string name="pref_key_medication_stopping">name.leesah.nirvana:pref:key:MEDICATION:STOPPING</string>
-    <string name="pref_key_medication_stopping_after_period">name.leesah.nirvana:pref:key:MEDICATION:STOPPING:AFTER_PERIOD</string>
 
     <!-- Notification -->
     <string name="pref_key_notification">name.leesah.nirvana:pref:key:NOTIFICATION</string>

@@ -11,8 +11,6 @@ import android.view.MenuItem;
 
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
@@ -92,7 +90,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
 
     public static abstract class Reminding extends StrategyEditFragment<RemindingStrategy> {
         public Reminding() {
-            super( new TypeToken<RemindingStrategy>() {
+            super(new TypeToken<RemindingStrategy>() {
             });
         }
 
@@ -104,7 +102,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
 
     public static abstract class Repeating extends StrategyEditFragment<RepeatingStrategy> {
         public Repeating() {
-            super( new TypeToken<RepeatingStrategy>() {
+            super(new TypeToken<RepeatingStrategy>() {
             });
         }
 

@@ -2,6 +2,7 @@ package name.leesah.nirvana.ui.medication.reminding;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,16 +33,34 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        amount = (NumberPicker) view.findViewById(R.id.amount);
+        unit = (TextView) view.findViewById(R.id.unit);
+        n = (NumberPicker) view.findViewById(R.id.every_n);
+        firstDoseTime = (TimePicker) view.findViewById(R.id.first_dose_time);
+    }
+
+    @Override
     @NonNull
     protected EveryNHours readStrategy() {
-        LocalTime timeOfDay = new LocalTime(0).withHourOfDay(firstDoseTime.getHour()).withMinuteOfHour(firstDoseTime.getMinute());
+        LocalTime timeOfDay = new LocalTime(0)
+                .withHourOfDay(firstDoseTime.getHour())
+                .withMinuteOfHour(firstDoseTime.getMinute());
         Integer everyN = VALID_VALUES.get(n.getValue());
-        return new EveryNHours(new TimedDosage(timeOfDay, amount.getValue()), everyN);
+
+        return new EveryNHours(
+                new TimedDosage(timeOfDay, amount.getValue()),
+                everyN);
     }
 
     @Override
     protected void updateView(RemindingStrategy strategy) {
-        // TODO: initialize
+        EveryNHours enh = (EveryNHours) strategy;
+        amount.setValue(enh.getFirstDose().getAmount());
+        n.setValue(enh.getN());
+        firstDoseTime.setHour(enh.getFirstDose().getTimeOfDay().getHourOfDay());
+        firstDoseTime.setMinute(enh.getFirstDose().getTimeOfDay().getMinuteOfHour());
     }
 
 }

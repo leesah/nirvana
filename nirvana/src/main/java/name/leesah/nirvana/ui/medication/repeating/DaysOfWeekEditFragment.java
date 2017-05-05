@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.EnumSet;
 
-import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.Weekday;
 import name.leesah.nirvana.model.medication.repeating.DaysOfWeek;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;

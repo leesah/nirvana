@@ -6,8 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.google.gson.reflect.TypeToken;
-
+import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.starting.Delayed;
 import name.leesah.nirvana.model.medication.starting.ExactDate;
@@ -23,40 +22,29 @@ import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 public class StartingStrategyPreference extends CheckableDialogPreference {
 
-    private JsonValuedPreferenceDelegate<StartingStrategy> delegate;
+    private StrategyPreferenceDelegate<StartingStrategy> delegate;
     private boolean cycleEnabled;
 
     public StartingStrategyPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        delegate = new JsonValuedPreferenceDelegate<StartingStrategy>(
-                this, new TypeToken<StartingStrategy>() {
-        }) {
-            @Override
-            protected String buildSummary(StartingStrategy value) {
-                return summarizeStrategy(value);
-            }
-        };
-
-        cycleEnabled = Therapist.getInstance(getContext()).isCycleSupportEnabled();
-        setSummary(summarizeStrategy(delegate.getValue()));
     }
 
     @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        delegate.onSetInitialValue(restorePersistedValue, getDefaultStrategy());
+    protected void onAttachedToActivity() {
+        super.onAttachedToActivity();
+
+        setTitle(R.string.pref_title_medication_starting);
+        delegate = new StrategyPreferenceDelegate.Starting(this);
+
+        cycleEnabled = Therapist.getInstance(getContext()).isCycleSupportEnabled();
 
         StartingStrategy strategy = delegate.getValue();
         setChecked(strategy != null);
-        if (!strategyIsReasonable(strategy))
+        if (!isReasonableStrategy(strategy))
             delegate.setValue(getDefaultStrategy());
     }
 
-    private String summarizeStrategy(StartingStrategy value) {
-        return value.toString(getContext());
-    }
-
-    private boolean strategyIsReasonable(StartingStrategy strategy) {
+    private boolean isReasonableStrategy(StartingStrategy strategy) {
         return cycleEnabled ?
                 strategy instanceof Immediately || strategy instanceof Delayed :
                 strategy instanceof ExactDate;

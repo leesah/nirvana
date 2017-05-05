@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AppTheme">
-        <attr name="checkableDialogPreferenceStyle" format="reference" />
+        <attr name="checkablePreferenceStyle" format="reference" />
     </declare-styleable>
+
     <declare-styleable name="IntegerPreference">
         <attr name="minValue" format="integer" />
         <attr name="maxValue" format="integer" />
     </declare-styleable>
+
     <declare-styleable name="ValidatedEditTextPreference">
         <attr name="allowBlank" format="boolean" />
     </declare-styleable>
+
     <declare-styleable name="TimedDosageEditorCard">
         <attr name="mode" format="enum" >
             <enum name="add" value="0"/>
             <enum name="edit" value="1"/>
         </attr>
     </declare-styleable>
-    <declare-styleable name="CheckableDialogPreference">
-        <attr name="checked" format="boolean" />
-        <attr name="switchTextOn" format="string" />
-        <attr name="switchTextOff" format="string" />
-        <attr name="summaryOn" format="string" />
-        <attr name="summaryOff" format="string" />
-        <attr name="valueOff" format="string" />
-    </declare-styleable>
+
 </resources>

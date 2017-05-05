@@ -44,9 +44,6 @@ public class LimitedMinutesTimePicker extends TimePicker {
         Log.d(TAG, format("Setting minute to [%d].", minute));
         int roundedUp = roundUpMinute(minute);
         super.setMinute(roundedUp);
-
-        if (roundedUp == 0)
-            setHour(getHour() + 1);
     }
 
     @Override

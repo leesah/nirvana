@@ -20,7 +20,7 @@ public class Everyday implements RepeatingStrategy {
 
     @Override
     public String toString(Context context) {
-        return context.getString(R.string.to_string_everyday);
+        return context.getString(R.string.everyday);
     }
 
 }

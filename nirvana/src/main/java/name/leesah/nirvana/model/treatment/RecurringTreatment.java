@@ -42,12 +42,12 @@ public class RecurringTreatment implements Treatment {
 
     @Nullable
     private LocalDate getStartDate(@NonNull LocalDate date, LocalDate firstDayOfCycle) {
-            if (dateFallsInDuration(date, firstDayOfCycle, length))
-                return firstDayOfCycle;
-            else if (recurringStrategy.hasNext(dayZero, length, firstDayOfCycle))
-                return getStartDate(date, firstDayOfCycle.plus(length));
-            else
-                return null;
+        if (dateFallsInDuration(date, firstDayOfCycle, length))
+            return firstDayOfCycle;
+        else if (recurringStrategy.hasNext(dayZero, length, firstDayOfCycle))
+            return getStartDate(date, firstDayOfCycle.plus(length));
+        else
+            return null;
     }
 
     @Override

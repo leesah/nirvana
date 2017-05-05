@@ -62,7 +62,8 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     @Override
     protected void updateView(RemindingStrategy strategy) {
-        dosages.addAll(((CertainHours)strategy).getDosages());
+        dosages.addAll(((CertainHours) strategy).getDosages());
+        setSaveButtonEnabled(!dosages.isEmpty());
     }
 
     private void hideListFooter() {
@@ -85,7 +86,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
         dosages.add(dosage);
         dosages.sort(TimedDosage.comparator);
         adapter.notifyDataSetChanged();
-        setSaveButtonEnabled(true);
+        setSaveButtonEnabled(!dosages.isEmpty());
     }
 
     public void onSaveDosage(int position, TimedDosage dosage) {
@@ -98,6 +99,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
         adapter.setEditingFinished();
         adapter.notifyDataSetChanged();
         footer.setVisibility(View.VISIBLE);
+        setSaveButtonEnabled(!dosages.isEmpty());
     }
 
     public void onDeleteDosage(int position) {
@@ -105,7 +107,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
         adapter.setEditingFinished();
         adapter.notifyDataSetChanged();
         footer.setVisibility(View.VISIBLE);
-        setSaveButtonEnabled(false);
+        setSaveButtonEnabled(!dosages.isEmpty());
     }
 
     private boolean dosageExists(LocalTime timeOfDay) {

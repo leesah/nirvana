@@ -11,13 +11,9 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Locale;
-
-import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 
 import static java.lang.Class.forName;
-import static java.util.Arrays.*;
+import static java.util.Arrays.stream;
 
 /**
  * Created by sah on 2017-04-19.

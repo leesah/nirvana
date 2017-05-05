@@ -8,7 +8,6 @@ import android.util.Log;
 import org.joda.time.LocalDate;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.Collections.emptySet;
-import static java.util.Locale.*;
+import static java.util.Locale.US;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 

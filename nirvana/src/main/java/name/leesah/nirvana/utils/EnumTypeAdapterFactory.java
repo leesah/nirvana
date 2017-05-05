@@ -1,8 +1,6 @@
 package name.leesah.nirvana.utils;
 
 
-import android.text.TextUtils;
-
 import com.google.common.collect.MoreCollectors;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -12,17 +10,9 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.function.Function;
 
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 /**

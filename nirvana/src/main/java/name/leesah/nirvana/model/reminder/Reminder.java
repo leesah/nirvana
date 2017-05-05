@@ -98,7 +98,7 @@ public class Reminder {
 
     @Override
     public String toString() {
-        return format(US,"[Reminder #%d (%s: %s %s, m#%d x %d)]", id, state.name(), toText(date), toText(time), medicationId, dosageAmount);
+        return format(US, "[Reminder #%d (%s: %s %s, m#%d x %d)]", id, state.name(), toText(date), toText(time), medicationId, dosageAmount);
     }
 
     @Override

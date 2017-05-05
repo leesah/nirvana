@@ -76,7 +76,7 @@ public class Therapist extends DataHolder {
     private void loadFromSharedPreferences() {
         cycleSupportEnabled = preferences.getBoolean(
                 resources.getString(R.string.pref_key_treatment_enabled), false);
-        treatment =  cycleSupportEnabled ?
+        treatment = cycleSupportEnabled ?
                 new RecurringTreatment(loadDayZero(), loadLength(), loadRecurring()) :
                 new EverlastingTreatment(loadDayZero(toText(DEFAULT_DAY_ZERO)));
     }

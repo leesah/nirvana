@@ -62,14 +62,11 @@ public class MedicationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().findFragmentById(R.id.content) == medicationFragment)
-            confirmBeforeClosing(() -> {
-                clearStaged(this);
-                setResult(RESULT_CANCELED);
-                finish();
-            });
-        else
-            super.onBackPressed();
+        confirmBeforeClosing(() -> {
+            clearStaged(this);
+            setResult(RESULT_CANCELED);
+            finish();
+        });
     }
 
     public static void add(Activity caller) {

@@ -30,16 +30,12 @@ public class CheckableDialogPreference extends DialogPreference {
         delegate.onClick();
     }
 
-    boolean isChecked() {
+    public boolean isChecked() {
         return delegate.isChecked();
     }
 
     public void setChecked(boolean checked) {
         delegate.setChecked(checked);
-    }
-
-    String getValueOff() {
-        return delegate.getValueOff();
     }
 
 }

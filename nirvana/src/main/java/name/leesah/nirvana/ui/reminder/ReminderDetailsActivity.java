@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.util.Locale;
-
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -29,7 +27,7 @@ public class ReminderDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_details);
 
-        if (!getIntent().hasExtra(EXTRA_REMINDER_ID)){
+        if (!getIntent().hasExtra(EXTRA_REMINDER_ID)) {
             Log.wtf(TAG, "Reminder ID missing from intent. Closing.");
             setResult(RESULT_CANCELED);
             finish();

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import org.joda.time.LocalDate;
 
+import name.leesah.nirvana.R;
+import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 /**
@@ -19,6 +21,8 @@ public class Never implements StoppingStrategy {
 
     @Override
     public String toString(Context context) {
-        return null;
+        return Therapist.getInstance(context).isCycleSupportEnabled() ?
+                context.getString(R.string.stopping_until_cycle_ends) :
+                context.getString(R.string.stopping_never);
     }
 }

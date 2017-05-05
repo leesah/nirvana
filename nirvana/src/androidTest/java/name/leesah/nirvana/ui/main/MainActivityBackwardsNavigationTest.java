@@ -70,13 +70,13 @@ public class MainActivityBackwardsNavigationTest {
 
 
     @Test(expected = NoActivityResumedException.class)
-    public void main_Settings_TreatmentSettings_RepeatingModels_AllTheWayBack() throws Exception {
+    public void main_Settings_TreatmentSettings_Recurring_AllTheWayBack() throws Exception {
         onView(withId(R.id.navigation_settings)).perform(click());
         {
             onData(withTitle(R.string.pref_title_treatment)).perform(click());
             onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_treatment_repeating)).perform(click());
+                onData(withTitle(R.string.pref_title_treatment_recurring)).perform(click());
                 onView(withId(R.id.details_container)).check(matches(not(doesNotExist())));
                 pressBack();
             }

@@ -30,4 +30,12 @@ public class CheckableNonDialogPreference extends Preference {
         delegate.onClick();
     }
 
+    public boolean isChecked() {
+        return delegate.isChecked();
+    }
+
+    public void setChecked(boolean checked) {
+        delegate.setChecked(checked);
+    }
+
 }

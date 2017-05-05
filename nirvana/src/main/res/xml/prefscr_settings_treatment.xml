@@ -30,7 +30,7 @@
         <Preference
             android:dependency="@string/pref_key_treatment_enabled"
             android:key="@string/pref_key_treatment_recurring"
-            android:title="@string/pref_title_treatment_repeating" />
+            android:title="@string/pref_title_treatment_recurring" />
 
     </PreferenceCategory>
 

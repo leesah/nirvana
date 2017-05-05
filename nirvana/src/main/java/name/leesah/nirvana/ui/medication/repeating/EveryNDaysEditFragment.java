@@ -38,16 +38,17 @@ public class EveryNDaysEditFragment extends StrategyEditFragment.Repeating {
     @NonNull
     @Override
     protected EveryNDays readStrategy() {
-        return new EveryNDays(
-                getStagingPreferences().getInt(getString(R.string.pref_key_medication_repeating_every_n_days), 0)
-        );
+        return new EveryNDays(getStagingPreferences().getInt(
+                getString(R.string.pref_key_medication_repeating_every_n_days),
+                0));
     }
 
     @Override
     protected void updateView(RepeatingStrategy strategy) {
-        getStagingPreferences().edit()
-                .putInt(getString(R.string.pref_key_medication_repeating_every_n_days), ((EveryNDays)strategy).getN())
-                .apply();
+        getStagingPreferences().edit().putInt(
+                getString(R.string.pref_key_medication_repeating_every_n_days),
+                ((EveryNDays) strategy).getN()
+        ).apply();
         setSaveButtonEnabled(true);
     }
 

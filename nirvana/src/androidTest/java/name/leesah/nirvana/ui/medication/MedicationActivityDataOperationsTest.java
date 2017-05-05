@@ -143,8 +143,8 @@ public abstract class MedicationActivityDataOperationsTest {
             }
         }
         { // Edit stopping model
-            onView(switchWidgetBesidesTitle(R.string.pref_title_medication_stopping_after_period)).perform(setChecked(true));
-            onView(withText(R.string.pref_title_medication_stopping_after_period)).perform(click());
+            onView(switchWidgetBesidesTitle(R.string.pref_title_medication_stopping)).perform(setChecked(true));
+            onView(withText(R.string.pref_title_medication_stopping)).perform(click());
             onView(withId(R.id.number)).perform(setNumber(6));
             onView(withId(R.id.unit)).perform(setNumber(PERIOD_UNITS.indexOf(MONTH)));
             onView(withText(android.R.string.ok)).perform(click());
