@@ -142,8 +142,6 @@ jacoco:
 release:alpha:
   stage: release
   when: manual
-  except:
-    - branches
   script:
     - ${CI_PROJECT_DIR}/gradlew clean assembleRelease publishApkRelease
   artifacts:
