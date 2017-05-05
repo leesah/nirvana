@@ -35,6 +35,7 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
     public void setUp() throws Exception {
         everythingVanishesSilVousPlait(getTargetContext());
         existing = oneRandomMedicationSilVousPlait(getTargetContext(), true);
+        MedicationActivity.writeToStaged(getTargetContext(), existing);
         mActivityRule.launchActivity(new Intent(ACTION_EDIT_MEDICATION));
     }
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.repeating.EveryNDays;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;
@@ -19,13 +19,9 @@ import name.leesah.nirvana.ui.medication.StrategyEditFragment;
  * Created by sah on 2017-04-16.
  */
 
-public class EveryNDaysEditFragment extends StrategyEditFragment.Repeating {
+public class WithIntervalEditFragment extends StrategyEditFragment.Repeating {
 
-    private EveryNDaysEditPreferenceFragment innerFragment;
-
-    public EveryNDaysEditFragment() {
-        innerFragment = new EveryNDaysEditPreferenceFragment();
-    }
+    private InnerPreferenceFragment innerFragment = new InnerPreferenceFragment();
 
     @Nullable
     @Override
@@ -35,30 +31,28 @@ public class EveryNDaysEditFragment extends StrategyEditFragment.Repeating {
         return frameLayout;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.custom, innerFragment)
+                .commit();
+        setSaveButtonEnabled(true);
+    }
+
     @NonNull
     @Override
-    protected EveryNDays readStrategy() {
-        return new EveryNDays(getStagingPreferences().getInt(
-                getString(R.string.pref_key_medication_repeating_every_n_days),
+    protected WithInterval readStrategy() {
+        return new WithInterval(getSharedPreferences().getInt(
+                getString(R.string.pref_key_medication_repeating_with_interval),
                 0));
     }
 
     @Override
     protected void updateView(RepeatingStrategy strategy) {
-        getStagingPreferences().edit().putInt(
-                getString(R.string.pref_key_medication_repeating_every_n_days),
-                ((EveryNDays) strategy).getN()
-        ).apply();
-        setSaveButtonEnabled(true);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.custom, innerFragment).commit();
-    }
-
-    public static class EveryNDaysEditPreferenceFragment extends PreferenceFragment {
+    public static class InnerPreferenceFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -27,10 +27,9 @@
         android:dependency="@string/pref_key_treatment_enabled"
         android:title="@string/prefcat_title_treatment_recurring">
 
-        <Preference
+        <name.leesah.nirvana.ui.settings.treatment.RecurringStrategyPreference
             android:dependency="@string/pref_key_treatment_enabled"
-            android:key="@string/pref_key_treatment_recurring"
-            android:title="@string/pref_title_treatment_recurring" />
+            android:key="@string/pref_key_treatment_recurring" />
 
     </PreferenceCategory>
 

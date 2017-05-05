@@ -30,8 +30,7 @@ import static name.leesah.nirvana.model.reminder.Reminder.State.DONE;
 /**
  * Created by sah on 2017-04-19.
  */
-class ReminderCardData implements Comparable<ReminderCardData> {
-    private static final String TAG = ReminderCardData.class.getSimpleName();
+public class ReminderCardData implements Comparable<ReminderCardData> {
 
     protected final LocalTime time;
 
@@ -45,7 +44,7 @@ class ReminderCardData implements Comparable<ReminderCardData> {
     }
 
     public static class TiledReminders extends ReminderCardData {
-        final private List<Reminder> reminders;
+        public final List<Reminder> reminders;
 
         public TiledReminders(LocalTime time, List<Reminder> reminders) {
             super(time);

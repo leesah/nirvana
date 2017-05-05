@@ -40,12 +40,6 @@ public class RemindingStrategyPreference extends Preference implements SharedPre
         updateSummary();
     }
 
-    private void updateSummary() {
-        RemindingStrategy strategy = delegate.getValue();
-        if (strategy == null)
-            setSummary(R.string.pref_summary_medication_reminding);
-    }
-
     private boolean startStrategySelectActivity() {
         int selected = -1;
         if (delegate.getValue() instanceof CertainHours) selected = 0;
@@ -71,4 +65,10 @@ public class RemindingStrategyPreference extends Preference implements SharedPre
         if (key.equals(getKey()))
             updateSummary();
     }
+
+    private void updateSummary() {
+        if (delegate.getValue() == null)
+            setSummary(R.string.pref_summary_medication_reminding);
+    }
+
 }

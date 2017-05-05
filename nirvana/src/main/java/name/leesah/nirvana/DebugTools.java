@@ -50,8 +50,8 @@ public class DebugTools {
                 setName("Valaciclovir").
                 setManufacturer("Teva").
                 setForm(DosageForm.TABLET).
-                setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new CertainHours(Arrays.asList(new TimedDosage(NineAM, 1), new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
                 build();
@@ -60,8 +60,8 @@ public class DebugTools {
                 setName("Folacin").
                 setManufacturer("folsyra").
                 setForm(DosageForm.TABLET).
-                setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new CertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
                 build();
@@ -70,8 +70,8 @@ public class DebugTools {
                 setName("Man tabletter").
                 setManufacturer("apoteket").
                 setForm(DosageForm.TABLET).
-                setRepeatingStrategy(new Everyday()).
                 setRemindingStrategy(new CertainHours(Collections.singletonList(new TimedDosage(NinePM, 1)))).
+                setRepeatingStrategy(new Everyday()).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
                 build();

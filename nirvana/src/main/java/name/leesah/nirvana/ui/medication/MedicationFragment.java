@@ -22,9 +22,7 @@ import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
-public class MedicationFragment extends PreferenceFragment {
-
-    private final SharedPreferences.OnSharedPreferenceChangeListener refreshSavedButtonEnabled = (p, k) -> refreshSaveButtonEnabled();
+public class MedicationFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private boolean saveButtonEnabled;
     private MenuItem saveButton;
@@ -37,7 +35,7 @@ public class MedicationFragment extends PreferenceFragment {
 
         getPreferenceManager().setSharedPreferencesName(STAGING);
         getPreferenceManager().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(refreshSavedButtonEnabled);
+                .registerOnSharedPreferenceChangeListener(this);
 
         addPreferencesFromResource(R.xml.prefscr_medication);
     }
@@ -59,6 +57,11 @@ public class MedicationFragment extends PreferenceFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        refreshSaveButtonEnabled();
     }
 
     private void saveMedication() {
@@ -85,6 +88,8 @@ public class MedicationFragment extends PreferenceFragment {
     }
 
     private void refreshSaveButtonEnabled() {
+        if (!isAdded()) return;
+
         SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
         boolean name = preferences.contains(getString(R.string.pref_key_medication_name));
         boolean form = preferences.contains(getString(R.string.pref_key_medication_dosage_form));

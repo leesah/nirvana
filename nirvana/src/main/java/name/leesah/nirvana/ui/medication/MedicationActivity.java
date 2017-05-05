@@ -96,7 +96,7 @@ public class MedicationActivity extends AppCompatActivity {
                 .create().show();
     }
 
-    private static void writeToStaged(Context context, Medication medication) {
+    static void writeToStaged(Context context, Medication medication) {
         context.getSharedPreferences(STAGING, MODE_PRIVATE).edit()
                 .putInt(context.getString(R.string.pref_key_medication_id),
                         medication.getId())

@@ -17,7 +17,7 @@ import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
-import name.leesah.nirvana.model.medication.repeating.EveryNDays;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
@@ -86,16 +86,16 @@ public class MetaKeyBasedGenericTypeAdapterFactoryTest {
     @Test
     public void repeatingStrategy() throws Exception {
         JsonElement json = getGson().toJsonTree(
-                new EveryNDays(7),
+                new WithInterval(7),
                 RepeatingStrategy.class);
 
         assertThat(
                 json.getAsJsonObject().get(CLASS_META_KEY).getAsString(),
-                equalTo(EveryNDays.class.getCanonicalName()));
+                equalTo(WithInterval.class.getCanonicalName()));
 
         assertThat(
                 getGson().fromJson(json, RepeatingStrategy.class),
-                is(instanceOf(EveryNDays.class)));
+                is(instanceOf(WithInterval.class)));
     }
 
     @Test

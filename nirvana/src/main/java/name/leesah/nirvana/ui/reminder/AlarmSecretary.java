@@ -36,7 +36,7 @@ public class AlarmSecretary {
         alarmManager = context.getSystemService(AlarmManager.class);
     }
 
-    static void setInstance(AlarmSecretary instance) {
+    public static void setInstance(AlarmSecretary instance) {
         AlarmSecretary.instance = instance;
     }
 

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -23,7 +22,7 @@ import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
-import name.leesah.nirvana.model.medication.repeating.EveryNDays;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.medication.starting.Delayed;
@@ -35,14 +34,19 @@ import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.TimedDosage;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
+import name.leesah.nirvana.ui.reminder.AlarmSecretary;
+import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.lang.Integer.*;
 import static java.util.Collections.shuffle;
 import static java.util.Collections.singletonList;
 import static java.util.EnumSet.allOf;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
@@ -62,10 +66,15 @@ public class LanternGenie {
     private static final Random random = new Random();
 
     public static void everythingVanishesSilVousPlait(Context context) {
-        getDefaultSharedPreferences(context).edit().clear().apply();
+        getDefaultSharedPreferences(context)
+                .edit().clear().apply();
+        context.getSharedPreferences(MedicationActivity.STAGING, MODE_PRIVATE)
+                .edit().clear().apply();
         Pharmacist.reset();
         Nurse.reset();
         Therapist.reset();
+        AlarmSecretary.setInstance(null);
+        NotificationSecretary.setInstance(null);
         cancelAllAlarms(context);
     }
 
@@ -93,12 +102,21 @@ public class LanternGenie {
         Pharmacist.reset();
     }
 
-    public static Set<Reminder> severalRandomRemindersSilVousPlait(Context context, int count, boolean handToPharmacist) {
-        return range(0, count).mapToObj(i -> oneRandomReminderSilVousPlait(context, handToPharmacist)).collect(toSet());
+    public static Set<Reminder> severalRandomRemindersOnThisDaySilVousPlait(Context context, int count, LocalDate date, boolean handToNurse) {
+        return range(0, count).mapToObj(i -> oneRandomReminderOnThisDaySilVousPlait(context, date, handToNurse)).collect(toSet());
     }
 
-    public static Reminder oneRandomReminderSilVousPlait(Context context, boolean handToNurse) {
-        Reminder reminder = new Reminder(randomDaySilVousPlait(), now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
+    public static Set<Reminder> severalRandomRemindersOnAnyDaysSilVousPlait(Context context, int count, boolean handToNurse) {
+        return range(0, count).mapToObj(i -> oneRandomReminderOnThisDaySilVousPlait(context, randomDaySilVousPlait(), handToNurse)).collect(toSet());
+    }
+
+    public static Reminder oneRandomReminderOnAnyDaySilVousPlait(Context context, boolean handToNurse) {
+        return oneRandomReminderOnThisDaySilVousPlait(context, randomDaySilVousPlait(), handToNurse);
+    }
+
+    @NonNull
+    private static Reminder oneRandomReminderOnThisDaySilVousPlait(Context context, LocalDate date, boolean handToNurse) {
+        Reminder reminder = new Reminder(date, now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
         if (handToNurse)
             handThisToNurseSilVousPlait(context, reminder);
         return reminder;
@@ -111,10 +129,10 @@ public class LanternGenie {
         Nurse.reset();
     }
 
-    public static String randomStringSilVousPlait() {
-        return range(0, random.nextInt(3))
+    public static String randomNameSilVousPlait() {
+        return range(0, random.nextInt(2) + 2)
                 .mapToObj(i -> capitalizeFully(randomAlphabetic(2, 8)))
-                .collect(Collectors.joining(" "));
+                .collect(joining(" "));
     }
 
     public static int randomPositiveIntSilVousPlait() {
@@ -148,10 +166,11 @@ public class LanternGenie {
     public static Period randomPeriodSilVousPlait(Period maximum) {
         return days(random.nextInt(maximum.getDays())).plus(Days.ONE);
     }
+
     @NonNull
     private static Medication randomMedication(Context context) {
         return new Medication.Builder()
-                .setName(randomStringSilVousPlait())
+                .setName(randomNameSilVousPlait())
                 .setForm(randomForm())
                 .setRemindingStrategy(randomRemindingStrategy())
                 .setRepeatingStrategy(randomRepeatingStrategy())
@@ -188,7 +207,7 @@ public class LanternGenie {
     private static RepeatingStrategy randomRepeatingStrategy() {
         return takeAChance() < 20 ?
                 new Everyday() :
-                new EveryNDays(randomPositiveIntSilVousPlait(8));
+                new WithInterval(randomPositiveIntSilVousPlait(8));
     }
 
     private static void cancelAllAlarms(Context context) {

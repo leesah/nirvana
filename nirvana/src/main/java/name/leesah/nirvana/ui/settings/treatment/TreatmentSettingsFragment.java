@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 import name.leesah.nirvana.ui.preference.DatePreference;
 import name.leesah.nirvana.ui.preference.PeriodPreference;
@@ -23,36 +24,28 @@ import static org.joda.time.Period.weeks;
 public class TreatmentSettingsFragment extends PreferenceFragment {
 
     public static final Period TWO_WEEKS = weeks(2);
-    private DatePreference firstDayPreference;
-    private PeriodPreference lengthPreference;
-    private Preference repeatingModelPreference;
-    private Preference.OnPreferenceClickListener repeatingModelListener;
-    private RecurringStrategy repeatingModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefscr_settings_treatment);
-
-        firstDayPreference = (DatePreference) findPreference(getString(R.string.pref_key_treatment_first_day));
-        lengthPreference = (PeriodPreference) findPreference(getString(R.string.pref_key_treatment_cycle_length));
-        repeatingModelPreference = findPreference(getString(R.string.pref_key_treatment_recurring));
-
-        if (firstDayPreference.getDate() == null)
-            firstDayPreference.setDate(today());
-
-        if (lengthPreference.getPeriod() == null)
-            lengthPreference.setPeriod(TWO_WEEKS);
-
-        SharedPreferences sharedPreferences = getPreferenceManager().getSharedPreferences();
-        if (!sharedPreferences.contains(getString(R.string.pref_key_treatment_recurring)))
-            sharedPreferences.edit().putString(getString(R.string.pref_key_treatment_recurring), getString(R.string.treatment_recurring_none)).apply();
-        repeatingModelPreference.setOnPreferenceClickListener(repeatingModelListener);
     }
 
-    public void setRepeatingModelListener(Preference.OnPreferenceClickListener listener) {
-        this.repeatingModelListener = listener;
-        if (repeatingModelPreference != null)
-            repeatingModelPreference.setOnPreferenceClickListener(listener);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        DatePreference dayZero = (DatePreference) findPreference(getString(R.string.pref_key_treatment_first_day));
+        PeriodPreference length = (PeriodPreference) findPreference(getString(R.string.pref_key_treatment_cycle_length));
+        RecurringStrategyPreference recurringStrategy = (RecurringStrategyPreference) findPreference(getString(R.string.pref_key_treatment_recurring));
+
+        if (dayZero.getDate() == null)
+            dayZero.setDate(today());
+
+        if (length.getPeriod() == null)
+            length.setPeriod(TWO_WEEKS);
+
+        if (recurringStrategy.getStrategy() == null)
+            recurringStrategy.setStrategy(new NTimes(1));
     }
 }

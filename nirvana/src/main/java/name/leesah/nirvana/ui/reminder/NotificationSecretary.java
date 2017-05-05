@@ -21,7 +21,7 @@ public class NotificationSecretary {
         notificationManager = (NotificationManager) context.getSystemService(RemindingService.NOTIFICATION_SERVICE);
     }
 
-    static void setInstance(NotificationSecretary mock) {
+    public static void setInstance(NotificationSecretary mock) {
         instance = mock;
     }
 

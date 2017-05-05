@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.allOf;
  * Created by sah on 2017-04-06.
  */
 
-public class MoreViewActions {
+public class MoreActions {
 
     public static ViewAction setNumber(int n) {
         return new ViewAction() {

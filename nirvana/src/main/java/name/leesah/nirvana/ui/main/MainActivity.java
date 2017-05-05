@@ -10,23 +10,23 @@ import android.view.MenuItem;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
+import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
 import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentRepeatingModelSelectFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String KEY_NAV_POS = "navigation position";
+    public static final String KEY_NAV_POS = "name.leesah.nirvana:key:NAVIGATION_POSITION";
     private final MedicationListFragment medicationListFragment = new MedicationListFragment();
     private final RemindersOfDayFragment remindersOfDayFragment = new RemindersOfDayFragment();
     private final SettingsFragment settingsFragment = new SettingsFragment();
     private final TreatmentSettingsFragment treatmentSettingsFragment = new TreatmentSettingsFragment();
     private final NotificationSettingsFragment notificationSettingsFragment = new NotificationSettingsFragment();
-    private final TreatmentRepeatingModelSelectFragment treatmentRepeatingModelSelectFragment = new TreatmentRepeatingModelSelectFragment();
-    private FragmentManager fragmentManager;
     private BottomNavigationView navigation;
 
     @Override
@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeSettingsFragment();
-
-        fragmentManager = getFragmentManager();
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this::onNavigation);
@@ -56,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ADD_MEDICATION ||
+                requestCode == REQUEST_CODE_EDIT_MEDICATION &&
+                resultCode == RESULT_OK)
+            clearBackStackAndReplaceFragment(medicationListFragment);
     }
 
     private void restoreStatus(Bundle savedInstanceState) {
@@ -94,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Fragment getCurrentFragment() {
-        return fragmentManager.findFragmentById(R.id.content_main);
+        return getFragmentManager().findFragmentById(R.id.content_main);
     }
 
     private void clearBackStackAndReplaceFragment(Fragment fragment) {
-        fragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE);
-        fragmentManager.beginTransaction()
+        getFragmentManager().popBackStack(null, POP_BACK_STACK_INCLUSIVE);
+        getFragmentManager().beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .commit();
     }
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
     private void initializeSettingsFragment() {
         settingsFragment.setTreatmentListener(preference -> showTreatmentSettings());
         settingsFragment.setNotificationListener(preference -> showNotificationsSettings());
-        treatmentSettingsFragment.setRepeatingModelListener(preference -> showRepeatingModelSettings());
     }
 
     private boolean showTreatmentSettings() {
@@ -120,13 +120,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean showRepeatingModelSettings() {
-        replaceFragmentAndAddToBackStack(treatmentRepeatingModelSelectFragment);
-        return true;
-    }
-
     private void replaceFragmentAndAddToBackStack(Fragment fragment) {
-        fragmentManager.beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .addToBackStack(fragment.getClass().getSimpleName())
                 .commit();

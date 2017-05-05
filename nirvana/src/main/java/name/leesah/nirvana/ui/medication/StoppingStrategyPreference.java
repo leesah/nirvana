@@ -2,14 +2,23 @@ package name.leesah.nirvana.ui.medication;
 
 
 import android.content.Context;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+
+import org.joda.time.LocalDate;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.model.medication.starting.Delayed;
+import name.leesah.nirvana.model.medication.starting.ExactDate;
+import name.leesah.nirvana.model.medication.starting.StartingStrategy;
+import name.leesah.nirvana.model.medication.stopping.InPeriod;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.ui.preference.CheckableDialogPreference;
+import name.leesah.nirvana.ui.widget.PeriodPicker;
 
 /**
  * Created by sah on 2017-05-03.
@@ -18,9 +27,11 @@ import name.leesah.nirvana.ui.preference.CheckableDialogPreference;
 public class StoppingStrategyPreference extends CheckableDialogPreference {
 
     private StrategyPreferenceDelegate<StoppingStrategy> delegate;
+    private PeriodPicker periodPicker;
 
     public StoppingStrategyPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        periodPicker = new PeriodPicker(context, attrs);
     }
 
     @Override
@@ -31,9 +42,29 @@ public class StoppingStrategyPreference extends CheckableDialogPreference {
         delegate = new StrategyPreferenceDelegate.Stopping(this);
 
         StoppingStrategy strategy = delegate.getValue();
-        setChecked(strategy != null);
+        setChecked(strategy != null && !(strategy instanceof Never));
         if (strategy == null)
             delegate.setValue(new Never());
+    }
+
+    @Override
+    protected View onCreateDialogView() {
+        return periodPicker;
+    }
+
+    @Override
+    protected void onBindDialogView(View view) {
+        StoppingStrategy strategy = delegate.getValue();
+        if (strategy instanceof InPeriod)
+            periodPicker.setPeriod(((InPeriod) strategy).getPeriod());
+        super.onBindDialogView(view);
+    }
+
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        super.onDialogClosed(positiveResult);
+        if (positiveResult)
+            delegate.setValue(new InPeriod(periodPicker.getPeriod()));
     }
 
     public void setStrategy(@NonNull StoppingStrategy strategy) {

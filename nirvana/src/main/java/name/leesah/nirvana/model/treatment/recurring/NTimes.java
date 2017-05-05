@@ -1,10 +1,12 @@
 package name.leesah.nirvana.model.treatment.recurring;
 
+import android.content.Context;
 import android.support.annotation.IntRange;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
+import name.leesah.nirvana.R;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
@@ -38,8 +40,13 @@ public class NTimes implements RecurringStrategy {
     }
 
     @Override
+    public String toString(Context context) {
+        return context.getResources().getQuantityString(R.plurals.to_string_recurring_n_times, n, n);
+    }
+
+    @Override
     public String toString() {
-        return format(US, "Repeating for %d times", n);
+        return format(US, "Recurring for %d time(s)", n);
     }
 
     public int getN() {

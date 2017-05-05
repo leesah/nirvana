@@ -2,7 +2,6 @@ package name.leesah.nirvana.ui.medication;
 
 import android.content.SharedPreferences;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +12,7 @@ import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
 import static android.text.TextUtils.isEmpty;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
@@ -31,6 +31,8 @@ public abstract class StrategyPreferenceDelegate<ValueType> implements SharedPre
     protected StrategyPreferenceDelegate(Preference preference, TypeToken<ValueType> type) {
         this.preference = preference;
         this.type = type;
+        value = getPersistedValue();
+        preference.setSummary(buildSummary(value));
     }
 
     public void setValue(@Nullable ValueType newValue) {
@@ -49,13 +51,16 @@ public abstract class StrategyPreferenceDelegate<ValueType> implements SharedPre
     protected abstract String buildSummary(ValueType value);
 
     private void persistValue(ValueType value) {
-        if (shouldPersist()) {
-            if (Objects.equals(value, getPersistedValue())) return;
+        if (!shouldPersist() || Objects.equals(value, getPersistedValue())) return;
 
+        if (value == null)
+            getSharedPreferences().edit()
+                    .remove(getKey())
+                    .apply();
+        else
             getSharedPreferences().edit()
                     .putString(getKey(), getGson().toJson(value))
                     .apply();
-        }
     }
 
     private ValueType getPersistedValue() {
@@ -75,12 +80,8 @@ public abstract class StrategyPreferenceDelegate<ValueType> implements SharedPre
                 && !isEmpty(getKey());
     }
 
-    private PreferenceManager getPreferenceManager() {
-        return preference.getPreferenceManager();
-    }
-
     private SharedPreferences getSharedPreferences() {
-        return getPreferenceManager().getSharedPreferences();
+        return preference.getPreferenceManager().getSharedPreferences();
     }
 
     private String getKey() {
@@ -97,6 +98,19 @@ public abstract class StrategyPreferenceDelegate<ValueType> implements SharedPre
         if (key.equals(preference.getKey())) {
             value = getPersistedValue();
             preference.setSummary(buildSummary(getValue()));
+        }
+    }
+
+    public static class Recurring extends StrategyPreferenceDelegate<RecurringStrategy> {
+
+        public Recurring(Preference preference) {
+            super(preference, new TypeToken<RecurringStrategy>() {
+            });
+        }
+
+        @Override
+        protected String buildSummary(RecurringStrategy value) {
+            return value == null ? null : value.toString(preference.getContext());
         }
     }
 

@@ -21,7 +21,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 /**
  * Created by sah on 2017-04-29.
  */
-public class EveryNDaysTest {
+public class WithIntervalTest {
 
     private static final int N = 10;
 
@@ -42,14 +42,14 @@ public class EveryNDaysTest {
     public void matches() throws Exception {
         LocalDate date = realStartDate.plusDays((new Random().nextInt(10) + 1) * 10);
         when(startingStrategy.getRealStartDate(same(treatment), same(date))).thenReturn(realStartDate);
-        assertThat(new EveryNDays(N).matches(treatment, startingStrategy, date), is(true));
+        assertThat(new WithInterval(N).matches(treatment, startingStrategy, date), is(true));
     }
 
     @Test
     public void matchesNot() throws Exception {
         LocalDate date = realStartDate.plusDays(N + 1);
         when(startingStrategy.getRealStartDate(same(treatment), same(date))).thenReturn(realStartDate);
-        assertThat(new EveryNDays(N).matches(treatment, startingStrategy, date), is(false));
+        assertThat(new WithInterval(N).matches(treatment, startingStrategy, date), is(false));
     }
 
 }

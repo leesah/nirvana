@@ -22,14 +22,8 @@
             android:title="@string/pref_title_medication_manufacturer"
             app:allowBlank="true" />
 
-        <ListPreference
-            android:entries="@array/dosage_forms"
-            android:entryValues="@array/dosage_forms"
-            android:key="@string/pref_key_medication_dosage_form"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:summary="%s"
-            android:title="@string/pref_title_dosage_form" />
+        <name.leesah.nirvana.ui.medication.DosageFormPreference android:key="@string/pref_key_medication_dosage_form" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefcat_title_medication_strategies">

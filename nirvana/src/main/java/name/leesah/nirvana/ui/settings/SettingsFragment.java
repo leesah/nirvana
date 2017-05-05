@@ -25,7 +25,9 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferences();
+        addPreferencesFromResource(R.xml.prefscr_settings);
+        initializeDebugToolsSection();
+        initializeInformationSection();
 
         treatment = findPreference(getString(R.string.pref_key_treatment));
         notification = findPreference(getString(R.string.pref_key_notification));
@@ -33,14 +35,6 @@ public class SettingsFragment extends PreferenceFragment {
         treatment.setOnPreferenceClickListener(treatmentListener);
         notification.setOnPreferenceClickListener(notificationListener);
 
-    }
-
-    private void addPreferences() {
-        addPreferencesFromResource(R.xml.prefscr_settings);
-        {
-            initializeDebugToolsSection();
-        }
-        initializeInformationSection();
     }
 
     private void initializeDebugToolsSection() {
@@ -70,6 +64,5 @@ public class SettingsFragment extends PreferenceFragment {
         this.notificationListener = listener;
         if (notification != null)
             notification.setOnPreferenceClickListener(listener);
-
     }
 }

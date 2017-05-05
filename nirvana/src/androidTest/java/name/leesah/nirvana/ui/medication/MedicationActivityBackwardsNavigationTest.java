@@ -1,6 +1,5 @@
 package name.leesah.nirvana.ui.medication;
 
-import android.support.test.espresso.NoActivityResumedException;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.BeforeClass;
@@ -8,7 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.ui.MoreViewMatchers;
+import name.leesah.nirvana.ui.MoreMatchers;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
@@ -19,7 +18,9 @@ import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.stream.IntStream.range;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
-import static name.leesah.nirvana.ui.MoreViewActions.setChecked;
+import static name.leesah.nirvana.ui.MoreActions.setChecked;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 /**
@@ -35,14 +36,14 @@ public abstract class MedicationActivityBackwardsNavigationTest {
         everythingVanishesSilVousPlait(getTargetContext());
     }
 
-    @Test(expected = NoActivityResumedException.class)
+    @Test
     public void medication_BackImmediately() throws Exception {
         pressBack();
         onView(withText(android.R.string.ok)).perform(click());
-        fail("Activity should be closed.");
+        assertThat(mActivityRule.getActivity().isFinishing(), is(true));
     }
 
-    @Test(expected = NoActivityResumedException.class)
+    @Test
     public void medication_NavigationAmongFragments() throws Exception {
         range(0, 2).forEach(x ->
         { //
@@ -57,7 +58,7 @@ public abstract class MedicationActivityBackwardsNavigationTest {
                     pressBack();
                 }
 
-                onView(MoreViewMatchers.switchWidgetBesidesTitle(R.string.pref_title_medication_repeating)).perform(setChecked(true));
+                onView(MoreMatchers.switchWidgetBesidesTitle(R.string.pref_title_medication_repeating)).perform(setChecked(true));
                 onData(withTitle(R.string.pref_title_medication_repeating)).perform(click());
                 { // In repeating strategy selecting fragment
                     onView(withText(R.string.pref_title_medication_repeating)).perform(click());
@@ -71,7 +72,7 @@ public abstract class MedicationActivityBackwardsNavigationTest {
         });
         pressBack();
         onView(withText(android.R.string.ok)).perform(click());
-        fail("Activity should be closed.");
+        assertThat(mActivityRule.getActivity().isFinishing(), is(true));
     }
 
 }

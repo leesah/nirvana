@@ -3,6 +3,7 @@ package name.leesah.nirvana.ui.medication;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Menu;
@@ -14,9 +15,11 @@ import com.google.gson.reflect.TypeToken;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+import static android.preference.PreferenceManager.*;
 import static android.text.TextUtils.isEmpty;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
@@ -40,7 +43,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        String json = getStagingPreferences().getString(getPreferenceKey(), null);
+        String json = getSharedPreferences().getString(getPreferenceKey(), null);
         if (!isEmpty(json)) updateView(getGson().fromJson(json, strategyType.getType()));
     }
 
@@ -61,7 +64,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
         switch (item.getItemId()) {
             case R.id.save_button:
                 String json = getGson().toJson(readStrategy(), strategyType.getType());
-                getStagingPreferences().edit().putString(getPreferenceKey(), json).apply();
+                getSharedPreferences().edit().putString(getPreferenceKey(), json).apply();
                 getActivity().setResult(RESULT_OK);
                 getActivity().finish();
                 return true;
@@ -77,9 +80,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
             saveButton.setEnabled(saveButtonEnabled);
     }
 
-    protected SharedPreferences getStagingPreferences() {
-        return getContext().getSharedPreferences(STAGING, MODE_PRIVATE);
-    }
+    protected abstract SharedPreferences getSharedPreferences();
 
     @NonNull
     protected abstract StrategyType readStrategy();
@@ -87,6 +88,23 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
     protected abstract void updateView(StrategyType strategy);
 
     protected abstract String getPreferenceKey();
+
+    public static abstract class Recurring extends StrategyEditFragment<RecurringStrategy> {
+        public Recurring() {
+            super(new TypeToken<RecurringStrategy>() {
+            });
+        }
+
+        @Override
+        protected String getPreferenceKey() {
+            return getString(R.string.pref_key_treatment_recurring);
+        }
+
+        @Override
+        protected SharedPreferences getSharedPreferences() {
+            return getDefaultSharedPreferences(getContext());
+        }
+    }
 
     public static abstract class Reminding extends StrategyEditFragment<RemindingStrategy> {
         public Reminding() {
@@ -97,6 +115,11 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
         @Override
         protected String getPreferenceKey() {
             return getString(R.string.pref_key_medication_reminding);
+        }
+
+        @Override
+        protected SharedPreferences getSharedPreferences() {
+            return getContext().getSharedPreferences(STAGING, MODE_PRIVATE);
         }
     }
 
@@ -109,6 +132,11 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
         @Override
         protected String getPreferenceKey() {
             return getString(R.string.pref_key_medication_repeating);
+        }
+
+        @Override
+        protected SharedPreferences getSharedPreferences() {
+            return getContext().getSharedPreferences(STAGING, MODE_PRIVATE);
         }
     }
 }

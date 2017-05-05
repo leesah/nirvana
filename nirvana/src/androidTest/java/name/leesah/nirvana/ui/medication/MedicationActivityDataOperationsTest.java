@@ -17,7 +17,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
-import name.leesah.nirvana.model.medication.repeating.EveryNDays;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.starting.ExactDate;
 import name.leesah.nirvana.model.medication.stopping.InPeriod;
 
@@ -40,10 +40,10 @@ import static name.leesah.nirvana.LanternGenie.cycledTreatmentDisabledSilVousPla
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
 import static name.leesah.nirvana.model.PeriodUnit.MONTH;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
-import static name.leesah.nirvana.ui.MoreViewActions.setChecked;
-import static name.leesah.nirvana.ui.MoreViewActions.setNumber;
-import static name.leesah.nirvana.ui.MoreViewMatchers.switchWidgetBesidesTitle;
-import static name.leesah.nirvana.ui.preference.PeriodPreference.PERIOD_UNITS;
+import static name.leesah.nirvana.ui.MoreActions.setChecked;
+import static name.leesah.nirvana.ui.MoreActions.setNumber;
+import static name.leesah.nirvana.ui.MoreMatchers.switchWidgetBesidesTitle;
+import static name.leesah.nirvana.ui.widget.PeriodPicker.PERIOD_UNITS;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.endsWith;
@@ -90,7 +90,7 @@ public abstract class MedicationActivityDataOperationsTest {
         }
         { // Select form: Tablets
             onView(withText(R.string.pref_title_dosage_form)).perform(click());
-            onView(withText(TABLET.getName(getTargetContext()))).perform(click());
+            onView(withText(R.string.tablet)).perform(click());
         }
         { // Edit reminding model
             onView(withText(R.string.pref_title_medication_reminding)).perform(click());
@@ -161,7 +161,7 @@ public abstract class MedicationActivityDataOperationsTest {
         assertThat(medication.getName(), equalTo("Valaciclovir"));
         assertThat(medication.getManufacturer(), equalTo("Bluefish"));
         assertThat(medication.getForm(), equalTo(TABLET));
-        assertThat(medication.getRepeatingStrategy(), equalTo(new EveryNDays(4)));
+        assertThat(medication.getRepeatingStrategy(), equalTo(new WithInterval(4)));
         assertThat(medication.getRemindingStrategy(), instanceOf(CertainHours.class));
         assertThat(medication.getStartingStrategy(), equalTo(new ExactDate(new LocalDate(0).withYear(2016).withMonthOfYear(8).withDayOfMonth(10))));
         assertThat(medication.getStoppingStrategy(), equalTo(new InPeriod(months(6))));

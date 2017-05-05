@@ -19,6 +19,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
@@ -76,7 +77,7 @@ public class MainActivityBackwardsNavigationTest {
             onData(withTitle(R.string.pref_title_treatment)).perform(click());
             onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
             {
-                onData(withTitle(R.string.pref_title_treatment_recurring)).perform(click());
+                onView(withText(R.string.pref_title_treatment_recurring)).perform(click());
                 onView(withId(R.id.details_container)).check(matches(not(doesNotExist())));
                 pressBack();
             }

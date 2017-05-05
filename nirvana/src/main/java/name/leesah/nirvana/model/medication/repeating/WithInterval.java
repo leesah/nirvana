@@ -15,11 +15,11 @@ import static org.joda.time.Days.daysBetween;
 /**
  * Created by sah on 2016-12-07.
  */
-public class EveryNDays implements RepeatingStrategy {
+public class WithInterval implements RepeatingStrategy {
 
     private int n;
 
-    public EveryNDays(int n) {
+    public WithInterval(int n) {
         this.n = n;
     }
 
@@ -34,7 +34,7 @@ public class EveryNDays implements RepeatingStrategy {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EveryNDays that = (EveryNDays) o;
+        WithInterval that = (WithInterval) o;
         return n == that.n;
     }
 

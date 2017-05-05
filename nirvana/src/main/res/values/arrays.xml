@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="cycle_recurring_strategies">
-        <item>@string/treatment_recurring_none</item>
+    <string-array name="treatment_recurring_strategies">
         <item>@string/treatment_recurring_n_times</item>
         <item>@string/treatment_recurring_until_date</item>
-    </string-array>
-
-    <string-array name="dosage_forms">
-        <item>@string/tablet</item>
-        <item>@string/capsule</item>
-        <item>@string/injection</item>
     </string-array>
 
     <string-array name="medication_starting_strategies" >
@@ -31,4 +24,11 @@
         <item>@string/medication_stopping_with_cycle</item>
         <item>@string/medication_stopping_after_period</item>
     </string-array>
+
+    <string-array name="dosage_forms">
+        <item>@string/tablet</item>
+        <item>@string/capsule</item>
+        <item>@string/injection</item>
+    </string-array>
+
 </resources>

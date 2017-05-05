@@ -1,5 +1,7 @@
 package name.leesah.nirvana.model.treatment.recurring;
 
+import android.content.Context;
+
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
@@ -9,4 +11,6 @@ import org.joda.time.Period;
 public interface RecurringStrategy {
 
     boolean hasNext(LocalDate dayZero, Period length, LocalDate date);
+
+    String toString(Context context);
 }

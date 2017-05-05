@@ -17,7 +17,7 @@
     <string name="pref_key_medication_dosage_form">name.leesah.nirvana:pref:key:MEDICATION:DOSAGE_FORM</string>
     <string name="pref_key_medication_reminding">name.leesah.nirvana:pref:key:MEDICATION:REMINDING</string>
     <string name="pref_key_medication_repeating">name.leesah.nirvana:pref:key:MEDICATION:REPEATING</string>
-    <string name="pref_key_medication_repeating_every_n_days" >name.leesah.nirvana:pref:key:MEDICATION:REPEATING:EVERY_N_DAYS</string>
+    <string name="pref_key_medication_repeating_with_interval" >name.leesah.nirvana:pref:key:MEDICATION:REPEATING:EVERY_N_DAYS</string>
     <string name="pref_key_medication_starting">name.leesah.nirvana:pref:key:MEDICATION:STARTING</string>
     <string name="pref_key_medication_stopping">name.leesah.nirvana:pref:key:MEDICATION:STOPPING</string>
 

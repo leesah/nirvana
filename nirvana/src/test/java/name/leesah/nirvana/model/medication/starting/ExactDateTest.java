@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -33,5 +34,8 @@ public class ExactDateTest {
         assertThat(new ExactDate(realStartDate).getRealStartDate(treatment, date), equalTo(realStartDate));
     }
 
-
+    @Test
+    public void equals() throws Exception {
+        assertThat(new ExactDate(today()), equalTo(new ExactDate(today())));
+    }
 }

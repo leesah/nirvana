@@ -3,32 +3,40 @@ package name.leesah.nirvana.ui.reminder;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.preference.PreferenceManager;
+
+import com.google.common.collect.Sets;
 
 import org.joda.time.LocalTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
-import java.util.Arrays;
 import java.util.Set;
 
+import name.leesah.nirvana.BuildConfig;
+import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
+import name.leesah.nirvana.model.medication.starting.Immediately;
+import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderFactory;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.core.deps.guava.collect.Sets.newHashSet;
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.severalRandomMedicationsSilVousPlait;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
@@ -42,66 +50,44 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.MockitoAnnotations.initMocks;
+import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2017-04-07.
  */
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = {24, 25})
 public class RemindingServiceTest {
-    private static final LocalTime NINE_AM = new LocalTime(0).withHourOfDay(9);
-    private static final LocalTime NINE_PM = new LocalTime(0).withHourOfDay(21);
-    private static final Medication FOLACIN = new Medication.Builder().
-            setName("Folacin").
-            setManufacturer("folsyra").
-            setForm(TABLET).
-            setRepeatingStrategy(new Everyday()).
-            setRemindingStrategy(new CertainHours(singletonList(new TimedDosage(NINE_AM, 1)))).
-            build();
-    private static final Medication VALACICLOVIR = new Medication.Builder().
-            setName("Valaciclovir").
-            setManufacturer("Teva").
-            setForm(TABLET).
-            setRepeatingStrategy(new Everyday()).
-            setRemindingStrategy(new CertainHours(Arrays.asList(new TimedDosage(NINE_AM, 1), new TimedDosage(NINE_PM, 1)))).
-            build();
 
-    private RemindingServiceWrapper service;
     private Context context;
-    private Pharmacist pharmacist;
     private Nurse nurse;
     private Set<Reminder> reminders;
+    @Mock
     private NotificationSecretary notificationSecretary;
-    private AlarmSecretary alarmSecretry;
+    @Mock
+    private AlarmSecretary alarmSecretary;
 
     @Before
     public void setUp() throws Exception {
-        context = getTargetContext();
-        pharmacist = Pharmacist.getInstance(context);
+        initMocks(this);
+
+        context = application.getApplicationContext();
         nurse = Nurse.getInstance(context);
 
-        notificationSecretary = mock(NotificationSecretary.class);
         NotificationSecretary.setInstance(notificationSecretary);
 
-        alarmSecretry = mock(AlarmSecretary.class);
-        AlarmSecretary.setInstance(alarmSecretry);
+        AlarmSecretary.setInstance(alarmSecretary);
 
-        newHashSet(VALACICLOVIR, FOLACIN).forEach(m -> pharmacist.save(m));
+        severalRandomMedicationsSilVousPlait(
+                context, 128, true);
         reminders = new ReminderFactory(context).createReminders(today());
         nurse.add(reminders);
     }
 
     @After
     public void tearDown() throws Exception {
-        resetAll();
-    }
-
-    @BeforeClass
-    public static void resetAll() {
-        Pharmacist.reset();
-        Nurse.reset();
-        Therapist.reset();
-        NotificationSecretary.setInstance(null);
-        AlarmSecretary.setInstance(null);
-        PreferenceManager.getDefaultSharedPreferences(getTargetContext()).edit().clear().apply();
+        LanternGenie.everythingVanishesSilVousPlait(application.getApplicationContext());
     }
 
     @Test
@@ -111,7 +97,7 @@ public class RemindingServiceTest {
             verify(notificationSecretary).display(notifIdEquals(reminder), any(Notification.class));
         });
         verifyNoMoreInteractions(notificationSecretary);
-        verifyNoMoreInteractions(alarmSecretry);
+        verifyNoMoreInteractions(alarmSecretary);
     }
 
     @Test
@@ -119,15 +105,15 @@ public class RemindingServiceTest {
         reminders.forEach(reminder -> {
             show(reminder);
             reset(notificationSecretary);
-            reset(alarmSecretry);
+            reset(alarmSecretary);
 
             int notifId = nurse.getReminder(reminder.getId()).getNotificationId();
             snooze(reminder);
             verify(notificationSecretary).dismiss(eq(notifId));
-            verify(alarmSecretry).setAlarm(medIdEquals(reminder));
+            verify(alarmSecretary).setAlarm(medIdEquals(reminder));
         });
         verifyNoMoreInteractions(notificationSecretary);
-        verifyNoMoreInteractions(alarmSecretry);
+        verifyNoMoreInteractions(alarmSecretary);
     }
 
     @Test
@@ -140,7 +126,7 @@ public class RemindingServiceTest {
             verify(notificationSecretary).dismiss(notifIdEquals(reminder));
         });
         verifyNoMoreInteractions(notificationSecretary);
-        verifyNoMoreInteractions(alarmSecretry);
+        verifyNoMoreInteractions(alarmSecretary);
     }
 
     @Test
@@ -152,7 +138,7 @@ public class RemindingServiceTest {
             showDetails(reminder);
         });
         verifyNoMoreInteractions(notificationSecretary);
-        verifyNoMoreInteractions(alarmSecretry);
+        verifyNoMoreInteractions(alarmSecretary);
     }
 
     private void show(Reminder reminder) {
@@ -180,11 +166,6 @@ public class RemindingServiceTest {
         Intent intent = new Intent(context, ReminderDetailsActivity.class)
                 .setFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
-    }
-
-
-    private void assertSecretaryCalled(Reminder reminder) {
-
     }
 
     private int notifIdEquals(Reminder expected) {

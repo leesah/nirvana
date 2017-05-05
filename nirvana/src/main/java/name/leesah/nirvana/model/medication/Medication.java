@@ -145,12 +145,12 @@ public class Medication {
         public Medication buildFromStaged(Context context) {
             SharedPreferences sp = context.getSharedPreferences(STAGING, MODE_PRIVATE);
             setId(
-                    sp.getInt(context.getString(R.string.pref_key_medication_id), INVALID_ID));
+                    sp.getInt(context.getString(R.string.pref_key_medication_id), uniqueInt()));
             setName(
                     sp.getString(context.getString(R.string.pref_key_medication_name), null));
             setManufacturer(
                     sp.getString(context.getString(R.string.pref_key_medication_manufacturer), null));
-            setForm(DosageForm.withName(context,
+            setForm(DosageForm.valueOf(
                     sp.getString(context.getString(R.string.pref_key_medication_dosage_form), null)));
             setRemindingStrategy(getGson().fromJson(
                     sp.getString(context.getString(R.string.pref_key_medication_reminding), null), RemindingStrategy.class));
