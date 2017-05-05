@@ -142,8 +142,6 @@ jacoco:
 release:alpha:
   stage: release
   when: manual
-  only:
-    - /^morningly@.*$/
   except:
     - branches
   script:
