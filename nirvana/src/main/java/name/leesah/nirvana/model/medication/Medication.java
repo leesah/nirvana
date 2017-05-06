@@ -2,6 +2,7 @@ package name.leesah.nirvana.model.medication;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Keep;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
@@ -19,6 +20,7 @@ import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 /**
  * Created by sah on 2016-12-07.
  */
+@Keep
 public class Medication {
 
     private final int id;

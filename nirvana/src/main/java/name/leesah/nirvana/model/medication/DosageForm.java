@@ -2,6 +2,7 @@ package name.leesah.nirvana.model.medication;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.Keep;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import static java.util.EnumSet.allOf;
 /**
  * Created by sah on 2016-12-07.
  */
+@Keep
 public enum DosageForm {
     TABLET, CAPSULE, INJECTION;
 

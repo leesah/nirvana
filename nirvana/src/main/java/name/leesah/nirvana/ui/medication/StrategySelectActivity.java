@@ -97,7 +97,7 @@ public class StrategySelectActivity extends AppCompatActivity {
 
         private boolean listViewOptimized = false;
         private String[] entries;
-        private List<Fragment> fragments;
+        private List<StrategyEditFragment> fragments;
 
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -144,10 +144,10 @@ public class StrategySelectActivity extends AppCompatActivity {
             return true;
         }
 
-        private Fragment instantiateFragment(String fragmentClass) {
-            Fragment fragment;
+        private StrategyEditFragment instantiateFragment(String fragmentClass) {
+            StrategyEditFragment fragment;
             try {
-                fragment = (Fragment) Class.forName(fragmentClass).newInstance();
+                fragment = (StrategyEditFragment) Class.forName(fragmentClass).newInstance();
             } catch (java.lang.InstantiationException | IllegalAccessException | ClassNotFoundException e) {
                 throw new IllegalStateException(format(US, "Error instantiating StrategyEditFragment: [%s].", fragmentClass), e);
             }

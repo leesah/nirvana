@@ -1,6 +1,7 @@
 package name.leesah.nirvana.model.reminder;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 
 import org.joda.time.LocalTime;
 
@@ -15,6 +16,7 @@ import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 /**
  * Created by sah on 2016-12-11.
  */
+@Keep
 public class TimedDosage {
     private final LocalTime timeOfDay;
     private final int amount;

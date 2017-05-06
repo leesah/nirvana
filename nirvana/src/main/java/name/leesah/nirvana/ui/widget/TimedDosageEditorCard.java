@@ -2,6 +2,7 @@ package name.leesah.nirvana.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -110,10 +111,12 @@ public class TimedDosageEditorCard extends FrameLayout {
         numberPicker.setValue(dosage.getAmount());
     }
 
+    @Keep
     public interface OnSaveDosageListener {
         void onSaveDosage(TimedDosage dosage);
     }
 
+    @Keep
     public interface OnDeleteDosageListener {
         void onDeleteDosage();
     }
