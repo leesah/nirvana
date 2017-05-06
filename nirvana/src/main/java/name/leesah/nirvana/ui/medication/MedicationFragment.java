@@ -24,7 +24,6 @@ import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 public class MedicationFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private boolean saveButtonEnabled;
     private MenuItem saveButton;
 
     @Override
@@ -43,7 +42,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         saveButton = menu.findItem(R.id.save_button);
-        saveButton.setEnabled(saveButtonEnabled);
+        refreshSaveButtonEnabled();
         super.onPrepareOptionsMenu(menu);
     }
 
@@ -88,7 +87,8 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     }
 
     private void refreshSaveButtonEnabled() {
-        if (!isAdded()) return;
+        if (!isAdded() || saveButton == null)
+            return;
 
         SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
         boolean name = preferences.contains(getString(R.string.pref_key_medication_name));
@@ -97,13 +97,8 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
         boolean repeating = preferences.contains(getString(R.string.pref_key_medication_repeating));
         boolean starting = preferences.contains(getString(R.string.pref_key_medication_starting));
         boolean stopping = preferences.contains(getString(R.string.pref_key_medication_stopping));
-        setSaveButtonEnabled(name && form && reminding && repeating && starting && stopping);
-    }
 
-    private void setSaveButtonEnabled(boolean enabled) {
-        saveButtonEnabled = enabled;
-        if (saveButton != null)
-            saveButton.setEnabled(saveButtonEnabled);
+        saveButton.setEnabled(name && form && reminding && repeating && starting && stopping);
     }
 
 }

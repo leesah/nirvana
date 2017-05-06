@@ -18,6 +18,7 @@ import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 import static android.text.TextUtils.isEmpty;
 import static java.lang.String.format;
 import static java.util.Locale.US;
+import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
@@ -101,39 +102,12 @@ public class Therapist extends DataHolder {
     }
 
     private RecurringStrategy loadRecurring() {
-        String text = preferences.getString(resources.getString(R.string.pref_key_treatment_recurring), "");
-
-        if (text.equals(resources.getString(R.string.treatment_recurring_n_times)))
-            return loadRepeatingNTimes();
-        else if (text.equals(resources.getString(R.string.treatment_recurring_until_date)))
-            return loadRepeatingUntilDate();
-        else {
-            throw new IllegalStateException(format("Unexpected treatment recurring strategy: [%s].", text));
-        }
+        String text = preferences.getString(resources.getString(R.string.pref_key_treatment_recurring), null);
+        if (isEmpty(text))
+            throw new IllegalStateException("Recurring strategy is not set.");
+        return getGson().fromJson(text, RecurringStrategy.class);
     }
 
-
-    private NTimes loadRepeatingNTimes() {
-        int n = preferences.getInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), -1);
-        if (n < 0) {
-            String msg = format(US, "Unexpected n for [%s]: [%d].", NTimes.class.getSimpleName(), n);
-            Log.wtf(TAG, msg);
-            throw new IllegalStateException(msg);
-        }
-        return new NTimes(n);
-    }
-
-    private UntilDate loadRepeatingUntilDate() {
-        String key = resources.getString(R.string.pref_key_treatment_recurring_until_date);
-        String text = preferences.getString(key, null);
-        if (isEmpty(text)) {
-            String msg = format("Unexpected date for [%s]: [%s].", UntilDate.class.getSimpleName(), text);
-            Log.wtf(TAG, msg);
-            throw new IllegalStateException(msg);
-        }
-
-        return new UntilDate(toDate(text));
-    }
 
     public static void reset() {
         Therapist.instance = null;

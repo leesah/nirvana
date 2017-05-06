@@ -35,14 +35,17 @@ public class PeriodPreference extends DialogPreference {
 
     public PeriodPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setDialogLayoutResource(R.layout.period_picker);
-
         periodPicker = new PeriodPicker(context, attrs);
         periodFormatter = new PeriodFormatterBuilder()
                 .appendMonths().appendSuffix(" ").appendSuffix(context.getString(R.string.month), context.getString(R.string.months))
                 .appendWeeks().appendSuffix(" ").appendSuffix(context.getString(R.string.week), context.getString(R.string.weeks))
                 .appendDays().appendSuffix(" ").appendSuffix(context.getString(R.string.day), context.getString(R.string.days))
                 .toFormatter();
+    }
+
+    @Override
+    protected View onCreateDialogView() {
+        return periodPicker;
     }
 
     @Override
