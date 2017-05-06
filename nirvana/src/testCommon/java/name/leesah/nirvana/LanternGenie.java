@@ -115,7 +115,7 @@ public class LanternGenie {
     }
 
     @NonNull
-    private static Reminder oneRandomReminderOnThisDaySilVousPlait(Context context, LocalDate date, boolean handToNurse) {
+    public static Reminder oneRandomReminderOnThisDaySilVousPlait(Context context, LocalDate date, boolean handToNurse) {
         Reminder reminder = new Reminder(date, now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
         if (handToNurse)
             handThisToNurseSilVousPlait(context, reminder);
