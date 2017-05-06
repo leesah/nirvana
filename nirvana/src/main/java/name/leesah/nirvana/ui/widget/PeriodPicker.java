@@ -7,8 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import org.joda.time.Period;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

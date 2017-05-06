@@ -14,16 +14,10 @@ import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.PeriodUnit;
 import name.leesah.nirvana.ui.widget.PeriodPicker;
-import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
-import static name.leesah.nirvana.model.PeriodUnit.DAY;
-import static name.leesah.nirvana.model.PeriodUnit.MONTH;
-import static name.leesah.nirvana.model.PeriodUnit.WEEK;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
-import static name.leesah.nirvana.utils.DateTimeHelper.toPeriodAsString;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 /**

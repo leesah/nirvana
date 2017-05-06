@@ -9,9 +9,9 @@ import android.util.AttributeSet;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.repeating.DaysOfWeek;
-import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.ui.medication.repeating.DaysOfWeekEditFragment;
 import name.leesah.nirvana.ui.medication.repeating.WithIntervalEditFragment;
 import name.leesah.nirvana.ui.preference.CheckableNonDialogPreference;

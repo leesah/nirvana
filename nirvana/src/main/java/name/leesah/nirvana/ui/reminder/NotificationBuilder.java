@@ -92,16 +92,16 @@ class NotificationBuilder extends Notification.Builder {
             case CAPSULE:
                 return Icon.createWithResource(context, R.drawable.ic_capsule);
             default:
-                return Icon.createWithResource(context, R.drawable.ic_notification_default);
+                return Icon.createWithResource(context, R.drawable.ic_reminder_status_active);
         }
     }
 
     private Icon getConfirmIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_check);
+        return Icon.createWithResource(context, R.drawable.ic_reminder_status_done);
     }
 
     private Icon getSnoozeIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_snooze);
+        return Icon.createWithResource(context, R.drawable.ic_reminder_status_snoozed);
     }
 
 }

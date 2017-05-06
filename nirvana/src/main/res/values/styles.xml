@@ -4,63 +4,67 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="android:textViewStyle">@style/VerticallyCentralText</item>
+        <item name="android:textViewStyle">@style/VerticallyCenteredTextView</item>
         <item name="android:buttonStyle">@style/Button</item>
     </style>
 
-    <style name="VerticallyCentralText" parent="android:Widget.DeviceDefault.TextView">
+    <style name="VerticallyCenteredTextView" parent="android:Widget.DeviceDefault.TextView">
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="VerticallyCentralText.Primary">
+    <style name="VerticallyCenteredTextView.Primary">
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="VerticallyCentralText.Primary.Accent">
+    <style name="VerticallyCenteredTextView.Primary.Accent">
         <item name="android:textColor">?android:attr/colorAccent</item>
     </style>
 
-    <style name="VerticallyCentralText.Secondary">
+    <style name="VerticallyCenteredTextView.Secondary">
         <item name="android:textAppearance">?android:attr/textAppearanceListItemSecondary</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="VerticallyCentralText.MedicationCard" />
+    <style name="VerticallyCenteredTextView.MedicationCard" />
 
-    <style name="VerticallyCentralText.MedicationCard.Primary">
+    <style name="VerticallyCenteredTextView.MedicationCard.Primary">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="VerticallyCentralText.MedicationCard.Secondary">
+    <style name="VerticallyCenteredTextView.MedicationCard.Secondary">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="VerticallyCentralText.ReminderCard" />
+    <style name="VerticallyCenteredTextView.ReminderCard" />
 
-    <style name="VerticallyCentralText.ReminderCard.Primary">
+    <style name="VerticallyCenteredTextView.ReminderCard.Primary">
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="VerticallyCentralText.ReminderCard.Secondary">
+    <style name="VerticallyCenteredTextView.ReminderCard.Secondary">
         <item name="android:textAppearance">?android:attr/textAppearanceListItemSecondary</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="VerticallyCentralText.ReminderCard.Time">
+    <style name="VerticallyCenteredTextView.ReminderCard.Time">
         <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@color/cardview_light_background</item>
     </style>
 
-    <style name="VerticallyCentralText.ReminderCard.Primary.Note">
+    <style name="VerticallyCenteredTextView.ReminderCard.Primary.Note">
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="VerticallyCentralText.ReminderCard.Time.Note">
+    <style name="VerticallyCenteredTextView.ReminderCard.Time.Note">
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/cardview_dark_background</item>
     </style>
 
     <style name="Button" parent="android:Widget.Material.Button.Borderless.Colored" />
@@ -79,7 +83,7 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="FloatingActionButton" parent="Widget.Design.FloatingActionButton" >
+    <style name="FloatingActionButton" parent="Widget.Design.FloatingActionButton">
         <item name="android:tint">@android:color/white</item>
         <item name="android:layout_marginEnd">@dimen/fab_margin</item>
         <item name="android:layout_marginBottom">@dimen/fab_margin</item>
@@ -105,7 +109,7 @@
     </style>
 
     <style name="ImageView.CheckMark">
-        <item name="android:tint">@color/ic_check</item>
+        <item name="android:tint">@color/primary</item>
     </style>
 
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">

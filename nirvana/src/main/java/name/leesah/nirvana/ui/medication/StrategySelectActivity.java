@@ -1,6 +1,5 @@
 package name.leesah.nirvana.ui.medication;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,16 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import name.leesah.nirvana.R;
+import name.leesah.nirvana.utils.ListViewHeightOptimizer;
 
-import static android.view.View.MeasureSpec.UNSPECIFIED;
-import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -33,6 +30,7 @@ import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDe
 import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDetailsFragment.EXTRA_FRAGMENTS;
 import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDetailsFragment.EXTRA_SELECTED;
 import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDetailsFragment.EXTRA_TITLE;
+import static name.leesah.nirvana.utils.ListViewHeightOptimizer.*;
 
 /**
  * Created by sah on 2017-04-17.
@@ -136,7 +134,8 @@ public class StrategySelectActivity extends AppCompatActivity {
 
         private boolean onSelectStrategy(String choice) {
             if (!listViewOptimized)
-                optimizeListViewHeight();
+                optimize((ListView) getView().findViewById(android.R.id.list));
+            listViewOptimized = true;
 
             getFragmentManager().beginTransaction()
                     .replace(R.id.details_container, fragments.get(asList(entries).indexOf(choice)))
@@ -152,28 +151,6 @@ public class StrategySelectActivity extends AppCompatActivity {
                 throw new IllegalStateException(format(US, "Error instantiating StrategyEditFragment: [%s].", fragmentClass), e);
             }
             return fragment;
-        }
-
-        private void optimizeListViewHeight() {
-            ListView listView = (ListView) getView().findViewById(android.R.id.list);
-
-            int totalHeight = 0;
-            ListAdapter adapter = listView.getAdapter();
-            int childCount = adapter.getCount();
-            for (int i = 0; i < childCount; i++) {
-                View row = adapter.getView(i, null, listView);
-                row.measure(makeMeasureSpec(0, UNSPECIFIED), makeMeasureSpec(0, UNSPECIFIED));
-                totalHeight += row.getMeasuredHeight();
-            }
-
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            totalHeight += (listView.getDividerHeight() * (childCount - 1));
-
-            params.height = totalHeight;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-
-            listViewOptimized = true;
         }
 
     }

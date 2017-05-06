@@ -25,7 +25,6 @@
                 android:layout_weight="20">
 
                 <View
-                    android:id="@+id/view_vertical_line"
                     android:layout_width="8dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -37,20 +36,18 @@
 
                     <TextView
                         android:id="@+id/time"
-                        style="@style/VerticallyCentralText.ReminderCard.Time"
+                        style="@style/VerticallyCenteredTextView.ReminderCard.Time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/cardview_light_background"
-                        android:padding="8dp"
-                        android:text="21:00"
-                        android:textAlignment="center" />
+                        tools:text="21:00" />
+
                 </FrameLayout>
 
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="80"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
@@ -66,7 +63,9 @@
                     tools:listitem="@layout/reminder_card_inner_list_item" />
 
             </FrameLayout>
+
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
 
 </FrameLayout>

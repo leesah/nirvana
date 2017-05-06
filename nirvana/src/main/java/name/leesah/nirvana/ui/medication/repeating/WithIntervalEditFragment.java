@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;
 

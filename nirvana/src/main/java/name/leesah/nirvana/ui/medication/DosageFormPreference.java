@@ -8,10 +8,10 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.DosageForm;
 
 import static java.util.Arrays.asList;
-import static name.leesah.nirvana.model.medication.DosageForm.*;
 import static name.leesah.nirvana.model.medication.DosageForm.CAPSULE;
 import static name.leesah.nirvana.model.medication.DosageForm.INJECTION;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
+import static name.leesah.nirvana.model.medication.DosageForm.valueOf;
 
 /**
  * Created by sah on 2017-05-05.

@@ -19,7 +19,6 @@ import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.ui.preference.CheckableDialogPreference;
 import name.leesah.nirvana.ui.widget.PeriodPicker;
 
-import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 /**

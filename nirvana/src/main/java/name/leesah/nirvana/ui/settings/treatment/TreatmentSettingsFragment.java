@@ -1,8 +1,6 @@
 package name.leesah.nirvana.ui.settings.treatment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 
@@ -10,7 +8,6 @@ import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
-import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 import name.leesah.nirvana.ui.preference.DatePreference;
 import name.leesah.nirvana.ui.preference.PeriodPreference;
 

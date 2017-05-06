@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import org.joda.time.LocalDate;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;

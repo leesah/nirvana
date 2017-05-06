@@ -48,14 +48,14 @@
 
                     <TextView
                         android:id="@+id/name"
-                        style="@style/VerticallyCentralText.MedicationCard.Primary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Primary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:text="Valaciclovir" />
 
                     <TextView
-                        style="@style/VerticallyCentralText.MedicationCard.Secondary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -63,7 +63,7 @@
 
                     <TextView
                         android:id="@+id/manufacturer"
-                        style="@style/VerticallyCentralText.MedicationCard.Secondary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -80,14 +80,14 @@
 
                     <TextView
                         android:id="@+id/repeating"
-                        style="@style/VerticallyCentralText.MedicationCard.Secondary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:text="Everyday" />
 
                     <TextView
-                        style="@style/VerticallyCentralText.MedicationCard.Secondary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -95,7 +95,7 @@
 
                     <TextView
                         android:id="@+id/reminding"
-                        style="@style/VerticallyCentralText.MedicationCard.Secondary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
@@ -113,7 +113,7 @@
 
                     <TextView
                         android:id="@+id/suggestions"
-                        style="@style/VerticallyCentralText.MedicationCard.Secondary"
+                        style="@style/VerticallyCenteredTextView.MedicationCard.Secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"

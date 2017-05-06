@@ -5,15 +5,13 @@ import android.support.annotation.NonNull;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormat;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.dateFallsInDuration;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
-import static org.joda.time.format.DateTimeFormat.*;
+import static org.joda.time.format.DateTimeFormat.fullDate;
 
 /**
  * Created by sah on 2016-12-03.

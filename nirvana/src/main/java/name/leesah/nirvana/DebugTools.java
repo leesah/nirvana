@@ -1,5 +1,6 @@
 package name.leesah.nirvana;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -20,6 +21,9 @@ import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.reminder.TimedDosage;
+import name.leesah.nirvana.ui.main.MainActivity;
+import name.leesah.nirvana.ui.reminder.AlarmSecretary;
+import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.SchedulingService;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -35,6 +39,9 @@ public class DebugTools {
         Pharmacist.reset();
         Nurse.reset();
         Therapist.reset();
+        AlarmSecretary.setInstance(null);
+        NotificationSecretary.setInstance(null);
+        ((Activity)context).getFragmentManager().popBackStackImmediate();
     }
 
     public static void injectTestData(Context context) {
@@ -42,11 +49,10 @@ public class DebugTools {
 
         Pharmacist pharmacist = Pharmacist.getInstance(context);
 
-        DateTimeFormatter formatterHHmm = DateTimeFormat.forPattern("HH:mm");
-        LocalTime NineAM = LocalTime.parse("09:00", formatterHHmm);
-        LocalTime NinePM = LocalTime.parse("21:00", formatterHHmm);
+        LocalTime NineAM = new LocalTime(0).withHourOfDay(9);
+        LocalTime NinePM = new LocalTime(0).withHourOfDay(21);
 
-        Medication valaciclovir = new Medication.Builder().
+        pharmacist.save(new Medication.Builder().
                 setName("Valaciclovir").
                 setManufacturer("Teva").
                 setForm(DosageForm.TABLET).
@@ -54,9 +60,9 @@ public class DebugTools {
                 setRepeatingStrategy(new Everyday()).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
-                build();
+                build());
 
-        Medication folacin = new Medication.Builder().
+        pharmacist.save(new Medication.Builder().
                 setName("Folacin").
                 setManufacturer("folsyra").
                 setForm(DosageForm.TABLET).
@@ -64,9 +70,9 @@ public class DebugTools {
                 setRepeatingStrategy(new Everyday()).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
-                build();
+                build());
 
-        Medication manTabletter = new Medication.Builder().
+        pharmacist.save(new Medication.Builder().
                 setName("Man tabletter").
                 setManufacturer("apoteket").
                 setForm(DosageForm.TABLET).
@@ -74,15 +80,11 @@ public class DebugTools {
                 setRepeatingStrategy(new Everyday()).
                 setStartingStrategy(new Immediately()).
                 setStoppingStrategy(new Never()).
-                build();
-
-        pharmacist.save(valaciclovir);
-        pharmacist.save(folacin);
-        pharmacist.save(manTabletter);
-        Toast.makeText(context, "Medications injected.", Toast.LENGTH_SHORT).show();
+                build());
 
         SchedulingService.inCaseNotRunToday(context);
-        Toast.makeText(context, "SchedulingService triggered.", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(context, "Done.", Toast.LENGTH_SHORT).show();
 
     }
 }

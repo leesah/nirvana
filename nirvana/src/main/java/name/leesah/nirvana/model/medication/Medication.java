@@ -6,7 +6,6 @@ import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
@@ -15,8 +14,6 @@ import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 
 import static android.content.Context.MODE_PRIVATE;
-import static java.lang.String.format;
-import static java.util.Locale.US;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;

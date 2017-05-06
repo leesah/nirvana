@@ -2,18 +2,12 @@ package name.leesah.nirvana.ui.medication;
 
 
 import android.content.Context;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.joda.time.LocalDate;
-
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.model.medication.starting.Delayed;
-import name.leesah.nirvana.model.medication.starting.ExactDate;
-import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.medication.stopping.InPeriod;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;

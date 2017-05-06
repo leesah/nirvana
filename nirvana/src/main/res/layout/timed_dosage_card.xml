@@ -30,12 +30,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="10"
                     android:scaleType="center"
-                    app:srcCompat="@drawable/ic_notification_default" />
+                    app:srcCompat="@drawable/ic_reminder_status_active" />
             </FrameLayout>
 
             <TextView
                 android:id="@+id/text"
-                style="@style/VerticallyCentralText.Primary"
+                style="@style/VerticallyCenteredTextView.Primary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="80"

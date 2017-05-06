@@ -2,6 +2,7 @@ package name.leesah.nirvana.ui.reminder;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +15,7 @@ import name.leesah.nirvana.utils.IdentityHelper;
 
 import static java.util.Collections.singleton;
 import static java.util.Locale.US;
+import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 
 /**
@@ -75,7 +77,7 @@ public class RemindingService extends IntentService {
             return;
         }
 
-        int notificationId = IdentityHelper.uniqueInt();
+        int notificationId = uniqueInt();
         Notification notification = new NotificationBuilder(this, reminder).build();
         notificationSecretary.display(notificationId, notification);
         nurse.setNotified(reminderId, notificationId);
@@ -123,6 +125,20 @@ public class RemindingService extends IntentService {
 
     private void showToast(final String text) {
         new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show());
+    }
+
+    public static void confirmReminder(Context context, int reminderId) {
+        context.startService(
+                new Intent(context, RemindingService.class)
+                .setAction(ACTION_CONFIRM_REMINDER)
+                .putExtra(EXTRA_REMINDER_ID, reminderId));
+    }
+
+    public static void snoozeReminder(Context context, int reminderId) {
+        context.startService(
+                new Intent(context, RemindingService.class)
+                .setAction(ACTION_SNOOZE_REMINDER)
+                .putExtra(EXTRA_REMINDER_ID, reminderId));
     }
 
 }

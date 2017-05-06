@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -23,9 +24,8 @@
                 android:layout_weight="20">
 
                 <View
-                    android:id="@+id/view_vertical_line"
                     android:layout_width="8dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:background="@color/accent" />
 
@@ -35,31 +35,31 @@
 
                     <TextView
                         android:id="@+id/time"
-                        style="@style/VerticallyCentralText.ReminderCard.Time.Note"
+                        style="@style/VerticallyCenteredTextView.ReminderCard.Time.Note"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/cardview_dark_background"
-                        android:padding="8dp"
-                        android:text="21:00"
-                        android:textAlignment="center" />
+                        tools:text="21:00" />
+
                 </FrameLayout>
 
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="80"
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart">
 
-                <TextView
-                    android:id="@+id/note"
-                    style="@style/VerticallyCentralText.ReminderCard.Primary.Note"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="No more intakes today." />
+            <TextView
+                android:id="@+id/note"
+                style="@style/VerticallyCenteredTextView.ReminderCard.Primary.Note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:text="No more intakes today." />
+
             </FrameLayout>
 
         </LinearLayout>

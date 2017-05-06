@@ -11,9 +11,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.main.MainActivity"
-            android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +31,18 @@
 
         <activity
             android:name=".ui.reminder.ReminderDetailsActivity"
-            android:label="@string/reminder_details" />
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="name.leesah.nirvana.ui.main.MainActivity" />
+        </activity>
 
         <activity android:name=".ui.medication.StrategySelectActivity" />
 
         <service
             android:name=".ui.reminder.SchedulingService"
             android:exported="false" />
+
         <service
             android:name=".ui.reminder.RemindingService"
             android:exported="false" />
@@ -51,6 +56,7 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
+
     </application>
 
 </manifest>

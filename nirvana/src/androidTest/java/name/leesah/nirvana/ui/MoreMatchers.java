@@ -9,15 +9,13 @@ import org.hamcrest.Description;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.joda.time.LocalDate;
 
 import java.util.Set;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.ui.main.ReminderCardData;
-import name.leesah.nirvana.ui.main.ReminderCardData.TiledReminders;
+import name.leesah.nirvana.ui.main.TiledRemindersCard;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -92,19 +90,19 @@ public class MoreMatchers {
         };
     }
 
-    public static FeatureMatcher<TiledReminders, Set<Integer>> ofReminderWithId(final int id) {
-        return new FeatureMatcher<TiledReminders, Set<Integer>>(hasItem(id), "card with tiled reminders the ids of which being", "reminder id") {
+    public static FeatureMatcher<TiledRemindersCard.Data, Set<Integer>> ofReminderWithId(final int id) {
+        return new FeatureMatcher<TiledRemindersCard.Data, Set<Integer>>(hasItem(id), "card with tiled reminders the ids of which being", "reminder id") {
             @Override
-            protected Set<Integer> featureValueOf(TiledReminders actual) {
+            protected Set<Integer> featureValueOf(TiledRemindersCard.Data actual) {
                 return actual.reminders.stream().map(Reminder::getId).collect(toSet());
             }
         };
     }
 
-    public static FeatureMatcher<TiledReminders, Set<Integer>> ofReminderWithMedicationId(final int medicationId) {
-        return new FeatureMatcher<TiledReminders, Set<Integer>>(hasItem(medicationId), "card with tiled reminders the medication ids of which being", "medication id in reminder") {
+    public static FeatureMatcher<TiledRemindersCard.Data, Set<Integer>> ofReminderWithMedicationId(final int medicationId) {
+        return new FeatureMatcher<TiledRemindersCard.Data, Set<Integer>>(hasItem(medicationId), "card with tiled reminders the medication ids of which being", "medication id in reminder") {
             @Override
-            protected Set<Integer> featureValueOf(TiledReminders actual) {
+            protected Set<Integer> featureValueOf(TiledRemindersCard.Data actual) {
                 return actual.reminders.stream().map(Reminder::getMedicationId).collect(toSet());
             }
         };

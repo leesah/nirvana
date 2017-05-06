@@ -2,7 +2,6 @@ package name.leesah.nirvana.ui.main;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,8 @@ import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.*;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
 
 public class MainActivity extends AppCompatActivity {
 
