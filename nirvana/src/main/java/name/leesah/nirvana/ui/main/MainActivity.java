@@ -1,8 +1,8 @@
 package name.leesah.nirvana.ui.main;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +10,8 @@ import android.view.MenuItem;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
 import name.leesah.nirvana.ui.settings.SettingsFragment;
-import name.leesah.nirvana.ui.settings.treatment.TreatmentRepeatingModelSelectFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;

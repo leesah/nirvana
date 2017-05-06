@@ -108,4 +108,9 @@
         <item name="android:tint">@color/ic_check</item>
     </style>
 
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="itemIconTint">@color/navigation_item</item>
+        <item name="itemTextColor">@color/navigation_item</item>
+    </style>
+
 </resources>
