@@ -3,10 +3,16 @@ package name.leesah.nirvana.ui.main;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -23,6 +29,7 @@ import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
+import static java.util.stream.Collectors.toList;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
 
@@ -31,40 +38,74 @@ import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_
  */
 public class MedicationListFragment extends Fragment {
 
-    private final ArrayList<Medication> medications = new ArrayList<>();
-    private ArrayAdapter<Medication> arrayAdapter;
+    private final List<Medication> medications = new ArrayList<>();
+    private ArrayAdapter<Medication> adapter;
+    private SwipeRefreshLayout refreshLayout;
 
-    public MedicationListFragment() {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        if (medications.isEmpty()) medications.addAll(buildMedicationList());
+        if (adapter == null) adapter = new MedicationArrayAdapter(getContext(), medications);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.medication_list, container, false);
+        return inflater.inflate(R.layout.medication_list, container, false);
+    }
 
-        arrayAdapter = new MedicationArrayAdapter(getContext(), medications);
-
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ListView listView = (ListView) view.findViewById(R.id.medications);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(adapter);
         listView.setEmptyView(view.findViewById(R.id.empty_view));
 
         FloatingActionButton addButton = (FloatingActionButton) view.findViewById(R.id.add_button);
         addButton.setOnClickListener(v -> MedicationActivity.add(getActivity()));
 
-        reloadMedications();
-        return view;
+        refreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh));
+        refreshLayout.setOnRefreshListener(() -> new RefreshTask().execute());
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.refresh_button, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh_button:
+                refreshLayout.setRefreshing(true);
+                new RefreshTask().execute();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Arrays.asList(REQUEST_CODE_ADD_MEDICATION, REQUEST_CODE_EDIT_MEDICATION).contains(requestCode)
                 && resultCode == RESULT_OK)
-            reloadMedications();
+            new RefreshTask().execute();
     }
 
-    private void reloadMedications() {
+    @NonNull
+    private List<Medication> buildMedicationList() {
+        return Pharmacist.getInstance(getContext()).getMedications().stream()
+                .sorted().collect(toList());
+    }
+
+    private void onRefreshDone(List<Medication> result) {
         medications.clear();
-        medications.addAll(Pharmacist.getInstance(getContext()).getMedications());
-        arrayAdapter.notifyDataSetChanged();
+        medications.addAll(result);
+        if (adapter != null) adapter.notifyDataSetChanged();
+        refreshLayout.setRefreshing(false);
     }
 
     /**
@@ -87,4 +128,20 @@ public class MedicationListFragment extends Fragment {
         }
 
     }
+
+    private class RefreshTask extends AsyncTask<Void, Void, List<Medication>> {
+        @Override
+        protected List<Medication> doInBackground(Void... voids) {
+            return buildMedicationList();
+        }
+
+        @Override
+        protected void onPostExecute(List<Medication> result) {
+            super.onPostExecute(result);
+            onRefreshDone(result);
+        }
+
+    }
+
+
 }

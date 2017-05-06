@@ -3,6 +3,10 @@ package name.leesah.nirvana.model.medication;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
@@ -21,7 +25,7 @@ import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
  * Created by sah on 2016-12-07.
  */
 @Keep
-public class Medication {
+public class Medication implements Comparable<Medication>{
 
     private final int id;
     private final String name;
@@ -77,7 +81,21 @@ public class Medication {
 
     @Override
     public String toString() {
-        return format(US, "Medication {id=[%d], n=[%s]}", id, name);
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
+                .add("manufacturer", manufacturer)
+                .add("form", form)
+                .add("repeatingStrategy", repeatingStrategy)
+                .add("remindingStrategy", remindingStrategy)
+                .add("startingStrategy", startingStrategy)
+                .add("stoppingStrategy", stoppingStrategy)
+                .toString();
+    }
+
+    @Override
+    public int compareTo(@NonNull Medication that) {
+        return this.getName().compareTo(that.name);
     }
 
     /**

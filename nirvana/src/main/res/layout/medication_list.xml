@@ -1,42 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="@string/no_medication"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="191dp"
-            tools:layout_editor_absoluteY="255dp" />
-    </android.support.constraint.ConstraintLayout>
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/medications"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:divider="@null"
-            tools:listitem="@layout/medication_card" />
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/medications"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                tools:listitem="@layout/medication_card" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_button"
@@ -46,6 +33,19 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_medication" />
     </RelativeLayout>
 
 </FrameLayout>

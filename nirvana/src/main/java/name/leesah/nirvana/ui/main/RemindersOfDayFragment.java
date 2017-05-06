@@ -1,12 +1,16 @@
 package name.leesah.nirvana.ui.main;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.joda.time.Minutes;
@@ -23,7 +27,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static name.leesah.nirvana.ui.main.ReminderCardData.NoteAmongReminders;
+import static name.leesah.nirvana.ui.main.ReminderCardData.Note;
 import static name.leesah.nirvana.ui.main.ReminderCardData.ReminderCardArrayAdapter;
 import static name.leesah.nirvana.ui.main.ReminderCardData.TiledReminders;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -41,27 +45,56 @@ public class RemindersOfDayFragment extends Fragment {
             .appendMinutes()
             .appendSuffix(" minute", " minutes")
             .toFormatter();
-    private List<ReminderCardData> cards = new ArrayList<>();
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.reminder_list, container, false);
-
-        ArrayAdapter arrayAdapter = new ReminderCardArrayAdapter(getContext(), cards);
-
-        ListView listView = (ListView) view.findViewById(R.id.reminders);
-        listView.setAdapter(arrayAdapter);
-        listView.setEmptyView(view.findViewById(R.id.empty_view));
-
-        return view;
-    }
+    private final List<ReminderCardData> cards = new ArrayList<>();
+    private ReminderCardArrayAdapter adapter;
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
-        cards = Nurse.getInstance(getContext())
+        if (cards.isEmpty()) cards.addAll(buildCards());
+        if (adapter == null) adapter = new ReminderCardArrayAdapter(getContext(), cards);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.reminder_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        ListView listView = (ListView) view.findViewById(R.id.reminders);
+        listView.setAdapter(adapter);
+        listView.setEmptyView(view.findViewById(R.id.empty_view));
+
+        refreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh));
+        refreshLayout.setOnRefreshListener(() -> new RefreshTask().execute());
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.refresh_button, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh_button:
+                refreshLayout.setRefreshing(true);
+                new RefreshTask().execute();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private List<ReminderCardData> buildCards() {
+        List<ReminderCardData> cards = Nurse.getInstance(getContext())
                 .getReminders(today()).stream()
                 .collect(groupingBy(Reminder::getTime, toList()))
                 .entrySet().stream()
@@ -70,12 +103,39 @@ public class RemindersOfDayFragment extends Fragment {
                 .collect(toList());
 
         if (!cards.isEmpty()) {
-            int indexOfFirstCardInTheFuture = (int) cards.stream().filter(card -> card.time.isBefore(now())).count();
-            if (indexOfFirstCardInTheFuture == cards.size())
-                cards.add(new NoteAmongReminders(now(), getString(R.string.note_no_more_intakes)));
-            else
-                cards.add(indexOfFirstCardInTheFuture, new NoteAmongReminders(now(), getString(R.string.note_time_until_next_intake, new Period(now(), cards.get(indexOfFirstCardInTheFuture).time).plus(Minutes.ONE).toString(PERIOD_FORMATTER))));
+            int index = (int) cards.stream()
+                    .filter(card -> card.time.isBefore(now()))
+                    .count();
+
+            cards.add(index, new Note(now(), index == cards.size() ?
+                    getString(R.string.note_no_more_intakes) :
+                    getString(R.string.note_time_until_next_intake,
+                            new Period(now(), cards.get(index).time).plus(Minutes.ONE)
+                                    .toString(PERIOD_FORMATTER))));
         }
+
+        return cards;
+    }
+
+    private void onRefreshDone(List<ReminderCardData> result) {
+        cards.clear();
+        cards.addAll(result);
+        if (adapter != null) adapter.notifyDataSetChanged();
+        refreshLayout.setRefreshing(false);
+    }
+
+    private class RefreshTask extends AsyncTask<Void, Void, List<ReminderCardData>> {
+        @Override
+        protected List<ReminderCardData> doInBackground(Void... voids) {
+            return buildCards();
+        }
+
+        @Override
+        protected void onPostExecute(List<ReminderCardData> result) {
+            super.onPostExecute(result);
+            onRefreshDone(result);
+        }
+
     }
 
 }

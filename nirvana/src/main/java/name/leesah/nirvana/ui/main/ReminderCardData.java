@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.joda.time.LocalTime;
 
+import java.util.Comparator;
 import java.util.List;
 
 import name.leesah.nirvana.R;
@@ -25,6 +26,7 @@ import name.leesah.nirvana.utils.DateTimeHelper;
 
 import static android.view.View.MeasureSpec.UNSPECIFIED;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
+import static java.util.Comparator.comparing;
 import static name.leesah.nirvana.model.reminder.Reminder.State.DONE;
 
 /**
@@ -53,18 +55,18 @@ public class ReminderCardData implements Comparable<ReminderCardData> {
 
     }
 
-    public static class NoteAmongReminders extends ReminderCardData {
+    public static class Note extends ReminderCardData {
         private final String title;
 
-        public NoteAmongReminders(LocalTime time, String title) {
+        public Note(LocalTime time, String title) {
             super(time);
             this.title = title;
         }
     }
 
     static class ReminderCardArrayAdapter extends ArrayAdapter<ReminderCardData> {
-        private static final int REMINDERS_CARD_LAYOUT = R.layout.reminder_card;
-        private static final int NOTE_CARD_LAYOUT = R.layout.reminder_card_note;
+
+        private final Pharmacist pharmacist = Pharmacist.getInstance(getContext());
 
         public ReminderCardArrayAdapter(Context context, List<ReminderCardData> objects) {
             super(context, 0, objects);
@@ -80,17 +82,18 @@ public class ReminderCardData implements Comparable<ReminderCardData> {
             assert item != null;
 
             if (item instanceof TiledReminders) {
-                view = inflater.inflate(REMINDERS_CARD_LAYOUT, parent, false);
+                view = inflater.inflate(R.layout.reminder_card, parent, false);
 
                 TiledReminders card = (TiledReminders) item;
                 ListView remindersListView = (ListView) view.findViewById(R.id.tiled_reminders);
+                card.reminders.sort(comparing(reminder -> pharmacist.getMedication(reminder.getMedicationId()).getName()));
                 remindersListView.setAdapter(new ReminderArrayAdapter(getContext(), card.reminders));
                 refreshListViewHeight(remindersListView);
 
             } else {
-                view = inflater.inflate(NOTE_CARD_LAYOUT, parent, false);
+                view = inflater.inflate(R.layout.reminder_card_note, parent, false);
 
-                NoteAmongReminders card = (NoteAmongReminders) item;
+                Note card = (Note) item;
                 TextView textViewTitle = (TextView) view.findViewById(R.id.note);
                 textViewTitle.setText(card.title);
             }
