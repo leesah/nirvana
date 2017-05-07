@@ -18,7 +18,7 @@ import static org.robolectric.RuntimeEnvironment.application;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = {24, 25})
-public class ReminderFactoryTest {
+public class ReminderMakerTest {
     private Context context;
 
     @Before

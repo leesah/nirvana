@@ -1,15 +1,12 @@
 package name.leesah.nirvana.ui.main;
 
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.R;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
@@ -18,23 +15,17 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.oneRandomReminderOnThisDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomMedicationsSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomRemindersOnThisDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
 
 /**
  * Created by sah on 2017-05-06.
@@ -46,12 +37,12 @@ public class MainActivityRefreshButtonTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @Test
@@ -69,7 +60,7 @@ public class MainActivityRefreshButtonTest {
     public void refreshReminderListBySwipingDown() throws Exception {
         onView(withId(R.id.navigation_reminders)).perform(click());
 
-        oneRandomReminderOnThisDaySilVousPlait(getTargetContext(), today(), true);
+        randomReminder(getTargetContext(), today(), true);
         onView(withId(R.id.reminders)).check(matches(not(withAdaptedData(anything()))));
 
         onView(withId(R.id.content_main)).perform(swipeDown());
@@ -92,7 +83,7 @@ public class MainActivityRefreshButtonTest {
     public void refreshReminderListFromMenu() throws Exception {
         onView(withId(R.id.navigation_reminders)).perform(click());
 
-        oneRandomReminderOnThisDaySilVousPlait(getTargetContext(), today(), true);
+        randomReminder(getTargetContext(), today(), true);
         onView(withId(R.id.reminders)).check(matches(not(withAdaptedData(anything()))));
 
         openActionBarOverflowOrOptionsMenu(getTargetContext());

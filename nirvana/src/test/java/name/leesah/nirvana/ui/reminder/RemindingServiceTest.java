@@ -18,7 +18,7 @@ import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.model.reminder.ReminderFactory;
+import name.leesah.nirvana.model.reminder.ReminderMaker;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -65,13 +65,13 @@ public class RemindingServiceTest {
 
         severalRandomMedicationsSilVousPlait(
                 context, 128, true);
-        reminders = new ReminderFactory(context).createReminders(today());
+        reminders = new ReminderMaker(context).createReminders(today());
         nurse.add(reminders);
     }
 
     @After
     public void tearDown() throws Exception {
-        LanternGenie.everythingVanishesSilVousPlait(application.getApplicationContext());
+        LanternGenie.everythingVanishes(application.getApplicationContext());
     }
 
     @Test

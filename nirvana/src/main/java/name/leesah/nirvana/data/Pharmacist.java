@@ -29,10 +29,11 @@ public class Pharmacist extends DataHolder {
     private static Pharmacist instance;
     private ArrayMap<Integer, Medication> cache;
 
-    Pharmacist(Context context) {
+    public Pharmacist(Context context) {
         super(context);
     }
 
+    @Deprecated
     public static Pharmacist getInstance(Context context) {
         if (instance == null)
             instance = new Pharmacist(context);
@@ -98,6 +99,7 @@ public class Pharmacist extends DataHolder {
         return cache.values().stream().map(Medication::toString).collect(Collectors.joining(", "));
     }
 
+    @Deprecated
     public static void reset() {
         instance = null;
     }

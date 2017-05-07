@@ -3,19 +3,15 @@ package name.leesah.nirvana.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
-import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
@@ -23,15 +19,11 @@ import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 
 import static android.preference.PreferenceManager.*;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.PickerActions.setDate;
-import static android.support.test.espresso.matcher.PreferenceMatchers.isEnabled;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withSummary;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withSummaryText;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -62,7 +54,7 @@ public class MainActivityTreatmentSettingsTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @Before
@@ -78,7 +70,7 @@ public class MainActivityTreatmentSettingsTest {
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(context);
+        everythingVanishes(context);
     }
 
     @Test

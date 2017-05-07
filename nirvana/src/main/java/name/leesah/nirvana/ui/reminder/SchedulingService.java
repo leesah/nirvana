@@ -2,54 +2,50 @@ package name.leesah.nirvana.ui.reminder;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Minutes;
 
-import java.util.Set;
+import java.util.function.Predicate;
 
-import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.model.reminder.ReminderFactory;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
+import static android.app.PendingIntent.*;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
-import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
+import static java.lang.String.format;
+import static java.util.Locale.US;
+import static name.leesah.nirvana.PhoneBook.alarmSecretary;
+import static name.leesah.nirvana.PhoneBook.nurse;
+import static name.leesah.nirvana.PhoneBook.reminderFactory;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static name.leesah.nirvana.utils.DateTimeHelper.todayAsString;
-import static org.joda.time.Days.ONE;
+import static org.joda.time.DateTime.*;
+import static org.joda.time.format.DateTimeFormat.longDateTime;
 
-
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * TODO: Customize class - update intent actions and extra parameters.
- */
 public class SchedulingService extends IntentService {
 
     private static final String TAG = SchedulingService.class.getSimpleName();
 
-    private static final String ACTION_SET_REMINDERS = "name.leesah.nirvana.ui.action.SET_REMINDERS";
-    private static final int REQUEST_CODE_SET_REMINDERS = 1000;
-    private static final String PREF_KEY_MIDNIGHT_ALARM_LATEST_RUN = "SCHEDULING SERVICE LATEST RUN";
+    static final String ACTION_SET_REMINDERS = "name.leesah.nirvana:action:SET_REMINDERS";
+    static final int REQUEST_CODE = 1000;
+    public static final Minutes GAP = Minutes.THREE;
 
     public SchedulingService() {
-        super("SchedulingService");
+        super(SchedulingService.class.getSimpleName());
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            Log.d(TAG, String.format("Awakened for [%s].", action));
+            Log.d(TAG, format("Awakened for [%s].", action));
 
             switch (action) {
                 case ACTION_SET_REMINDERS:
@@ -62,47 +58,47 @@ public class SchedulingService extends IntentService {
     }
 
     private static void handleMidnightAlarm(Context context) {
-        LocalDate today = today();
-        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
-
-        String latestRun = sharedPreference.getString(PREF_KEY_MIDNIGHT_ALARM_LATEST_RUN, null);
-        if (latestRun != null && toDate(latestRun).equals(today)) {
-            Log.d(TAG, "SchedulingService was run today.");
-            return;
-        }
-
-        setReminderAlarms(context, today);
-        setMidnightAlarm(context, today);
-
-        sharedPreference.edit().putString(PREF_KEY_MIDNIGHT_ALARM_LATEST_RUN, todayAsString()).apply();
+        setMidnightAlarm(context);
+        setReminderAlarms(context);
     }
 
-    private static void setReminderAlarms(Context context, LocalDate date) {
-        Set<Reminder> reminders = new ReminderFactory(context).createReminders(date);
-        reminders.forEach(reminder -> AlarmSecretary.getInstance(context).setAlarm(reminder));
-        Nurse.getInstance(context).add(reminders);
+    static void setMidnightAlarm(Context context) {
 
-        Log.i(TAG, String.format("%d reminders(s) set.", reminders.size()));
-        reminders.forEach(reminder -> Log.d(TAG, reminder.toString()));
+        DateTime trigger = today().plus(Days.ONE).toDateTimeAtStartOfDay().plus(GAP);
+        context.getSystemService(AlarmManager.class).set(
+                RTC_WAKEUP,
+                trigger.getMillis(),
+                getService(context, REQUEST_CODE, buildMidnightIntent(context), FLAG_UPDATE_CURRENT));
+
+        Log.d(TAG, format("SchedulingService registered to run at [%s].", longDateTime().print(trigger)));
     }
 
-    private static void setMidnightAlarm(Context context, LocalDate date) {
-        LocalDate tomorrow = date.plus(ONE);
-        Log.i(TAG, String.format("Registering SchedulingService for a run on [%s].", toText(tomorrow)));
-
-        long millis = tomorrow.toDateTimeAtStartOfDay().getMillis();
-        PendingIntent pendingIntent = buildPendingIntentForMidnightAlarm(context);
-        ((AlarmManager) context.getSystemService(ALARM_SERVICE)).set(RTC_WAKEUP, millis, pendingIntent);
-        Log.d(TAG, String.format("SchedulingService registered to run at [%d] millis.", millis));
+    static void setReminderAlarms(Context context) {
+        reminderFactory(context).createReminders(today()).stream()
+                .filter(isSeenByNurse(context).negate().and(isUpcoming(now())))
+                .forEach(reminder -> {
+                    alarmSecretary(context).setAlarm(reminder);
+                    nurse(context).add(reminder);
+                    Log.d(TAG, format(US, "Scheduled new reminder: %s", reminder));
+                });
     }
 
-    private static PendingIntent buildPendingIntentForMidnightAlarm(Context context) {
-        Intent intent = new Intent(context, SchedulingService.class).setAction(ACTION_SET_REMINDERS);
-        return PendingIntent.getService(context, REQUEST_CODE_SET_REMINDERS, intent, FLAG_UPDATE_CURRENT);
+    private static Intent buildMidnightIntent(Context context) {
+        return new Intent(context, SchedulingService.class).setAction(ACTION_SET_REMINDERS);
+    }
+
+    @NonNull
+    private static Predicate<Reminder> isSeenByNurse(Context context) {
+        return reminder -> nurse(context).hasReminder(reminder);
+    }
+
+    @NonNull
+    private static Predicate<Reminder> isUpcoming(DateTime now) {
+        return reminder -> now.minus(GAP).minus(Minutes.ONE).isBefore(reminder.getPlannedTime());
     }
 
     public static void inCaseNotRunToday(Context context) {
-        handleMidnightAlarm(context);
+        context.startService(buildMidnightIntent(context));
     }
 
     public static class BootCompletedReceiver extends BroadcastReceiver {
@@ -111,7 +107,7 @@ public class SchedulingService extends IntentService {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, String.format("Received broadcast: [%s].", intent.getAction()));
+            Log.d(TAG, format("Received broadcast: [%s].", intent.getAction()));
 
             if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
                 inCaseNotRunToday(context);

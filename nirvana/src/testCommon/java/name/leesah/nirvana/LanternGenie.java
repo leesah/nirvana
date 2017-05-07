@@ -33,6 +33,7 @@ import name.leesah.nirvana.model.medication.stopping.InPeriod;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
+import name.leesah.nirvana.model.reminder.ReminderMaker;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
@@ -65,7 +66,7 @@ public class LanternGenie {
     public static final Period YEAR = days(365);
     private static final Random random = new Random();
 
-    public static void everythingVanishesSilVousPlait(Context context) {
+    public static void everythingVanishes(Context context) {
         getDefaultSharedPreferences(context)
                 .edit().clear().apply();
         context.getSharedPreferences(MedicationActivity.STAGING, MODE_PRIVATE)
@@ -75,7 +76,32 @@ public class LanternGenie {
         Therapist.reset();
         AlarmSecretary.setInstance(null);
         NotificationSecretary.setInstance(null);
+        PhoneBook.fireEveryone();
         cancelAllAlarms(context);
+    }
+
+    public static void hire(Nurse nurse) {
+        PhoneBook.hireNurse(nurse);
+    }
+
+    public static void hire(Pharmacist pharmacist) {
+        PhoneBook.hirePharmacist(pharmacist);
+    }
+
+    public static void hire(Therapist therapist) {
+        PhoneBook.hireTherapist(therapist);
+    }
+
+    public static void hire(ReminderMaker reminderMaker) {
+        PhoneBook.hireReminderMaker(reminderMaker);
+    }
+
+    public static void hire(AlarmSecretary alarmSecretary) {
+        PhoneBook.hireAlarmSecretary(alarmSecretary);
+    }
+
+    public static void hire(NotificationSecretary notificationSecretary) {
+        PhoneBook.hireNotificationSecretary(notificationSecretary);
     }
 
     public static void cycledTreatmentDisabledSilVousPlait(Context context) {
@@ -102,20 +128,20 @@ public class LanternGenie {
         Pharmacist.reset();
     }
 
-    public static Set<Reminder> severalRandomRemindersOnThisDaySilVousPlait(Context context, int count, LocalDate date, boolean handToNurse) {
-        return range(0, count).mapToObj(i -> oneRandomReminderOnThisDaySilVousPlait(context, date, handToNurse)).collect(toSet());
+    public static Set<Reminder> severalRandomReminders(Context context, int count, LocalDate date, boolean handToNurse) {
+        return range(0, count).mapToObj(i -> randomReminder(context, date, handToNurse)).collect(toSet());
     }
 
     public static Set<Reminder> severalRandomRemindersOnAnyDaysSilVousPlait(Context context, int count, boolean handToNurse) {
-        return range(0, count).mapToObj(i -> oneRandomReminderOnThisDaySilVousPlait(context, randomDaySilVousPlait(), handToNurse)).collect(toSet());
+        return range(0, count).mapToObj(i -> randomReminder(context, randomDaySilVousPlait(), handToNurse)).collect(toSet());
     }
 
-    public static Reminder oneRandomReminderOnAnyDaySilVousPlait(Context context, boolean handToNurse) {
-        return oneRandomReminderOnThisDaySilVousPlait(context, randomDaySilVousPlait(), handToNurse);
+    public static Reminder randomReminderOnAnyDay(Context context, boolean handToNurse) {
+        return randomReminder(context, randomDaySilVousPlait(), handToNurse);
     }
 
     @NonNull
-    public static Reminder oneRandomReminderOnThisDaySilVousPlait(Context context, LocalDate date, boolean handToNurse) {
+    public static Reminder randomReminder(Context context, LocalDate date, boolean handToNurse) {
         Reminder reminder = new Reminder(date, now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
         if (handToNurse)
             handThisToNurseSilVousPlait(context, reminder);

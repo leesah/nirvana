@@ -24,6 +24,7 @@ public class AlarmSecretary {
     private static AlarmSecretary instance;
     private final Context context;
 
+    @Deprecated
     public static AlarmSecretary getInstance(Context context) {
         if (instance == null)
             instance = new AlarmSecretary(context);
@@ -31,11 +32,12 @@ public class AlarmSecretary {
         return instance;
     }
 
-    private AlarmSecretary(Context context) {
+    public AlarmSecretary(Context context) {
         this.context = context;
         alarmManager = context.getSystemService(AlarmManager.class);
     }
 
+    @Deprecated
     public static void setInstance(AlarmSecretary instance) {
         AlarmSecretary.instance = instance;
     }

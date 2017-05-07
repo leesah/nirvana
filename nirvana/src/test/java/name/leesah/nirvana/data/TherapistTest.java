@@ -21,6 +21,7 @@ import name.leesah.nirvana.model.treatment.recurring.NTimes;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -72,7 +73,7 @@ public class TherapistTest {
         preferences.edit().putBoolean(resources.getString(R.string.pref_key_treatment_enabled), true).apply();
         preferences.edit().putString(resources.getString(R.string.pref_key_treatment_first_day), toText(dayZero)).apply();
         preferences.edit().putString(resources.getString(R.string.pref_key_treatment_cycle_length), toText(length)).apply();
-        preferences.edit().putString(resources.getString(R.string.pref_key_treatment_recurring), resources.getString(R.string.treatment_recurring_n_times)).apply();
+        preferences.edit().putString(resources.getString(R.string.pref_key_treatment_recurring), getGson().toJson(new NTimes(4))).apply();
         preferences.edit().putInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), n).apply();
 
         assertThat(therapist.isCycleSupportEnabled(), is(true));
@@ -81,7 +82,7 @@ public class TherapistTest {
         RecurringTreatment treatment = (RecurringTreatment) therapist.getTreatment();
         assertThat(treatment.getDayZero(), equalTo(dayZero));
         assertThat(treatment.getLength(), equalTo(length));
-        assertThat(treatment.getRecurringStrategy(), instanceOf(NTimes.class));
+        assertThat(treatment.getRecurringStrategy(), equalTo(new NTimes(4)));
 
         NTimes strategy = (NTimes) treatment.getRecurringStrategy();
         assertThat(strategy.getN(), equalTo(n));

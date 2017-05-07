@@ -16,7 +16,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
 
 /**
@@ -30,12 +30,12 @@ public class MainActivityNavigationBarDefaultPositionTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @Test

@@ -19,8 +19,8 @@ import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.oneRandomReminderOnAnyDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
+import static name.leesah.nirvana.LanternGenie.randomReminderOnAnyDay;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -50,12 +50,12 @@ public class AlarmSecretaryTest {
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(application.getApplicationContext());
+        everythingVanishes(application.getApplicationContext());
     }
 
     @Test
     public void setAlarm() throws Exception {
-        Reminder reminder = oneRandomReminderOnAnyDaySilVousPlait(context, true);
+        Reminder reminder = randomReminderOnAnyDay(context, true);
 
         AlarmSecretary.getInstance(context).setAlarm(reminder);
 

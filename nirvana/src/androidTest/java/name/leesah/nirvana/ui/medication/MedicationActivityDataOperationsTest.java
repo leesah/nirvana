@@ -37,7 +37,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVi
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.LanternGenie.cycledTreatmentDisabledSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.model.PeriodUnit.MONTH;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.ui.MoreActions.setChecked;
@@ -63,7 +63,7 @@ public abstract class MedicationActivityDataOperationsTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @Test

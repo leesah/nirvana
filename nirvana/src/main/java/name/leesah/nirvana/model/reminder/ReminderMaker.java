@@ -17,12 +17,16 @@ import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
-public class ReminderFactory {
-    private static final String TAG = ReminderFactory.class.getSimpleName();
+public class ReminderMaker {
+    private static final String TAG = ReminderMaker.class.getSimpleName();
+
+    private static ReminderMaker instance;
+
     private Therapist therapist;
     private Pharmacist pharmacist;
 
-    public ReminderFactory(Context context) {
+    @Deprecated
+    public ReminderMaker(Context context) {
         therapist = Therapist.getInstance(context);
         pharmacist = Pharmacist.getInstance(context);
     }
@@ -48,4 +52,16 @@ public class ReminderFactory {
                 medication.getRemindingStrategy().getRemindersThroughDay(medication, date) : emptySet();
     }
 
+    @Deprecated
+    public static ReminderMaker getInstance(Context context) {
+        if (instance == null)
+            instance = new ReminderMaker(context);
+
+        return instance;
+    }
+
+    @Deprecated
+    public static void setInstance(ReminderMaker instance) {
+        ReminderMaker.instance = instance;
+    }
 }

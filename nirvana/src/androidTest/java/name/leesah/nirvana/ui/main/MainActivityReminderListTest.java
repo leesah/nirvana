@@ -17,13 +17,12 @@ import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomRemindersOnThisDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.severalRandomReminders;
 import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithId;
 import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithMedicationId;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
@@ -45,10 +44,10 @@ public class MainActivityReminderListTest {
 
     @Before
     public void setUp() throws Exception {
-        remindersToday = (severalRandomRemindersOnThisDaySilVousPlait(
+        remindersToday = (severalRandomReminders(
                 getTargetContext(), randomPositiveIntSilVousPlait(8),
                 today(), true));
-        remindersYesterday = (severalRandomRemindersOnThisDaySilVousPlait(
+        remindersYesterday = (severalRandomReminders(
                 getTargetContext(), randomPositiveIntSilVousPlait(8),
                 today().minusDays(1), true));
 
@@ -57,7 +56,7 @@ public class MainActivityReminderListTest {
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @Test

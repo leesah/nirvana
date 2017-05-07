@@ -37,10 +37,11 @@ public class Therapist extends DataHolder {
     private boolean cycleSupportEnabled;
     private boolean cacheUpToDate = false;
 
-    private Therapist(Context context) {
+    public Therapist(Context context) {
         super(context);
     }
 
+    @Deprecated
     public static Therapist getInstance(Context context) {
         if (instance == null)
             instance = new Therapist(context);
@@ -108,7 +109,7 @@ public class Therapist extends DataHolder {
         return getGson().fromJson(text, RecurringStrategy.class);
     }
 
-
+    @Deprecated
     public static void reset() {
         Therapist.instance = null;
     }

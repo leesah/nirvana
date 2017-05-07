@@ -17,7 +17,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.stream.IntStream.range;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.ui.MoreActions.setChecked;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -33,7 +33,7 @@ public abstract class MedicationActivityBackwardsNavigationTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
     @Test

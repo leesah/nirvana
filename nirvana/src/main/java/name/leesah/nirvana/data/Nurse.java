@@ -1,9 +1,12 @@
 package name.leesah.nirvana.data;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 import android.util.Log;
+
+import com.google.common.collect.MoreCollectors;
 
 import org.joda.time.LocalDate;
 
@@ -11,12 +14,15 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
 import static java.util.Locale.US;
+import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
@@ -32,21 +38,26 @@ public class Nurse extends DataHolder {
     private static Nurse instance;
     private Map<Integer, Reminder> cache = null;
 
-    private Nurse(Context context) {
+    public Nurse(Context context) {
         super(context);
     }
 
+    @Deprecated
     public static Nurse getInstance(Context context) {
         if (instance == null)
             instance = new Nurse(context);
         return instance;
     }
 
-    public void add(Set<Reminder> reminders) {
-        replace(reminder -> false, reminders);
+    public void add(Reminder reminder) {
+        replace(reminder::equals, singleton(reminder));
     }
 
-    public Set<Reminder> replace(Function<Reminder, Boolean> isDeprecated, Set<Reminder> reminders) {
+    public void add(Set<Reminder> reminders) {
+        replace(reminders::contains, reminders);
+    }
+
+    public Set<Reminder> replace(Predicate<Reminder> isDeprecated, Set<Reminder> reminders) {
         loadCacheIfNeeded();
 
         synchronized (this) {
@@ -62,12 +73,12 @@ public class Nurse extends DataHolder {
         }
     }
 
-    private Set<Reminder> deprecate(Function<Reminder, Boolean> isDeprecated) {
+    private Set<Reminder> deprecate(Predicate<Reminder> isDeprecated) {
         if (cache.isEmpty())
             return emptySet();
 
         Map<Boolean, Set<Reminder>> partitioned = cache.values().stream()
-                .collect(Collectors.partitioningBy(isDeprecated::apply, Collectors.toSet()));
+                .collect(partitioningBy(isDeprecated, toSet()));
 
         Set<Reminder> deprecated = partitioned.get(true);
         if (deprecated != null && !deprecated.isEmpty()) {
@@ -164,6 +175,12 @@ public class Nurse extends DataHolder {
             return new Reminder(cached);
     }
 
+    @Nullable
+    public boolean hasReminder(@NonNull Reminder target) {
+        loadCacheIfNeeded();
+        return cache.containsValue(target);
+    }
+
     private void onReminderMissing(int id) {
         Log.wtf(TAG, String.format(US, "Reminder not found by ID [%d].", id));
         Log.d(TAG, String.format(US, "Reminder(s) in cache: [%s]", itemsInCache()));
@@ -172,10 +189,12 @@ public class Nurse extends DataHolder {
     private String itemsInCache() {
         return cache.isEmpty() ? "EMPTY" : cache.values().stream()
                 .map(Reminder::toString)
-                .collect(Collectors.joining(", "));
+                .collect(joining(", "));
     }
 
+    @Deprecated
     public static void reset() {
         instance = null;
     }
+
 }

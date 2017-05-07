@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
@@ -31,6 +32,8 @@ public class DateTimeTypeAdapterFactory implements TypeAdapterFactory {
             return (TypeAdapter<T>) new LocalDateAdapter();
         else if (type.getRawType() == Period.class)
             return (TypeAdapter<T>) new PeriodAdapter();
+        else if (type.getRawType() == DateTime.class)
+            return (TypeAdapter<T>) new DateTimeAdapter();
         else
             return null;
     }
@@ -71,6 +74,19 @@ public class DateTimeTypeAdapterFactory implements TypeAdapterFactory {
         @Override
         public Period read(JsonReader in) throws IOException {
             return toPeriod(in.nextString());
+        }
+    }
+
+    private class DateTimeAdapter extends TypeAdapter<DateTime> {
+        @Override
+        public void write(JsonWriter out, DateTime value) throws IOException {
+            if (value == null) out.nullValue();
+            else out.value(value.getMillis());
+        }
+
+        @Override
+        public DateTime read(JsonReader in) throws IOException {
+            return new DateTime(in.nextLong());
         }
     }
 

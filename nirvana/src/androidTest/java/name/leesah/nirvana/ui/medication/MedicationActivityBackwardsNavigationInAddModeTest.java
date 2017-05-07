@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;
 
 /**
@@ -21,7 +21,7 @@ public class MedicationActivityBackwardsNavigationInAddModeTest extends Medicati
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(getTargetContext());
+        everythingVanishes(getTargetContext());
     }
 
 }

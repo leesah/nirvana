@@ -24,7 +24,7 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
-import static name.leesah.nirvana.LanternGenie.everythingVanishesSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
 import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
 import static name.leesah.nirvana.LanternGenie.severalRandomRemindersOnAnyDaysSilVousPlait;
@@ -59,7 +59,7 @@ public class NurseTest {
 
     @After
     public void tearDown() throws Exception {
-        everythingVanishesSilVousPlait(context);
+        everythingVanishes(context);
     }
 
     @Test

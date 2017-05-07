@@ -13,7 +13,7 @@ import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.model.reminder.ReminderFactory;
+import name.leesah.nirvana.model.reminder.ReminderMaker;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 
@@ -72,7 +72,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
         Medication medication = new Medication.Builder().buildFromStaged(getContext());
         pharmacist.save(medication);
 
-        Set<Reminder> reminders = new ReminderFactory(getContext()).createReminders(medication, today());
+        Set<Reminder> reminders = new ReminderMaker(getContext()).createReminders(medication, today());
         Set<Reminder> deprecated = nurse.replace(
                 reminder -> reminder.getMedicationId() == medication.getId() &&
                         reminder.getDate().equals(today()),

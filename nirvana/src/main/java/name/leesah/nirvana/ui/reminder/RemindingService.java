@@ -40,7 +40,7 @@ public class RemindingService extends IntentService {
     private Nurse nurse;
 
     public RemindingService() {
-        super("RemindingService");
+        super(RemindingService.class.getSimpleName());
     }
 
     @Override
