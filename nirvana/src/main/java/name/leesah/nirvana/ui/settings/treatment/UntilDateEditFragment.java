@@ -54,7 +54,7 @@ public class UntilDateEditFragment extends StrategyEditFragment.Recurring {
                         null));
         if (date == null)
             throw new IllegalStateException(format(
-                    US,"SharedPreference [%s] == [null]",
+                    US, "SharedPreference [%s] == [null]",
                     getContext().getString(R.string.pref_key_treatment_recurring_until_date)));
 
         return new UntilDate(date);

@@ -25,7 +25,7 @@ public class StoppingStrategyPreference extends CheckableDialogPreference {
 
     public StoppingStrategyPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        periodPicker = new PeriodPicker(context, attrs);
+        setDialogLayoutResource(R.layout.dialog_period_picker);
     }
 
     @Override
@@ -42,15 +42,13 @@ public class StoppingStrategyPreference extends CheckableDialogPreference {
     }
 
     @Override
-    protected View onCreateDialogView() {
-        return periodPicker;
-    }
-
-    @Override
     protected void onBindDialogView(View view) {
+        periodPicker = (PeriodPicker) view.findViewById(R.id.period_picker);
+
         StoppingStrategy strategy = delegate.getValue();
         if (strategy instanceof InPeriod)
             periodPicker.setPeriod(((InPeriod) strategy).getPeriod());
+
         super.onBindDialogView(view);
     }
 

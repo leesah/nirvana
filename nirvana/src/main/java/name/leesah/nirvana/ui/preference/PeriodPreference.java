@@ -6,7 +6,6 @@ import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import org.joda.time.Period;
@@ -16,7 +15,6 @@ import org.joda.time.format.PeriodFormatterBuilder;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.ui.widget.PeriodPicker;
 
-import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
@@ -79,20 +77,14 @@ public class PeriodPreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         value = restorePersistedValue ? getPersistedString(null) : defaultValue.toString();
-        if (value != null) {
-            persistString(value);
-            setSummary(value);
-        }
+        persistString(value);
+        setSummary(value);
     }
 
     @Override
     public void setSummary(CharSequence original) {
-        try {
-            super.setSummary(periodFormatter.print(toPeriod(original)));
-        } catch (IllegalArgumentException e) {
-            Log.wtf(TAG, format("Unexpected format: [%s].", original));
-            super.setSummary(original);
-        }
+        super.setSummary(original == null ?
+                null : periodFormatter.print(toPeriod(original)));
     }
 
     public void setPeriod(@NonNull Period period) {

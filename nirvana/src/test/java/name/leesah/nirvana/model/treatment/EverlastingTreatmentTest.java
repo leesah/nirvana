@@ -50,8 +50,8 @@ public class EverlastingTreatmentTest {
     @Test
     public void getStartDateOf() throws Exception {
         assertThat(
-        new EverlastingTreatment(dayZero)
-                .getStartDateOf(randomDaySilVousPlait()),
+                new EverlastingTreatment(dayZero)
+                        .getStartDateOf(randomDaySilVousPlait()),
                 equalTo(dayZero));
     }
 

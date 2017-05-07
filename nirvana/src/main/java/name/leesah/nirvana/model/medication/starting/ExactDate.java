@@ -11,6 +11,7 @@ import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.format.DateTimeFormat.fullDate;
+import static org.joda.time.format.DateTimeFormat.longDate;
 
 /**
  * Created by sah on 2017-04-28.
@@ -48,7 +49,7 @@ public class ExactDate implements StartingStrategy {
                 context.getString(R.string.today) :
                 startDate.equals(today().plusDays(1)) ?
                         context.getString(R.string.tomorrow) :
-                        fullDate().print(startDate);
+                        longDate().print(startDate);
     }
 
     public LocalDate getStartDate() {

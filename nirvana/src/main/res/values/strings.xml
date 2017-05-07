@@ -36,6 +36,10 @@
     <string name="pref_title_treatment_first_day">First Day</string>
     <string name="pref_title_treatment_cycle_length">Length of cycle</string>
     <string name="prefcat_title_treatment_recurring">Recurring</string>
+    <string name="pref_title_treatment_recurring_n_times">Number of recurring times</string>
+    <string name="pref_summary_treatment_recurring_n_times">Including the first cycle</string>
+    <string name="pref_title_treatment_recurring_until_date">Last day</string>
+    <string name="pref_summary_treatment_recurring_until_date">Treatment recurs until the date (exclusively)</string>
     <string name="pref_title_treatment_recurring">Treatment cycle recurring</string>
 
     <!-- Medication -->

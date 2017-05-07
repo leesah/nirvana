@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.LanternGenie.YEAR;

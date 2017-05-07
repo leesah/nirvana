@@ -64,11 +64,10 @@ public class MoreMatchers {
                 withId(android.R.id.switch_widget),
                 withParent(allOf(
                         withId(android.R.id.widget_frame),
-                        withParent(withChild(allOf(
-                                withId(R.id.text_frame),
+                        withParent(withChild(
                                 withChild(allOf(
                                         withId(android.R.id.title),
-                                        withText(prefTitleResId))))))))
+                                        withText(prefTitleResId)))))))
         );
     }
 

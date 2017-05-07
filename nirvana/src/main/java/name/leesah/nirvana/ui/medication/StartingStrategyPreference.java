@@ -34,9 +34,10 @@ public class StartingStrategyPreference extends CheckableDialogPreference {
 
     public StartingStrategyPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        periodPicker = new PeriodPicker(context, attrs);
-        datePicker = new DatePicker(context, attrs);
         relativeMode = Therapist.getInstance(context).isCycleSupportEnabled();
+
+        setDialogLayoutResource(relativeMode ?
+                R.layout.dialog_period_picker : R.layout.dialog_date_picker);
     }
 
     @Override
@@ -50,34 +51,32 @@ public class StartingStrategyPreference extends CheckableDialogPreference {
         setChecked(strategy != null &&
                 !(strategy instanceof Immediately) &&
                 !(strategy.equals(new ExactDate(today()))));
+
         if (!isReasonableStrategy(strategy))
             delegate.setValue(getDefaultStrategy());
-    }
-
-    @Override
-    protected View onCreateDialogView() {
-        return relativeMode ? periodPicker : datePicker;
     }
 
     @Override
     protected void onBindDialogView(View view) {
         StartingStrategy strategy = delegate.getValue();
 
-        if (relativeMode && strategy instanceof Delayed)
-            updatePeriodPickerView((Delayed) strategy);
-        else if (strategy instanceof ExactDate)
-            updateDatePickerView((ExactDate) strategy);
+        if (relativeMode) {
+            periodPicker = (PeriodPicker) view.findViewById(R.id.period_picker);
+            if (relativeMode && strategy instanceof Delayed)
+                periodPicker.setPeriod(((Delayed) strategy).getPeriod());
+
+        } else {
+            datePicker = (DatePicker) view.findViewById(R.id.date_picker);
+            if (strategy instanceof ExactDate) {
+                LocalDate startDate = ((ExactDate) strategy).getStartDate();
+                datePicker.updateDate(
+                        startDate.getYear(),
+                        startDate.getMonthOfYear() - 1,
+                        startDate.getDayOfMonth());
+            }
+        }
 
         super.onBindDialogView(view);
-    }
-
-    private void updatePeriodPickerView(Delayed delayed) {
-        periodPicker.setPeriod(delayed.getPeriod());
-    }
-
-    private void updateDatePickerView(ExactDate strategy) {
-        LocalDate date = strategy.getStartDate();
-        datePicker.updateDate(date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth());
     }
 
     @Override

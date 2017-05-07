@@ -109,12 +109,12 @@ public abstract class MedicationActivityDataOperationsTest {
                 }
             }
             { // Add 1 dose at 9:15
-                onView(allOf(withId(R.id.numberPicker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
+                onView(allOf(withId(R.id.number_picker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
                 onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE))).perform(setTime(9, 15));
                 onView(allOf(withText(R.string.add), withEffectiveVisibility(VISIBLE))).perform(click());
             }
             { // Add 1 dose at 21:15
-                onView(allOf(withId(R.id.numberPicker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
+                onView(allOf(withId(R.id.number_picker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
                 onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE))).perform(setTime(21, 15));
                 onView(allOf(withText(R.string.add), withEffectiveVisibility(VISIBLE))).perform(click());
             }

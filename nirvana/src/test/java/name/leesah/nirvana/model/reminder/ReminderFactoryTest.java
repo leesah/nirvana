@@ -26,12 +26,14 @@ public class ReminderFactoryTest {
         context = application.getApplicationContext();
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void createReminders() throws Exception {
         // TODO: figure out how to test this
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void createRemindersForCertainMedication() throws Exception {
     }
 

@@ -15,8 +15,8 @@ import name.leesah.nirvana.ui.widget.TimedDosageCard;
 
 import static java.lang.String.format;
 import static java.util.Locale.US;
-import static name.leesah.nirvana.model.reminder.Reminder.State.DONE;
-import static name.leesah.nirvana.ui.reminder.RemindingService.*;
+import static name.leesah.nirvana.ui.reminder.RemindingService.confirmReminder;
+import static name.leesah.nirvana.ui.reminder.RemindingService.snoozeReminder;
 
 public class ReminderDetailsActivity extends AppCompatActivity {
 

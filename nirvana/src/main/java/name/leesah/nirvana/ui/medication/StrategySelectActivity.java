@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.utils.ListViewHeightOptimizer;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -30,7 +29,7 @@ import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDe
 import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDetailsFragment.EXTRA_FRAGMENTS;
 import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDetailsFragment.EXTRA_SELECTED;
 import static name.leesah.nirvana.ui.medication.StrategySelectActivity.ListAndDetailsFragment.EXTRA_TITLE;
-import static name.leesah.nirvana.utils.ListViewHeightOptimizer.*;
+import static name.leesah.nirvana.utils.ListViewHeightOptimizer.optimize;
 
 /**
  * Created by sah on 2017-04-17.

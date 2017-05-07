@@ -107,13 +107,13 @@ public class RemindersOfDayFragment extends Fragment {
 
         if (!cards.isEmpty()) {
             int index = (int) cards.stream()
-                    .filter(card -> ((Data)card).time.isBefore(now()))
+                    .filter(card -> ((Data) card).time.isBefore(now()))
                     .count();
 
             cards.add(index, new Note(now(), index == cards.size() ?
                     getString(R.string.note_no_more_intakes) :
                     getString(R.string.note_time_until_next_intake,
-                            new Period(now(), ((Data)cards.get(index)).time).plus(Minutes.ONE)
+                            new Period(now(), ((Data) cards.get(index)).time).plus(Minutes.ONE)
                                     .toString(PERIOD_FORMATTER))));
         }
 
@@ -157,7 +157,7 @@ public class RemindersOfDayFragment extends Fragment {
                 return view;
             } else {
                 View view = inflater.inflate(R.layout.reminder_card_note, parent, false);
-                Note note = (Note)card;
+                Note note = (Note) card;
                 ((TextView) view.findViewById(R.id.time)).setText(toText(note.time));
                 ((TextView) view.findViewById(R.id.note)).setText(note.title);
                 return view;

@@ -6,6 +6,8 @@ import android.support.annotation.IntRange;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
+import java.util.Objects;
+
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.utils.DateTimeHelper;
 
@@ -37,6 +39,19 @@ public class NTimes implements RecurringStrategy {
             return true;
         else
             return hasNext(i + 1, dayZero.plus(length), length, date);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NTimes nTimes = (NTimes) o;
+        return n == nTimes.n;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(n);
     }
 
     @Override

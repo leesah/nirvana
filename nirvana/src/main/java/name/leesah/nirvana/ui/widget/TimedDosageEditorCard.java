@@ -50,7 +50,7 @@ public class TimedDosageEditorCard extends FrameLayout {
 
     private void init(int mode) {
         inflate(getContext(), R.layout.timed_dosage_editor_card, this);
-        numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+        numberPicker = (NumberPicker) findViewById(R.id.number_picker);
         timePicker = (TimePicker) findViewById(R.id.timePicker);
         saveButton = (Button) findViewById(R.id.save_button);
         deleteButton = (Button) findViewById(R.id.delete_button);

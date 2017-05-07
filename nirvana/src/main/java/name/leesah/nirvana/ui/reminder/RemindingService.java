@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.utils.IdentityHelper;
 
 import static java.util.Collections.singleton;
 import static java.util.Locale.US;
@@ -130,15 +129,15 @@ public class RemindingService extends IntentService {
     public static void confirmReminder(Context context, int reminderId) {
         context.startService(
                 new Intent(context, RemindingService.class)
-                .setAction(ACTION_CONFIRM_REMINDER)
-                .putExtra(EXTRA_REMINDER_ID, reminderId));
+                        .setAction(ACTION_CONFIRM_REMINDER)
+                        .putExtra(EXTRA_REMINDER_ID, reminderId));
     }
 
     public static void snoozeReminder(Context context, int reminderId) {
         context.startService(
                 new Intent(context, RemindingService.class)
-                .setAction(ACTION_SNOOZE_REMINDER)
-                .putExtra(EXTRA_REMINDER_ID, reminderId));
+                        .setAction(ACTION_SNOOZE_REMINDER)
+                        .putExtra(EXTRA_REMINDER_ID, reminderId));
     }
 
 }

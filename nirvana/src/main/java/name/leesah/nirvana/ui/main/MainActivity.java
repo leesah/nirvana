@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_ADD_MEDICATION ||
                 requestCode == REQUEST_CODE_EDIT_MEDICATION &&
-                resultCode == RESULT_OK)
+                        resultCode == RESULT_OK)
             clearBackStackAndReplaceFragment(medicationListFragment);
     }
 

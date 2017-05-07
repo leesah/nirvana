@@ -50,7 +50,7 @@ public class NTimesEditFragment extends StrategyEditFragment.Recurring {
                 0);
         if (n == 0)
             throw new IllegalStateException(format(
-                    US,"SharedPreference [%s] == [0]",
+                    US, "SharedPreference [%s] == [0]",
                     getContext().getString(R.string.pref_key_treatment_recurring_n_times)));
 
         return new NTimes(n);

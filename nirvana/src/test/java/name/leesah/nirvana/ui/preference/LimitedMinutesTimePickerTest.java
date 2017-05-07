@@ -16,7 +16,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * Created by sah on 2017-04-16.
  */
 public class LimitedMinutesTimePickerTest {
-    @Mock private Context context;
+    @Mock
+    private Context context;
     private LimitedMinutesTimePicker picker;
 
     @Before
