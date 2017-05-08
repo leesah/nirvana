@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -19,6 +20,9 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.*;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static android.content.Intent.ACTION_BOOT_COMPLETED;
+import static android.widget.Toast.*;
+import static android.widget.Toast.makeText;
 import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.alarmSecretary;
@@ -103,15 +107,10 @@ public class SchedulingService extends IntentService {
 
     public static class BootCompletedReceiver extends BroadcastReceiver {
 
-        private static final String TAG = BootCompletedReceiver.class.getSimpleName();
-
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, format("Received broadcast: [%s].", intent.getAction()));
-
-            if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+            if (intent.getAction().equals(ACTION_BOOT_COMPLETED))
                 inCaseNotRunToday(context);
-            }
         }
     }
 }
