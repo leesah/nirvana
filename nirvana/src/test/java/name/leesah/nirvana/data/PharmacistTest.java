@@ -23,8 +23,8 @@ import name.leesah.nirvana.model.medication.Medication;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
-import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomMedicationsSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomMedication;
+import static name.leesah.nirvana.LanternGenie.randomMedications;
 import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -82,7 +82,7 @@ public class PharmacistTest {
     public void addMedication() throws Exception {
         Set<Medication> givenExisting = givenExistingMedications(randomNonZeroInteger());
 
-        Medication newMedication = oneRandomMedicationSilVousPlait(context, false);
+        Medication newMedication = randomMedication(context, false);
         pharmacist.save(newMedication);
 
         Set<Medication> all = new ArraySet<>();
@@ -107,7 +107,7 @@ public class PharmacistTest {
     }
 
     private Set<Medication> givenExistingMedications(int n) {
-        return severalRandomMedicationsSilVousPlait(context, n, true);
+        return randomMedications(context, true);
     }
 
     private void thenMedicationsAreTheSameAsGiven(Set<Medication> expected, Set<Medication> actual) {

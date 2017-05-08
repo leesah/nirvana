@@ -21,7 +21,6 @@ import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.ui.MoreActions.setChecked;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 /**
  * Created by sah on 2017-04-20.

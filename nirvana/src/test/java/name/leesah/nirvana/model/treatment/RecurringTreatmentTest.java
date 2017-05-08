@@ -7,12 +7,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitAfter;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitBefore;
-import static name.leesah.nirvana.LanternGenie.randomPeriodSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDayAfter;
+import static name.leesah.nirvana.LanternGenie.randomDayBefore;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -32,15 +32,15 @@ public class RecurringTreatmentTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        dayZero = randomDaySilVousPlait();
-        length = randomPeriodSilVousPlait();
+        dayZero = randomDay();
+        length = LanternGenie.randomPeriod();
     }
 
     @Test
     public void contains() throws Exception {
         assertThat(
                 new RecurringTreatment(dayZero, length, recurring)
-                        .contains(randomDaySilVousPlaitAfter(dayZero)),
+                        .contains(randomDayAfter(dayZero)),
                 is(true));
     }
 
@@ -56,7 +56,7 @@ public class RecurringTreatmentTest {
     public void containsNot() throws Exception {
         assertThat(
                 new EverlastingTreatment(dayZero)
-                        .contains(randomDaySilVousPlaitBefore(dayZero)),
+                        .contains(randomDayBefore(dayZero)),
                 is(false));
     }
 
@@ -64,7 +64,7 @@ public class RecurringTreatmentTest {
     public void getStartDateOf() throws Exception {
         assertThat(
                 new EverlastingTreatment(dayZero)
-                        .getStartDateOf(randomDaySilVousPlait()),
+                        .getStartDateOf(randomDay()),
                 equalTo(dayZero));
     }
 

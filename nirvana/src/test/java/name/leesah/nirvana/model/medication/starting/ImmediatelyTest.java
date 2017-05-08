@@ -7,8 +7,8 @@ import org.mockito.Mock;
 
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitBefore;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDayBefore;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.same;
@@ -27,8 +27,8 @@ public class ImmediatelyTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        date = randomDaySilVousPlait();
-        startDate = randomDaySilVousPlaitBefore(date);
+        date = randomDay();
+        startDate = randomDayBefore(date);
     }
 
     @Test

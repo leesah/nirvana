@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 
 import org.joda.time.LocalDate;
 
+import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.starting.Delayed;
@@ -19,6 +20,7 @@ import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.ui.preference.CheckableDialogPreference;
 import name.leesah.nirvana.ui.widget.PeriodPicker;
 
+import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 /**
@@ -34,7 +36,7 @@ public class StartingStrategyPreference extends CheckableDialogPreference {
 
     public StartingStrategyPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        relativeMode = Therapist.getInstance(context).isCycleSupportEnabled();
+        relativeMode = therapist(context).isCycleSupportEnabled();
 
         setDialogLayoutResource(relativeMode ?
                 R.layout.dialog_period_picker : R.layout.dialog_date_picker);

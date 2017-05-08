@@ -120,8 +120,9 @@ public class Medication implements Comparable<Medication>{
                     remindingStrategy, repeatingStrategy, startingStrategy, stoppingStrategy);
         }
 
-        private void setId(int id) {
+        private Builder setId(int id) {
             this.id = id;
+            return this;
         }
 
         public Builder setName(String name) {
@@ -159,25 +160,26 @@ public class Medication implements Comparable<Medication>{
             return this;
         }
 
-        public Medication buildFromStaged(Context context) {
+        public static Medication buildFromStaged(Context context) {
             SharedPreferences sp = context.getSharedPreferences(STAGING, MODE_PRIVATE);
-            setId(
-                    sp.getInt(context.getString(R.string.pref_key_medication_id), uniqueInt()));
-            setName(
-                    sp.getString(context.getString(R.string.pref_key_medication_name), null));
-            setManufacturer(
-                    sp.getString(context.getString(R.string.pref_key_medication_manufacturer), null));
-            setForm(DosageForm.valueOf(
-                    sp.getString(context.getString(R.string.pref_key_medication_dosage_form), null)));
-            setRemindingStrategy(getGson().fromJson(
-                    sp.getString(context.getString(R.string.pref_key_medication_reminding), null), RemindingStrategy.class));
-            setRepeatingStrategy(getGson().fromJson(
-                    sp.getString(context.getString(R.string.pref_key_medication_repeating), null), RepeatingStrategy.class));
-            setStartingStrategy(getGson().fromJson(
-                    sp.getString(context.getString(R.string.pref_key_medication_starting), null), StartingStrategy.class));
-            setStoppingStrategy(getGson().fromJson(
-                    sp.getString(context.getString(R.string.pref_key_medication_stopping), null), StoppingStrategy.class));
-            return build();
+            return new Builder()
+                    .setId(
+                            sp.getInt(context.getString(R.string.pref_key_medication_id), uniqueInt()))
+                    .setName(
+                            sp.getString(context.getString(R.string.pref_key_medication_name), null))
+                    .setManufacturer(
+                            sp.getString(context.getString(R.string.pref_key_medication_manufacturer), null))
+                    .setForm(DosageForm.valueOf(
+                            sp.getString(context.getString(R.string.pref_key_medication_dosage_form), null)))
+                    .setRemindingStrategy(getGson().fromJson(
+                            sp.getString(context.getString(R.string.pref_key_medication_reminding), null), RemindingStrategy.class))
+                    .setRepeatingStrategy(getGson().fromJson(
+                            sp.getString(context.getString(R.string.pref_key_medication_repeating), null), RepeatingStrategy.class))
+                    .setStartingStrategy(getGson().fromJson(
+                            sp.getString(context.getString(R.string.pref_key_medication_starting), null), StartingStrategy.class))
+                    .setStoppingStrategy(getGson().fromJson(
+                            sp.getString(context.getString(R.string.pref_key_medication_stopping), null), StoppingStrategy.class))
+                    .build();
         }
 
     }

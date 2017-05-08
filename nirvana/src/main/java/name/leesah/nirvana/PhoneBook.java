@@ -40,7 +40,7 @@ public class PhoneBook {
         return therapist;
     }
 
-    public static ReminderMaker reminderFactory(Context context) {
+    public static ReminderMaker reminderMaker(Context context) {
         if (reminderMaker == null)
             reminderMaker = new ReminderMaker(context);
         return reminderMaker;

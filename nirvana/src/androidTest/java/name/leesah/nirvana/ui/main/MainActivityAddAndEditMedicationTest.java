@@ -21,7 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomMedication;
 
 /**
  * Created by sah on 2017-04-20.
@@ -35,7 +35,7 @@ public class MainActivityAddAndEditMedicationTest {
 
     @Before
     public void setUp() throws Exception {
-        existing = oneRandomMedicationSilVousPlait(getTargetContext(), true);
+        existing = randomMedication(getTargetContext(), true);
         mActivityRule.launchActivity(new Intent());
     }
 

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import name.leesah.nirvana.LanternGenie;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -22,9 +22,9 @@ public class NTimesTest {
 
     @Before
     public void setUp() throws Exception {
-        dayZero = randomDaySilVousPlait();
-        length = LanternGenie.randomPeriodSilVousPlait();
-        n = LanternGenie.randomPositiveIntSilVousPlait();
+        dayZero = randomDay();
+        length = LanternGenie.randomPeriod();
+        n = LanternGenie.randomAmount();
     }
 
     @Test

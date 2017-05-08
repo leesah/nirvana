@@ -26,18 +26,10 @@ public class Pharmacist extends DataHolder {
     private static final String TAG = Pharmacist.class.getSimpleName();
     public static final String PREFERENCE_KEY_MEDICATIONS = "name.leesah.nirvana.preferences.key.MEDICATIONS";
 
-    private static Pharmacist instance;
     private ArrayMap<Integer, Medication> cache;
 
     public Pharmacist(Context context) {
         super(context);
-    }
-
-    @Deprecated
-    public static Pharmacist getInstance(Context context) {
-        if (instance == null)
-            instance = new Pharmacist(context);
-        return instance;
     }
 
     @NonNull
@@ -99,8 +91,4 @@ public class Pharmacist extends DataHolder {
         return cache.values().stream().map(Medication::toString).collect(Collectors.joining(", "));
     }
 
-    @Deprecated
-    public static void reset() {
-        instance = null;
-    }
 }

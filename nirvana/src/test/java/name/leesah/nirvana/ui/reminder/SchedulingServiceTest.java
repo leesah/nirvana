@@ -22,6 +22,7 @@ import org.robolectric.annotation.Config;
 import java.util.Set;
 
 import name.leesah.nirvana.BuildConfig;
+import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
@@ -34,8 +35,6 @@ import static java.util.Collections.singleton;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
-import static name.leesah.nirvana.LanternGenie.randomReminderOnAnyDay;
-import static name.leesah.nirvana.LanternGenie.severalRandomReminders;
 import static name.leesah.nirvana.ui.reminder.SchedulingService.ACTION_SET_REMINDERS;
 import static name.leesah.nirvana.ui.reminder.SchedulingService.REQUEST_CODE;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -93,7 +92,7 @@ public class SchedulingServiceTest {
 
     @Test
     public void arrayMapHasValue() throws Exception {
-        Reminder origin = randomReminderOnAnyDay(context, false);
+        Reminder origin = LanternGenie.randomReminder(context, false);
         ArrayMap<Integer, Reminder> map = new ArrayMap<>();
         map.put(origin.getId(), origin);
 
@@ -109,8 +108,8 @@ public class SchedulingServiceTest {
         hire(nurse);
         hire(alarmSecretary);
 
-        Set<Reminder> existing = severalRandomReminders(context, 128, today(), false);
-        Reminder brandNew = randomReminder(context, today(), false);
+        Set<Reminder> existing = LanternGenie.randomReminders(context, false, today());
+        Reminder brandNew = randomReminder(context, false, today());
 
         when(reminderMaker.createReminders(any(LocalDate.class))).thenReturn(union(existing, singleton(brandNew)));
         when(nurse.hasReminder(argThat(isIn(existing)))).thenReturn(true);

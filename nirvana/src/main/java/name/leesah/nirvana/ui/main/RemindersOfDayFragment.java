@@ -33,6 +33,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.ui.main.TiledRemindersCard.Data;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -99,7 +100,7 @@ public class RemindersOfDayFragment extends Fragment {
     }
 
     private List<Object> buildCards() {
-        List<Object> cards = Nurse.getInstance(getContext()).getReminders(today()).stream()
+        List<Object> cards = nurse(getContext()).getReminders(today()).stream()
                 .collect(groupingBy(Reminder::getTime, toList())).entrySet().stream()
                 .map(entry -> new Data(entry.getKey(), entry.getValue()))
                 .sorted(comparing(card -> card.time))

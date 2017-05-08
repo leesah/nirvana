@@ -8,6 +8,8 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.treatment.Treatment;
 
+import static name.leesah.nirvana.PhoneBook.therapist;
+
 /**
  * Created by sah on 2017-04-27.
  */
@@ -21,7 +23,7 @@ public class Never implements StoppingStrategy {
 
     @Override
     public String toString(Context context) {
-        return Therapist.getInstance(context).isCycleSupportEnabled() ?
+        return therapist(context).isCycleSupportEnabled() ?
                 context.getString(R.string.stopping_until_cycle_ends) :
                 context.getString(R.string.stopping_never);
     }

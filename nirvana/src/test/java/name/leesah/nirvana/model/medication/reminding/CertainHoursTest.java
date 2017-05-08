@@ -24,7 +24,7 @@ import name.leesah.nirvana.model.reminder.TimedDosage;
 
 import static java.util.stream.IntStream.range;
 import static junit.framework.Assert.assertEquals;
-import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomMedication;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -52,7 +52,7 @@ public class CertainHoursTest {
         range(0, random.nextInt(4)).forEach(x -> addRandomDosage());
         model = new CertainHours(new ArrayList<>(dosages.values()));
 
-        medication = oneRandomMedicationSilVousPlait(context, false);
+        medication = randomMedication(context, false);
     }
 
     @Test

@@ -29,24 +29,15 @@ import static java.util.stream.Collectors.toSet;
 /**
  * Created by sah on 2016-12-11.
  */
-
 public class Nurse extends DataHolder {
 
     private static final String TAG = Nurse.class.getSimpleName();
     public static final String PREFERENCE_KEY_REMINDERS = "name.leesah.nirvana.pref:key:REMINDERS";
 
-    private static Nurse instance;
     private Map<Integer, Reminder> cache = null;
 
     public Nurse(Context context) {
         super(context);
-    }
-
-    @Deprecated
-    public static Nurse getInstance(Context context) {
-        if (instance == null)
-            instance = new Nurse(context);
-        return instance;
     }
 
     public void add(Reminder reminder) {
@@ -190,11 +181,6 @@ public class Nurse extends DataHolder {
         return cache.isEmpty() ? "EMPTY" : cache.values().stream()
                 .map(Reminder::toString)
                 .collect(joining(", "));
-    }
-
-    @Deprecated
-    public static void reset() {
-        instance = null;
     }
 
 }

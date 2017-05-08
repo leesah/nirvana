@@ -4,9 +4,9 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitAfter;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitBefore;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDayAfter;
+import static name.leesah.nirvana.LanternGenie.randomDayBefore;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -20,14 +20,14 @@ public class EverlastingTreatmentTest {
 
     @Before
     public void setUp() throws Exception {
-        dayZero = randomDaySilVousPlait();
+        dayZero = randomDay();
     }
 
     @Test
     public void contains() throws Exception {
         assertThat(
                 new EverlastingTreatment(dayZero)
-                        .contains(randomDaySilVousPlaitAfter(dayZero)),
+                        .contains(randomDayAfter(dayZero)),
                 is(true));
     }
 
@@ -43,7 +43,7 @@ public class EverlastingTreatmentTest {
     public void containsNot() throws Exception {
         assertThat(
                 new EverlastingTreatment(dayZero)
-                        .contains(randomDaySilVousPlaitBefore(dayZero)),
+                        .contains(randomDayBefore(dayZero)),
                 is(false));
     }
 
@@ -51,7 +51,7 @@ public class EverlastingTreatmentTest {
     public void getStartDateOf() throws Exception {
         assertThat(
                 new EverlastingTreatment(dayZero)
-                        .getStartDateOf(randomDaySilVousPlait()),
+                        .getStartDateOf(randomDay()),
                 equalTo(dayZero));
     }
 

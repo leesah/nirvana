@@ -9,9 +9,9 @@ import org.mockito.Mock;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.LanternGenie.YEAR;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitBefore;
-import static name.leesah.nirvana.LanternGenie.randomPeriodSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDayBefore;
+import static name.leesah.nirvana.LanternGenie.randomPeriod;
 import static org.hamcrest.CoreMatchers.is;
 import static org.joda.time.Days.ONE;
 import static org.junit.Assert.assertThat;
@@ -34,12 +34,12 @@ public class InPeriodTest {
     public void setUp() throws Exception {
         initMocks(this);
 
-        LocalDate dayZero = randomDaySilVousPlait();
-        Period length = randomPeriodSilVousPlait();
+        LocalDate dayZero = randomDay();
+        Period length = randomPeriod();
         when(treatment.contains(notNull())).thenReturn(true);
         when(treatment.getStartDateOf(notNull())).thenReturn(dayZero);
 
-        lastsFor = randomPeriodSilVousPlait(length);
+        lastsFor = randomPeriod(length);
         strategy = new InPeriod(lastsFor);
 
         lastDay = dayZero.plus(lastsFor).minus(ONE);
@@ -48,7 +48,7 @@ public class InPeriodTest {
     @Test
     public void hasNotStopped() throws Exception {
         // Long before the actual last day
-        assertStopped(false, randomDaySilVousPlaitBefore(lastDay));
+        assertStopped(false, randomDayBefore(lastDay));
         // The day before the actual last day
         assertStopped(false, lastDay.minus(ONE));
         // The actual last day
@@ -60,7 +60,7 @@ public class InPeriodTest {
         // The second day of the actual last day
         assertStopped(true, lastDay.plus(ONE));
         // Long after the actual last day
-        assertStopped(true, lastDay.plus(lastsFor).plus(randomPeriodSilVousPlait(YEAR)));
+        assertStopped(true, lastDay.plus(lastsFor).plus(randomPeriod(YEAR)));
     }
 
     private void assertStopped(boolean stopped, LocalDate date) {

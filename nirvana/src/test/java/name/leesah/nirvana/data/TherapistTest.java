@@ -14,13 +14,15 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.BuildConfig;
+import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.EverlastingTreatment;
 import name.leesah.nirvana.model.treatment.RecurringTreatment;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -37,7 +39,6 @@ import static org.robolectric.RuntimeEnvironment.application;
 @Config(constants = BuildConfig.class, sdk = {24, 25})
 public class TherapistTest {
     private SharedPreferences preferences;
-    private Therapist therapist;
     private Resources resources;
     private Context context;
 
@@ -46,27 +47,26 @@ public class TherapistTest {
         context = application.getApplicationContext();
         resources = context.getResources();
         preferences = getDefaultSharedPreferences(context);
-        therapist = Therapist.getInstance(context);
     }
 
     @After
     public void tearDown() throws Exception {
         preferences.edit().clear().apply();
-        Therapist.reset();
+        LanternGenie.everythingVanishes(context);
     }
 
     @Test
     public void loadEverlastingFromEmptyCache() throws Exception {
-        assertThat(therapist.isCycleSupportEnabled(), is(false));
-        assertThat(therapist.getTreatment(), instanceOf(EverlastingTreatment.class));
+        assertThat(therapist(context).isCycleSupportEnabled(), is(false));
+        assertThat(therapist(context).getTreatment(), instanceOf(EverlastingTreatment.class));
 
-        EverlastingTreatment treatment = (EverlastingTreatment) therapist.getTreatment();
+        EverlastingTreatment treatment = (EverlastingTreatment) therapist(context).getTreatment();
         assertThat(treatment.getDayZero(), equalTo(new LocalDate(0)));
     }
 
     @Test
     public void loadRecurringFromCache() throws Exception {
-        LocalDate dayZero = randomDaySilVousPlait();
+        LocalDate dayZero = randomDay();
         Period length = months(6);
         int n = 4;
 
@@ -76,10 +76,10 @@ public class TherapistTest {
         preferences.edit().putString(resources.getString(R.string.pref_key_treatment_recurring), getGson().toJson(new NTimes(4))).apply();
         preferences.edit().putInt(resources.getString(R.string.pref_key_treatment_recurring_n_times), n).apply();
 
-        assertThat(therapist.isCycleSupportEnabled(), is(true));
-        assertThat(therapist.getTreatment(), instanceOf(RecurringTreatment.class));
+        assertThat(therapist(context).isCycleSupportEnabled(), is(true));
+        assertThat(therapist(context).getTreatment(), instanceOf(RecurringTreatment.class));
 
-        RecurringTreatment treatment = (RecurringTreatment) therapist.getTreatment();
+        RecurringTreatment treatment = (RecurringTreatment) therapist(context).getTreatment();
         assertThat(treatment.getDayZero(), equalTo(dayZero));
         assertThat(treatment.getLength(), equalTo(length));
         assertThat(treatment.getRecurringStrategy(), equalTo(new NTimes(4)));

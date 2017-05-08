@@ -16,13 +16,14 @@ import java.util.Set;
 
 import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.LanternGenie;
-import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.model.reminder.ReminderMaker;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static name.leesah.nirvana.LanternGenie.severalRandomMedicationsSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.hire;
+import static name.leesah.nirvana.LanternGenie.randomMedications;
+import static name.leesah.nirvana.PhoneBook.nurse;
+import static name.leesah.nirvana.PhoneBook.reminderMaker;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
@@ -45,7 +46,6 @@ import static org.robolectric.RuntimeEnvironment.application;
 public class RemindingServiceTest {
 
     private Context context;
-    private Nurse nurse;
     private Set<Reminder> reminders;
     @Mock
     private NotificationSecretary notificationSecretary;
@@ -57,16 +57,14 @@ public class RemindingServiceTest {
         initMocks(this);
 
         context = application.getApplicationContext();
-        nurse = Nurse.getInstance(context);
 
-        NotificationSecretary.setInstance(notificationSecretary);
+        hire(notificationSecretary);
+        hire(alarmSecretary);
 
-        AlarmSecretary.setInstance(alarmSecretary);
-
-        severalRandomMedicationsSilVousPlait(
-                context, 128, true);
-        reminders = new ReminderMaker(context).createReminders(today());
-        nurse.add(reminders);
+        randomMedications(
+                context, true);
+        reminders = reminderMaker(context).createReminders(today());
+        nurse(context).add(reminders);
     }
 
     @After
@@ -91,7 +89,7 @@ public class RemindingServiceTest {
             reset(notificationSecretary);
             reset(alarmSecretary);
 
-            int notifId = nurse.getReminder(reminder.getId()).getNotificationId();
+            int notifId = nurse(context).getReminder(reminder.getId()).getNotificationId();
             snooze(reminder);
             verify(notificationSecretary).dismiss(eq(notifId));
             verify(alarmSecretary).setAlarm(medIdEquals(reminder));
@@ -153,7 +151,7 @@ public class RemindingServiceTest {
     }
 
     private int notifIdEquals(Reminder expected) {
-        Reminder reminder = nurse.getReminder(expected.getId());
+        Reminder reminder = nurse(context).getReminder(expected.getId());
         return eq(reminder.getNotificationId());
     }
 

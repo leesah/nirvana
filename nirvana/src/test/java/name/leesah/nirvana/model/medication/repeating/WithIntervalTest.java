@@ -10,7 +10,7 @@ import java.util.Random;
 import name.leesah.nirvana.model.medication.starting.StartingStrategy;
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.notNull;
@@ -34,7 +34,7 @@ public class WithIntervalTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        realStartDate = randomDaySilVousPlait();
+        realStartDate = randomDay();
         when(treatment.contains(notNull())).thenReturn(true);
     }
 

@@ -8,9 +8,9 @@ import org.junit.Test;
 
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitAfter;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlaitBefore;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomDayAfter;
+import static name.leesah.nirvana.LanternGenie.randomDayBefore;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -25,7 +25,7 @@ public class StartingStrategyTest {
 
     @Before
     public void setUp() throws Exception {
-        realStartDate = randomDaySilVousPlait();
+        realStartDate = randomDay();
         startingStrategy = new StartingStrategy() {
             @Override
             public LocalDate getRealStartDate(Treatment treatment, LocalDate date) {
@@ -41,7 +41,7 @@ public class StartingStrategyTest {
 
     @Test
     public void hasStartedLongAgo() throws Exception {
-        assertThat(startingStrategy.hasStarted(mock(Treatment.class), randomDaySilVousPlaitAfter(realStartDate)), is(true));
+        assertThat(startingStrategy.hasStarted(mock(Treatment.class), randomDayAfter(realStartDate)), is(true));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class StartingStrategyTest {
 
     @Test
     public void hasNotStarted() throws Exception {
-        assertThat(startingStrategy.hasStarted(mock(Treatment.class), randomDaySilVousPlaitBefore(realStartDate)), is(false));
+        assertThat(startingStrategy.hasStarted(mock(Treatment.class), randomDayBefore(realStartDate)), is(false));
     }
 
 }

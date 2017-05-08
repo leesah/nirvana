@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 
 import java.util.Set;
 
+import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
@@ -15,6 +16,8 @@ import name.leesah.nirvana.model.treatment.Treatment;
 
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
+import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 
 public class ReminderMaker {
@@ -25,10 +28,9 @@ public class ReminderMaker {
     private Therapist therapist;
     private Pharmacist pharmacist;
 
-    @Deprecated
     public ReminderMaker(Context context) {
-        therapist = Therapist.getInstance(context);
-        pharmacist = Pharmacist.getInstance(context);
+        therapist = therapist(context);
+        pharmacist = pharmacist(context);
     }
 
     public Set<Reminder> createReminders(@NonNull Medication medication, @NonNull LocalDate date) {
@@ -52,16 +54,4 @@ public class ReminderMaker {
                 medication.getRemindingStrategy().getRemindersThroughDay(medication, date) : emptySet();
     }
 
-    @Deprecated
-    public static ReminderMaker getInstance(Context context) {
-        if (instance == null)
-            instance = new ReminderMaker(context);
-
-        return instance;
-    }
-
-    @Deprecated
-    public static void setInstance(ReminderMaker instance) {
-        ReminderMaker.instance = instance;
-    }
 }

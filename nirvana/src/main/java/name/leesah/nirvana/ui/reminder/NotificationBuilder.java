@@ -16,6 +16,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
@@ -35,7 +36,7 @@ class NotificationBuilder extends Notification.Builder {
 
         this.context = context;
         this.reminderId = reminder.getId();
-        Medication medication = Pharmacist.getInstance(context).getMedication(reminder.getMedicationId());
+        Medication medication = pharmacist(context).getMedication(reminder.getMedicationId());
 
         final Resources res = context.getResources();
 

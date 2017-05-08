@@ -1,5 +1,6 @@
 package name.leesah.nirvana.ui.medication;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 
 import java.util.Set;
 
+import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -18,6 +20,8 @@ import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 
 import static android.app.Activity.RESULT_OK;
+import static name.leesah.nirvana.PhoneBook.*;
+import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -64,23 +68,20 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     }
 
     private void saveMedication() {
-        Pharmacist pharmacist = Pharmacist.getInstance(getContext());
-        Nurse nurse = Nurse.getInstance(getContext());
-        AlarmSecretary alarmSecretary = AlarmSecretary.getInstance(getContext());
-        NotificationSecretary notificationSecretary = NotificationSecretary.getInstance(getContext());
 
-        Medication medication = new Medication.Builder().buildFromStaged(getContext());
-        pharmacist.save(medication);
+        Context c = getContext();
+        Medication medication = Medication.Builder.buildFromStaged(c);
+        pharmacist(c).save(medication);
 
-        Set<Reminder> reminders = new ReminderMaker(getContext()).createReminders(medication, today());
-        Set<Reminder> deprecated = nurse.replace(
+        Set<Reminder> reminders = reminderMaker(c).createReminders(medication, today());
+        Set<Reminder> deprecated = nurse(c).replace(
                 reminder -> reminder.getMedicationId() == medication.getId() &&
                         reminder.getDate().equals(today()),
                 reminders);
-        reminders.forEach(alarmSecretary::setAlarm);
+        reminders.forEach(alarmSecretary(c)::setAlarm);
         deprecated.stream()
                 .filter(reminder -> reminder.getState().equals(NOTIFIED))
-                .forEach(reminder -> notificationSecretary.dismiss(reminder.getNotificationId()));
+                .forEach(reminder -> notificationSecretary(c).dismiss(reminder.getNotificationId()));
 
         getActivity().setResult(RESULT_OK);
         getActivity().finish();

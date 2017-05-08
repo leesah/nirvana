@@ -12,7 +12,6 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.util.Set;
 
-import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.ui.main.TiledRemindersCard;

@@ -17,29 +17,28 @@ import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 
-import static android.preference.PreferenceManager.*;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.PickerActions.setDate;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withSummaryText;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static name.leesah.nirvana.LanternGenie.*;
-import static name.leesah.nirvana.LanternGenie.cycledTreatmentDisabledSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
+import static name.leesah.nirvana.LanternGenie.treatmentDisabled;
 import static name.leesah.nirvana.ui.MoreActions.setChecked;
 import static name.leesah.nirvana.ui.MoreActions.setNumber;
 import static name.leesah.nirvana.ui.MoreMatchers.switchWidgetBesidesTitle;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.joda.time.Period.*;
+import static org.joda.time.Period.weeks;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -60,7 +59,7 @@ public class MainActivityTreatmentSettingsTest {
     @Before
     public void setUp() throws Exception {
         context = getTargetContext();
-        cycledTreatmentDisabledSilVousPlait(context);
+        treatmentDisabled(context);
         sharedPreferences = getDefaultSharedPreferences(context);
 
         mActivityRule.launchActivity(new Intent());
@@ -127,7 +126,7 @@ public class MainActivityTreatmentSettingsTest {
         onView(withText(R.string.pref_title_treatment_recurring)).perform(click());
 
         onView(withText(R.string.pref_title_treatment_recurring_n_times)).perform(click());
-        onView(withId(R.id.number_picker)).perform(setNumber(6));
+        onView(withId(R.id.number_picker)).perform(setNumber(6), closeSoftKeyboard());
         onView(withText(android.R.string.ok)).perform(click());
         onView(withText(R.string.save)).perform(click());
 

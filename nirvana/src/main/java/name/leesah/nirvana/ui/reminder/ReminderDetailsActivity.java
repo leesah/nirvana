@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.data.Pharmacist;
@@ -15,6 +16,7 @@ import name.leesah.nirvana.ui.widget.TimedDosageCard;
 
 import static java.lang.String.format;
 import static java.util.Locale.US;
+import static name.leesah.nirvana.PhoneBook.*;
 import static name.leesah.nirvana.ui.reminder.RemindingService.confirmReminder;
 import static name.leesah.nirvana.ui.reminder.RemindingService.snoozeReminder;
 
@@ -31,15 +33,14 @@ public class ReminderDetailsActivity extends AppCompatActivity {
         if (!getIntent().hasExtra(EXTRA_REMINDER_ID))
             throw new IllegalArgumentException("Reminder ID missing from intent.");
 
-        Nurse nurse = Nurse.getInstance(this);
         reminderId = getIntent().getIntExtra(EXTRA_REMINDER_ID, 0);
-        Reminder reminder = nurse.getReminder(reminderId);
+        Reminder reminder = nurse(this).getReminder(reminderId);
 
         if (reminder == null)
             throw new IllegalArgumentException(
                     format(US, "Reminder #[%d] not recognized by nurse.", reminderId));
 
-        Medication medication = Pharmacist.getInstance(this).getMedication(reminder.getMedicationId());
+        Medication medication = pharmacist(this).getMedication(reminder.getMedicationId());
         if (medication == null)
             throw new IllegalArgumentException(
                     format(US, "Medication #[%d] not recognized by pharmacist.", reminder.getMedicationId()));

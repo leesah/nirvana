@@ -14,7 +14,6 @@ import org.junit.Test;
 import java.util.Set;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.repeating.WithInterval;
@@ -26,6 +25,7 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.PickerActions.setDate;
@@ -36,8 +36,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static name.leesah.nirvana.LanternGenie.cycledTreatmentDisabledSilVousPlait;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
+import static name.leesah.nirvana.LanternGenie.treatmentDisabled;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.model.PeriodUnit.MONTH;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.ui.MoreActions.setChecked;
@@ -74,7 +75,7 @@ public abstract class MedicationActivityDataOperationsTest {
     @Test
     public void everydayCertainHours() throws Exception {
         // Cycled treatment disabled
-        cycledTreatmentDisabledSilVousPlait(getTargetContext());
+        treatmentDisabled(getTargetContext());
 
         { // Input name: Valaciclovir
             onView(withText(R.string.pref_title_medication_name)).perform(click());
@@ -109,13 +110,17 @@ public abstract class MedicationActivityDataOperationsTest {
                 }
             }
             { // Add 1 dose at 9:15
-                onView(allOf(withId(R.id.number_picker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
-                onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE))).perform(setTime(9, 15));
+                onView(allOf(withId(R.id.number_picker), withEffectiveVisibility(VISIBLE)))
+                        .perform(setNumber(1), closeSoftKeyboard());
+                onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE)))
+                        .perform(setTime(9, 15), closeSoftKeyboard());
                 onView(allOf(withText(R.string.add), withEffectiveVisibility(VISIBLE))).perform(click());
             }
             { // Add 1 dose at 21:15
-                onView(allOf(withId(R.id.number_picker), withEffectiveVisibility(VISIBLE))).perform(setNumber(1));
-                onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE))).perform(setTime(21, 15));
+                onView(allOf(withId(R.id.number_picker), withEffectiveVisibility(VISIBLE)))
+                        .perform(setNumber(1), closeSoftKeyboard());
+                onView(allOf(withId(R.id.timePicker), withEffectiveVisibility(VISIBLE)))
+                        .perform(setTime(21, 15), closeSoftKeyboard());
                 onView(allOf(withText(R.string.add), withEffectiveVisibility(VISIBLE))).perform(click());
             }
             onView(withText(R.string.save)).perform(click());
@@ -128,7 +133,8 @@ public abstract class MedicationActivityDataOperationsTest {
                 onView(withText(R.string.medication_repeating_every_n_days)).perform(click());
                 { // Set every 4 days
                     onView(withText(R.string.pref_title_medication_repeating_every_n_days)).perform(click());
-                    onView(withClassName(equalTo(NumberPicker.class.getCanonicalName()))).perform(setNumber(4));
+                    onView(withClassName(equalTo(NumberPicker.class.getCanonicalName())))
+                            .perform(setNumber(4), closeSoftKeyboard());
                     onView(withText(android.R.string.ok)).perform(click());
                 }
                 onView(withText(R.string.save)).perform(click());
@@ -145,7 +151,7 @@ public abstract class MedicationActivityDataOperationsTest {
         { // Edit stopping model
             onView(switchWidgetBesidesTitle(R.string.pref_title_medication_stopping)).perform(setChecked(true));
             onView(withText(R.string.pref_title_medication_stopping)).perform(click());
-            onView(withId(R.id.number)).perform(setNumber(6));
+            onView(withId(R.id.number)).perform(setNumber(6), closeSoftKeyboard());
             onView(withId(R.id.unit)).perform(setNumber(PERIOD_UNITS.indexOf(MONTH)));
             onView(withText(android.R.string.ok)).perform(click());
         }
@@ -153,7 +159,7 @@ public abstract class MedicationActivityDataOperationsTest {
         onView(withText(R.string.save)).perform(click());
 
         // Verify: 1 medication found at pharmacist's
-        Set<Medication> medications = Pharmacist.getInstance(getTargetContext()).getMedications();
+        Set<Medication> medications = pharmacist(getTargetContext()).getMedications();
         assertThat(medications.size(), is(1));
 
         // Verify: medication information

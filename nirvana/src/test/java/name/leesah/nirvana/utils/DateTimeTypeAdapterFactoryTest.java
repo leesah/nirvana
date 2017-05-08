@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import name.leesah.nirvana.LanternGenie;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -26,14 +26,14 @@ public class DateTimeTypeAdapterFactoryTest {
 
     @Test
     public void localDate() throws Exception {
-        LocalDate date = randomDaySilVousPlait();
+        LocalDate date = randomDay();
         String json = getGson().toJson(date);
         assertThat(getGson().fromJson(json, LocalDate.class), equalTo(date));
     }
 
     @Test
     public void period() throws Exception {
-        Period period = LanternGenie.randomPeriodSilVousPlait();
+        Period period = LanternGenie.randomPeriod();
         String json = getGson().toJson(period);
         assertThat(getGson().fromJson(json, Period.class), equalTo(period));
     }

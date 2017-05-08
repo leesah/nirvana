@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
@@ -14,6 +15,7 @@ import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
 
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDefaultView() {
-        boolean newUser = Pharmacist.getInstance(this).getMedications().isEmpty();
+        boolean newUser = pharmacist(this).getMedications().isEmpty();
         navigation.setSelectedItemId(newUser ? R.id.navigation_medications : R.id.navigation_reminders);
     }
 

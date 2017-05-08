@@ -23,7 +23,7 @@ import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.alarmSecretary;
 import static name.leesah.nirvana.PhoneBook.nurse;
-import static name.leesah.nirvana.PhoneBook.reminderFactory;
+import static name.leesah.nirvana.PhoneBook.reminderMaker;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.DateTime.*;
@@ -74,7 +74,7 @@ public class SchedulingService extends IntentService {
     }
 
     static void setReminderAlarms(Context context) {
-        reminderFactory(context).createReminders(today()).stream()
+        reminderMaker(context).createReminders(today()).stream()
                 .filter(isSeenByNurse(context).negate().and(isUpcoming(now())))
                 .forEach(reminder -> {
                     alarmSecretary(context).setAlarm(reminder);

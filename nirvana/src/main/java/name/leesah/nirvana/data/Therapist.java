@@ -32,20 +32,12 @@ public class Therapist extends DataHolder {
     private static final String TAG = Therapist.class.getSimpleName();
     public static final LocalDate DEFAULT_DAY_ZERO = new LocalDate(0);
 
-    private static Therapist instance;
     private Treatment treatment;
     private boolean cycleSupportEnabled;
     private boolean cacheUpToDate = false;
 
     public Therapist(Context context) {
         super(context);
-    }
-
-    @Deprecated
-    public static Therapist getInstance(Context context) {
-        if (instance == null)
-            instance = new Therapist(context);
-        return instance;
     }
 
     public boolean isCycleSupportEnabled() {
@@ -107,11 +99,6 @@ public class Therapist extends DataHolder {
         if (isEmpty(text))
             throw new IllegalStateException("Recurring strategy is not set.");
         return getGson().fromJson(text, RecurringStrategy.class);
-    }
-
-    @Deprecated
-    public static void reset() {
-        Therapist.instance = null;
     }
 
 }

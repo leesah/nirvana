@@ -21,25 +21,11 @@ public class AlarmSecretary {
 
     private AlarmManager alarmManager;
 
-    private static AlarmSecretary instance;
     private final Context context;
-
-    @Deprecated
-    public static AlarmSecretary getInstance(Context context) {
-        if (instance == null)
-            instance = new AlarmSecretary(context);
-
-        return instance;
-    }
 
     public AlarmSecretary(Context context) {
         this.context = context;
         alarmManager = context.getSystemService(AlarmManager.class);
-    }
-
-    @Deprecated
-    public static void setInstance(AlarmSecretary instance) {
-        AlarmSecretary.instance = instance;
     }
 
     public void setAlarm(Reminder reminder) {

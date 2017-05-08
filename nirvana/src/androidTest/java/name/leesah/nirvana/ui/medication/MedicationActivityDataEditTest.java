@@ -16,7 +16,7 @@ import static android.support.test.espresso.matcher.PreferenceMatchers.withSumma
 import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomMedication;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
@@ -34,7 +34,7 @@ public class MedicationActivityDataEditTest extends MedicationActivityDataOperat
     @Before
     public void setUp() throws Exception {
         everythingVanishes(getTargetContext());
-        existing = oneRandomMedicationSilVousPlait(getTargetContext(), true);
+        existing = randomMedication(getTargetContext(), true);
         MedicationActivity.writeToStaged(getTargetContext(), existing);
         mActivityRule.launchActivity(new Intent(ACTION_EDIT_MEDICATION));
     }

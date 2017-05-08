@@ -8,23 +8,8 @@ public class NotificationSecretary {
 
     private NotificationManager notificationManager;
 
-    private static NotificationSecretary instance;
-
-    @Deprecated
-    public static NotificationSecretary getInstance(Context context) {
-        if (instance == null)
-            instance = new NotificationSecretary(context);
-
-        return instance;
-    }
-
     public NotificationSecretary(Context context) {
         notificationManager = (NotificationManager) context.getSystemService(RemindingService.NOTIFICATION_SERVICE);
-    }
-
-    @Deprecated
-    public static void setInstance(NotificationSecretary mock) {
-        instance = mock;
     }
 
     public void display(int notificationId, Notification notification) {

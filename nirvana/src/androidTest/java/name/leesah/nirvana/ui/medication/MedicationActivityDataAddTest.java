@@ -9,7 +9,6 @@ import org.junit.Test;
 import name.leesah.nirvana.R;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;
 import static org.hamcrest.Matchers.equalTo;

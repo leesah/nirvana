@@ -30,6 +30,7 @@ import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
 import static java.util.stream.Collectors.toList;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
 
@@ -97,7 +98,7 @@ public class MedicationListFragment extends Fragment {
 
     @NonNull
     private List<Medication> buildMedicationList() {
-        return Pharmacist.getInstance(getContext()).getMedications().stream()
+        return pharmacist(getContext()).getMedications().stream()
                 .sorted().collect(toList());
     }
 

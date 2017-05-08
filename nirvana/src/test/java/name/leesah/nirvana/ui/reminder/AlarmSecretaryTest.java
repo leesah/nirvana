@@ -20,7 +20,8 @@ import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.randomReminderOnAnyDay;
+import static name.leesah.nirvana.LanternGenie.randomReminder;
+import static name.leesah.nirvana.PhoneBook.alarmSecretary;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -40,7 +41,7 @@ public class AlarmSecretaryTest {
     @Mock
     private AlarmManager alarmManager;
     @Captor
-    ArgumentCaptor<PendingIntent> pendingIntent;
+    private ArgumentCaptor<PendingIntent> pendingIntent;
 
     @Before
     public void setUp() throws Exception {
@@ -55,9 +56,9 @@ public class AlarmSecretaryTest {
 
     @Test
     public void setAlarm() throws Exception {
-        Reminder reminder = randomReminderOnAnyDay(context, true);
+        Reminder reminder = randomReminder(context, true);
 
-        AlarmSecretary.getInstance(context).setAlarm(reminder);
+        alarmSecretary(context).setAlarm(reminder);
 
         verify(alarmManager).set(
                 eq(RTC_WAKEUP),

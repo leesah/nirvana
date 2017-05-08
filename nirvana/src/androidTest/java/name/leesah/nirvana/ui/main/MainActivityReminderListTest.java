@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.util.Set;
 
+import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.reminder.Reminder;
 
@@ -21,14 +22,11 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomReminders;
 import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithId;
 import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithMedicationId;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.not;
 
 /**
@@ -44,12 +42,12 @@ public class MainActivityReminderListTest {
 
     @Before
     public void setUp() throws Exception {
-        remindersToday = (severalRandomReminders(
-                getTargetContext(), randomPositiveIntSilVousPlait(8),
-                today(), true));
-        remindersYesterday = (severalRandomReminders(
-                getTargetContext(), randomPositiveIntSilVousPlait(8),
-                today().minusDays(1), true));
+        remindersToday = (LanternGenie.randomReminders(
+                getTargetContext(),
+                true, today()));
+        remindersYesterday = (LanternGenie.randomReminders(
+                getTargetContext(),
+                true, today().minusDays(1)));
 
         mActivityRule.launchActivity(new Intent());
     }

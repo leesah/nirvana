@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import name.leesah.nirvana.model.treatment.Treatment;
 
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.same;
@@ -20,7 +20,7 @@ public class NeverTest {
     @Test
     public void hasNotStopped() throws Exception {
         Treatment treatment = mock(Treatment.class);
-        LocalDate date = randomDaySilVousPlait();
+        LocalDate date = randomDay();
         when(treatment.contains(same(date))).thenReturn(true);
         assertThat(new Never().hasStopped(treatment, date), is(false));
     }
@@ -28,7 +28,7 @@ public class NeverTest {
     @Test
     public void hasStopped() throws Exception {
         Treatment treatment = mock(Treatment.class);
-        LocalDate date = randomDaySilVousPlait();
+        LocalDate date = randomDay();
         when(treatment.contains(same(date))).thenReturn(false);
         assertThat(new Never().hasStopped(treatment, date), is(true));
     }

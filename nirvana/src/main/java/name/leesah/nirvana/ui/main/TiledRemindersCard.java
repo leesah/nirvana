@@ -19,6 +19,7 @@ import org.joda.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
@@ -26,6 +27,7 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.ui.reminder.ReminderDetailsActivity;
 
 import static java.util.Comparator.comparing;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.ListViewHeightOptimizer.optimize;
 
@@ -36,7 +38,6 @@ import static name.leesah.nirvana.utils.ListViewHeightOptimizer.optimize;
 public class TiledRemindersCard extends FrameLayout {
 
     private final ListView tiledItems;
-    private final Pharmacist pharmacist;
     private final TextView time;
 
     public TiledRemindersCard(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -45,14 +46,14 @@ public class TiledRemindersCard extends FrameLayout {
         time = ((TextView) findViewById(R.id.time));
         tiledItems = (ListView) findViewById(R.id.tiled_reminders);
 
-        pharmacist = Pharmacist.getInstance(getContext());
     }
 
     public void fillWith(Data data) {
         time.setText(toText(data.time));
 
         List<Reminder> reminders = new ArrayList<>(data.reminders);
-        reminders.sort(comparing(reminder -> pharmacist.getMedication(reminder.getMedicationId()).getName()));
+        reminders.sort(comparing(reminder -> pharmacist(getContext())
+                .getMedication(reminder.getMedicationId()).getName()));
 
         tiledItems.setAdapter(new ItemArrayAdapter(getContext(), reminders));
         optimize(tiledItems);
@@ -83,7 +84,8 @@ public class TiledRemindersCard extends FrameLayout {
         }
 
         public void setReminder(Reminder reminder) {
-            Medication medication = pharmacist.getMedication(reminder.getMedicationId());
+            Medication medication = pharmacist(getContext())
+                    .getMedication(reminder.getMedicationId());
 
             medicationName.setText(medication == null ?
                     getContext().getString(R.string.unknown_medication) :

@@ -20,10 +20,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomMedicationsSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomMedications;
 import static name.leesah.nirvana.ui.MoreMatchers.ofMedicationWithId;
 import static name.leesah.nirvana.ui.MoreMatchers.ofMedicationWithName;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -40,8 +38,7 @@ public class MainActivityMedicationListTest {
 
     @Before
     public void setUp() throws Exception {
-        existing = severalRandomMedicationsSilVousPlait(
-                getTargetContext(), randomPositiveIntSilVousPlait(128), true);
+        existing = randomMedications(getTargetContext(), true);
         mActivityRule.launchActivity(new Intent());
     }
 

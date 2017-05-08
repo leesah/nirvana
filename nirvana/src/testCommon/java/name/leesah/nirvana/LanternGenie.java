@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
+import org.joda.time.PeriodType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,6 @@ import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.RemindingService;
@@ -50,8 +50,15 @@ import static java.util.EnumSet.allOf;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
+import static name.leesah.nirvana.PhoneBook.*;
+import static name.leesah.nirvana.PhoneBook.fireEveryone;
+import static name.leesah.nirvana.PhoneBook.hireNurse;
+import static name.leesah.nirvana.PhoneBook.hirePharmacist;
+import static name.leesah.nirvana.PhoneBook.hireReminderMaker;
+import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.*;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -69,134 +76,134 @@ public class LanternGenie {
     public static void everythingVanishes(Context context) {
         getDefaultSharedPreferences(context)
                 .edit().clear().apply();
-        context.getSharedPreferences(MedicationActivity.STAGING, MODE_PRIVATE)
+        context.getSharedPreferences(STAGING, MODE_PRIVATE)
                 .edit().clear().apply();
-        Pharmacist.reset();
-        Nurse.reset();
-        Therapist.reset();
-        AlarmSecretary.setInstance(null);
-        NotificationSecretary.setInstance(null);
-        PhoneBook.fireEveryone();
+        fireEveryone();
         cancelAllAlarms(context);
     }
 
     public static void hire(Nurse nurse) {
-        PhoneBook.hireNurse(nurse);
+        hireNurse(nurse);
     }
 
     public static void hire(Pharmacist pharmacist) {
-        PhoneBook.hirePharmacist(pharmacist);
+        hirePharmacist(pharmacist);
     }
 
     public static void hire(Therapist therapist) {
-        PhoneBook.hireTherapist(therapist);
+        hireTherapist(therapist);
     }
 
     public static void hire(ReminderMaker reminderMaker) {
-        PhoneBook.hireReminderMaker(reminderMaker);
+        hireReminderMaker(reminderMaker);
     }
 
     public static void hire(AlarmSecretary alarmSecretary) {
-        PhoneBook.hireAlarmSecretary(alarmSecretary);
+        hireAlarmSecretary(alarmSecretary);
     }
 
     public static void hire(NotificationSecretary notificationSecretary) {
-        PhoneBook.hireNotificationSecretary(notificationSecretary);
+        hireNotificationSecretary(notificationSecretary);
     }
 
-    public static void cycledTreatmentDisabledSilVousPlait(Context context) {
+    public static void treatmentDisabled(Context context) {
         getDefaultSharedPreferences(context).edit()
                 .putBoolean(context.getString(R.string.pref_key_treatment_enabled), false).apply();
     }
 
-    public static Set<Medication> severalRandomMedicationsSilVousPlait(Context context, int count, boolean handToPharmacist) {
-        return range(0, count).mapToObj(i -> oneRandomMedicationSilVousPlait(context, handToPharmacist)).collect(toSet());
+    public static Set<Medication> randomMedications(Context context, boolean handToPharmacist) {
+        return range(0, randomAmount(128)).mapToObj(i -> randomMedication(context, handToPharmacist)).collect(toSet());
     }
 
     @NonNull
-    public static Medication oneRandomMedicationSilVousPlait(Context context, boolean handToPharmacist) {
+    public static Medication randomMedication(Context context, boolean handToPharmacist) {
         Medication medication = randomMedication(context);
         if (handToPharmacist)
-            handThisToPharmacistSilVousPlait(context, medication);
+            letPharmacistHave(context, medication);
         return medication;
     }
 
-    public static void handThisToPharmacistSilVousPlait(Context context, @NonNull Medication medication) {
+    public static void letPharmacistHave(Context context, @NonNull Medication medication) {
         Set<String> all = getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_MEDICATIONS, newHashSet());
         all.add(getGson().toJson(medication));
         getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_MEDICATIONS, all).apply();
-        Pharmacist.reset();
+        hirePharmacist(null);
     }
 
-    public static Set<Reminder> severalRandomReminders(Context context, int count, LocalDate date, boolean handToNurse) {
-        return range(0, count).mapToObj(i -> randomReminder(context, date, handToNurse)).collect(toSet());
+    public static Set<Reminder> randomReminders(Context context, boolean handToNurse, LocalDate date) {
+        return range(0, randomAmount(128)).mapToObj(i -> randomReminder(context, handToNurse, date)).collect(toSet());
     }
 
-    public static Set<Reminder> severalRandomRemindersOnAnyDaysSilVousPlait(Context context, int count, boolean handToNurse) {
-        return range(0, count).mapToObj(i -> randomReminder(context, randomDaySilVousPlait(), handToNurse)).collect(toSet());
+    public static Set<Reminder> randomReminders(Context context, boolean handToNurse) {
+        return range(0, randomAmount(128)).mapToObj(i -> randomReminder(context, handToNurse, randomDay())).collect(toSet());
     }
 
-    public static Reminder randomReminderOnAnyDay(Context context, boolean handToNurse) {
-        return randomReminder(context, randomDaySilVousPlait(), handToNurse);
+    public static Reminder randomReminder(Context context, boolean handToNurse) {
+        return randomReminder(context, handToNurse, randomDay());
     }
 
     @NonNull
-    public static Reminder randomReminder(Context context, LocalDate date, boolean handToNurse) {
-        Reminder reminder = new Reminder(date, now(), uniqueInt(), randomPositiveIntSilVousPlait(8));
+    public static Reminder randomReminder(Context context, boolean handToNurse, LocalDate date) {
+        int medicationId = randomMedication(context, true).getId();
+        Reminder reminder = new Reminder(date, now(), medicationId, randomAmount(8));
         if (handToNurse)
-            handThisToNurseSilVousPlait(context, reminder);
+            letNurseHave(context, reminder);
         return reminder;
     }
 
-    public static void handThisToNurseSilVousPlait(Context context, Reminder reminder) {
+    public static void letNurseHave(Context context, Reminder reminder) {
         Set<String> all = getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_REMINDERS, newHashSet());
         all.add(getGson().toJson(reminder));
         getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_REMINDERS, all).apply();
-        Nurse.reset();
+        hireNurse(null);
     }
 
-    public static String randomNameSilVousPlait() {
+    public static String randomName() {
         return range(0, random.nextInt(2) + 2)
                 .mapToObj(i -> capitalizeFully(randomAlphabetic(2, 8)))
                 .collect(joining(" "));
     }
 
-    public static int randomPositiveIntSilVousPlait() {
-        return randomPositiveIntSilVousPlait(1 << 10);
+    public static int randomAmount() {
+        return randomAmount(1 << 8);
     }
 
-    public static int randomPositiveIntSilVousPlait(int maximum) {
+    public static int randomAmount(int maximum) {
         return random.nextInt(maximum) + 1;
     }
 
 
-    public static LocalDate randomDaySilVousPlait() {
-        return randomDaySilVousPlaitAfter(randomDaySilVousPlaitBefore(today()));
+    public static LocalDate randomDay() {
+        return randomDayAfter(randomDayBefore(today()));
     }
 
     @NonNull
-    public static LocalDate randomDaySilVousPlaitBefore(LocalDate date) {
-        return date.minus(randomPeriodSilVousPlait());
+    public static LocalDate randomDayBefore(LocalDate date) {
+        return date.minus(randomPeriod());
     }
 
-    public static LocalDate randomDaySilVousPlaitAfter(LocalDate date) {
-        return date.plus(randomPeriodSilVousPlait());
+    public static LocalDate randomDayAfter(LocalDate date) {
+        return date.plus(randomPeriod());
+    }
+    @NonNull
+    public static Period randomPeriod() {
+        return randomPeriod(365);
     }
 
     @NonNull
-    public static Period randomPeriodSilVousPlait() {
-        return randomPeriodSilVousPlait(YEAR);
+    public static Period randomPeriod(Period maximum) {
+        return randomPeriod(new Period(maximum, PeriodType.days()).getDays());
     }
 
     @NonNull
-    public static Period randomPeriodSilVousPlait(Period maximum) {
-        return days(random.nextInt(maximum.getDays())).plus(Days.ONE);
+    private static Period randomPeriod(int maximumDays) {
+        return days(randomAmount(maximumDays)).plus(Days.ONE);
     }
 
     @NonNull
     private static Medication randomMedication(Context context) {
         return new Medication.Builder()
-                .setName(randomNameSilVousPlait())
+                .setName(randomName())
                 .setForm(randomForm())
                 .setRemindingStrategy(randomRemindingStrategy())
                 .setRepeatingStrategy(randomRepeatingStrategy())
@@ -210,11 +217,11 @@ public class LanternGenie {
     }
 
     private static StartingStrategy randomStartingStrategy(Context context) {
-        return Therapist.getInstance(context).isCycleSupportEnabled() ?
+        return therapist(context).isCycleSupportEnabled() ?
                 takeAChance() < 20 ?
                         new Immediately() :
                         new Delayed(days(random.nextInt(365))) :
-                new ExactDate(randomDaySilVousPlait());
+                new ExactDate(randomDay());
     }
 
     @NonNull
@@ -233,7 +240,7 @@ public class LanternGenie {
     private static RepeatingStrategy randomRepeatingStrategy() {
         return takeAChance() < 20 ?
                 new Everyday() :
-                new WithInterval(randomPositiveIntSilVousPlait(8));
+                new WithInterval(randomAmount(8));
     }
 
     private static void cancelAllAlarms(Context context) {

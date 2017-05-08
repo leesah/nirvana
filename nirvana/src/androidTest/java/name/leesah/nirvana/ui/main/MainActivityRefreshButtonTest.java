@@ -20,7 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.oneRandomMedicationSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomMedication;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -49,7 +49,7 @@ public class MainActivityRefreshButtonTest {
     public void refreshMedicationListBySwipingDown() throws Exception {
         onView(withId(R.id.navigation_medications)).perform(click());
 
-        oneRandomMedicationSilVousPlait(getTargetContext(), true);
+        randomMedication(getTargetContext(), true);
         onView(withId(R.id.medications)).check(matches(not(withAdaptedData(anything()))));
 
         onView(withId(R.id.content_main)).perform(swipeDown());
@@ -60,7 +60,7 @@ public class MainActivityRefreshButtonTest {
     public void refreshReminderListBySwipingDown() throws Exception {
         onView(withId(R.id.navigation_reminders)).perform(click());
 
-        randomReminder(getTargetContext(), today(), true);
+        randomReminder(getTargetContext(), true, today());
         onView(withId(R.id.reminders)).check(matches(not(withAdaptedData(anything()))));
 
         onView(withId(R.id.content_main)).perform(swipeDown());
@@ -71,7 +71,7 @@ public class MainActivityRefreshButtonTest {
     public void refreshMedicationListFromMenu() throws Exception {
         onView(withId(R.id.navigation_medications)).perform(click());
 
-        oneRandomMedicationSilVousPlait(getTargetContext(), true);
+        randomMedication(getTargetContext(), true);
         onView(withId(R.id.medications)).check(matches(not(withAdaptedData(anything()))));
 
         openActionBarOverflowOrOptionsMenu(getTargetContext());
@@ -83,7 +83,7 @@ public class MainActivityRefreshButtonTest {
     public void refreshReminderListFromMenu() throws Exception {
         onView(withId(R.id.navigation_reminders)).perform(click());
 
-        randomReminder(getTargetContext(), today(), true);
+        randomReminder(getTargetContext(), true, today());
         onView(withId(R.id.reminders)).check(matches(not(withAdaptedData(anything()))));
 
         openActionBarOverflowOrOptionsMenu(getTargetContext());

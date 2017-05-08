@@ -27,6 +27,7 @@ import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.SchedulingService;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 
 /**
  * Created by sah on 2017-04-18.
@@ -36,23 +37,17 @@ public class DebugTools {
 
     public static void clearAllData(Context context) {
         getDefaultSharedPreferences(context).edit().clear().apply();
-        Pharmacist.reset();
-        Nurse.reset();
-        Therapist.reset();
-        AlarmSecretary.setInstance(null);
-        NotificationSecretary.setInstance(null);
+        PhoneBook.fireEveryone();
         ((Activity)context).getFragmentManager().popBackStackImmediate();
     }
 
     public static void injectTestData(Context context) {
         clearAllData(context);
 
-        Pharmacist pharmacist = Pharmacist.getInstance(context);
-
         LocalTime NineAM = new LocalTime(0).withHourOfDay(9);
         LocalTime NinePM = new LocalTime(0).withHourOfDay(21);
 
-        pharmacist.save(new Medication.Builder().
+        pharmacist(context).save(new Medication.Builder().
                 setName("Valaciclovir").
                 setManufacturer("Teva").
                 setForm(DosageForm.TABLET).
@@ -62,7 +57,7 @@ public class DebugTools {
                 setStoppingStrategy(new Never()).
                 build());
 
-        pharmacist.save(new Medication.Builder().
+        pharmacist(context).save(new Medication.Builder().
                 setName("Folacin").
                 setManufacturer("folsyra").
                 setForm(DosageForm.TABLET).
@@ -72,7 +67,7 @@ public class DebugTools {
                 setStoppingStrategy(new Never()).
                 build());
 
-        pharmacist.save(new Medication.Builder().
+        pharmacist(context).save(new Medication.Builder().
                 setName("Man tabletter").
                 setManufacturer("apoteket").
                 setForm(DosageForm.TABLET).

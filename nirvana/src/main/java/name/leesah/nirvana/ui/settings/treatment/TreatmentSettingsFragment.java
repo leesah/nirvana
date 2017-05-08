@@ -13,6 +13,7 @@ import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.ui.preference.DatePreference;
 import name.leesah.nirvana.ui.preference.PeriodPreference;
 
+import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.Period.weeks;
 
@@ -59,6 +60,6 @@ public class TreatmentSettingsFragment extends PreferenceFragment implements Sha
             recurringStrategy.setStrategy(null);
         }
 
-        Therapist.reset();
+        therapist(getContext()).invalidate();
     }
 }

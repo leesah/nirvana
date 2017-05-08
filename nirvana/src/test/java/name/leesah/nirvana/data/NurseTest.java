@@ -25,9 +25,9 @@ import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
-import static name.leesah.nirvana.LanternGenie.randomDaySilVousPlait;
-import static name.leesah.nirvana.LanternGenie.randomPositiveIntSilVousPlait;
-import static name.leesah.nirvana.LanternGenie.severalRandomRemindersOnAnyDaysSilVousPlait;
+import static name.leesah.nirvana.LanternGenie.randomDay;
+import static name.leesah.nirvana.LanternGenie.randomReminders;
+import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
@@ -46,7 +46,6 @@ import static org.robolectric.RuntimeEnvironment.application;
 public class NurseTest {
 
     private Gson gson = getGson();
-    private Nurse nurse;
     private SharedPreferences preferences;
     private Context context;
 
@@ -54,7 +53,6 @@ public class NurseTest {
     public void setUp() throws Exception {
         context = application.getApplicationContext();
         preferences = getDefaultSharedPreferences(context);
-        nurse = Nurse.getInstance(context);
     }
 
     @After
@@ -64,9 +62,9 @@ public class NurseTest {
 
     @Test
     public void addXRemindersWhen0Existing() throws Exception {
-        Set<Reminder> newReminders = severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(10), false);
+        Set<Reminder> newReminders = randomReminders(context, false);
 
-        nurse.add(newReminders);
+        nurse(context).add(newReminders);
 
         assertThat(
                 preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).stream()
@@ -77,16 +75,16 @@ public class NurseTest {
 
     @Test
     public void add0ReminderWhen0Existing() throws Exception {
-        nurse.add(emptySet());
+        nurse(context).add(emptySet());
         assertThat(preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).size(), is(0));
     }
 
     @Test
     public void addXRemindersWhenYExisting() throws Exception {
-        Set<Reminder> existingReminders = severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), true);
-        Set<Reminder> newReminders = severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), false);
+        Set<Reminder> existingReminders = randomReminders(context, true);
+        Set<Reminder> newReminders = randomReminders(context, false);
 
-        nurse.add(newReminders);
+        nurse(context).add(newReminders);
 
         assertThat(
                 preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).stream()
@@ -97,9 +95,9 @@ public class NurseTest {
 
     @Test
     public void add0ReminderWhenYExisting() throws Exception {
-        Set<Reminder> existingReminders = severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), true);
+        Set<Reminder> existingReminders = randomReminders(context, true);
 
-        nurse.add(emptySet());
+        nurse(context).add(emptySet());
 
         assertThat(
                 preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).stream()
@@ -110,13 +108,13 @@ public class NurseTest {
 
     @Test
     public void replace() throws Exception {
-        Set<Reminder> existingReminders = severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), true);
+        Set<Reminder> existingReminders = randomReminders(context, true);
         Set<Reminder> existingRemindersWithOddMedicationids = existingReminders.stream()
                 .filter(reminder -> reminder.getMedicationId() % 2 != 0)
                 .collect(toSet());
-        Set<Reminder> newReminders = singleton(new Reminder(randomDaySilVousPlait(), now(), uniqueInt() * 2 + 1, 1));
+        Set<Reminder> newReminders = singleton(new Reminder(randomDay(), now(), uniqueInt() * 2 + 1, 1));
 
-        nurse.replace(
+        nurse(context).replace(
                 reminder -> reminder.getMedicationId() % 2 == 0,
                 newReminders);
 
@@ -136,11 +134,11 @@ public class NurseTest {
     @Test
     public void setNotified() throws Exception {
         Reminder firstReminder = new ArrayList<>(
-                severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), true)
+                randomReminders(context, true)
         ).get(0);
         int notificationId = uniqueInt();
 
-        nurse.setNotified(firstReminder.getId(), notificationId);
+        nurse(context).setNotified(firstReminder.getId(), notificationId);
 
         Reminder saved = preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).stream()
                 .map(json -> gson.fromJson(json, Reminder.class))
@@ -153,11 +151,10 @@ public class NurseTest {
     @Test
     public void setDone() throws Exception {
         Reminder firstReminder = new ArrayList<>(
-                severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), true)
+                randomReminders(context, true)
         ).get(0);
-        int notificationId = uniqueInt();
 
-        nurse.setDone(firstReminder.getId());
+        nurse(context).setDone(firstReminder.getId());
 
         Reminder saved = preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).stream()
                 .map(json -> gson.fromJson(json, Reminder.class))
@@ -169,13 +166,12 @@ public class NurseTest {
     @Test
     public void getReminders() throws Exception {
         LocalDate date = new ArrayList<>(
-                severalRandomRemindersOnAnyDaysSilVousPlait(context, randomPositiveIntSilVousPlait(128), true)
+                randomReminders(context, true)
         ).get(0).getDate();
 
-        Set<Reminder> reminders = nurse.getReminders(date);
+        Set<Reminder> reminders = nurse(context).getReminders(date);
 
-        reminders.stream()
-                .forEach(reminder -> assertThat(reminder.getDate(), equalTo(date)));
+        reminders.forEach(reminder -> assertThat(reminder.getDate(), equalTo(date)));
     }
 
     @Test
