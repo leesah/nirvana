@@ -22,6 +22,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
+import static name.leesah.nirvana.ui.MoreMatchers.isCardContaining;
 import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithId;
 import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithMedicationId;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
@@ -60,21 +61,15 @@ public class MainActivityReminderListTest {
     @Test
     public void allRemindersOfTodayListed() throws Exception {
         onView(withId(R.id.navigation_reminders)).perform(click());
-        remindersToday.forEach(
-                reminder -> onData(allOf(
-                        ofReminderWithId(reminder.getId()),
-                        ofReminderWithMedicationId(reminder.getMedicationId())
-                )).inAdapterView(withId(R.id.reminders)).check(matches(isDisplayed())));
+        remindersToday.forEach(reminder -> onView(withId(R.id.reminders))
+                .check(matches(withAdaptedData(isCardContaining(reminder)))));
     }
 
     @Test
     public void allRemindersOfYesterdayNotListed() throws Exception {
         onView(withId(R.id.navigation_reminders)).perform(click());
-
-        remindersYesterday.forEach(
-                reminder -> onView(withId(R.id.reminders))
-                        .check(matches(not(
-                                withAdaptedData(ofReminderWithId(reminder.getId()))))));
+        remindersYesterday.forEach(reminder -> onView(withId(R.id.reminders))
+                .check(matches(not(withAdaptedData(isCardContaining(reminder))))));
     }
 
 }

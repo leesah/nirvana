@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 
 import com.google.common.base.MoreObjects;
 
+import java.util.Objects;
+
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
@@ -74,6 +76,21 @@ public class Medication implements Comparable<Medication>{
 
     public StoppingStrategy getStoppingStrategy() {
         return stoppingStrategy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Medication that = (Medication) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(manufacturer, that.manufacturer) &&
+                form == that.form;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, manufacturer, form);
     }
 
     @Override

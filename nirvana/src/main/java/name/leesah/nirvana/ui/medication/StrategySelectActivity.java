@@ -98,7 +98,7 @@ public class StrategySelectActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.list_and_details, container, false);
+            return inflater.inflate(R.layout.strategy_selecting, container, false);
         }
 
         @Override

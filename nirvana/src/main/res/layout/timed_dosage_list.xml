@@ -21,7 +21,7 @@
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add an intake."
+                android:text="@string/add_an_intake"
                 android:textAlignment="center" />
 
         </FrameLayout>
@@ -37,6 +37,7 @@
         android:id="@+id/dosages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:divider="@null"
         android:footerDividersEnabled="false"
         tools:context=".ui.medication.reminding.CertainHoursEditFragment"

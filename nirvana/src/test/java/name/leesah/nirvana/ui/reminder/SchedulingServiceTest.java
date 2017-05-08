@@ -22,7 +22,6 @@ import org.robolectric.annotation.Config;
 import java.util.Set;
 
 import name.leesah.nirvana.BuildConfig;
-import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
@@ -31,10 +30,10 @@ import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.app.PendingIntent.getService;
 import static com.google.common.collect.Sets.union;
-import static java.util.Collections.singleton;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
+import static name.leesah.nirvana.LanternGenie.randomReminders;
 import static name.leesah.nirvana.ui.reminder.SchedulingService.ACTION_SET_REMINDERS;
 import static name.leesah.nirvana.ui.reminder.SchedulingService.REQUEST_CODE;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -46,7 +45,9 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -92,7 +93,7 @@ public class SchedulingServiceTest {
 
     @Test
     public void arrayMapHasValue() throws Exception {
-        Reminder origin = LanternGenie.randomReminder(context, false);
+        Reminder origin = randomReminder(context, false);
         ArrayMap<Integer, Reminder> map = new ArrayMap<>();
         map.put(origin.getId(), origin);
 
@@ -108,18 +109,20 @@ public class SchedulingServiceTest {
         hire(nurse);
         hire(alarmSecretary);
 
-        Set<Reminder> existing = LanternGenie.randomReminders(context, false, today());
-        Reminder brandNew = randomReminder(context, false, today());
+        Set<Reminder> existing = randomReminders(context, false, today());
+        Set<Reminder> brandNew = randomReminders(context, false, today());
 
-        when(reminderMaker.createReminders(any(LocalDate.class))).thenReturn(union(existing, singleton(brandNew)));
+        when(reminderMaker.createReminders(any(LocalDate.class))).thenReturn(union(existing, brandNew));
         when(nurse.hasReminder(argThat(isIn(existing)))).thenReturn(true);
         when(nurse.hasReminder(argThat(not(isIn(existing))))).thenReturn(false);
 
         SchedulingService.setReminderAlarms(context);
 
-        union(existing, singleton(brandNew)).forEach(reminder -> verify(nurse).hasReminder(reminder));
-        verify(nurse).add(eq(brandNew));
-        verify(alarmSecretary).setAlarm(eq(brandNew));
+        verify(nurse, atLeastOnce()).hasReminder(notNull());
+        brandNew.forEach(reminder -> {
+            verify(nurse).add(eq(reminder));
+            verify(alarmSecretary).setAlarm(eq(reminder));
+        });
 
         verifyNoMoreInteractions(alarmSecretary);
         verifyNoMoreInteractions(nurse);
@@ -132,18 +135,10 @@ public class SchedulingServiceTest {
 
         SchedulingService.setMidnightAlarm(context);
 
-        verify(alarmManager).set(
-                eq(RTC_WAKEUP),
-                anyLong(),
-                intent.capture());
-
-        assertThat(
-                intent.getValue(),
-                equalTo(getService(
-                        context,
-                        REQUEST_CODE,
-                        new Intent(context, SchedulingService.class)
-                                .setAction(ACTION_SET_REMINDERS), FLAG_UPDATE_CURRENT)));
+        verify(alarmManager).set(eq(RTC_WAKEUP), anyLong(), intent.capture());
+        assertThat(intent.getValue(), equalTo(getService(context, REQUEST_CODE,
+                new Intent(context, SchedulingService.class)
+                        .setAction(ACTION_SET_REMINDERS), FLAG_UPDATE_CURRENT)));
         verifyNoMoreInteractions(alarmManager);
 
     }

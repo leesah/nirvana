@@ -109,7 +109,7 @@ public class NurseTest {
     @Test
     public void replace() throws Exception {
         Set<Reminder> existingReminders = randomReminders(context, true);
-        Set<Reminder> existingRemindersWithOddMedicationids = existingReminders.stream()
+        Set<Reminder> existingRemindersWithOddMedicationIds = existingReminders.stream()
                 .filter(reminder -> reminder.getMedicationId() % 2 != 0)
                 .collect(toSet());
         Set<Reminder> newReminders = singleton(new Reminder(randomDay(), now(), uniqueInt() * 2 + 1, 1));
@@ -120,14 +120,14 @@ public class NurseTest {
 
         assertThat(
                 preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).size(),
-                is(existingRemindersWithOddMedicationids.size() + newReminders.size()));
+                is(existingRemindersWithOddMedicationIds.size() + newReminders.size()));
 
         assertThat(
                 preferences.getStringSet(PREFERENCE_KEY_REMINDERS, null).stream()
                         .map(json -> gson.fromJson(json, Reminder.class))
                         .collect(toSet()),
                 containsInAnyOrder(Sets.union(
-                        existingRemindersWithOddMedicationids,
+                        existingRemindersWithOddMedicationIds,
                         newReminders).toArray(new Reminder[0])));
     }
 

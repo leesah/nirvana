@@ -5,12 +5,14 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 
+import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
@@ -21,6 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.stream.Collectors.toSet;
+import static java.util.stream.IntStream.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.allOf;
@@ -32,30 +35,39 @@ import static org.hamcrest.Matchers.allOf;
 public class MoreMatchers {
 
     public static Matcher<View> withAdaptedData(final Matcher<?> dataMatcher) {
-        return new TypeSafeMatcher<View>() {
+        return new BaseMatcher<View>() {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("with class name: ");
+                description.appendText("AdapterView with data entry: ");
                 dataMatcher.describeTo(description);
             }
 
             @Override
-            public boolean matchesSafely(View view) {
-                if (!(view instanceof AdapterView)) {
-                    return false;
-                }
-                @SuppressWarnings("rawtypes")
-                Adapter adapter = ((AdapterView) view).getAdapter();
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    if (dataMatcher.matches(adapter.getItem(i))) {
-                        return true;
-                    }
-                }
-                return false;
+            public boolean matches(Object item) {
+                return item instanceof AdapterView &&
+                        range(0, ((AdapterView) item).getAdapter().getCount())
+                        .anyMatch(i -> dataMatcher.matches(((AdapterView) item).getAdapter().getItem(i)));
             }
         };
     }
+
+    public static Matcher<TiledRemindersCard.Data> isCardContaining(Reminder reminder) {
+        return new BaseMatcher<TiledRemindersCard.Data>() {
+            @Override
+            public boolean matches(Object item) {
+                return item instanceof TiledRemindersCard.Data &&
+                        ((TiledRemindersCard.Data)item).reminders.contains(reminder);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("card containing reminder: ")
+                        .appendText(reminder.toString());
+            }
+        };
+    }
+
 
     @NonNull
     public static Matcher<View> switchWidgetBesidesTitle(int prefTitleResId) {

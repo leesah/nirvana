@@ -62,7 +62,6 @@ import static name.leesah.nirvana.ui.medication.MedicationActivity.*;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
 import static org.joda.time.LocalTime.now;
@@ -130,21 +129,34 @@ public class LanternGenie {
         hirePharmacist(null);
     }
 
-    public static Set<Reminder> randomReminders(Context context, boolean handToNurse, LocalDate date) {
-        return range(0, randomAmount(128)).mapToObj(i -> randomReminder(context, handToNurse, date)).collect(toSet());
-    }
-
     public static Set<Reminder> randomReminders(Context context, boolean handToNurse) {
-        return range(0, randomAmount(128)).mapToObj(i -> randomReminder(context, handToNurse, randomDay())).collect(toSet());
+        int medicationId = randomMedication(context, true).getId();
+        return range(0, randomAmount(128))
+                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, randomDay(), medicationId))
+                .collect(toSet());
     }
 
+    public static Set<Reminder> randomReminders(Context context, boolean handToNurse, LocalDate date) {
+        int medicationId = randomMedication(context, true).getId();
+        return range(0, randomAmount(128))
+                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, date, medicationId))
+                .collect(toSet());
+    }
+
+    @NonNull
     public static Reminder randomReminder(Context context, boolean handToNurse) {
-        return randomReminder(context, handToNurse, randomDay());
+        int medicationId = randomMedication(context, true).getId();
+        return randomReminderOnDayForMedication(context, handToNurse, randomDay(), medicationId);
     }
 
     @NonNull
     public static Reminder randomReminder(Context context, boolean handToNurse, LocalDate date) {
         int medicationId = randomMedication(context, true).getId();
+        return randomReminderOnDayForMedication(context, handToNurse, date, medicationId);
+    }
+
+    @NonNull
+    private static Reminder randomReminderOnDayForMedication(Context context, boolean handToNurse, LocalDate date, int medicationId) {
         Reminder reminder = new Reminder(date, now(), medicationId, randomAmount(8));
         if (handToNurse)
             letNurseHave(context, reminder);

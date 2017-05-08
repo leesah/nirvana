@@ -146,6 +146,7 @@
     <string name="stopping_never">Never</string>
     <string name="to_string_recurring_until_date">Recurs until %s</string>
     <string name="refresh">Refresh</string>
+    <string name="add_an_intake">Add an intake.</string>
     <plurals name="to_string_timed_dosage">
         <item quantity="one">%1$d unit at %2$s</item>
         <item quantity="other">%1$d units at %2$s</item>
