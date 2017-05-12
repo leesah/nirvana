@@ -8,7 +8,9 @@ import android.util.Log;
 
 import com.google.common.collect.MoreCollectors;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.Minutes;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -17,7 +19,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
+import name.leesah.nirvana.ui.reminder.SchedulingService;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
@@ -25,6 +29,7 @@ import static java.util.Locale.US;
 import static java.util.stream.Collectors.*;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
+import static name.leesah.nirvana.PhoneBook.nurse;
 
 /**
  * Created by sah on 2016-12-11.
@@ -170,6 +175,21 @@ public class Nurse extends DataHolder {
     public boolean hasReminder(@NonNull Reminder target) {
         loadCacheIfNeeded();
         return cache.containsValue(target);
+    }
+
+    @NonNull
+    public static Predicate<Reminder> isSeenByNurse(Context context) {
+        return reminder -> nurse(context).hasReminder(reminder);
+    }
+
+    @NonNull
+    public static Predicate<Reminder> isUpcoming(DateTime now) {
+        return reminder -> now.minus(SchedulingService.GAP).minus(Minutes.ONE).isBefore(reminder.getPlannedTime());
+    }
+
+    @NonNull
+    public static Predicate<Reminder> isFor(Medication medication) {
+        return reminder -> reminder.getMedicationId() == medication.getId();
     }
 
     private void onReminderMissing(int id) {

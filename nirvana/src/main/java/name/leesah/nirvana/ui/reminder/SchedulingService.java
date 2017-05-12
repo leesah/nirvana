@@ -5,29 +5,26 @@ import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Minutes;
 
-import java.util.function.Predicate;
-
-import name.leesah.nirvana.model.reminder.Reminder;
+import name.leesah.nirvana.data.Nurse;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.*;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.content.Intent.ACTION_BOOT_COMPLETED;
-import static android.widget.Toast.*;
 import static android.widget.Toast.makeText;
 import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.alarmSecretary;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.reminderMaker;
+import static name.leesah.nirvana.data.Nurse.*;
+import static name.leesah.nirvana.data.Nurse.isSeenByNurse;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.joda.time.DateTime.*;
@@ -89,16 +86,6 @@ public class SchedulingService extends IntentService {
 
     private static Intent buildMidnightIntent(Context context) {
         return new Intent(context, SchedulingService.class).setAction(ACTION_SET_REMINDERS);
-    }
-
-    @NonNull
-    private static Predicate<Reminder> isSeenByNurse(Context context) {
-        return reminder -> nurse(context).hasReminder(reminder);
-    }
-
-    @NonNull
-    private static Predicate<Reminder> isUpcoming(DateTime now) {
-        return reminder -> now.minus(GAP).minus(Minutes.ONE).isBefore(reminder.getPlannedTime());
     }
 
     public static void inCaseNotRunToday(Context context) {
