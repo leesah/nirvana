@@ -8,9 +8,8 @@ import org.joda.time.LocalDate;
 
 import java.util.Set;
 
-import name.leesah.nirvana.PhoneBook;
-import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.data.Therapist;
+import name.leesah.nirvana.persistence.Pharmacist;
+import name.leesah.nirvana.persistence.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.treatment.Treatment;
 

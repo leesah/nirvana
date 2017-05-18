@@ -19,9 +19,7 @@ import org.joda.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.ui.reminder.ReminderDetailsActivity;

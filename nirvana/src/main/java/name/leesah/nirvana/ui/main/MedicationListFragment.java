@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.widget.MedicationCard;

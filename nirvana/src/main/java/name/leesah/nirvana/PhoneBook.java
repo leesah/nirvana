@@ -2,9 +2,9 @@ package name.leesah.nirvana;
 
 import android.content.Context;
 
-import name.leesah.nirvana.data.Nurse;
-import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.data.Therapist;
+import name.leesah.nirvana.persistence.Nurse;
+import name.leesah.nirvana.persistence.Pharmacist;
+import name.leesah.nirvana.persistence.Therapist;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 

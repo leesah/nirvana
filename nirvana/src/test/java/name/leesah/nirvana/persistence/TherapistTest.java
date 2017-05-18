@@ -1,4 +1,4 @@
-package name.leesah.nirvana.data;
+package name.leesah.nirvana.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;

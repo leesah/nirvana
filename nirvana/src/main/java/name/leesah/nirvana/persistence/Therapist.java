@@ -1,4 +1,4 @@
-package name.leesah.nirvana.data;
+package name.leesah.nirvana.persistence;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,13 +11,10 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.EverlastingTreatment;
 import name.leesah.nirvana.model.treatment.RecurringTreatment;
 import name.leesah.nirvana.model.treatment.Treatment;
-import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
-import name.leesah.nirvana.model.treatment.recurring.UntilDate;
 
 import static android.text.TextUtils.isEmpty;
 import static java.lang.String.format;
-import static java.util.Locale.US;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;

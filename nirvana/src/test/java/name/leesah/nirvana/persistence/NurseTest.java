@@ -1,4 +1,4 @@
-package name.leesah.nirvana.data;
+package name.leesah.nirvana.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +28,7 @@ import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.randomDay;
 import static name.leesah.nirvana.LanternGenie.randomReminders;
 import static name.leesah.nirvana.PhoneBook.nurse;
-import static name.leesah.nirvana.data.Nurse.PREFERENCE_KEY_REMINDERS;
+import static name.leesah.nirvana.persistence.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 import static org.hamcrest.CoreMatchers.equalTo;

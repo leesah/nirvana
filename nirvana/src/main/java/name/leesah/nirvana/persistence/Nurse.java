@@ -1,12 +1,10 @@
-package name.leesah.nirvana.data;
+package name.leesah.nirvana.persistence;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 import android.util.Log;
-
-import com.google.common.collect.MoreCollectors;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -17,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;

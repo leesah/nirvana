@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.Comparator.comparing;

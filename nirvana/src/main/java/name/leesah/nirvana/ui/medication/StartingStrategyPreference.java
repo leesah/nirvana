@@ -10,9 +10,7 @@ import android.widget.DatePicker;
 
 import org.joda.time.LocalDate;
 
-import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.starting.Delayed;
 import name.leesah.nirvana.model.medication.starting.ExactDate;
 import name.leesah.nirvana.model.medication.starting.Immediately;

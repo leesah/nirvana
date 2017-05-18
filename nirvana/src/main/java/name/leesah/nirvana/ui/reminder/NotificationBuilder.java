@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Icon;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;

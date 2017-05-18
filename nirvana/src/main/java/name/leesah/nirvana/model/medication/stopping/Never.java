@@ -5,7 +5,6 @@ import android.content.Context;
 import org.joda.time.LocalDate;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.PhoneBook.therapist;

@@ -1,4 +1,4 @@
-package name.leesah.nirvana.data;
+package name.leesah.nirvana.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,7 +25,7 @@ import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.LanternGenie.randomMedication;
 import static name.leesah.nirvana.LanternGenie.randomMedications;
-import static name.leesah.nirvana.data.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
+import static name.leesah.nirvana.persistence.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;

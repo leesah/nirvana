@@ -22,7 +22,7 @@ import org.robolectric.annotation.Config;
 import java.util.Set;
 
 import name.leesah.nirvana.BuildConfig;
-import name.leesah.nirvana.data.Nurse;
+import name.leesah.nirvana.persistence.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
 

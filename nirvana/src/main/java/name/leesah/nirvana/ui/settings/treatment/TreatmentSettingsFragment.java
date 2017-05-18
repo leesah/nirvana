@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import org.joda.time.Period;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.treatment.recurring.NTimes;
 import name.leesah.nirvana.ui.preference.DatePreference;
 import name.leesah.nirvana.ui.preference.PeriodPreference;
