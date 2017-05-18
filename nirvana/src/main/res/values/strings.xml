@@ -163,5 +163,6 @@
         <item quantity="one">Not recurring (single cycle treatment)</item>
         <item quantity="other">%d cycles in total</item>
     </plurals>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://nirvana.leesah.name\",\n  }\n}]</string>
 
 </resources>

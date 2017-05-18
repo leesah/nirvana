@@ -1,7 +1,10 @@
 package name.leesah.nirvana.ui.reminder;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 
 import name.leesah.nirvana.R;
@@ -27,12 +30,15 @@ public class ReminderDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_details);
 
-        if (!getIntent().hasExtra(EXTRA_REMINDER_ID))
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_REMINDER_ID))
+            reminderId = intent.getIntExtra(EXTRA_REMINDER_ID, 0);
+        else if  (TextUtils.isDigitsOnly(intent.getData().getLastPathSegment()))
+            reminderId = Integer.valueOf(intent.getData().getLastPathSegment());
+        else
             throw new IllegalArgumentException("Reminder ID missing from intent.");
 
-        reminderId = getIntent().getIntExtra(EXTRA_REMINDER_ID, 0);
         Reminder reminder = nurse(this).getReminder(reminderId);
-
         if (reminder == null)
             throw new IllegalArgumentException(
                     format(US, "Reminder #[%d] not recognized by nurse.", reminderId));
