@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId 'name.leesah.nirvana'
         minSdkVersion 24
-        targetSdkVersion 'O'
+        targetSdkVersion 26
         versionCode 32
         versionName sprintf('HRB%d', versionCode)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
