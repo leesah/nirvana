@@ -1,12 +1,8 @@
-import groovy.time.TimeCategory
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.triplet.play'
 
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(rootProject.file('keystore.properties')))
-
-def DAY0 = Date.parse('yyyy-MM-dd', '2017-04-07')
 
 android {
     compileSdkVersion 25
@@ -20,8 +16,8 @@ android {
         applicationId 'name.leesah.nirvana'
         minSdkVersion 24
         targetSdkVersion 25
-        versionCode use(TimeCategory) {(new Date() - DAY0).days}
-        versionName sprintf('%s%d', 'HRB', versionCode)
+        versionCode 32
+        versionName sprintf('HRB%d', versionCode)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
