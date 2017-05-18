@@ -37,7 +37,6 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
-import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -99,10 +98,6 @@ public class LanternGenie {
 
     public static void hire(AlarmSecretary alarmSecretary) {
         hireAlarmSecretary(alarmSecretary);
-    }
-
-    public static void hire(NotificationSecretary notificationSecretary) {
-        hireNotificationSecretary(notificationSecretary);
     }
 
     public static void treatmentDisabled(Context context) {

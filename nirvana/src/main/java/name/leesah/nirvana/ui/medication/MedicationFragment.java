@@ -1,5 +1,6 @@
 package name.leesah.nirvana.ui.medication;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,21 +10,17 @@ import android.view.MenuItem;
 
 import java.util.Set;
 
-import name.leesah.nirvana.PhoneBook;
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.data.Nurse;
-import name.leesah.nirvana.data.Pharmacist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.model.reminder.ReminderMaker;
-import name.leesah.nirvana.ui.reminder.AlarmSecretary;
-import name.leesah.nirvana.ui.reminder.NotificationSecretary;
+import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.app.Activity.RESULT_OK;
 import static name.leesah.nirvana.PhoneBook.*;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
+import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 
 public class MedicationFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -81,7 +78,8 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
         reminders.forEach(alarmSecretary(c)::setAlarm);
         deprecated.stream()
                 .filter(reminder -> reminder.getState().equals(NOTIFIED))
-                .forEach(reminder -> notificationSecretary(c).dismiss(reminder.getNotificationId()));
+                .forEach(reminder -> getContext().getSystemService(NotificationManager.class)
+                        .cancel(NOTIFICATION_TAG, reminder.getNotificationId()));
 
         getActivity().setResult(RESULT_OK);
         getActivity().finish();

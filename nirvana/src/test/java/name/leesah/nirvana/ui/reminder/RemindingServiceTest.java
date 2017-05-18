@@ -1,6 +1,8 @@
 package name.leesah.nirvana.ui.reminder;
 
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
@@ -9,10 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-
-import java.util.Set;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowContextImpl;
 
 import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.LanternGenie;
@@ -20,23 +25,29 @@ import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
-import static name.leesah.nirvana.LanternGenie.randomMedications;
+import static name.leesah.nirvana.LanternGenie.randomReminder;
+import static name.leesah.nirvana.LanternGenie.randomReminders;
 import static name.leesah.nirvana.PhoneBook.nurse;
-import static name.leesah.nirvana.PhoneBook.reminderMaker;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
+import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.robolectric.Robolectric.buildActivity;
 import static org.robolectric.RuntimeEnvironment.application;
+import static org.robolectric.Shadows.shadowOf;
 
 /**
  * Created by sah on 2017-04-07.
@@ -46,80 +57,65 @@ import static org.robolectric.RuntimeEnvironment.application;
 public class RemindingServiceTest {
 
     private Context context;
-    private Set<Reminder> reminders;
-    @Mock
-    private NotificationSecretary notificationSecretary;
+    private Reminder reminder;
+    // TODO: mock nurse
     @Mock
     private AlarmSecretary alarmSecretary;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-
         context = application.getApplicationContext();
-
-        hire(notificationSecretary);
         hire(alarmSecretary);
 
-        randomMedications(
-                context, true);
-        reminders = reminderMaker(context).createReminders(today());
-        nurse(context).add(reminders);
+        reminder = randomReminder(context, true, today());
     }
 
     @After
     public void tearDown() throws Exception {
-        LanternGenie.everythingVanishes(application.getApplicationContext());
+        everythingVanishes(context);
     }
 
     @Test
     public void showReminders() throws Exception {
-        reminders.forEach(reminder -> {
-            show(reminder);
-            verify(notificationSecretary).display(notifIdEquals(reminder), any(Notification.class));
-        });
-        verifyNoMoreInteractions(notificationSecretary);
+        show(reminder);
+        int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
+
+        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId)).isNotNull();
         verifyNoMoreInteractions(alarmSecretary);
     }
 
     @Test
     public void snoozeReminders() throws Exception {
-        reminders.forEach(reminder -> {
-            show(reminder);
-            reset(notificationSecretary);
-            reset(alarmSecretary);
+        show(reminder);
+        int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
+        reset(alarmSecretary);
 
-            int notifId = nurse(context).getReminder(reminder.getId()).getNotificationId();
-            snooze(reminder);
-            verify(notificationSecretary).dismiss(eq(notifId));
-            verify(alarmSecretary).setAlarm(medIdEquals(reminder));
-        });
-        verifyNoMoreInteractions(notificationSecretary);
+        snooze(reminder);
+
+        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId)).isNull();
+        verify(alarmSecretary).setAlarm(hasSameMedicationIdAs(reminder));
         verifyNoMoreInteractions(alarmSecretary);
     }
 
     @Test
     public void confirmReminders() throws Exception {
-        reminders.forEach(reminder -> {
-            show(reminder);
-            reset(notificationSecretary);
+        show(reminder);
+        int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
 
-            confirm(reminder);
-            verify(notificationSecretary).dismiss(notifIdEquals(reminder));
-        });
-        verifyNoMoreInteractions(notificationSecretary);
+        confirm(reminder);
+
+        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId)).isNull();
         verifyNoMoreInteractions(alarmSecretary);
     }
 
     @Test
     public void showReminderDetails() {
-        reminders.forEach(reminder -> {
-            show(reminder);
-            reset(notificationSecretary);
+        show(reminder);
 
-            showDetails(reminder);
-        });
-        verifyNoMoreInteractions(notificationSecretary);
+        showDetails(reminder);
+
+        // TODO: verify activity started
         verifyNoMoreInteractions(alarmSecretary);
     }
 
@@ -150,12 +146,7 @@ public class RemindingServiceTest {
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
     }
 
-    private int notifIdEquals(Reminder expected) {
-        Reminder reminder = nurse(context).getReminder(expected.getId());
-        return eq(reminder.getNotificationId());
-    }
-
-    private Reminder medIdEquals(Reminder expected) {
+    private Reminder hasSameMedicationIdAs(Reminder expected) {
         return argThat(actual -> expected.getMedicationId() == actual.getMedicationId());
     }
 

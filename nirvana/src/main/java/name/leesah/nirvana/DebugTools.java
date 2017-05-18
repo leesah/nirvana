@@ -5,15 +5,10 @@ import android.content.Context;
 import android.widget.Toast;
 
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import name.leesah.nirvana.data.Nurse;
-import name.leesah.nirvana.data.Pharmacist;
-import name.leesah.nirvana.data.Therapist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
@@ -21,9 +16,6 @@ import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.main.MainActivity;
-import name.leesah.nirvana.ui.reminder.AlarmSecretary;
-import name.leesah.nirvana.ui.reminder.NotificationSecretary;
 import name.leesah.nirvana.ui.reminder.SchedulingService;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;

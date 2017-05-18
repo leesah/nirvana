@@ -2,6 +2,7 @@ package name.leesah.nirvana.ui.reminder;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -9,16 +10,12 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import name.leesah.nirvana.PhoneBook;
-import name.leesah.nirvana.data.Nurse;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.Collections.singleton;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.alarmSecretary;
-import static name.leesah.nirvana.PhoneBook.notificationSecretary;
 import static name.leesah.nirvana.PhoneBook.nurse;
-import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 
@@ -38,7 +35,7 @@ public class RemindingService extends IntentService {
     static final String EXTRA_REMINDER_ID = "name.leesah.nirvana.ui.extra.REMINDER";
 
     static final int SNOOZE_FOR_MINUTES = 15;
-    static final String NOTIFICATION_TAG = "name.leesah.nirvana.ui.notification.REMINDER";
+    public static final String NOTIFICATION_TAG = "name.leesah.nirvana.ui.notification.REMINDER";
 
     public RemindingService() {
         super(RemindingService.class.getSimpleName());
@@ -75,7 +72,7 @@ public class RemindingService extends IntentService {
 
         int notificationId = uniqueInt();
         Notification notification = new NotificationBuilder(this, reminder).build();
-        notificationSecretary(this).display(notificationId, notification);
+        display(notificationId, notification);
         nurse(this).setNotified(reminderId, notificationId);
 
         Log.d(TAG, String.format("Reminder shown: [%s]", reminder));
@@ -88,7 +85,7 @@ public class RemindingService extends IntentService {
             return;
         }
 
-        notificationSecretary(this).dismiss(reminder.getNotificationId());
+        dismiss(reminder.getNotificationId());
 
         Reminder snoozed = reminder.snooze(SNOOZE_FOR_MINUTES);
         alarmSecretary(this).setAlarm(snoozed);
@@ -105,7 +102,7 @@ public class RemindingService extends IntentService {
             return;
         }
 
-        notificationSecretary(this).dismiss(reminder.getNotificationId());
+        dismiss(reminder.getNotificationId());
         nurse(this).setDone(reminder.getId());
 
         Log.d(TAG, String.format("Reminder confirmed: [%s].", reminder));
@@ -117,6 +114,14 @@ public class RemindingService extends IntentService {
             throw new IllegalStateException("Reminder ID missing from Intent");
         }
         return intent.getIntExtra(EXTRA_REMINDER_ID, Integer.MIN_VALUE);
+    }
+
+    public void display(int notificationId, Notification notification) {
+        getSystemService(NotificationManager.class).notify(NOTIFICATION_TAG, notificationId, notification);
+    }
+
+    public void dismiss(int notificationId) {
+        getSystemService(NotificationManager.class).cancel(NOTIFICATION_TAG, notificationId);
     }
 
     private void showToast(final String text) {
