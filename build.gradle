@@ -28,11 +28,12 @@ allprojects {
 }
 
 ext {
-    support_lib_version = '26.0.0-alpha1'
+    support_lib_version = "26.0.0-alpha1"
+    firebase_version = "10.2.6"
     espresso_version = "2.2.2"
     guava_version = "21.0"
     junit_version = "4.12"
-    mockito_version = '2.7.22'
+    mockito_version = "2.7.22"
 }
 
 task clean(type: Delete) {
