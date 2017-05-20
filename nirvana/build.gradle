@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.github.triplet.play'
 
 def keystoreProperties = new Properties()
@@ -19,12 +18,13 @@ android {
         targetSdkVersion 26
         versionCode 32
         versionName sprintf('HRB%d', versionCode)
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
     signingConfigs {
         config {
-            storeFile rootProject.file('keystore/release.jks')
+            storeFile rootProject.file('keystore/upload-keys.jks')
             storePassword keystoreProperties['storePassword']
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -34,9 +34,6 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
-        }
-        debug {
             signingConfig signingConfigs.config
         }
     }
@@ -55,6 +52,9 @@ android {
             java.srcDir sharedTestDir
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 play {
@@ -64,32 +64,45 @@ play {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Support library
     compile "com.android.support:appcompat-v7:$rootProject.ext.support_lib_version"
     compile "com.android.support:design:$rootProject.ext.support_lib_version"
     compile "com.android.support:cardview-v7:$rootProject.ext.support_lib_version"
     compile "com.android.support.constraint:constraint-layout:1.0.2"
+    androidTestCompile "com.android.support:support-annotations:$rootProject.ext.support_lib_version"
+    androidTestCompile "com.android.support:recyclerview-v7:$rootProject.ext.support_lib_version"
+    androidTestCompile "com.android.support:design:$rootProject.ext.support_lib_version"
+
+    // Firebase
     compile "com.google.firebase:firebase-core:$rootProject.ext.firebase_version"
     compile "com.google.firebase:firebase-crash:$rootProject.ext.firebase_version"
     compile "com.google.firebase:firebase-appindexing:$rootProject.ext.firebase_version"
     compile "com.google.firebase:firebase-ads:$rootProject.ext.firebase_version"
-    compile "com.google.code.gson:gson:2.8.0"
-    compile "com.google.guava:guava:$rootProject.ext.guava_version"
-    compile "joda-time:joda-time:2.9.9"
-    compile "org.apache.commons:commons-lang3:3.5"
+
+    // JUnit, Mockito & Hamcrest
     testCompile "junit:junit:$rootProject.ext.junit_version"
     testCompile "org.mockito:mockito-core:$rootProject.ext.mockito_version"
-    testCompile "org.robolectric:robolectric:3.3.2"
-    testCompile "com.google.guava:guava:$rootProject.ext.guava_version"
     androidTestCompile "junit:junit:$rootProject.ext.junit_version"
     androidTestCompile "org.hamcrest:hamcrest-library:1.3"
     androidTestCompile "org.mockito:mockito-android:$rootProject.ext.mockito_version"
-    androidTestCompile "com.google.guava:guava:$rootProject.ext.guava_version"
+
+    // Robolectric
+    testCompile "org.robolectric:robolectric:3.3.2"
+
+    // Espresso
     androidTestCompile "com.android.support.test:runner:0.5"
     androidTestCompile "com.android.support.test:rules:0.5"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espresso_version"
     androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espresso_version"
-    androidTestCompile "com.android.support:support-annotations:$rootProject.ext.support_lib_version"
-    androidTestCompile "com.android.support:recyclerview-v7:$rootProject.ext.support_lib_version"
-    androidTestCompile "com.android.support:design:$rootProject.ext.support_lib_version"
+
+    // Utility libraries
+    compile "com.google.code.gson:gson:2.8.0"
+    compile "joda-time:joda-time:2.9.9"
+    compile "org.apache.commons:commons-lang3:3.5"
+    compile "com.google.guava:guava:$rootProject.ext.guava_version"
+    testCompile "com.google.guava:guava:$rootProject.ext.guava_version"
+    androidTestCompile "com.google.guava:guava:$rootProject.ext.guava_version"
 }
 
+apply plugin: 'com.google.gms.google-services'
