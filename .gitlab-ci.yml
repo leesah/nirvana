@@ -1,7 +1,7 @@
 image: openjdk:8-jdk
 
 variables:
-  TARGET_SDK: "26"
+  TARGET_SDK: "O"
   ANDROID_SDK_VERSION: "25.2.5"
   GCLOUD_SDK_VERSION: "152.0.0"
 
