@@ -37,16 +37,16 @@ public class MedicationCard extends FrameLayout {
         super(context, attrs);
 
         inflate(getContext(), R.layout.medication_card, this);
-        name = findViewById(R.id.name);
-        manufacturer = findViewById(R.id.manufacturer);
-        repeating = findViewById(R.id.repeating);
-        reminding = findViewById(R.id.reminding);
-        suggestions = findViewById(R.id.suggestions);
-        dosageForm = findViewById(R.id.icon);
+        name = (TextView) findViewById(R.id.name);
+        manufacturer = (TextView) findViewById(R.id.manufacturer);
+        repeating = (TextView) findViewById(R.id.repeating);
+        reminding = (TextView) findViewById(R.id.reminding);
+        suggestions = (TextView) findViewById(R.id.suggestions);
+        dosageForm = (ImageView) findViewById(R.id.icon);
         buttonBar = findViewById(R.id.button_bar);
-        edit = findViewById(R.id.edit_button);
-        delete = findViewById(R.id.delete_button);
-        cancel = findViewById(R.id.cancel_button);
+        edit = (Button) findViewById(R.id.edit_button);
+        delete = (Button) findViewById(R.id.delete_button);
+        cancel = (Button) findViewById(R.id.cancel_button);
     }
 
     public void setMedication(@NonNull Medication medication) {
