@@ -69,24 +69,6 @@ public class MedicationActivity extends AppCompatActivity {
         });
     }
 
-    public static void add(Activity caller) {
-        clearStaged(caller);
-        Intent intent = new Intent(caller, MedicationActivity.class)
-                .setAction(ACTION_ADD_MEDICATION);
-        caller.startActivityForResult(intent, REQUEST_CODE_ADD_MEDICATION);
-    }
-
-    public static void edit(Activity caller, Medication medication) {
-        writeToStaged(caller, medication);
-        Intent intent = new Intent(caller, MedicationActivity.class)
-                .setAction(ACTION_EDIT_MEDICATION);
-        caller.startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICATION);
-    }
-
-    private static void clearStaged(Context context) {
-        context.getSharedPreferences(STAGING, MODE_PRIVATE).edit().clear().apply();
-    }
-
     private void confirmBeforeClosing(Runnable onOkay) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.alert_abort_medication_title)
@@ -96,7 +78,11 @@ public class MedicationActivity extends AppCompatActivity {
                 .create().show();
     }
 
-    static void writeToStaged(Context context, Medication medication) {
+    public static void clearStaged(Context context) {
+        context.getSharedPreferences(STAGING, MODE_PRIVATE).edit().clear().apply();
+    }
+
+    public static void writeToStaged(Context context, Medication medication) {
         context.getSharedPreferences(STAGING, MODE_PRIVATE).edit()
                 .putInt(context.getString(R.string.pref_key_medication_id),
                         medication.getId())

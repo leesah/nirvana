@@ -18,6 +18,7 @@ import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
@@ -49,9 +50,12 @@ public class TiledRemindersCard extends FrameLayout {
     public void fillWith(Data data) {
         time.setText(toText(data.time));
 
-        List<Reminder> reminders = new ArrayList<>(data.reminders);
-        reminders.sort(comparing(reminder -> pharmacist(getContext())
-                .getMedication(reminder.getMedicationId()).getName()));
+        List<Reminder> reminders = data.reminders.stream()
+                .filter(reminder -> pharmacist(getContext())
+                        .getMedication(reminder.getMedicationId()) != null)
+                .sorted(comparing(reminder -> pharmacist(getContext())
+                        .getMedication(reminder.getMedicationId()).getName()))
+                .collect(Collectors.toList());
 
         tiledItems.setAdapter(new ItemArrayAdapter(getContext(), reminders));
         optimize(tiledItems);

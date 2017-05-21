@@ -61,6 +61,7 @@ public class MainActivityAddAndEditMedicationTest {
         onView(withId(R.id.navigation_medications)).perform(click());
 
         onView(withText(existing.getName())).perform(click());
+        onView(withText(R.string.edit)).perform(click());
         onView(withText(R.string.pref_title_medication_name)).check(matches(isDisplayed()));
 
         pressBack();

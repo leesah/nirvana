@@ -50,14 +50,6 @@ public class MainActivity extends AppCompatActivity {
         restoreStatus(savedInstanceState);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_ADD_MEDICATION ||
-                requestCode == REQUEST_CODE_EDIT_MEDICATION &&
-                        resultCode == RESULT_OK)
-            clearBackStackAndReplaceFragment(medicationListFragment);
-    }
-
     private void restoreStatus(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             int position = savedInstanceState.getInt(KEY_NAV_POS, 0);
