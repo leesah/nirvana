@@ -58,7 +58,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_button:
-                analytics.logEvent("SAVE_BUTTON", null);
+                analytics.logEvent("medication_save", null);
                 saveMedication();
                 return true;
 
@@ -70,16 +70,13 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         Bundle params = new Bundle();
-        params.putCharSequence(ITEM_ID, preference.getKey());
-        analytics.logEvent("PREFERENCE", params);
+        params.putCharSequence("preference", preference.getKey());
+        analytics.logEvent("preference_click", params);
         return false;
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Bundle params = new Bundle();
-        params.putCharSequence(ITEM_ID, key);
-        analytics.logEvent("CHANGE_MEDICATION_FIELD", params);
         refreshSaveButtonEnabled();
     }
 

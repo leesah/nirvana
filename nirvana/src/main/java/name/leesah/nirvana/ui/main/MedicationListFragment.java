@@ -84,8 +84,8 @@ public class MedicationListFragment extends Fragment {
         listView.setEmptyView(view.findViewById(R.id.empty_view));
         listView.setOnItemClickListener((a, v, position, l) -> {
             Bundle params = new Bundle();
-            params.putCharSequence("MEDICATION", medications.get(position).toString());
-            analytics.logEvent("SHOW_BUTTON_BAR", params);
+            params.putCharSequence("medication", medications.get(position).toString());
+            analytics.logEvent("medication_button_bar_show", params);
 
             selected = position;
             adapter.notifyDataSetChanged();
@@ -95,7 +95,10 @@ public class MedicationListFragment extends Fragment {
         addButton.setOnClickListener(v -> add());
 
         refreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh));
-        refreshLayout.setOnRefreshListener(() -> new RefreshTask().execute());
+        refreshLayout.setOnRefreshListener(() -> {
+            analytics.logEvent("medication_list_refresh_swipe", null);
+            new RefreshTask().execute();
+        });
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -109,7 +112,7 @@ public class MedicationListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_button:
-                analytics.logEvent("REFRESH_FROM_MENU", null);
+                analytics.logEvent("medication_list_refresh_menu", null);
                 performRefresh();
                 return true;
             default:
@@ -144,7 +147,7 @@ public class MedicationListFragment extends Fragment {
     }
 
     public void add() {
-        analytics.logEvent("ADD_MEDICATION_BUTTON", null);
+        analytics.logEvent("medication_add", null);
 
         clearStaged(getContext());
         Intent intent = new Intent(getContext(), MedicationActivity.class)
@@ -154,8 +157,8 @@ public class MedicationListFragment extends Fragment {
 
     public void edit(Medication medication) {
         Bundle params = new Bundle();
-        params.putCharSequence("MEDICATION", medication.toString());
-        analytics.logEvent("EDIT_MEDICATION_BUTTON", params);
+        params.putCharSequence("medication", medication.toString());
+        analytics.logEvent("medication_edit", params);
 
         writeToStaged(getContext(), medication);
         Intent intent = new Intent(getContext(), MedicationActivity.class)
@@ -174,8 +177,8 @@ public class MedicationListFragment extends Fragment {
 
     private void performDelete(Medication medication) {
         Bundle params = new Bundle();
-        params.putCharSequence("MEDICATION", medication.toString());
-        analytics.logEvent("DELETE_MEDICATION_BUTTON", params);
+        params.putCharSequence("medication", medication.toString());
+        analytics.logEvent("medication_delete", params);
 
         nurse(getContext()).replace(isFor(medication), emptySet());
         pharmacist(getContext()).removeMedication(medication.getId());

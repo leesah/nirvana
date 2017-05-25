@@ -65,9 +65,13 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_button:
-                analytics.logEvent("SAVE_BUTTON", null);
                 String json = getGson().toJson(readStrategy(), strategyType.getType());
                 getSharedPreferences().edit().putString(getPreferenceKey(), json).apply();
+
+                Bundle params = new Bundle();
+                params.putCharSequence("json", json);
+                analytics.logEvent("strategy_save", params);
+
                 getActivity().setResult(RESULT_OK);
                 getActivity().finish();
                 return true;

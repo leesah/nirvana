@@ -1,11 +1,14 @@
 package name.leesah.nirvana.ui.preference;
 
+import android.os.Bundle;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import name.leesah.nirvana.R;
 
@@ -19,13 +22,14 @@ public class CheckablePreferenceDelegate {
     private Switch switchWidget;
     private OnCheckedChangeListener onCheckedChangeListener;
     private OnTextFrameClickListener onTextFrameClickListener;
+    private FirebaseAnalytics analytics;
 
     public CheckablePreferenceDelegate(Preference preference, AttributeSet attrs) {
         this.preference = preference;
         preference.setLayoutResource(R.layout.preference_unclickable);
         preference.setWidgetLayoutResource(R.layout.preference_widget_switch);
         preference.setShouldDisableView(false);
-
+        analytics = FirebaseAnalytics.getInstance(preference.getContext());
     }
 
     public void onBindView(View view) {
@@ -33,7 +37,7 @@ public class CheckablePreferenceDelegate {
 
         iconFrame = view.findViewById(android.R.id.icon_frame);
         textFrame = view.findViewById(R.id.text_frame);
-        textFrame.setOnClickListener(v -> onTextFrameClickListener.onTextFrameClick());
+        textFrame.setOnClickListener(v -> onTextFrameClick());
 
         switchWidget = (Switch) view.findViewById(android.R.id.switch_widget);
         switchWidget.setClickable(true);
@@ -49,7 +53,17 @@ public class CheckablePreferenceDelegate {
     public void onClick() {
     }
 
+    private void onTextFrameClick() {
+        analytics.logEvent("checkable_preference_click", null);
+
+        onTextFrameClickListener.onTextFrameClick();
+    }
+
     void onCheckedChange(CompoundButton buttonView, boolean checked) {
+        Bundle params = new Bundle();
+        params.putBoolean("checked", checked);
+        analytics.logEvent("checkable_preference_toggle", params);
+
         if (!callChangeListener(checked)) {
             buttonView.setChecked(!checked);
             return;

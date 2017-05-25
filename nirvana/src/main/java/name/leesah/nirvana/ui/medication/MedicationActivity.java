@@ -53,7 +53,7 @@ public class MedicationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                analytics.logEvent("HOME_BUTTON", null);
+                analytics.logEvent("navigate_up", null);
                 confirmBeforeClosing(() -> {
                     clearStaged(this);
                     navigateUpFromSameTask(this);
@@ -67,7 +67,7 @@ public class MedicationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        analytics.logEvent("BACK_BUTTON", null);
+        analytics.logEvent("navigate_back", null);
         confirmBeforeClosing(() -> {
             clearStaged(this);
             setResult(RESULT_CANCELED);

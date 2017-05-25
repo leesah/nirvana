@@ -80,7 +80,10 @@ public class RemindersOfDayFragment extends Fragment {
         listView.setEmptyView(view.findViewById(R.id.empty_view));
 
         refreshLayout = ((SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh));
-        refreshLayout.setOnRefreshListener(() -> new RefreshTask().execute());
+        refreshLayout.setOnRefreshListener(() -> {
+            analytics.logEvent("reminder_list_refresh_swipe", null);
+            new RefreshTask().execute();
+        });
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -94,7 +97,7 @@ public class RemindersOfDayFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_button:
-                analytics.logEvent("REFRESH_FROM_MENU", null);
+                analytics.logEvent("reminder_list_refresh_menu", null);
                 refreshLayout.setRefreshing(true);
                 new RefreshTask().execute();
                 return true;

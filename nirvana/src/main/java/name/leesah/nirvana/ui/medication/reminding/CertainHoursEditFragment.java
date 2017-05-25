@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
@@ -71,6 +73,10 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
     }
 
     public void editRow(int position) {
+        Bundle params = new Bundle();
+        params.putCharSequence("dosage", dosages.get(position).toString());
+        analytics.logEvent("dosage_click", params);
+
         setSaveButtonEnabled(false);
         hideListFooter();
         adapter.setEditing(position);
@@ -79,8 +85,8 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     private void onAddDosage(TimedDosage dosage) {
         Bundle params = new Bundle();
-        params.putCharSequence("DOSAGE", dosage.toString());
-        analytics.logEvent("ADD_BUTTON", null);
+        params.putCharSequence("dosage", dosage.toString());
+        analytics.logEvent("dosage_add", null);
 
         if (dosageExists(dosage.getTimeOfDay())) {
             Toast.makeText(getContext(), R.string.err_dosage_already_added, Toast.LENGTH_LONG).show();
@@ -95,8 +101,8 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     public void onSaveDosage(int position, TimedDosage dosage) {
         Bundle params = new Bundle();
-        params.putCharSequence("DOSAGE", dosage.toString());
-        analytics.logEvent("SAVE_BUTTON", null);
+        params.putCharSequence("dosage", dosage.toString());
+        analytics.logEvent("dosage_save", null);
 
         if (dosageExists(dosage.getTimeOfDay())) {
             Toast.makeText(getContext(), R.string.err_dosage_already_added, Toast.LENGTH_LONG).show();
@@ -112,8 +118,8 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     public void onDeleteDosage(int position) {
         Bundle params = new Bundle();
-        params.putCharSequence("DOSAGE", dosages.get(position).toString());
-        analytics.logEvent("DELETE_BUTTON", null);
+        params.putCharSequence("dosage", dosages.get(position).toString());
+        analytics.logEvent("dosage_delete", null);
 
         dosages.remove(position);
         adapter.setEditingFinished();

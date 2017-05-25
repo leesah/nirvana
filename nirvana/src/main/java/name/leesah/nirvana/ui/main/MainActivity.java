@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onNavigation(MenuItem item) {
         Bundle params = new Bundle();
-        params.putCharSequence(ITEM_NAME, item.getTitle());
-        FirebaseAnalytics.getInstance(this).logEvent("BOTTOM_NAVIGATION", params);
+        params.putCharSequence("item_title", item.getTitle());
+        FirebaseAnalytics.getInstance(this).logEvent("main_navigate", params);
 
         switch (item.getItemId()) {
             case R.id.navigation_medications:

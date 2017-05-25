@@ -136,8 +136,8 @@ public class StrategySelectActivity extends AppCompatActivity {
 
         private boolean onSelectStrategy(String choice) {
             Bundle params = new Bundle();
-            params.putCharSequence(ITEM_ID, choice);
-            FirebaseAnalytics.getInstance(getContext()).logEvent("SELECT_STRATEGY", params);
+            params.putCharSequence("strategy", choice);
+            FirebaseAnalytics.getInstance(getContext()).logEvent("strategy_select", params);
 
             if (!listViewOptimized)
                 optimize((ListView) getView().findViewById(android.R.id.list));
