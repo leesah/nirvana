@@ -55,6 +55,7 @@ public class MedicationActivity extends AppCompatActivity {
             case android.R.id.home:
                 analytics.logEvent("navigate_up", null);
                 confirmBeforeClosing(() -> {
+                    analytics.logEvent("stage_clear", null);
                     clearStaged(this);
                     navigateUpFromSameTask(this);
                 });
@@ -69,6 +70,7 @@ public class MedicationActivity extends AppCompatActivity {
     public void onBackPressed() {
         analytics.logEvent("navigate_back", null);
         confirmBeforeClosing(() -> {
+            analytics.logEvent("stage_clear", null);
             clearStaged(this);
             setResult(RESULT_CANCELED);
             finish();
