@@ -78,6 +78,10 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
     }
 
     private void onAddDosage(TimedDosage dosage) {
+        Bundle params = new Bundle();
+        params.putCharSequence("DOSAGE", dosage.toString());
+        analytics.logEvent("ADD_BUTTON", null);
+
         if (dosageExists(dosage.getTimeOfDay())) {
             Toast.makeText(getContext(), R.string.err_dosage_already_added, Toast.LENGTH_LONG).show();
             return;
@@ -90,6 +94,10 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
     }
 
     public void onSaveDosage(int position, TimedDosage dosage) {
+        Bundle params = new Bundle();
+        params.putCharSequence("DOSAGE", dosage.toString());
+        analytics.logEvent("SAVE_BUTTON", null);
+
         if (dosageExists(dosage.getTimeOfDay())) {
             Toast.makeText(getContext(), R.string.err_dosage_already_added, Toast.LENGTH_LONG).show();
             return;
@@ -103,6 +111,10 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
     }
 
     public void onDeleteDosage(int position) {
+        Bundle params = new Bundle();
+        params.putCharSequence("DOSAGE", dosages.get(position).toString());
+        analytics.logEvent("DELETE_BUTTON", null);
+
         dosages.remove(position);
         adapter.setEditingFinished();
         adapter.notifyDataSetChanged();

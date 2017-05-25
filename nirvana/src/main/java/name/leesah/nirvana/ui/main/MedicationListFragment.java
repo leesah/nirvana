@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +35,8 @@ import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_NAME;
+import static com.google.firebase.analytics.FirebaseAnalytics.Param.VALUE;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 import static name.leesah.nirvana.PhoneBook.nurse;
@@ -56,11 +60,13 @@ public class MedicationListFragment extends Fragment {
     private ArrayAdapter<Medication> adapter;
     private SwipeRefreshLayout refreshLayout;
     private int selected = -1;
+    private FirebaseAnalytics analytics;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        analytics = FirebaseAnalytics.getInstance(getContext());
 
         if (medications.isEmpty()) medications.addAll(buildMedicationList());
         if (adapter == null) adapter = new MedicationArrayAdapter(getContext(), medications);
@@ -77,6 +83,10 @@ public class MedicationListFragment extends Fragment {
         listView.setAdapter(adapter);
         listView.setEmptyView(view.findViewById(R.id.empty_view));
         listView.setOnItemClickListener((a, v, position, l) -> {
+            Bundle params = new Bundle();
+            params.putCharSequence("MEDICATION", medications.get(position).toString());
+            analytics.logEvent("SHOW_BUTTON_BAR", params);
+
             selected = position;
             adapter.notifyDataSetChanged();
         });
@@ -99,6 +109,7 @@ public class MedicationListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_button:
+                analytics.logEvent("REFRESH_FROM_MENU", null);
                 performRefresh();
                 return true;
             default:
@@ -133,6 +144,8 @@ public class MedicationListFragment extends Fragment {
     }
 
     public void add() {
+        analytics.logEvent("ADD_MEDICATION_BUTTON", null);
+
         clearStaged(getContext());
         Intent intent = new Intent(getContext(), MedicationActivity.class)
                 .setAction(ACTION_ADD_MEDICATION);
@@ -140,6 +153,10 @@ public class MedicationListFragment extends Fragment {
     }
 
     public void edit(Medication medication) {
+        Bundle params = new Bundle();
+        params.putCharSequence("MEDICATION", medication.toString());
+        analytics.logEvent("EDIT_MEDICATION_BUTTON", params);
+
         writeToStaged(getContext(), medication);
         Intent intent = new Intent(getContext(), MedicationActivity.class)
                 .setAction(ACTION_EDIT_MEDICATION);
@@ -156,6 +173,10 @@ public class MedicationListFragment extends Fragment {
     }
 
     private void performDelete(Medication medication) {
+        Bundle params = new Bundle();
+        params.putCharSequence("MEDICATION", medication.toString());
+        analytics.logEvent("DELETE_MEDICATION_BUTTON", params);
+
         nurse(getContext()).replace(isFor(medication), emptySet());
         pharmacist(getContext()).removeMedication(medication.getId());
         performRefresh();

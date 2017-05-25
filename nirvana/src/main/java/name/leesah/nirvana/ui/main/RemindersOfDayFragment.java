@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.Period;
@@ -53,11 +55,13 @@ public class RemindersOfDayFragment extends Fragment {
     private final List<Object> cards = new ArrayList<>();
     private TiledRemindersCardArrayAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
+    private FirebaseAnalytics analytics;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        analytics = FirebaseAnalytics.getInstance(getContext());
 
         if (cards.isEmpty()) cards.addAll(buildCards());
         if (adapter == null) adapter = new TiledRemindersCardArrayAdapter(getContext(), cards);
@@ -90,6 +94,7 @@ public class RemindersOfDayFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_button:
+                analytics.logEvent("REFRESH_FROM_MENU", null);
                 refreshLayout.setRefreshing(true);
                 new RefreshTask().execute();
                 return true;

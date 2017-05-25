@@ -2,6 +2,7 @@ package name.leesah.nirvana.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.joda.time.LocalTime;
 
@@ -76,6 +79,7 @@ public class TiledRemindersCard extends FrameLayout {
         private final TextView medicationName;
         private final TextView dosage;
         private final ImageView status;
+        private Medication medication;
 
         public TiledItem(Context context, @Nullable AttributeSet attrs) {
             super(context, attrs);
@@ -86,7 +90,7 @@ public class TiledRemindersCard extends FrameLayout {
         }
 
         public void setReminder(Reminder reminder) {
-            Medication medication = pharmacist(getContext())
+            medication = pharmacist(getContext())
                     .getMedication(reminder.getMedicationId());
 
             medicationName.setText(medication == null ?
@@ -113,6 +117,11 @@ public class TiledRemindersCard extends FrameLayout {
         }
 
         private void viewReminderDetails(Reminder reminder) {
+            Bundle params = new Bundle();
+            params.putCharSequence("REMINDER", reminder.toString());
+            params.putCharSequence("MEDICATION", medication.toString());
+            FirebaseAnalytics.getInstance(getContext()).logEvent("VIEW_REMINDER_DETAILS", params);
+
             getContext().startActivity(new Intent(getContext(), ReminderDetailsActivity.class)
                     .putExtra(ReminderDetailsActivity.EXTRA_REMINDER_ID, reminder.getId()));
         }

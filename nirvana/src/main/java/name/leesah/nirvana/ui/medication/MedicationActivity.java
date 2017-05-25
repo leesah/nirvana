@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 
@@ -24,11 +26,13 @@ public class MedicationActivity extends AppCompatActivity {
     public static final String ACTION_EDIT_MEDICATION = "name.leesah.nirvana:action:EDIT_MEDICATION";
     public static final String STAGING = "name.leesah.nirvana:preference:MEDICATION_STAGING";
     private MedicationFragment medicationFragment = new MedicationFragment();
+    private FirebaseAnalytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_container);
+        analytics = FirebaseAnalytics.getInstance(this);
 
         setTitle(getSharedPreferences(STAGING, MODE_PRIVATE).getString(
                 getString(R.string.pref_key_medication_name),
@@ -49,6 +53,7 @@ public class MedicationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                analytics.logEvent("HOME_BUTTON", null);
                 confirmBeforeClosing(() -> {
                     clearStaged(this);
                     navigateUpFromSameTask(this);
@@ -62,6 +67,7 @@ public class MedicationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        analytics.logEvent("BACK_BUTTON", null);
         confirmBeforeClosing(() -> {
             clearStaged(this);
             setResult(RESULT_CANCELED);

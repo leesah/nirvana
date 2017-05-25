@@ -4,9 +4,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Set;
 
@@ -16,6 +20,8 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.app.Activity.RESULT_OK;
+import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_ID;
+import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_NAME;
 import static name.leesah.nirvana.PhoneBook.*;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
@@ -26,12 +32,13 @@ import static name.leesah.nirvana.utils.DateTimeHelper.today;
 public class MedicationFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private MenuItem saveButton;
+    private FirebaseAnalytics analytics;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
+        analytics = FirebaseAnalytics.getInstance(getContext());
 
         getPreferenceManager().setSharedPreferencesName(STAGING);
         getPreferenceManager().getSharedPreferences()
@@ -51,6 +58,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_button:
+                analytics.logEvent("SAVE_BUTTON", null);
                 saveMedication();
                 return true;
 
@@ -60,7 +68,18 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     }
 
     @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        Bundle params = new Bundle();
+        params.putCharSequence(ITEM_ID, preference.getKey());
+        analytics.logEvent("PREFERENCE", params);
+        return false;
+    }
+
+    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Bundle params = new Bundle();
+        params.putCharSequence(ITEM_ID, key);
+        analytics.logEvent("CHANGE_MEDICATION_FIELD", params);
         refreshSaveButtonEnabled();
     }
 

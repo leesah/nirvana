@@ -15,11 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import name.leesah.nirvana.R;
 
+import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_ID;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -132,6 +135,10 @@ public class StrategySelectActivity extends AppCompatActivity {
         }
 
         private boolean onSelectStrategy(String choice) {
+            Bundle params = new Bundle();
+            params.putCharSequence(ITEM_ID, choice);
+            FirebaseAnalytics.getInstance(getContext()).logEvent("SELECT_STRATEGY", params);
+
             if (!listViewOptimized)
                 optimize((ListView) getView().findViewById(android.R.id.list));
             listViewOptimized = true;

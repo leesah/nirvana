@@ -7,12 +7,16 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics.Param;
+
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
 import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
+import static com.google.firebase.analytics.FirebaseAnalytics.Param.*;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
@@ -64,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean onNavigation(MenuItem item) {
+        Bundle params = new Bundle();
+        params.putCharSequence(ITEM_NAME, item.getTitle());
+        FirebaseAnalytics.getInstance(this).logEvent("BOTTOM_NAVIGATION", params);
+
         switch (item.getItemId()) {
             case R.id.navigation_medications:
                 clearBackStackAndReplaceFragment(medicationListFragment);

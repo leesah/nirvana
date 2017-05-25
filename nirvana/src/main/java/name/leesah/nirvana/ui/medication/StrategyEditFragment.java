@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.reflect.TypeToken;
 
 import name.leesah.nirvana.R;
@@ -32,6 +33,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
     private MenuItem saveButton;
     private boolean saveButtonEnabled = false;
     private final TypeToken<StrategyType> strategyType;
+    protected FirebaseAnalytics analytics;
 
     protected StrategyEditFragment(TypeToken<StrategyType> strategyType) {
         this.strategyType = strategyType;
@@ -41,6 +43,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        analytics = FirebaseAnalytics.getInstance(getContext());
 
         String json = getSharedPreferences().getString(getPreferenceKey(), null);
         if (!isEmpty(json)) updateView(getGson().fromJson(json, strategyType.getType()));
@@ -62,6 +65,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_button:
+                analytics.logEvent("SAVE_BUTTON", null);
                 String json = getGson().toJson(readStrategy(), strategyType.getType());
                 getSharedPreferences().edit().putString(getPreferenceKey(), json).apply();
                 getActivity().setResult(RESULT_OK);
