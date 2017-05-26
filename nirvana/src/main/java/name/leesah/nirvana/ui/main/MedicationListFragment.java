@@ -1,6 +1,5 @@
 package name.leesah.nirvana.ui.main;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
@@ -24,32 +23,25 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.persistence.Nurse;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.widget.MedicationCard;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
-import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_NAME;
-import static com.google.firebase.analytics.FirebaseAnalytics.Param.VALUE;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
-import static name.leesah.nirvana.persistence.Nurse.*;
+import static name.leesah.nirvana.persistence.Nurse.isFor;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_ADD_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.ACTION_EDIT_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_ADD_MEDICATION;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.REQUEST_CODE_EDIT_MEDICATION;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.clearStaged;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.writeToStaged;
-import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -57,10 +49,10 @@ import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 public class MedicationListFragment extends Fragment {
 
     private final List<Medication> medications = new ArrayList<>();
-    private ArrayAdapter<Medication> adapter;
+    private MedicationArrayAdapter adapter;
     private SwipeRefreshLayout refreshLayout;
-    private int selected = -1;
     private FirebaseAnalytics analytics;
+    int selected = -1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,13 +74,13 @@ public class MedicationListFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.medications);
         listView.setAdapter(adapter);
         listView.setEmptyView(view.findViewById(R.id.empty_view));
-        listView.setOnItemClickListener((a, v, position, l) -> {
+        listView.setOnItemClickListener((p, v, position, n) -> {
             Bundle params = new Bundle();
             params.putInt("medication_id", medications.get(position).getId());
             params.putString("medication_name", medications.get(position).getName());
             analytics.logEvent("medication_button_bar_show", params);
 
-            selected = position;
+            selected = selected == position ? -1 : position;
             adapter.notifyDataSetChanged();
         });
 
@@ -156,23 +148,23 @@ public class MedicationListFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE_ADD_MEDICATION);
     }
 
-    public void edit(Medication medication) {
+    private void onEdit() {
         Bundle params = new Bundle();
-        params.putInt("medication_id", medication.getId());
-        params.putString("medication_name", medication.getName());
+        params.putInt("medication_id", medications.get(selected).getId());
+        params.putString("medication_name", medications.get(selected).getName());
         analytics.logEvent("medication_edit", params);
 
-        writeToStaged(getContext(), medication);
+        writeToStaged(getContext(), medications.get(selected));
         Intent intent = new Intent(getContext(), MedicationActivity.class)
                 .setAction(ACTION_EDIT_MEDICATION);
         startActivityForResult(intent, REQUEST_CODE_EDIT_MEDICATION);
     }
 
-    private void delete(Medication medication) {
+    private void onDelete() {
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.alert_delete_medication_title)
-                .setMessage(getContext().getString(R.string.alert_delete_medication_message, medication.getName()))
-                .setPositiveButton(android.R.string.ok, (d, w) -> performDelete(medication))
+                .setMessage(getContext().getString(R.string.alert_delete_medication_message, medications.get(selected).getName()))
+                .setPositiveButton(android.R.string.ok, (d, w) -> performDelete(medications.get(selected)))
                 .setNegativeButton(android.R.string.cancel, null)
                 .create().show();
     }
@@ -188,6 +180,11 @@ public class MedicationListFragment extends Fragment {
         performRefresh();
     }
 
+    private void onCancel() {
+        selected = -1;
+        adapter.notifyDataSetChanged();
+    }
+
     /**
      * Created by sah on 2016-12-11.
      */
@@ -201,11 +198,11 @@ public class MedicationListFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             MedicationCard view = convertView == null ? new MedicationCard(getContext(), null) : (MedicationCard) convertView;
-            Medication medication = getItem(position);
-            view.setMedication(medication);
-            view.findViewById(R.id.edit_button).setOnClickListener(v -> edit(medication));
-            view.findViewById(R.id.delete_button).setOnClickListener(v -> delete(medication));
-            view.setButtonsVisibility(position == selected);
+            view.setMedication(getItem(position));
+            if (position == selected)
+                view.showButtons(() -> onEdit(), () -> onDelete(), () -> onCancel());
+            else
+                view.hideButtons();
             return view;
         }
     }

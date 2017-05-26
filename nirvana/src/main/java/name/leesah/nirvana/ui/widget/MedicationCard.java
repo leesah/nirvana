@@ -26,7 +26,6 @@ public class MedicationCard extends FrameLayout {
     private final TextView manufacturer;
     private final TextView repeating;
     private final TextView reminding;
-    private final TextView suggestions;
     private final ImageView dosageForm;
     private final Button edit;
     private final Button delete;
@@ -41,7 +40,6 @@ public class MedicationCard extends FrameLayout {
         manufacturer = (TextView) findViewById(R.id.manufacturer);
         repeating = (TextView) findViewById(R.id.repeating);
         reminding = (TextView) findViewById(R.id.reminding);
-        suggestions = (TextView) findViewById(R.id.suggestions);
         dosageForm = (ImageView) findViewById(R.id.icon);
         buttonBar = findViewById(R.id.button_bar);
         edit = (Button) findViewById(R.id.edit_button);
@@ -62,12 +60,17 @@ public class MedicationCard extends FrameLayout {
                 dosageForm.setImageResource(R.drawable.ic_tablet);
                 break;
         }
-        cancel.setOnClickListener(view -> buttonBar.setVisibility(GONE));
     }
 
-    public void setButtonsVisibility(boolean visible) {
-        buttonBar.setVisibility(visible ? VISIBLE : GONE);
+    public void showButtons(Runnable onEdit, Runnable onDelete, Runnable onCancel) {
+        buttonBar.setVisibility(VISIBLE);
+        edit.setOnClickListener(v -> onEdit.run());
+        delete.setOnClickListener(v -> onDelete.run());
+        cancel.setOnClickListener(v -> onCancel.run());
     }
 
+    public void hideButtons() {
+        buttonBar.setVisibility(GONE);
+    }
 
 }
