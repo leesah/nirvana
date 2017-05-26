@@ -84,7 +84,8 @@ public class MedicationListFragment extends Fragment {
         listView.setEmptyView(view.findViewById(R.id.empty_view));
         listView.setOnItemClickListener((a, v, position, l) -> {
             Bundle params = new Bundle();
-            params.putCharSequence("medication", medications.get(position).toString());
+            params.putInt("medication_id", medications.get(position).getId());
+            params.putString("medication_name", medications.get(position).getName());
             analytics.logEvent("medication_button_bar_show", params);
 
             selected = position;
@@ -157,7 +158,8 @@ public class MedicationListFragment extends Fragment {
 
     public void edit(Medication medication) {
         Bundle params = new Bundle();
-        params.putCharSequence("medication", medication.toString());
+        params.putInt("medication_id", medication.getId());
+        params.putString("medication_name", medication.getName());
         analytics.logEvent("medication_edit", params);
 
         writeToStaged(getContext(), medication);
@@ -177,7 +179,8 @@ public class MedicationListFragment extends Fragment {
 
     private void performDelete(Medication medication) {
         Bundle params = new Bundle();
-        params.putCharSequence("medication", medication.toString());
+        params.putInt("medication_id", medication.getId());
+        params.putString("medication_name", medication.getName());
         analytics.logEvent("medication_delete", params);
 
         nurse(getContext()).replace(isFor(medication), emptySet());

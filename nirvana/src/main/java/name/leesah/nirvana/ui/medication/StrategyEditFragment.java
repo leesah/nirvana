@@ -69,7 +69,7 @@ public abstract class StrategyEditFragment<StrategyType> extends Fragment {
                 getSharedPreferences().edit().putString(getPreferenceKey(), json).apply();
 
                 Bundle params = new Bundle();
-                params.putCharSequence("json", json);
+                params.putString("json", json);
                 analytics.logEvent("strategy_save", params);
 
                 getActivity().setResult(RESULT_OK);

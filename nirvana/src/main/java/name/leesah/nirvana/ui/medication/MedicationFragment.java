@@ -70,7 +70,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         Bundle params = new Bundle();
-        params.putCharSequence("preference", preference.getKey());
+        params.putString("preference", preference.getKey());
         analytics.logEvent("preference_click", params);
         return false;
     }

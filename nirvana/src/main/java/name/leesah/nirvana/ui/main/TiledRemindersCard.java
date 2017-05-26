@@ -118,8 +118,12 @@ public class TiledRemindersCard extends FrameLayout {
 
         private void viewReminderDetails(Reminder reminder) {
             Bundle params = new Bundle();
-            params.putCharSequence("reminder", reminder.toString());
-            params.putCharSequence("medication", medication.toString());
+            params.putInt("reminder_id", reminder.getId());
+            params.putString("reminder_state", reminder.getState().name());
+            params.putString("reminder_time_planned", reminder.getPlannedTime().toString());
+            params.putString("reminder_time_actual", reminder.getActualTime().toString());
+            params.putInt("medication_id", medication.getId());
+            params.putString("medication_name", medication.getName());
             FirebaseAnalytics.getInstance(getContext()).logEvent("reminder_view_details", params);
 
             getContext().startActivity(new Intent(getContext(), ReminderDetailsActivity.class)

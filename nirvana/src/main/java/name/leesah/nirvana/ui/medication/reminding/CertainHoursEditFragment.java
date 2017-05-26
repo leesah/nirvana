@@ -74,7 +74,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     public void editRow(int position) {
         Bundle params = new Bundle();
-        params.putCharSequence("dosage", dosages.get(position).toString());
+        params.putString("dosage", dosages.get(position).toString());
         analytics.logEvent("dosage_click", params);
 
         setSaveButtonEnabled(false);
@@ -85,7 +85,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     private void onAddDosage(TimedDosage dosage) {
         Bundle params = new Bundle();
-        params.putCharSequence("dosage", dosage.toString());
+        params.putString("dosage", dosage.toString());
         analytics.logEvent("dosage_add", null);
 
         if (dosageExists(dosage.getTimeOfDay())) {
@@ -101,7 +101,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     public void onSaveDosage(int position, TimedDosage dosage) {
         Bundle params = new Bundle();
-        params.putCharSequence("dosage", dosage.toString());
+        params.putString("dosage", dosage.toString());
         analytics.logEvent("dosage_save", null);
 
         if (dosageExists(dosage.getTimeOfDay())) {
@@ -118,7 +118,7 @@ public class CertainHoursEditFragment extends StrategyEditFragment.Reminding {
 
     public void onDeleteDosage(int position) {
         Bundle params = new Bundle();
-        params.putCharSequence("dosage", dosages.get(position).toString());
+        params.putString("dosage", dosages.get(position).toString());
         analytics.logEvent("dosage_delete", null);
 
         dosages.remove(position);
