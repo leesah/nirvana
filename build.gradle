@@ -26,8 +26,8 @@ allprojects {
 }
 
 ext {
-    support_lib_version = "26.0.0-alpha1"
-    firebase_version = "10.2.6"
+    support_lib_version = "25.4.0"
+    firebase_version = "11.0.2"
     espresso_version = "2.2.2"
     guava_version = "21.0"
     junit_version = "4.12"
