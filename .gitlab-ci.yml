@@ -29,12 +29,12 @@ stages:
     - wget --quiet --output-document=/tmp/android-sdk.zip https://dl.google.com/android/repository/tools_r${ANDROID_SDK_VERSION}-linux.zip
     - unzip -q /tmp/android-sdk.zip -d ${ANDROID_SDK_ROOT}
     - mkdir -p ~/.android && echo "count=0" > ~/.android/repositories.cfg
-    # Install "platforms;android-${TARGET_SDK}"
+    # Install dependencies
     - mkdir --parents ${ANDROID_SDK_ROOT}/licenses/ && touch ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
     - echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
-    - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platforms;android-${TARGET_SDK}"
+    - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platforms;android-${TARGET_SDK}" "extras;google;google_play_services" "extras;google;m2repository" "extras;android;m2repository"
     # Passwords and keys for signing and publishing
-    - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.properties
+    - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.propertiesls
     - echo ${PLAY_PUBLISH_AUTH_KEY} > ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
   after_script:
     # Wipe the passwords and keys
