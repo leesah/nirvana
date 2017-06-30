@@ -1,5 +1,7 @@
 package name.leesah.nirvana.model.reminder;
 
+import android.support.annotation.NonNull;
+
 import com.google.common.base.MoreObjects;
 
 import org.joda.time.DateTime;
@@ -101,8 +103,13 @@ public class Reminder {
         this.state = State.DONE;
     }
 
+    @Deprecated
     public Reminder snooze(int minutes) {
-        DateTime snoozeTo = DateTime.now().plusMinutes(minutes);
+        return snooze(DateTime.now().plusMinutes(minutes));
+    }
+
+    @NonNull
+    public Reminder snooze(DateTime snoozeTo) {
         return new Reminder(uniqueInt(), this.plannedTime, snoozeTo, this.medicationId, this.dosageAmount, SNOOZED, null);
     }
 

@@ -10,6 +10,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static java.util.Collections.singleton;
@@ -47,15 +49,22 @@ public class RemindingService extends IntentService {
             final String action = intent.getAction();
             Log.d(TAG, String.format("Awakened for [%s].", action));
 
+            int reminderId = extractReminderId(intent);
+            Reminder reminder = nurse(this).getReminder(reminderId);
+            if (reminder == null) {
+                Log.w(TAG, "Reminder has expired.");
+                return;
+            }
+
             switch (action) {
                 case ACTION_SHOW_REMINDER:
-                    handleActionShowReminder(extractReminderId(intent));
+                    handleActionShowReminder(reminder);
                     break;
                 case ACTION_CONFIRM_REMINDER:
-                    handleActionConfirmReminder(extractReminderId(intent));
+                    handleActionConfirmReminder(reminder);
                     break;
                 case ACTION_SNOOZE_REMINDER:
-                    handleActionSnoozeReminder(extractReminderId(intent));
+                    handleActionSnoozeReminder(reminder);
                     break;
             }
 
@@ -63,45 +72,28 @@ public class RemindingService extends IntentService {
         }
     }
 
-    private void handleActionShowReminder(int reminderId) {
-        Reminder reminder = nurse(this).getReminder(reminderId);
-        if (reminder == null) {
-            Log.w(TAG, "Reminder has expired.");
-            return;
-        }
-
+    private void handleActionShowReminder(Reminder reminder) {
         int notificationId = uniqueInt();
         Notification notification = new NotificationBuilder(this, reminder).build();
         display(notificationId, notification);
-        nurse(this).setNotified(reminderId, notificationId);
+        nurse(this).setNotified(reminder.getId(), notificationId);
 
         Log.d(TAG, String.format("Reminder shown: [%s]", reminder));
     }
 
-    private void handleActionSnoozeReminder(int reminderId) {
-        final Reminder reminder = nurse(this).getReminder(reminderId);
-        if (reminder == null) {
-            Log.w(TAG, "Reminder has expired.");
-            return;
-        }
-
+    private void handleActionSnoozeReminder(Reminder reminder) {
+        DateTime snoozeTo = DateTime.now().plusMinutes(SNOOZE_FOR_MINUTES);
         dismiss(reminder.getNotificationId());
 
-        Reminder snoozed = reminder.snooze(SNOOZE_FOR_MINUTES);
+        Reminder snoozed = reminder.snooze(snoozeTo);
         alarmSecretary(this).setAlarm(snoozed);
-        nurse(this).replace(r -> r.getId() == reminderId, singleton(snoozed));
+        nurse(this).replace(r -> r.getId() == reminder.getId(), singleton(snoozed));
 
-        showToast(String.format(US, "Snoozed for %d minutes.", SNOOZE_FOR_MINUTES));
+        showToast(String.format(US, "Snoozed until %s.", snoozeTo));
         Log.d(TAG, String.format("Reminder snoozed [%s].", reminder));
     }
 
-    private void handleActionConfirmReminder(int id) {
-        final Reminder reminder = nurse(this).getReminder(id);
-        if (reminder == null) {
-            Log.w(TAG, "Reminder has expired.");
-            return;
-        }
-
+    private void handleActionConfirmReminder(Reminder reminder) {
         dismiss(reminder.getNotificationId());
         nurse(this).setDone(reminder.getId());
 
