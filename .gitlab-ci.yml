@@ -33,12 +33,13 @@ stages:
     - mkdir --parents ${ANDROID_SDK_ROOT}/licenses/ && touch ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
     - echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
     - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platforms;android-${TARGET_SDK}" "extras;google;google_play_services" "extras;google;m2repository" "extras;android;m2repository"
-    # Passwords and keys for signing and publishing
+    # Secrets
     - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.properties
     - echo ${PLAY_PUBLISH_AUTH_KEY} > ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
+    - echo ${GOOGLE_SERVICES_CONFIG} > ${CI_PROJECT_DIR}/nirvana/google-services.json
   after_script:
-    # Wipe the passwords and keys
-    - rm -f ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
+    # Wipe the secrets
+    - rm -f ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json ${CI_PROJECT_DIR}/nirvana/google-services.json
 
 # Jobs that require the Google Cloud SDK
 .require-google-cloud-sdk: &require-google-cloud-sdk
