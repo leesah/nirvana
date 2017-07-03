@@ -34,11 +34,11 @@ stages:
     - echo 8933bad161af4178b1185d1a37fbf41ea5269c55 > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
     - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platforms;android-${TARGET_SDK}" "extras;google;google_play_services" "extras;google;m2repository" "extras;android;m2repository"
     # Passwords and keys for signing and publishing
-    - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.propertiesls
+    - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.properties
     - echo ${PLAY_PUBLISH_AUTH_KEY} > ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
   after_script:
     # Wipe the passwords and keys
-    - rm ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
+    - rm -f ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
 
 # Jobs that require the Google Cloud SDK
 .require-google-cloud-sdk: &require-google-cloud-sdk
@@ -52,7 +52,7 @@ stages:
     - ${GCLOUD_SDK_ROOT}/bin/gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
   after_script:
     # Wipe the authentication key
-    - rm /tmp/$CI_PIPELINE_ID.json
+    - rm -f /tmp/$CI_PIPELINE_ID.json
 
 # Jobs that run instrumental tests on Firebase
 .run-firebase-instrumental-test: &run-firebase-instrumental-test
