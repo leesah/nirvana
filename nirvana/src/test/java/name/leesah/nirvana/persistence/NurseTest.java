@@ -43,7 +43,7 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = {24, 25})
+//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class NurseTest {
 
     private Gson gson = getGson();

@@ -1,8 +1,6 @@
 package name.leesah.nirvana.ui.reminder;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
@@ -11,16 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowContextImpl;
 
-import name.leesah.nirvana.BuildConfig;
-import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
@@ -28,7 +19,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
-import static name.leesah.nirvana.LanternGenie.randomReminders;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
@@ -36,16 +26,15 @@ import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REM
 import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
 import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.robolectric.Robolectric.buildActivity;
 import static org.robolectric.RuntimeEnvironment.application;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -53,7 +42,7 @@ import static org.robolectric.Shadows.shadowOf;
  * Created by sah on 2017-04-07.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = {24, 25})
+//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class RemindingServiceTest {
 
     private Context context;
@@ -81,7 +70,7 @@ public class RemindingServiceTest {
         show(reminder);
         int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
 
-        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId)).isNotNull();
+        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(notNullValue()));
         verifyNoMoreInteractions(alarmSecretary);
     }
 
@@ -93,7 +82,7 @@ public class RemindingServiceTest {
 
         snooze(reminder);
 
-        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId)).isNull();
+        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(nullValue()));
         verify(alarmSecretary).setAlarm(hasSameMedicationIdAs(reminder));
         verifyNoMoreInteractions(alarmSecretary);
     }
@@ -105,7 +94,7 @@ public class RemindingServiceTest {
 
         confirm(reminder);
 
-        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId)).isNull();
+        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(nullValue()));
         verifyNoMoreInteractions(alarmSecretary);
     }
 

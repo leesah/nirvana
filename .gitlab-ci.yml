@@ -1,9 +1,9 @@
 image: openjdk:8-jdk
 
 variables:
-  TARGET_SDK: "25"
-  ANDROID_SDK_VERSION: "25.2.5"
-  GCLOUD_SDK_VERSION: "152.0.0"
+  TARGET_SDK: "26"
+  SDK_TOOLS_VERSION: "3859397"
+  GCLOUD_SDK_VERSION: "169.0.0"
 
   ANDROID_SDK_ROOT: "/opt/android-sdk"
   ANDROID_HOME: "${ANDROID_SDK_ROOT}"
@@ -26,7 +26,7 @@ stages:
   before_script:
     - *apt-get-packages
     # Install Android SDK
-    - wget --quiet --output-document=/tmp/android-sdk.zip https://dl.google.com/android/repository/tools_r${ANDROID_SDK_VERSION}-linux.zip
+    - wget --quiet --output-document=/tmp/android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip
     - unzip -q /tmp/android-sdk.zip -d ${ANDROID_SDK_ROOT}
     - mkdir -p ~/.android && echo "count=0" > ~/.android/repositories.cfg
     # Install dependencies

@@ -33,7 +33,7 @@ import static name.leesah.nirvana.utils.DateTimeHelper.today;
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = {24, 25})
+//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class CertainHoursTest {
     private RemindingStrategy model;
     private ArrayMap<String, TimedDosage> dosages;

@@ -15,6 +15,9 @@ import name.leesah.nirvana.model.treatment.recurring.RecurringStrategy;
 
 import static android.text.TextUtils.isEmpty;
 import static java.lang.String.format;
+import static name.leesah.nirvana.R.string.pref_key_treatment_enabled;
+import static name.leesah.nirvana.R.string.pref_key_treatment_first_day;
+import static name.leesah.nirvana.R.string.pref_key_treatment_recurring;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.toDate;
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
@@ -66,7 +69,7 @@ public class Therapist extends DataHolder {
 
     private void loadFromSharedPreferences() {
         cycleSupportEnabled = preferences.getBoolean(
-                resources.getString(R.string.pref_key_treatment_enabled), false);
+                resources.getString(pref_key_treatment_enabled), false);
         treatment = cycleSupportEnabled ?
                 new RecurringTreatment(loadDayZero(), loadLength(), loadRecurring()) :
                 new EverlastingTreatment(loadDayZero(toText(DEFAULT_DAY_ZERO)));
@@ -80,7 +83,7 @@ public class Therapist extends DataHolder {
     }
 
     private LocalDate loadDayZero(String defaultValue) {
-        return toDate(preferences.getString(resources.getString(R.string.pref_key_treatment_first_day), defaultValue));
+        return toDate(preferences.getString(resources.getString(pref_key_treatment_first_day), defaultValue));
     }
 
     private Period loadLength() {
@@ -92,7 +95,7 @@ public class Therapist extends DataHolder {
     }
 
     private RecurringStrategy loadRecurring() {
-        String text = preferences.getString(resources.getString(R.string.pref_key_treatment_recurring), null);
+        String text = preferences.getString(resources.getString(pref_key_treatment_recurring), null);
         if (isEmpty(text))
             throw new IllegalStateException("Recurring strategy is not set.");
         return getGson().fromJson(text, RecurringStrategy.class);

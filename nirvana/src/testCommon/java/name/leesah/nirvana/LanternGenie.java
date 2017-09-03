@@ -16,16 +16,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import name.leesah.nirvana.persistence.Nurse;
-import name.leesah.nirvana.persistence.Pharmacist;
-import name.leesah.nirvana.persistence.Therapist;
 import name.leesah.nirvana.model.medication.DosageForm;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
-import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.repeating.RepeatingStrategy;
+import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.model.medication.starting.Delayed;
 import name.leesah.nirvana.model.medication.starting.ExactDate;
 import name.leesah.nirvana.model.medication.starting.Immediately;
@@ -36,35 +33,39 @@ import name.leesah.nirvana.model.medication.stopping.StoppingStrategy;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.model.reminder.ReminderMaker;
 import name.leesah.nirvana.model.reminder.TimedDosage;
+import name.leesah.nirvana.persistence.Nurse;
+import name.leesah.nirvana.persistence.Pharmacist;
+import name.leesah.nirvana.persistence.Therapist;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.google.common.collect.Sets.newHashSet;
-import static java.lang.Integer.*;
+import static java.lang.Integer.MAX_VALUE;
 import static java.util.Collections.shuffle;
 import static java.util.Collections.singletonList;
 import static java.util.EnumSet.allOf;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
-import static name.leesah.nirvana.PhoneBook.*;
 import static name.leesah.nirvana.PhoneBook.fireEveryone;
+import static name.leesah.nirvana.PhoneBook.hireAlarmSecretary;
 import static name.leesah.nirvana.PhoneBook.hireNurse;
 import static name.leesah.nirvana.PhoneBook.hirePharmacist;
 import static name.leesah.nirvana.PhoneBook.hireReminderMaker;
+import static name.leesah.nirvana.PhoneBook.hireTherapist;
 import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.persistence.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.persistence.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
-import static name.leesah.nirvana.ui.medication.MedicationActivity.*;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
 import static org.joda.time.LocalTime.now;
-import static org.joda.time.Period.*;
+import static org.joda.time.Period.days;
 
 public class LanternGenie {
 
@@ -192,6 +193,7 @@ public class LanternGenie {
     public static LocalDate randomDayAfter(LocalDate date) {
         return date.plus(randomPeriod());
     }
+
     @NonNull
     public static Period randomPeriod() {
         return randomPeriod(365);

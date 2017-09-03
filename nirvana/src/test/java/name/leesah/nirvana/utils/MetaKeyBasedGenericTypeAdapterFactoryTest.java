@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThat;
  * Created by sah on 2016-12-05.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = {24, 25})
+//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class MetaKeyBasedGenericTypeAdapterFactoryTest {
 
     @Before
