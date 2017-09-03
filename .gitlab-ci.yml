@@ -62,8 +62,8 @@ stages:
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type instrumentation
-        --app ${APK_DIR}/nirvana-debug.apk
-        --test ${APK_DIR}/nirvana-debug-androidTest.apk
+        --app ${APK_DIR}/debug/nirvana-debug.apk
+        --test ${APK_DIR}/androidTest/debug/nirvana-debug-androidTest.apk
         --device model=${VIRTUAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
         --device model=${PHYSICAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
 
@@ -74,7 +74,7 @@ stages:
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type robo
-        --app ${APK_DIR}/nirvana-debug.apk
+        --app ${APK_DIR}/debug/nirvana-debug.apk
         --device model=${VIRTUAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
         --device model=${PHYSICAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
 
