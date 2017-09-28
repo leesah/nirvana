@@ -11,13 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
-import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.model.medication.Medication;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;

@@ -1,6 +1,5 @@
 package name.leesah.nirvana.ui.widget;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +12,6 @@ import android.widget.TextView;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
-import name.leesah.nirvana.ui.medication.MedicationActivity;
-
-import static name.leesah.nirvana.PhoneBook.*;
 
 /**
  * Created by sah on 2017-04-19.

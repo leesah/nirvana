@@ -17,7 +17,6 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
-import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
@@ -53,15 +52,10 @@ class NotificationBuilder extends Notification.Builder {
         setAutoCancel(false);
         setOngoing(true);
         addAction(getConfirmAction(context));
-        addAction(getSnoozeAction(context));
     }
 
     private Notification.Action getConfirmAction(Context context) {
         return new Notification.Action.Builder(getConfirmIcon(), context.getString(R.string.done), getConfirmIntent()).build();
-    }
-
-    private Notification.Action getSnoozeAction(Context context) {
-        return new Notification.Action.Builder(getSnoozeIcon(), context.getString(R.string.snooze), getSnoozeIntent()).build();
     }
 
     private PendingIntent getShowDetailsIntent() {
@@ -74,13 +68,6 @@ class NotificationBuilder extends Notification.Builder {
     private PendingIntent getConfirmIntent() {
         Intent intent = new Intent(context, RemindingService.class)
                 .setAction(ACTION_CONFIRM_REMINDER)
-                .putExtra(RemindingService.EXTRA_REMINDER_ID, reminderId);
-        return PendingIntent.getService(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
-    }
-
-    private PendingIntent getSnoozeIntent() {
-        Intent intent = new Intent(context, RemindingService.class)
-                .setAction(ACTION_SNOOZE_REMINDER)
                 .putExtra(RemindingService.EXTRA_REMINDER_ID, reminderId);
         return PendingIntent.getService(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
@@ -98,10 +85,6 @@ class NotificationBuilder extends Notification.Builder {
 
     private Icon getConfirmIcon() {
         return Icon.createWithResource(context, R.drawable.ic_reminder_status_done);
-    }
-
-    private Icon getSnoozeIcon() {
-        return Icon.createWithResource(context, R.drawable.ic_reminder_status_snoozed);
     }
 
 }

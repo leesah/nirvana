@@ -12,20 +12,18 @@ import org.joda.time.Days;
 import org.joda.time.Minutes;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
-import static android.app.PendingIntent.*;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static android.app.PendingIntent.getService;
 import static android.content.Intent.ACTION_BOOT_COMPLETED;
-import static android.widget.Toast.makeText;
 import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.alarmSecretary;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.reminderMaker;
-import static name.leesah.nirvana.persistence.Nurse.*;
 import static name.leesah.nirvana.persistence.Nurse.isSeenByNurse;
-import static name.leesah.nirvana.utils.DateTimeHelper.toText;
+import static name.leesah.nirvana.persistence.Nurse.isUpcoming;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.joda.time.DateTime.*;
+import static org.joda.time.DateTime.now;
 import static org.joda.time.format.DateTimeFormat.longDateTime;
 
 public class SchedulingService extends IntentService {

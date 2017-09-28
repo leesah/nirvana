@@ -1,7 +1,6 @@
 package name.leesah.nirvana.ui.reminder;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -16,9 +15,9 @@ import name.leesah.nirvana.ui.widget.TimedDosageCard;
 
 import static java.lang.String.format;
 import static java.util.Locale.US;
-import static name.leesah.nirvana.PhoneBook.*;
+import static name.leesah.nirvana.PhoneBook.nurse;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.reminder.RemindingService.confirmReminder;
-import static name.leesah.nirvana.ui.reminder.RemindingService.snoozeReminder;
 
 public class ReminderDetailsActivity extends AppCompatActivity {
 
@@ -55,21 +54,17 @@ public class ReminderDetailsActivity extends AppCompatActivity {
         dosageCard.setDosage(new TimedDosage(reminder.getTime(), reminder.getDosageAmount()));
 
         View confirm = findViewById(R.id.done_button);
-        View snooze = findViewById(R.id.snooze_button);
         View ignore = findViewById(R.id.ignore_button);
 
         switch (reminder.getState()) {
             case DONE:
             case PLANNED:
                 confirm.setEnabled(false);
-                snooze.setEnabled(false);
                 ignore.setEnabled(false);
                 break;
 
             case NOTIFIED:
-            case SNOOZED:
                 confirm.setOnClickListener(v -> confirmAndFinish());
-                snooze.setOnClickListener(v -> snoozeAndFinish());
                 ignore.setOnClickListener(v -> confirmAndFinish());
                 break;
         }
@@ -78,12 +73,6 @@ public class ReminderDetailsActivity extends AppCompatActivity {
 
     private void confirmAndFinish() {
         confirmReminder(this, reminderId);
-        setResult(RESULT_OK);
-        finish();
-    }
-
-    private void snoozeAndFinish() {
-        snoozeReminder(this, reminderId);
         setResult(RESULT_OK);
         finish();
     }

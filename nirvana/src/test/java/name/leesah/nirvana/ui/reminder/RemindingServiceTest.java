@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.model.reminder.Reminder;
 
@@ -22,7 +21,6 @@ import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
-import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SNOOZE_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
 import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -30,9 +28,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.robolectric.RuntimeEnvironment.application;
@@ -75,19 +70,6 @@ public class RemindingServiceTest {
     }
 
     @Test
-    public void snoozeReminders() throws Exception {
-        show(reminder);
-        int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
-        reset(alarmSecretary);
-
-        snooze(reminder);
-
-        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(nullValue()));
-        verify(alarmSecretary).setAlarm(hasSameMedicationIdAs(reminder));
-        verifyNoMoreInteractions(alarmSecretary);
-    }
-
-    @Test
     public void confirmReminders() throws Exception {
         show(reminder);
         int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
@@ -115,13 +97,6 @@ public class RemindingServiceTest {
         new RemindingServiceWrapper(context).startWithIntent(intent);
     }
 
-    private void snooze(Reminder reminder) {
-        Intent intent = new Intent(context, SchedulingService.class)
-                .setAction(ACTION_SNOOZE_REMINDER)
-                .putExtra(EXTRA_REMINDER_ID, reminder.getId());
-        new RemindingServiceWrapper(context).startWithIntent(intent);
-    }
-
     private void confirm(Reminder reminder) {
         Intent intent = new Intent(context, SchedulingService.class)
                 .setAction(ACTION_CONFIRM_REMINDER)
@@ -133,10 +108,6 @@ public class RemindingServiceTest {
         Intent intent = new Intent(context, ReminderDetailsActivity.class)
                 .setFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
-    }
-
-    private Reminder hasSameMedicationIdAs(Reminder expected) {
-        return argThat(actual -> expected.getMedicationId() == actual.getMedicationId());
     }
 
     private class RemindingServiceWrapper extends RemindingService {

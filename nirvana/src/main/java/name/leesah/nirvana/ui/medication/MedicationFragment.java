@@ -17,13 +17,12 @@ import java.util.Set;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.ui.reminder.RemindingService;
 
 import static android.app.Activity.RESULT_OK;
-import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_ID;
-import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_NAME;
-import static name.leesah.nirvana.PhoneBook.*;
+import static name.leesah.nirvana.PhoneBook.alarmSecretary;
 import static name.leesah.nirvana.PhoneBook.nurse;
+import static name.leesah.nirvana.PhoneBook.pharmacist;
+import static name.leesah.nirvana.PhoneBook.reminderMaker;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;

@@ -10,7 +10,6 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.Treatment;
 
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.joda.time.format.DateTimeFormat.fullDate;
 import static org.joda.time.format.DateTimeFormat.longDate;
 
 /**

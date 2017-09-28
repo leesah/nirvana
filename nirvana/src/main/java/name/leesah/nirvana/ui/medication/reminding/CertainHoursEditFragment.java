@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;

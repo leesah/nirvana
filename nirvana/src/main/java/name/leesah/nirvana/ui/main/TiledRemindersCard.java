@@ -19,7 +19,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.joda.time.LocalTime;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,9 +102,6 @@ public class TiledRemindersCard extends FrameLayout {
             switch (reminder.getState()) {
                 case NOTIFIED:
                     status.setImageResource(R.drawable.ic_reminder_status_active);
-                    break;
-                case SNOOZED:
-                    status.setImageResource(R.drawable.ic_reminder_status_snoozed);
                     break;
                 case DONE:
                     status.setImageResource(R.drawable.ic_reminder_status_done);

@@ -1,7 +1,5 @@
 package name.leesah.nirvana.model.reminder;
 
-import android.support.annotation.NonNull;
-
 import com.google.common.base.MoreObjects;
 
 import org.joda.time.DateTime;
@@ -10,11 +8,8 @@ import org.joda.time.LocalTime;
 
 import java.util.Objects;
 
-import static java.lang.String.format;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;
-import static name.leesah.nirvana.model.reminder.Reminder.State.SNOOZED;
-import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 /**
@@ -26,7 +21,6 @@ public class Reminder {
     public enum State {
         PLANNED,
         NOTIFIED,
-        SNOOZED,
         DONE
     }
 
@@ -101,16 +95,6 @@ public class Reminder {
 
     public void setDone() {
         this.state = State.DONE;
-    }
-
-    @Deprecated
-    public Reminder snooze(int minutes) {
-        return snooze(DateTime.now().plusMinutes(minutes));
-    }
-
-    @NonNull
-    public Reminder snooze(DateTime snoozeTo) {
-        return new Reminder(uniqueInt(), this.plannedTime, snoozeTo, this.medicationId, this.dosageAmount, SNOOZED, null);
     }
 
     @Override

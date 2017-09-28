@@ -13,7 +13,6 @@ import name.leesah.nirvana.R;
 import static java.lang.String.format;
 import static name.leesah.nirvana.utils.DateTimeHelper.dateFallsInDuration;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
-import static org.joda.time.format.DateTimeFormat.fullDate;
 import static org.joda.time.format.DateTimeFormat.longDate;
 
 /**

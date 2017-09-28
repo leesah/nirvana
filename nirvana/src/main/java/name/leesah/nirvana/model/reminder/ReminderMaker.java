@@ -8,10 +8,10 @@ import org.joda.time.LocalDate;
 
 import java.util.Set;
 
-import name.leesah.nirvana.persistence.Pharmacist;
-import name.leesah.nirvana.persistence.Therapist;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.treatment.Treatment;
+import name.leesah.nirvana.persistence.Pharmacist;
+import name.leesah.nirvana.persistence.Therapist;
 
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toSet;

@@ -101,7 +101,6 @@
         <item quantity="one">Take %1$d dose at %2$s.</item>
         <item quantity="other">Take %1$d doses at %2$s.</item>
     </plurals>
-    <string name="snooze">Snooze</string>
     <string name="done">Done</string>
 
     <!-- Settings -->

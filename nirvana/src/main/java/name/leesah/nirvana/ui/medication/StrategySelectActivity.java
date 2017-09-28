@@ -22,7 +22,6 @@ import java.util.List;
 
 import name.leesah.nirvana.R;
 
-import static com.google.firebase.analytics.FirebaseAnalytics.Param.ITEM_ID;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;

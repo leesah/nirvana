@@ -73,24 +73,8 @@
             android:layout_margin="8dp"
             android:elevation="4dp"
             android:text="@string/done"
-            app:layout_constraintEnd_toStartOf="@+id/snooze_button"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <Button
-            android:id="@+id/snooze_button"
-            style="@style/Button.Raised.Secondary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/snooze"
-            app:layout_constraintEnd_toStartOf="@+id/ignore_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/done_button"
-            tools:layout_editor_absoluteX="122dp"
             tools:layout_editor_absoluteY="0dp" />
 
         <Button
@@ -101,9 +85,6 @@
             android:layout_margin="8dp"
             android:text="@string/ignore_reminder"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/snooze_button"
-            tools:layout_editor_absoluteX="237dp"
             tools:layout_editor_absoluteY="0dp" />
 
     </android.support.constraint.ConstraintLayout>

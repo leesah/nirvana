@@ -2,27 +2,21 @@ package name.leesah.nirvana.ui.main;
 
 import android.support.test.rule.ActivityTestRule;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.ArgumentMatcher;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.util.stream.IntStream.range;
@@ -32,11 +26,8 @@ import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.ui.MoreMatchers.isCardContaining;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
-import static org.mockito.ArgumentMatchers.argThat;
 
 /**
  * Created by sah on 2017-05-06.

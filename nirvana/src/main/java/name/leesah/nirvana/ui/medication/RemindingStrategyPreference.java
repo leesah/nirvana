@@ -8,8 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.CertainHours;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;

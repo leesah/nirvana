@@ -11,9 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.EverlastingTreatment;

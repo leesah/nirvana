@@ -15,19 +15,14 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.ui.MoreMatchers.isCardContaining;
-import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithId;
-import static name.leesah.nirvana.ui.MoreMatchers.ofReminderWithMedicationId;
 import static name.leesah.nirvana.ui.MoreMatchers.withAdaptedData;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.not;
 
 /**
