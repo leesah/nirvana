@@ -6,7 +6,7 @@ keystoreProperties.load(new FileInputStream(rootProject.file('keystore.propertie
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.2'
     playAccountConfigs {
         defaultAccountConfig {
             jsonFile = file('play-publish-auth-key.json')
