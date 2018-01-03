@@ -2,8 +2,8 @@ image: openjdk:8-jdk
 
 variables:
   TARGET_SDK: "26"
-  SDK_TOOLS_VERSION: "3859397"
-  GCLOUD_SDK_VERSION: "169.0.0"
+  SDK_TOOLS_VERSION: "3859397" # Find latest at: https://developer.android.com/studio/index.html#downloads
+  GCLOUD_SDK_VERSION: "183.0.0" # Find latest at: https://cloud.google.com/sdk/docs/quickstart-linux#before-you-begin
 
   ANDROID_SDK_ROOT: "/opt/android-sdk"
   ANDROID_HOME: "${ANDROID_SDK_ROOT}"
