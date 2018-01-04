@@ -112,11 +112,11 @@ test:instrumental:api24:
   <<: *require-google-cloud-sdk
   <<: *run-firebase-instrumental-test
 
-# Run instrumental tests on Firebase against API 25
-test:instrumental:api25:
+# Run instrumental tests on Firebase against API 26
+test:instrumental:api26:
   stage: test
   variables:
-    API_LEVEL: "25"
+    API_LEVEL: "26"
     VIRTUAL_DEVICE: "Nexus5X"
     PHYSICAL_DEVICE: "sailfish"
   <<: *require-google-cloud-sdk
