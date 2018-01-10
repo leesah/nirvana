@@ -26,7 +26,8 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefscr_settings);
-        initializeDebugToolsSection();
+        if (BuildConfig.DEBUG)
+            initializeDebugToolsSection();
         initializeInformationSection();
 
         treatment = findPreference(getString(R.string.pref_key_treatment));

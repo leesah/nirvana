@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:key="note"
+        android:title="Note"
+        android:summary="Once turned on, you can't turn off the cycled treatment support. This limitation is to be lifted in a future update." />
+
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_key_treatment_enabled"
