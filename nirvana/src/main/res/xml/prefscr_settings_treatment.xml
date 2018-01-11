@@ -3,7 +3,8 @@
 
     <Preference
         android:key="note"
-        android:title="Note"
+        android:persistent="false"
+        android:title="IMPORTANT!"
         android:summary="Once turned on, you can't turn off the cycled treatment support. This limitation is to be lifted in a future update." />
 
     <SwitchPreference

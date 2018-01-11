@@ -41,7 +41,6 @@ public class TreatmentSettingsFragment extends PreferenceFragment {
         length = (PeriodPreference) findPreference(getString(R.string.pref_key_treatment_cycle_length));
         recurringStrategy = (RecurringStrategyPreference) findPreference(getString(R.string.pref_key_treatment_recurring));
 
-        treatmentEnabled.setEnabled(!getPreferenceManager().getSharedPreferences().getBoolean(getString(R.string.pref_key_treatment_enabled), false));
         treatmentEnabled.setOnPreferenceChangeListener((preference, newValue) -> {
             boolean enabling = (boolean) newValue;
             if (enabling) {
