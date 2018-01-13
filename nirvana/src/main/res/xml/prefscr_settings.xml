@@ -7,11 +7,6 @@
             android:summary="@string/pref_summary_treatment"
             android:title="@string/pref_title_treatment" />
 
-        <Preference
-            android:key="@string/pref_key_notification"
-            android:summary="@string/pref_summary_notification"
-            android:title="@string/pref_title_notification"
-            android:enabled="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

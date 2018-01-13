@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import name.leesah.nirvana.R;
-import name.leesah.nirvana.ui.settings.NotificationSettingsFragment;
 import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private final RemindersOfDayFragment remindersOfDayFragment = new RemindersOfDayFragment();
     private final SettingsFragment settingsFragment = new SettingsFragment();
     private final TreatmentSettingsFragment treatmentSettingsFragment = new TreatmentSettingsFragment();
-    private final NotificationSettingsFragment notificationSettingsFragment = new NotificationSettingsFragment();
     private BottomNavigationView navigation;
 
     @Override
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.navigation_settings:
                 Fragment currentFragment = getCurrentFragment();
-                if (currentFragment != treatmentSettingsFragment && currentFragment != notificationSettingsFragment)
+                if (currentFragment != treatmentSettingsFragment)
                     clearBackStackAndReplaceFragment(settingsFragment);
                 return true;
 
@@ -100,16 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeSettingsFragment() {
         settingsFragment.setTreatmentListener(preference -> showTreatmentSettings());
-        settingsFragment.setNotificationListener(preference -> showNotificationsSettings());
     }
 
     private boolean showTreatmentSettings() {
         replaceFragmentAndAddToBackStack(treatmentSettingsFragment);
-        return true;
-    }
-
-    private boolean showNotificationsSettings() {
-        replaceFragmentAndAddToBackStack(notificationSettingsFragment);
         return true;
     }
 

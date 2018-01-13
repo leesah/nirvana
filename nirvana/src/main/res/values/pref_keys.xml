@@ -21,9 +21,6 @@
     <string name="pref_key_medication_starting">name.leesah.nirvana:pref:key:MEDICATION:STARTING</string>
     <string name="pref_key_medication_stopping">name.leesah.nirvana:pref:key:MEDICATION:STOPPING</string>
 
-    <!-- Notification -->
-    <string name="pref_key_notification">name.leesah.nirvana:pref:key:NOTIFICATION</string>
-    
     <!-- Others -->
     <string name="pref_key_about">name.leesah.nirvana:pref:key:ABOUT</string>
     <string name="pref_key_strategies">name.leesah.name:pref:key:STRATEGIES</string>

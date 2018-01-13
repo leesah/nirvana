@@ -18,9 +18,7 @@ import static name.leesah.nirvana.DebugTools.injectTestData;
 public class SettingsFragment extends PreferenceFragment {
 
     private Preference treatment;
-    private Preference notification;
     private Preference.OnPreferenceClickListener treatmentListener;
-    private Preference.OnPreferenceClickListener notificationListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,10 +29,8 @@ public class SettingsFragment extends PreferenceFragment {
         initializeInformationSection();
 
         treatment = findPreference(getString(R.string.pref_key_treatment));
-        notification = findPreference(getString(R.string.pref_key_notification));
 
         treatment.setOnPreferenceClickListener(treatmentListener);
-        notification.setOnPreferenceClickListener(notificationListener);
 
     }
 
@@ -61,9 +57,4 @@ public class SettingsFragment extends PreferenceFragment {
             treatment.setOnPreferenceClickListener(listener);
     }
 
-    public void setNotificationListener(Preference.OnPreferenceClickListener listener) {
-        this.notificationListener = listener;
-        if (notification != null)
-            notification.setOnPreferenceClickListener(listener);
-    }
 }
