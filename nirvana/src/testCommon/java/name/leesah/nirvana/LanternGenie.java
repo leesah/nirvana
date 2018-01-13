@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.google.common.collect.Sets;
+
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
@@ -42,8 +44,10 @@ import name.leesah.nirvana.ui.reminder.RemindingService;
 import static android.content.Context.MODE_PRIVATE;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.union;
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Collections.shuffle;
+import static java.util.Collections.singleton;
 import static java.util.Collections.singletonList;
 import static java.util.EnumSet.allOf;
 import static java.util.stream.Collectors.joining;
@@ -161,8 +165,7 @@ public class LanternGenie {
 
     public static void letNurseHave(Context context, Reminder reminder) {
         Set<String> all = getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_REMINDERS, newHashSet());
-        all.add(getGson().toJson(reminder));
-        getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_REMINDERS, all).apply();
+        getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_REMINDERS, union(all, singleton(getGson().toJson(reminder)))).apply();
         hireNurse(null);
     }
 
