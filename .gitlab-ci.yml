@@ -8,7 +8,8 @@ variables:
   ANDROID_SDK_ROOT: "/opt/android-sdk"
   ANDROID_HOME: "${ANDROID_SDK_ROOT}"
   GCLOUD_SDK_ROOT: "/opt/google-cloud-sdk"
-  APK_DIR: "${CI_PROJECT_DIR}/nirvana/build/outputs/apk"
+  OUTPUTS_DIR: "${CI_PROJECT_DIR}/nirvana/build/outputs"
+  APK_DIR: "${OUTPUTS_DIR}/apk"
   JACOCO_REPORT_DIR: "${CI_PROJECT_DIR}/nirvana/build/reports/jacoco/debug"
 
   GIT_SUBMODULE_STRATEGY: recursive
@@ -151,5 +152,5 @@ release:alpha:
     - ${CI_PROJECT_DIR}/gradlew clean assembleRelease publishApkRelease
   artifacts:
     paths:
-    - ${APK_DIR}
+    - ${OUTPUTS_DIR}
   <<: *require-android-sdk
