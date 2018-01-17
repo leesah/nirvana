@@ -160,7 +160,7 @@ release:deobfuscate-firebase:
   stage: release
   when: manual
   script:
-    - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :app:firebaseUploadReleaseProguardMapping
+    - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :nirvana:firebaseUploadReleaseProguardMapping
   artifacts:
     paths:
     - ${CI_PROJECT_DIR}/nirvana/build/outputs/mapping
