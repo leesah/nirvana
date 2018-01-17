@@ -69,7 +69,7 @@ public class DebugTools {
                 setStoppingStrategy(new Never()).
                 build());
 
-        SchedulingService.inCaseNotRunToday(context);
+        SchedulingService.scheduleForTheRestOfToday(context);
 
         Toast.makeText(context, "Done.", Toast.LENGTH_SHORT).show();
 

@@ -114,7 +114,7 @@ public class SchedulingServiceTest {
         when(nurse.hasReminder(argThat(isIn(existing)))).thenReturn(true);
         when(nurse.hasReminder(argThat(not(isIn(existing))))).thenReturn(false);
 
-        SchedulingService.setReminderAlarms(context);
+        SchedulingService.scheduleForTheRestOfToday(context);
 
         verify(nurse, atLeastOnce()).hasReminder(notNull());
         brandNew.forEach(reminder -> {

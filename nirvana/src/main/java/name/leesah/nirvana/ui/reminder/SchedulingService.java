@@ -46,7 +46,7 @@ public class SchedulingService extends IntentService {
 
             switch (action) {
                 case ACTION_SET_REMINDERS:
-                    handleMidnightAlarm(this);
+                    midnightTasks(this);
                     break;
             }
 
@@ -54,9 +54,9 @@ public class SchedulingService extends IntentService {
         }
     }
 
-    private static void handleMidnightAlarm(Context context) {
+    private static void midnightTasks(Context context) {
         setMidnightAlarm(context);
-        setReminderAlarms(context);
+        scheduleForTheRestOfToday(context);
     }
 
     static void setMidnightAlarm(Context context) {
@@ -70,7 +70,7 @@ public class SchedulingService extends IntentService {
         Log.d(TAG, format("SchedulingService registered to run at [%s].", longDateTime().print(trigger)));
     }
 
-    static void setReminderAlarms(Context context) {
+    public static void scheduleForTheRestOfToday(Context context) {
         reminderMaker(context).createReminders(today()).stream()
                 .filter(isSeenByNurse(context).negate().and(isUpcoming(now())))
                 .forEach(reminder -> {
@@ -84,16 +84,12 @@ public class SchedulingService extends IntentService {
         return new Intent(context, SchedulingService.class).setAction(ACTION_SET_REMINDERS);
     }
 
-    public static void inCaseNotRunToday(Context context) {
-        context.startService(buildMidnightIntent(context));
-    }
-
     public static class BootCompletedReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_BOOT_COMPLETED))
-                inCaseNotRunToday(context);
+                midnightTasks(context);
         }
     }
 }
