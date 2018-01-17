@@ -163,5 +163,5 @@ release:deobfuscate-firebase:
     - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :app:firebaseUploadReleaseProguardMapping
   artifacts:
     paths:
-    - ${OUTPUTS_DIR}
+    - ${CI_PROJECT_DIR}/nirvana/build/outputs/mapping
   <<: *require-android-sdk
