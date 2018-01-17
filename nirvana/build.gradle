@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 
 def keystoreProperties = new Properties()
@@ -82,6 +83,7 @@ dependencies {
     implementation libraries.firebase.crash
     implementation libraries.firebase.appindexing
     implementation libraries.firebase.ads
+    implementation (libraries.firebase.crashlytics) {transitive = true}
     // JUnit, Mockito & Hamcrest
     testImplementation libraries.junit
     testImplementation libraries.mockito.core
