@@ -42,9 +42,10 @@ stages:
     - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.properties
     - echo ${PLAY_PUBLISH_AUTH_KEY} > ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json
     - echo ${GOOGLE_SERVICES_CONFIG} > ${CI_PROJECT_DIR}/nirvana/google-services.json
+    - echo ${FIREBASE_CRASHREPORTING_AUTH_KEY} > /tmp/firebase-crashreporting-auth-key.json
   after_script:
     # Wipe the secrets
-    - rm -f ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json ${CI_PROJECT_DIR}/nirvana/google-services.json
+    - rm -f ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json ${CI_PROJECT_DIR}/nirvana/google-services.json /tmp/firebase-crashreporting-auth-key.json
 
 # Jobs that require the Google Cloud SDK
 .require-google-cloud-sdk: &require-google-cloud-sdk
@@ -54,11 +55,11 @@ stages:
     - wget --quiet --output-document=/tmp/gcloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_SDK_VERSION}-linux-x86_64.tar.gz
     - tar --extract --file /tmp/gcloud-sdk.tar.gz --directory /opt
     # Authentication
-    - echo $GCLOUD_PROJECT_AUTH_KEY > /tmp/$CI_PIPELINE_ID.json
-    - ${GCLOUD_SDK_ROOT}/bin/gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+    - echo ${GCLOUD_PROJECT_AUTH_KEY} > /tmp/gcloud-project-auth-key.json
+    - ${GCLOUD_SDK_ROOT}/bin/gcloud auth activate-service-account --key-file /tmp/gcloud-project-auth-key.json
   after_script:
     # Wipe the authentication key
-    - rm -f /tmp/$CI_PIPELINE_ID.json
+    - rm -f /tmp/gcloud-project-auth-key.json
 
 # Jobs that run instrumental tests on Firebase
 .run-firebase-instrumental-test: &run-firebase-instrumental-test
@@ -150,6 +151,17 @@ release:alpha:
   when: manual
   script:
     - ${CI_PROJECT_DIR}/gradlew clean assembleRelease publishApkRelease
+  artifacts:
+    paths:
+    - ${OUTPUTS_DIR}
+  <<: *require-android-sdk
+
+# Upload deobfuscation file to Firebase
+release:deobfuscate-firebase:
+  stage: release
+  when: manual
+  script:
+    - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :app:firebaseUploadReleaseProguardMapping
   artifacts:
     paths:
     - ${OUTPUTS_DIR}
