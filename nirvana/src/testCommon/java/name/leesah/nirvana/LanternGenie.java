@@ -124,8 +124,7 @@ public class LanternGenie {
 
     public static void letPharmacistHave(Context context, @NonNull Medication medication) {
         Set<String> all = getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_MEDICATIONS, newHashSet());
-        all.add(getGson().toJson(medication));
-        getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_MEDICATIONS, all).apply();
+        getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_MEDICATIONS, union(all, singleton(getGson().toJson(medication)))).apply();
         hirePharmacist(null);
     }
 
