@@ -19,7 +19,7 @@ stages:
   - coverage
   - release
 
-.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar sed git openssh-client
+.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar sed git
 
 # Jobs that require the Android SDK
 .require-android-sdk: &require-android-sdk
@@ -151,11 +151,6 @@ release:alpha:
   only:
     - master
   script:
-    - mkdir --parents --mode=700 ~/.ssh
-    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr --delete '\r' | ssh-add - > /dev/null
     - git config --global user.email "ci@leesah.name"
     - git config --global user.name "GitLab-CI"
     - sed --regexp-extended --in-place 's/^(versionCode=)([0-9]+)$/echo "\1$((\2+1))"/ge' ${CI_PROJECT_DIR}/version.properties
