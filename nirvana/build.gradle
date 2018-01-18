@@ -18,7 +18,7 @@ android {
         applicationId 'name.leesah.nirvana'
         minSdkVersion 24
         targetSdkVersion 26
-        versionCode 44
+        versionCode 45
         versionName sprintf('HRB%d', versionCode)
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
