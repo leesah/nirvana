@@ -151,8 +151,7 @@ release:alpha:
   only:
     - master
   script:
-    - mkdir --parents ~/.ssh
-    - chmod 700 ~/.ssh
+    - mkdir --parents --mode=700 ~/.ssh
     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - eval $(ssh-agent -s)
@@ -161,7 +160,8 @@ release:alpha:
     - git config --global user.name "GitLab-CI"
     - sed --regexp-extended --in-place 's/^(versionCode=)([0-9]+)$/echo "\1$((\2+1))"/ge' ${CI_PROJECT_DIR}/version.properties
     - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "[GitLab-CI] Stepping \1 to \2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git commit --message="{}" --message="[skip ci]" ${CI_PROJECT_DIR}/version.properties
-    - git push origin HEAD:master
+    - echo ${CI_REPOSITORY_URL} | sed --regexp-extended 's/^(.*)${CI_REGISTRY_USER}:.*(@.*)$/echo "\1${GITLAB_USER_LOGIN}:${GITLAB_ACCESS_TOKEN}\2"/ge'
+    - echo ${CI_REPOSITORY_URL} | sed --regexp-extended 's/^(.*)${CI_REGISTRY_USER}:.*(@.*)$/echo "\1${GITLAB_USER_LOGIN}:${GITLAB_ACCESS_TOKEN}\2"/ge' | xargs -I{} git push {} HEAD:master
     - ${CI_PROJECT_DIR}/gradlew clean assembleRelease publishApkRelease
     - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :nirvana:firebaseUploadReleaseProguardMapping
   artifacts:
