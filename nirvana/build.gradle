@@ -3,6 +3,9 @@ apply plugin: 'com.google.firebase.firebase-crash'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 
+def versionProperties = new Properties()
+versionProperties.load(new FileInputStream(rootProject.file('version.properties')))
+
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(rootProject.file('keystore.properties')))
 
@@ -18,8 +21,8 @@ android {
         applicationId 'name.leesah.nirvana'
         minSdkVersion 24
         targetSdkVersion 26
-        versionCode 45
-        versionName sprintf('HRB%d', versionCode)
+        versionCode versionProperties['versionCode'].toInteger()
+        versionName "SH-${new Date().format('yyyyMMddHHmm')}"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         playAccountConfig = playAccountConfigs.defaultAccountConfig
