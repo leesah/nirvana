@@ -19,7 +19,7 @@ stages:
   - coverage
   - release
 
-.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar
+.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar sed git
 
 # Jobs that require the Android SDK
 .require-android-sdk: &require-android-sdk
@@ -150,18 +150,9 @@ release:alpha:
   when: manual
   script:
     - ${CI_PROJECT_DIR}/gradlew clean assembleRelease publishApkRelease
-  artifacts:
-    paths:
-    - ${APK_DIR}
-  <<: *require-android-sdk
-
-# Upload deobfuscation file to Firebase
-release:deobfuscate-firebase:
-  stage: release
-  when: manual
-  script:
     - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :nirvana:firebaseUploadReleaseProguardMapping
   artifacts:
     paths:
+    - ${APK_DIR}
     - ${CI_PROJECT_DIR}/nirvana/build/outputs/mapping
   <<: *require-android-sdk
