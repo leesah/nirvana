@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
@@ -24,9 +26,11 @@ import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.PhoneBook.reminderMaker;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
+import static name.leesah.nirvana.persistence.Nurse.isUpcoming;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
 import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
+import static org.joda.time.DateTime.now;
 
 public class MedicationFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -87,8 +91,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
 
         Set<Reminder> reminders = reminderMaker(c).createReminders(medication, today());
         Set<Reminder> deprecated = nurse(c).replace(
-                reminder -> reminder.getMedicationId() == medication.getId() &&
-                        reminder.getDate().equals(today()),
+                isOf(medication).and(isUpcoming(now())),
                 reminders);
         reminders.forEach(alarmSecretary(c)::setAlarm);
         deprecated.stream()
@@ -98,6 +101,11 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
 
         getActivity().setResult(RESULT_OK);
         getActivity().finish();
+    }
+
+    @NonNull
+    private Predicate<Reminder> isOf(Medication medication) {
+        return reminder -> reminder.getMedicationId() == medication.getId();
     }
 
     private void refreshSaveButtonEnabled() {
