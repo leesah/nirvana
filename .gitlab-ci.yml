@@ -159,6 +159,7 @@ release:alpha:
     - git config --global user.name "GitLab-CI"
     - sed --regexp-extended --in-place 's/^(versionCode=)([0-9]+)$/echo "\1$((\2+1))"/ge' ${CI_PROJECT_DIR}/version.properties
     - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "[GitLab-CI] Stepping \1 to \2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git commit --message="{}" --message="[skip ci]" ${CI_PROJECT_DIR}/version.properties
+    - git push
     - ${CI_PROJECT_DIR}/gradlew clean assembleRelease publishApkRelease
     - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json :nirvana:firebaseUploadReleaseProguardMapping
   artifacts:
