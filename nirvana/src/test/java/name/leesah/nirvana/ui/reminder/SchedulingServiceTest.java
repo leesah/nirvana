@@ -32,6 +32,8 @@ import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.LanternGenie.randomReminders;
+import static name.leesah.nirvana.LanternGenie.randomRemindersAnHourAgo;
+import static name.leesah.nirvana.LanternGenie.randomRemindersAnHourLater;
 import static name.leesah.nirvana.ui.reminder.SchedulingService.ACTION_SET_REMINDERS;
 import static name.leesah.nirvana.ui.reminder.SchedulingService.REQUEST_CODE;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -102,7 +104,7 @@ public class SchedulingServiceTest {
     }
 
     @Test
-    public void setReminderAlarms() throws Exception {
+    public void newRemindersAreHandedToNurse() throws Exception {
         hire(reminderMaker);
         hire(nurse);
         hire(alarmSecretary);
@@ -117,13 +119,28 @@ public class SchedulingServiceTest {
         SchedulingService.scheduleForTheRestOfToday(context);
 
         verify(nurse, atLeastOnce()).hasReminder(notNull());
-        brandNew.forEach(reminder -> {
-            verify(nurse).add(eq(reminder));
-            verify(alarmSecretary).setAlarm(eq(reminder));
-        });
+        brandNew.forEach(reminder -> verify(nurse).add(eq(reminder)));
+
+        verifyNoMoreInteractions(nurse);
+
+    }
+
+    @Test
+    public void setReminderAlarms() throws Exception {
+        hire(reminderMaker);
+        hire(nurse);
+        hire(alarmSecretary);
+
+        Set<Reminder> hourAgo = randomRemindersAnHourAgo(context, false);
+        Set<Reminder> hourLater = randomRemindersAnHourLater(context, false);
+
+        when(reminderMaker.createReminders(any(LocalDate.class))).thenReturn(union(hourAgo, hourLater));
+
+        SchedulingService.scheduleForTheRestOfToday(context);
+
+        hourLater.forEach(reminder -> verify(alarmSecretary).setAlarm(eq(reminder)));
 
         verifyNoMoreInteractions(alarmSecretary);
-        verifyNoMoreInteractions(nurse);
 
     }
 

@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
-import com.google.common.collect.Sets;
-
 import org.joda.time.Days;
+import org.joda.time.Hours;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 
@@ -131,32 +131,46 @@ public class LanternGenie {
     public static Set<Reminder> randomReminders(Context context, boolean handToNurse) {
         int medicationId = randomMedication(context, true).getId();
         return range(0, randomAmount(128))
-                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, randomDay(), medicationId))
+                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, randomDay(), now(), medicationId))
                 .collect(toSet());
     }
 
     public static Set<Reminder> randomReminders(Context context, boolean handToNurse, LocalDate date) {
         int medicationId = randomMedication(context, true).getId();
         return range(0, randomAmount(128))
-                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, date, medicationId))
+                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, date, now(), medicationId))
+                .collect(toSet());
+    }
+
+    public static Set<Reminder> randomRemindersAnHourAgo(Context context, boolean handToNurse) {
+        int medicationId = randomMedication(context, true).getId();
+        return range(0, randomAmount(128))
+                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, today(), now().minus(Hours.ONE), medicationId))
+                .collect(toSet());
+    }
+
+    public static Set<Reminder> randomRemindersAnHourLater(Context context, boolean handToNurse) {
+        int medicationId = randomMedication(context, true).getId();
+        return range(0, randomAmount(128))
+                .mapToObj(i -> randomReminderOnDayForMedication(context, handToNurse, today(), now().plus(Hours.ONE), medicationId))
                 .collect(toSet());
     }
 
     @NonNull
     public static Reminder randomReminder(Context context, boolean handToNurse) {
         int medicationId = randomMedication(context, true).getId();
-        return randomReminderOnDayForMedication(context, handToNurse, randomDay(), medicationId);
+        return randomReminderOnDayForMedication(context, handToNurse, randomDay(), now(), medicationId);
     }
 
     @NonNull
     public static Reminder randomReminder(Context context, boolean handToNurse, LocalDate date) {
         int medicationId = randomMedication(context, true).getId();
-        return randomReminderOnDayForMedication(context, handToNurse, date, medicationId);
+        return randomReminderOnDayForMedication(context, handToNurse, date, now(), medicationId);
     }
 
     @NonNull
-    private static Reminder randomReminderOnDayForMedication(Context context, boolean handToNurse, LocalDate date, int medicationId) {
-        Reminder reminder = new Reminder(date, now(), medicationId, randomAmount(8));
+    private static Reminder randomReminderOnDayForMedication(Context context, boolean handToNurse, LocalDate date, LocalTime time, int medicationId) {
+        Reminder reminder = new Reminder(date, time, medicationId, randomAmount(8));
         if (handToNurse)
             letNurseHave(context, reminder);
         return reminder;
