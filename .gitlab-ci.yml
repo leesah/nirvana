@@ -16,7 +16,6 @@ variables:
 stages:
   - assemble
   - test
-  - coverage
   - release
 
 .apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar sed git
@@ -98,9 +97,7 @@ test:unit:
   stage: test
   script:
     - ${CI_PROJECT_DIR}/gradlew testDebugUnitTest jacocoTestReportDebug
-  artifacts:
-    paths:
-      - ${JACOCO_REPORT_DIR}
+    - test -f "${JACOCO_REPORT_DIR}/index.html" && cat "${JACOCO_REPORT_DIR}/index.html"
   <<: *require-android-sdk
 
 # Run instrumental tests on Firebase against API 24
@@ -133,16 +130,6 @@ test:robo:api25:
     PHYSICAL_DEVICE: "sailfish"
   <<: *require-google-cloud-sdk
   <<: *run-firebase-robo-test
-
-# Collect code coverage
-jacoco:
-  stage: coverage
-  when: always
-  dependencies:
-    - test:unit
-  script:
-    - test -f "${JACOCO_REPORT_DIR}/index.html" && cat "${JACOCO_REPORT_DIR}/index.html"
-  coverage: /'Total.*?([0-9]{1,3})%'/
 
 # Release to Google Play alpha track
 release:alpha:
