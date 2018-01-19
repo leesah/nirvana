@@ -139,7 +139,7 @@ test:robo:api25:
 release:alpha:
   stage: release
   only:
-    - master
+    - schedules
   script:
     - git config --global user.email "ci@leesah.name"
     - git config --global user.name "GitLab-CI"
