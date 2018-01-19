@@ -134,7 +134,6 @@ test:robo:api25:
 # Release to Google Play alpha track
 release:alpha:
   stage: release
-  when: manual
   only:
     - master
   script:
