@@ -1,16 +1,21 @@
 package name.leesah.nirvana.persistence;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 import android.util.Log;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -20,14 +25,17 @@ import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.ui.reminder.SchedulingService;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static java.util.Locale.US;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.partitioningBy;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.PhoneBook.nurse;
+import static org.joda.time.format.DateTimeFormat.shortDateTime;
 
 /**
  * Created by sah on 2016-12-11.
@@ -58,11 +66,16 @@ public class Nurse extends DataHolder {
             Set<Reminder> deprecated = deprecate(isDeprecated);
 
             Map<Integer, Reminder> newEntries = reminders.stream().collect(toMap(Reminder::getId, Function.identity()));
+
             Log.d(TAG, String.format("Putting [%d] reminder(s) to cache: [%s]", newEntries.size(), Arrays.toString(newEntries.keySet().toArray())));
 
             cache.putAll(newEntries);
             persistCache();
 
+            Bundle params = new Bundle();
+            params.putInt("new_reminders_count", newEntries.size());
+            params.putInt("deprecated_reminders_count", deprecated.size());
+            FirebaseAnalytics.getInstance(context).logEvent("reminders_replaced", params);
             return deprecated;
         }
     }
@@ -86,6 +99,10 @@ public class Nurse extends DataHolder {
         cache.clear();
         Map<Integer, Reminder> replacement = reminders.stream().collect(toMap(Reminder::getId, Function.identity()));
         cache.putAll(replacement);
+
+        Bundle params = new Bundle();
+        params.putInt("replacement_count", reminders.size());
+        FirebaseAnalytics.getInstance(context).logEvent("reminders_cache_updated", params);
         Log.d(TAG, String.format("Cache updated: [%s]", itemsInCache()));
     }
 
@@ -97,6 +114,10 @@ public class Nurse extends DataHolder {
         }
         reminder.setNotified(notificationId);
         persistCache();
+
+        Bundle params = new Bundle();
+        params.putString("reminder", reminder.toString());
+        FirebaseAnalytics.getInstance(context).logEvent("reminder_set_notified", params);
         Log.d(TAG, String.format("Reminder [%d] set to [NOTIFIED], with notificationId=[%d].", id, notificationId));
     }
 
@@ -108,6 +129,10 @@ public class Nurse extends DataHolder {
         }
         reminder.setDone();
         persistCache();
+
+        Bundle params = new Bundle();
+        params.putString("reminder", reminder.toString());
+        FirebaseAnalytics.getInstance(context).logEvent("reminder_set_done", params);
         Log.d(TAG, String.format("Reminder [%d] set to [DONE].", id));
     }
 
@@ -143,6 +168,10 @@ public class Nurse extends DataHolder {
                 .collect(toMap(Reminder::getId, Function.identity()));
         cache = new ArrayMap<>();
         cache.putAll(map);
+
+        Bundle params = new Bundle();
+        params.putInt("reminders_count", map.size());
+        FirebaseAnalytics.getInstance(context).logEvent("reminders_cache_loaded", params);
         Log.i(TAG, String.format("%d reminder(s) loaded.", cache.size()));
         Log.d(TAG, String.format("Reminder(s) in cache: [%s].", itemsInCache()));
     }
@@ -156,6 +185,10 @@ public class Nurse extends DataHolder {
                 .map(gson::toJson)
                 .collect(toSet());
         preferences.edit().putStringSet(PREFERENCE_KEY_REMINDERS, stringSet).apply();
+
+        Bundle params = new Bundle();
+        params.putInt("reminders", stringSet.size());
+        FirebaseAnalytics.getInstance(context).logEvent("reminders_cache_persisted", params);
         Log.i(TAG, String.format("%d reminder(s) persisted.", cache.size()));
     }
 
@@ -191,6 +224,10 @@ public class Nurse extends DataHolder {
     }
 
     private void onReminderMissing(int id) {
+        Bundle params = new Bundle();
+        params.putInt("reminder_id", id);
+        params.putInt("cached_reminders_count", cache.size());
+        FirebaseAnalytics.getInstance(context).logEvent("reminder_missing_unexpectedly", params);
         Log.wtf(TAG, String.format(US, "Reminder not found by ID [%d].", id));
         Log.d(TAG, String.format(US, "Reminder(s) in cache: [%s]", itemsInCache()));
     }

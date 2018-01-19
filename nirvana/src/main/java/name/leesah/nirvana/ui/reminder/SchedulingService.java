@@ -5,7 +5,10 @@ import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -67,6 +70,9 @@ public class SchedulingService extends IntentService {
                 trigger.getMillis(),
                 getService(context, REQUEST_CODE, buildMidnightIntent(context), FLAG_UPDATE_CURRENT));
 
+        Bundle params = new Bundle();
+        params.putString("trigger", longDateTime().print(trigger));
+        FirebaseAnalytics.getInstance(context).logEvent("midnight_alarm_set", params);
         Log.d(TAG, format("SchedulingService registered to run at [%s].", longDateTime().print(trigger)));
     }
 
@@ -89,6 +95,7 @@ public class SchedulingService extends IntentService {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_BOOT_COMPLETED))
+                FirebaseAnalytics.getInstance(context).logEvent("boot_completed", new Bundle());
                 midnightTasks(context);
         }
     }

@@ -4,7 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.joda.time.DateTime;
 
@@ -15,6 +18,7 @@ import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
 import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
+import static org.joda.time.format.DateTimeFormat.longDateTime;
 
 public class AlarmSecretary {
     private static final String TAG = AlarmSecretary.class.getSimpleName();
@@ -25,7 +29,7 @@ public class AlarmSecretary {
 
     public AlarmSecretary(Context context) {
         this.context = context;
-        alarmManager = context.getSystemService(AlarmManager.class);
+        this.alarmManager = context.getSystemService(AlarmManager.class);
     }
 
     public void setAlarm(Reminder reminder) {
@@ -34,6 +38,10 @@ public class AlarmSecretary {
         DateTime trigger = reminder.getDate().toDateTime(reminder.getTime());
         alarmManager.set(RTC_WAKEUP, trigger.getMillis(), buildIntent(reminder, context));
 
+        Bundle params = new Bundle();
+        params.putString("reminder", reminder.toString());
+        params.putString("trigger", longDateTime().print(trigger));
+        FirebaseAnalytics.getInstance(context).logEvent("reminder_alarm_set", params);
         Log.i(TAG, String.format("Reminder has been set for medication: [%d].", reminder.getMedicationId()));
     }
 

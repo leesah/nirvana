@@ -5,7 +5,10 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import name.leesah.nirvana.model.reminder.Reminder;
 
@@ -37,11 +40,17 @@ public class RemindingService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
+            Bundle params = new Bundle();
+            params.putString("intent_action", action);
+            FirebaseAnalytics.getInstance(this).logEvent("reminding_service_run", params);
             Log.d(TAG, String.format("Awakened for [%s].", action));
 
             int reminderId = extractReminderId(intent);
             Reminder reminder = nurse(this).getReminder(reminderId);
             if (reminder == null) {
+                params = new Bundle();
+                params.putString("reminder", reminder.toString());
+                FirebaseAnalytics.getInstance(this).logEvent("expired_reminder_skipped", params);
                 Log.w(TAG, "Reminder has expired.");
                 return;
             }
@@ -65,6 +74,11 @@ public class RemindingService extends IntentService {
         display(notificationId, notification);
         nurse(this).setNotified(reminder.getId(), notificationId);
 
+        Bundle params = new Bundle();
+        params.putString("reminder", reminder.toString());
+        params.putInt("notification_id", notificationId);
+        params.putString("notification", notification.toString());
+        FirebaseAnalytics.getInstance(this).logEvent("reminder_shown", params);
         Log.d(TAG, String.format("Reminder shown: [%s]", reminder));
     }
 
@@ -72,6 +86,10 @@ public class RemindingService extends IntentService {
         dismiss(reminder.getNotificationId());
         nurse(this).setDone(reminder.getId());
 
+        Bundle params = new Bundle();
+        params.putString("reminder", reminder.toString());
+        params.putInt("notification_id", reminder.getNotificationId());
+        FirebaseAnalytics.getInstance(this).logEvent("reminder_confirmed", params);
         Log.d(TAG, String.format("Reminder confirmed: [%s].", reminder));
     }
 
@@ -83,11 +101,11 @@ public class RemindingService extends IntentService {
         return intent.getIntExtra(EXTRA_REMINDER_ID, Integer.MIN_VALUE);
     }
 
-    public void display(int notificationId, Notification notification) {
+    private void display(int notificationId, Notification notification) {
         getSystemService(NotificationManager.class).notify(NOTIFICATION_TAG, notificationId, notification);
     }
 
-    public void dismiss(int notificationId) {
+    private void dismiss(int notificationId) {
         getSystemService(NotificationManager.class).cancel(NOTIFICATION_TAG, notificationId);
     }
 
