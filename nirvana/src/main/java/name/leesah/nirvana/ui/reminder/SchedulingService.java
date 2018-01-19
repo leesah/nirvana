@@ -14,6 +14,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Minutes;
 
+import java.util.Set;
+
+import name.leesah.nirvana.model.reminder.Reminder;
+
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.app.PendingIntent.getService;
@@ -77,13 +81,13 @@ public class SchedulingService extends IntentService {
     }
 
     public static void scheduleForTheRestOfToday(Context context) {
-        reminderMaker(context).createReminders(today()).stream()
-                .filter(isSeenByNurse(context).negate().and(isUpcoming(now())))
-                .forEach(reminder -> {
-                    alarmSecretary(context).setAlarm(reminder);
-                    nurse(context).add(reminder);
-                    Log.d(TAG, format(US, "Scheduled new reminder: %s", reminder));
-                });
+        Set<Reminder> reminders = reminderMaker(context).createReminders(today());
+        reminders.stream()
+                .filter(isSeenByNurse(context).negate())
+                .forEach(reminder -> nurse(context).add(reminder));
+        reminders.stream()
+                .filter((isUpcoming(now())))
+                .forEach(reminder -> alarmSecretary(context).setAlarm(reminder));
     }
 
     private static Intent buildMidnightIntent(Context context) {
