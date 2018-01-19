@@ -63,8 +63,8 @@ stages:
 .run-firebase-instrumental-test: &run-firebase-instrumental-test
   dependencies:
     - assemble:debug
-  except:
-    - web
+  only:
+    - schedules
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type instrumentation
@@ -77,8 +77,8 @@ stages:
 .run-firebase-robo-test: &run-firebase-robo-test
   dependencies:
     - assemble:debug
-  except:
-    - web
+  only:
+    - schedules
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type robo
@@ -124,12 +124,11 @@ test:instrumental:api26:
   <<: *require-google-cloud-sdk
   <<: *run-firebase-instrumental-test
 
-# Run robo tests on Firebase against API 25
-test:robo:api25:
+# Run robo tests on Firebase against API 26
+test:robo:api26:
   stage: test
-  when: manual
   variables:
-    API_LEVEL: "25"
+    API_LEVEL: "26"
     VIRTUAL_DEVICE: "Nexus5X"
     PHYSICAL_DEVICE: "sailfish"
   <<: *require-google-cloud-sdk
