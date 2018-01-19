@@ -63,6 +63,8 @@ stages:
 .run-firebase-instrumental-test: &run-firebase-instrumental-test
   dependencies:
     - assemble:debug
+  except:
+    - web
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type instrumentation
@@ -75,6 +77,8 @@ stages:
 .run-firebase-robo-test: &run-firebase-robo-test
   dependencies:
     - assemble:debug
+  except:
+    - web
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type robo
