@@ -19,10 +19,10 @@ import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.PhoneBook.nurse;
-import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
-import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_SHOW_REMINDER;
-import static name.leesah.nirvana.ui.reminder.RemindingService.EXTRA_REMINDER_ID;
-import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
+import static name.leesah.nirvana.ui.reminder.BellRinger.ACTION_CONFIRM_REMINDER;
+import static name.leesah.nirvana.ui.reminder.BellRinger.ACTION_SHOW_REMINDER;
+import static name.leesah.nirvana.ui.reminder.BellRinger.EXTRA_REMINDER_ID;
+import static name.leesah.nirvana.ui.reminder.BellRinger.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -38,7 +38,7 @@ import static org.robolectric.Shadows.shadowOf;
  */
 @RunWith(RobolectricTestRunner.class)
 //TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
-public class RemindingServiceTest {
+public class BellRingerTest {
 
     private Context context;
     private Reminder reminder;
@@ -91,17 +91,17 @@ public class RemindingServiceTest {
     }
 
     private void show(Reminder reminder) {
-        Intent intent = new Intent(context, RemindingService.class)
+        Intent intent = new Intent(context, BellRinger.class)
                 .setAction(ACTION_SHOW_REMINDER)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
-        new RemindingServiceWrapper(context).startWithIntent(intent);
+        new BellRingerWrapper().startWithIntent(intent);
     }
 
     private void confirm(Reminder reminder) {
-        Intent intent = new Intent(context, SchedulingService.class)
+        Intent intent = new Intent(context, Midnighter.class)
                 .setAction(ACTION_CONFIRM_REMINDER)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
-        new RemindingServiceWrapper(context).startWithIntent(intent);
+        new BellRingerWrapper().startWithIntent(intent);
     }
 
     private void showDetails(Reminder reminder) {
@@ -110,14 +110,9 @@ public class RemindingServiceTest {
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
     }
 
-    private class RemindingServiceWrapper extends RemindingService {
-        public RemindingServiceWrapper(Context context) {
-            super();
-            attachBaseContext(context);
-        }
-
+    private class BellRingerWrapper extends BellRinger {
         private void startWithIntent(Intent intent) {
-            onHandleIntent(intent);
+            onReceive(context, intent);
         }
     }
 }

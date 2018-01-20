@@ -1,8 +1,8 @@
 package name.leesah.nirvana.ui.reminder;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,52 +15,42 @@ import name.leesah.nirvana.model.reminder.Reminder;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
+public class BellRinger extends BroadcastReceiver {
 
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- */
-public class RemindingService extends IntentService {
-
-    private static final String TAG = RemindingService.class.getSimpleName();
+    private static final String TAG = BellRinger.class.getSimpleName();
 
     public static final String ACTION_SHOW_REMINDER = "name.leesah.nirvana:action:SHOW_REMINDER";
-    static final String ACTION_CONFIRM_REMINDER = "name.leesah.nirvana:action:CONFIRM_REMINDER";
+    public static final String ACTION_CONFIRM_REMINDER = "name.leesah.nirvana:action:CONFIRM_REMINDER";
 
     static final String EXTRA_REMINDER_ID = "name.leesah.nirvana.ui.extra.REMINDER";
 
     public static final String NOTIFICATION_TAG = "name.leesah.nirvana.ui.notification.REMINDER";
 
-    public RemindingService() {
-        super(RemindingService.class.getSimpleName());
-    }
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onReceive(Context context, Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
             Bundle params = new Bundle();
             params.putString("intent_action", action);
-            FirebaseAnalytics.getInstance(this).logEvent("reminding_service_run", params);
+            FirebaseAnalytics.getInstance(context).logEvent("reminding_service_run", params);
             Log.d(TAG, String.format("Awakened for [%s].", action));
 
             int reminderId = extractReminderId(intent);
-            Reminder reminder = nurse(this).getReminder(reminderId);
+            Reminder reminder = nurse(context).getReminder(reminderId);
             if (reminder == null) {
                 params = new Bundle();
-                params.putString("reminder", reminder.toString());
-                FirebaseAnalytics.getInstance(this).logEvent("expired_reminder_skipped", params);
+                params.putInt("reminder_id", reminderId);
+                FirebaseAnalytics.getInstance(context).logEvent("expired_reminder_skipped", params);
                 Log.w(TAG, "Reminder has expired.");
                 return;
             }
 
             switch (action) {
                 case ACTION_SHOW_REMINDER:
-                    handleActionShowReminder(reminder);
+                    handleActionShowReminder(context, reminder);
                     break;
                 case ACTION_CONFIRM_REMINDER:
-                    handleActionConfirmReminder(reminder);
+                    handleActionConfirmReminder(context, reminder);
                     break;
             }
 
@@ -68,28 +58,27 @@ public class RemindingService extends IntentService {
         }
     }
 
-    private void handleActionShowReminder(Reminder reminder) {
+    private void handleActionShowReminder(Context context, Reminder reminder) {
         int notificationId = uniqueInt();
-        Notification notification = new NotificationBuilder(this, reminder).build();
-        display(notificationId, notification);
-        nurse(this).setNotified(reminder.getId(), notificationId);
+        Notification notification = new NotificationBuilder(context, reminder).build();
+        display(context, notificationId, notification);
+        nurse(context).setNotified(reminder.getId(), notificationId);
 
         Bundle params = new Bundle();
-        params.putString("reminder", reminder.toString());
+        params.putInt("reminder_id", reminder.getId());
         params.putInt("notification_id", notificationId);
-        params.putString("notification", notification.toString());
-        FirebaseAnalytics.getInstance(this).logEvent("reminder_shown", params);
+        FirebaseAnalytics.getInstance(context).logEvent("reminder_shown", params);
         Log.d(TAG, String.format("Reminder shown: [%s]", reminder));
     }
 
-    private void handleActionConfirmReminder(Reminder reminder) {
-        dismiss(reminder.getNotificationId());
-        nurse(this).setDone(reminder.getId());
+    private void handleActionConfirmReminder(Context context, Reminder reminder) {
+        dismiss(context, reminder.getNotificationId());
+        nurse(context).setDone(reminder.getId());
 
         Bundle params = new Bundle();
-        params.putString("reminder", reminder.toString());
+        params.putInt("reminder_id", reminder.getId());
         params.putInt("notification_id", reminder.getNotificationId());
-        FirebaseAnalytics.getInstance(this).logEvent("reminder_confirmed", params);
+        FirebaseAnalytics.getInstance(context).logEvent("reminder_confirmed", params);
         Log.d(TAG, String.format("Reminder confirmed: [%s].", reminder));
     }
 
@@ -101,17 +90,17 @@ public class RemindingService extends IntentService {
         return intent.getIntExtra(EXTRA_REMINDER_ID, Integer.MIN_VALUE);
     }
 
-    private void display(int notificationId, Notification notification) {
-        getSystemService(NotificationManager.class).notify(NOTIFICATION_TAG, notificationId, notification);
+    private void display(Context context, int notificationId, Notification notification) {
+        context.getSystemService(NotificationManager.class).notify(NOTIFICATION_TAG, notificationId, notification);
     }
 
-    private void dismiss(int notificationId) {
-        getSystemService(NotificationManager.class).cancel(NOTIFICATION_TAG, notificationId);
+    private void dismiss(Context context, int notificationId) {
+        context.getSystemService(NotificationManager.class).cancel(NOTIFICATION_TAG, notificationId);
     }
 
     public static void confirmReminder(Context context, int reminderId) {
         context.startService(
-                new Intent(context, RemindingService.class)
+                new Intent(context, BellRinger.class)
                         .setAction(ACTION_CONFIRM_REMINDER)
                         .putExtra(EXTRA_REMINDER_ID, reminderId));
     }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Icon;
+import android.os.Build;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.DosageForm;
@@ -16,7 +17,7 @@ import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
-import static name.leesah.nirvana.ui.reminder.RemindingService.ACTION_CONFIRM_REMINDER;
+import static name.leesah.nirvana.ui.reminder.BellRinger.ACTION_CONFIRM_REMINDER;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
@@ -42,6 +43,8 @@ class NotificationBuilder extends Notification.Builder {
         final String text = res.getQuantityString(R.plurals.notification_text, reminder.getDosageAmount(), reminder.getDosageAmount(), toText(reminder.getTime()));
 
         setDefaults(Notification.DEFAULT_ALL);
+        if (Build.VERSION.SDK_INT >= 26)
+            setChannelId(this.context.getString(R.string.notification_channel_id_reminder));
         setSmallIcon(getNotificationIcon(medication.getForm()));
         setContentTitle(title);
         setContentText(text);
@@ -66,9 +69,9 @@ class NotificationBuilder extends Notification.Builder {
     }
 
     private PendingIntent getConfirmIntent() {
-        Intent intent = new Intent(context, RemindingService.class)
+        Intent intent = new Intent(context, BellRinger.class)
                 .setAction(ACTION_CONFIRM_REMINDER)
-                .putExtra(RemindingService.EXTRA_REMINDER_ID, reminderId);
+                .putExtra(BellRinger.EXTRA_REMINDER_ID, reminderId);
         return PendingIntent.getService(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
 

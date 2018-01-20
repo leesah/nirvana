@@ -16,9 +16,9 @@ import name.leesah.nirvana.model.medication.repeating.Everyday;
 import name.leesah.nirvana.model.medication.starting.Immediately;
 import name.leesah.nirvana.model.medication.stopping.Never;
 import name.leesah.nirvana.model.reminder.TimedDosage;
-import name.leesah.nirvana.ui.reminder.SchedulingService;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
 
 /**
@@ -69,7 +69,7 @@ public class DebugTools {
                 setStoppingStrategy(new Never()).
                 build());
 
-        SchedulingService.scheduleForTheRestOfToday(context);
+        nurse(context).scheduleForTheRestOfToday();
 
         Toast.makeText(context, "Done.", Toast.LENGTH_SHORT).show();
 

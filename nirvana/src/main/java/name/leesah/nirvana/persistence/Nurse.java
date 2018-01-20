@@ -9,13 +9,10 @@ import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -23,19 +20,19 @@ import java.util.function.Predicate;
 
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
-import name.leesah.nirvana.ui.reminder.SchedulingService;
 
-import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.System.lineSeparator;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
 import static java.util.Locale.US;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.partitioningBy;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
-import static name.leesah.nirvana.PhoneBook.nurse;
-import static org.joda.time.format.DateTimeFormat.shortDateTime;
+import static name.leesah.nirvana.PhoneBook.alarmSecretary;
+import static name.leesah.nirvana.PhoneBook.reminderMaker;
+import static name.leesah.nirvana.utils.DateTimeHelper.today;
+import static org.joda.time.DateTime.now;
 
 /**
  * Created by sah on 2016-12-11.
@@ -51,21 +48,28 @@ public class Nurse extends DataHolder {
         super(context);
     }
 
+    public void scheduleForTheRestOfToday() {
+        add(reminderMaker(context).createReminders(today()));
+        getReminders(today()).stream()
+                .filter((isUpcoming()))
+                .forEach(reminder -> alarmSecretary(context).setAlarm(reminder));
+    }
+
     public void add(Reminder reminder) {
         replace(reminder::equals, singleton(reminder));
     }
 
-    public void add(Set<Reminder> reminders) {
-        replace(reminders::contains, reminders);
+    public void add(Set<Reminder> replacement) {
+        replace(replacement::contains, replacement);
     }
 
-    public Set<Reminder> replace(Predicate<Reminder> isDeprecated, Set<Reminder> reminders) {
+    public Set<Reminder> replace(Predicate<Reminder> isDeprecated, Set<Reminder> replacement) {
         loadCacheIfNeeded();
 
         synchronized (this) {
             Set<Reminder> deprecated = deprecate(isDeprecated);
 
-            Map<Integer, Reminder> newEntries = reminders.stream().collect(toMap(Reminder::getId, Function.identity()));
+            Map<Integer, Reminder> newEntries = replacement.stream().collect(toMap(Reminder::getId, Function.identity()));
 
             Log.d(TAG, String.format("Putting [%d] reminder(s) to cache: [%s]", newEntries.size(), Arrays.toString(newEntries.keySet().toArray())));
 
@@ -116,7 +120,7 @@ public class Nurse extends DataHolder {
         persistCache();
 
         Bundle params = new Bundle();
-        params.putString("reminder", reminder.toString());
+        params.putInt("reminder_id", reminder.getId());
         FirebaseAnalytics.getInstance(context).logEvent("reminder_set_notified", params);
         Log.d(TAG, String.format("Reminder [%d] set to [NOTIFIED], with notificationId=[%d].", id, notificationId));
     }
@@ -131,7 +135,7 @@ public class Nurse extends DataHolder {
         persistCache();
 
         Bundle params = new Bundle();
-        params.putString("reminder", reminder.toString());
+        params.putInt("reminder_id", reminder.getId());
         FirebaseAnalytics.getInstance(context).logEvent("reminder_set_done", params);
         Log.d(TAG, String.format("Reminder [%d] set to [DONE].", id));
     }
@@ -209,13 +213,8 @@ public class Nurse extends DataHolder {
     }
 
     @NonNull
-    public static Predicate<Reminder> isSeenByNurse(Context context) {
-        return reminder -> nurse(context).hasReminder(reminder);
-    }
-
-    @NonNull
-    public static Predicate<Reminder> isUpcoming(DateTime now) {
-        return reminder -> now.minus(SchedulingService.GAP).minus(Minutes.ONE).isBefore(reminder.getPlannedTime());
+    public static Predicate<Reminder> isUpcoming() {
+        return reminder -> now().minus(Minutes.ONE).isBefore(reminder.getPlannedTime());
     }
 
     @NonNull
@@ -235,7 +234,7 @@ public class Nurse extends DataHolder {
     private String itemsInCache() {
         return cache.isEmpty() ? "EMPTY" : cache.values().stream()
                 .map(Reminder::toString)
-                .collect(joining(", "));
+                .collect(joining(lineSeparator(), lineSeparator(), lineSeparator()));
     }
 
 }

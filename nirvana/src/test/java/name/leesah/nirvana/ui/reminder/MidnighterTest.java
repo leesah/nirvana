@@ -34,8 +34,8 @@ import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.LanternGenie.randomReminders;
 import static name.leesah.nirvana.LanternGenie.randomRemindersAnHourAgo;
 import static name.leesah.nirvana.LanternGenie.randomRemindersAnHourLater;
-import static name.leesah.nirvana.ui.reminder.SchedulingService.ACTION_SET_REMINDERS;
-import static name.leesah.nirvana.ui.reminder.SchedulingService.REQUEST_CODE;
+import static name.leesah.nirvana.ui.reminder.Midnighter.ACTION_SET_REMINDERS;
+import static name.leesah.nirvana.ui.reminder.Midnighter.REQUEST_CODE;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -60,7 +60,7 @@ import static org.robolectric.RuntimeEnvironment.application;
  */
 @RunWith(RobolectricTestRunner.class)
 //TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
-public class SchedulingServiceTest {
+public class MidnighterTest {
 
     @Spy
     private Context context = application.getApplicationContext();
@@ -68,12 +68,6 @@ public class SchedulingServiceTest {
     private ArgumentCaptor<PendingIntent> intent;
     @Mock
     private AlarmManager alarmManager;
-    @Mock
-    private Nurse nurse;
-    @Mock
-    private ReminderMaker reminderMaker;
-    @Mock
-    private AlarmSecretary alarmSecretary;
 
     @Before
     public void setUp() throws Exception {
@@ -86,73 +80,14 @@ public class SchedulingServiceTest {
     }
 
     @Test
-    @Ignore
-    public void runAtMidnight() throws Exception {
-
-    }
-
-    @Test
-    public void arrayMapHasValue() throws Exception {
-        Reminder origin = randomReminder(context, false);
-        ArrayMap<Integer, Reminder> map = new ArrayMap<>();
-        map.put(origin.getId(), origin);
-
-        Reminder copy = new Reminder(origin);
-        assertThat(copy, equalTo(origin));
-
-        assertThat(map.containsValue(copy), is(true));
-    }
-
-    @Test
-    public void newRemindersAreHandedToNurse() throws Exception {
-        hire(reminderMaker);
-        hire(nurse);
-        hire(alarmSecretary);
-
-        Set<Reminder> existing = randomReminders(context, false, today());
-        Set<Reminder> brandNew = randomReminders(context, false, today());
-
-        when(reminderMaker.createReminders(any(LocalDate.class))).thenReturn(union(existing, brandNew));
-        when(nurse.hasReminder(argThat(isIn(existing)))).thenReturn(true);
-        when(nurse.hasReminder(argThat(not(isIn(existing))))).thenReturn(false);
-
-        SchedulingService.scheduleForTheRestOfToday(context);
-
-        verify(nurse, atLeastOnce()).hasReminder(notNull());
-        brandNew.forEach(reminder -> verify(nurse).add(eq(reminder)));
-
-        verifyNoMoreInteractions(nurse);
-
-    }
-
-    @Test
-    public void setReminderAlarms() throws Exception {
-        hire(reminderMaker);
-        hire(nurse);
-        hire(alarmSecretary);
-
-        Set<Reminder> hourAgo = randomRemindersAnHourAgo(context, false);
-        Set<Reminder> hourLater = randomRemindersAnHourLater(context, false);
-
-        when(reminderMaker.createReminders(any(LocalDate.class))).thenReturn(union(hourAgo, hourLater));
-
-        SchedulingService.scheduleForTheRestOfToday(context);
-
-        hourLater.forEach(reminder -> verify(alarmSecretary).setAlarm(eq(reminder)));
-
-        verifyNoMoreInteractions(alarmSecretary);
-
-    }
-
-    @Test
     public void setMidnightAlarm() throws Exception {
         when(context.getSystemService(same(AlarmManager.class))).thenReturn(alarmManager);
 
-        SchedulingService.setMidnightAlarm(context);
+        Midnighter.setMidnightAlarm(context);
 
         verify(alarmManager).set(eq(RTC_WAKEUP), anyLong(), intent.capture());
         assertThat(intent.getValue(), equalTo(getService(context, REQUEST_CODE,
-                new Intent(context, SchedulingService.class)
+                new Intent(context, Midnighter.class)
                         .setAction(ACTION_SET_REMINDERS), FLAG_UPDATE_CURRENT)));
         verifyNoMoreInteractions(alarmManager);
 

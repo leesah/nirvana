@@ -28,9 +28,8 @@ import static name.leesah.nirvana.PhoneBook.reminderMaker;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.persistence.Nurse.isUpcoming;
 import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
-import static name.leesah.nirvana.ui.reminder.RemindingService.NOTIFICATION_TAG;
+import static name.leesah.nirvana.ui.reminder.BellRinger.NOTIFICATION_TAG;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
-import static org.joda.time.DateTime.now;
 
 public class MedicationFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -91,7 +90,7 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
 
         Set<Reminder> reminders = reminderMaker(c).createReminders(medication, today());
         Set<Reminder> deprecated = nurse(c).replace(
-                isOf(medication).and(isUpcoming(now())),
+                isOf(medication).and(isUpcoming()),
                 reminders);
         reminders.forEach(alarmSecretary(c)::setAlarm);
         deprecated.stream()

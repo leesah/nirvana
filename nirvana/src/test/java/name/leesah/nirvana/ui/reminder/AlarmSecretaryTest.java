@@ -65,7 +65,7 @@ public class AlarmSecretaryTest {
         verifyNoMoreInteractions(alarmManager);
 
         /* TODO: compare the PendingIntents
-        Intent intent = new Intent(context, RemindingService.class)
+        Intent intent = new Intent(context, BellRinger.class)
                 .setAction(ACTION_SHOW_REMINDER);
 
         assertThat(

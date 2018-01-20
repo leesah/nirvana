@@ -97,6 +97,9 @@
     <string name="prefcat_title_details">Details</string>
 
     <!-- Notification -->
+    <string name="notification_channel_id_reminder">name.leesah.nirvana:notification_channel:REMINDER</string>
+    <string name="notification_channel_name_reminder">Medication reminders</string>
+    <string name="notification_channel_description_reminder">Medication reminders</string>
     <string name="notification_title">Time to take %1$s</string>
     <plurals name="notification_text">
         <item quantity="one">Take %1$d dose at %2$s.</item>

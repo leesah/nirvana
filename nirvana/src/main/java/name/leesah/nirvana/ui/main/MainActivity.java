@@ -1,6 +1,9 @@
 package name.leesah.nirvana.ui.main;
 
 import android.app.Fragment;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +16,12 @@ import name.leesah.nirvana.ui.settings.SettingsFragment;
 import name.leesah.nirvana.ui.settings.treatment.TreatmentSettingsFragment;
 
 import static android.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
+import static android.app.NotificationManager.IMPORTANCE_HIGH;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
+import static name.leesah.nirvana.R.color.accent;
+import static name.leesah.nirvana.R.string.notification_channel_description_reminder;
+import static name.leesah.nirvana.R.string.notification_channel_id_reminder;
+import static name.leesah.nirvana.R.string.notification_channel_name_reminder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,12 +37,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeNotificationChannel();
         initializeSettingsFragment();
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this::onNavigation);
 
         showDefaultView();
+    }
+
+    private void initializeNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationChannel reminderChannel = new NotificationChannel(getString(notification_channel_id_reminder), getString(notification_channel_name_reminder), IMPORTANCE_HIGH);
+            reminderChannel.setDescription(getString(notification_channel_description_reminder));
+            reminderChannel.setLightColor(getColor(accent));
+            reminderChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            getSystemService(NotificationManager.class).createNotificationChannel(reminderChannel);
+        }
     }
 
     private void showDefaultView() {

@@ -58,15 +58,9 @@
 
         <activity android:name=".ui.medication.StrategySelectActivity" />
 
-        <service
-            android:name=".ui.reminder.SchedulingService"
-            android:exported="false" />
+        <receiver android:name=".ui.reminder.BellRinger" />
 
-        <service
-            android:name=".ui.reminder.RemindingService"
-            android:exported="false" />
-
-        <receiver android:name=".ui.reminder.SchedulingService$BootCompletedReceiver">
+        <receiver android:name=".ui.reminder.Midnighter">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

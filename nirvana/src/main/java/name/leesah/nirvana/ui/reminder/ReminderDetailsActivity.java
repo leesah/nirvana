@@ -17,7 +17,7 @@ import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
-import static name.leesah.nirvana.ui.reminder.RemindingService.confirmReminder;
+import static name.leesah.nirvana.ui.reminder.BellRinger.confirmReminder;
 
 public class ReminderDetailsActivity extends AppCompatActivity {
 
