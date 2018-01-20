@@ -100,7 +100,7 @@ assemble:debug:
 test:unit:
   stage: test
   script:
-    - ${CI_PROJECT_DIR}/gradlew testDebugUnitTest jacocoTestReportDebug
+    - ${CI_PROJECT_DIR}/gradlew jacocoTestReportDebug
     - test -f "${JACOCO_REPORT_DIR}/index.html" && cat "${JACOCO_REPORT_DIR}/index.html"
   <<: *require-android-sdk
 
@@ -124,9 +124,21 @@ test:instrumental:api26:
   <<: *require-google-cloud-sdk
   <<: *run-firebase-instrumental-test
 
+# Run robo tests on Firebase against API 24
+test:robo:api24:
+  stage: test
+  allow_failure: true
+  variables:
+    API_LEVEL: "24"
+    VIRTUAL_DEVICE: "Nexus5X"
+    PHYSICAL_DEVICE: "sailfish"
+  <<: *require-google-cloud-sdk
+  <<: *run-firebase-robo-test
+
 # Run robo tests on Firebase against API 26
 test:robo:api26:
   stage: test
+  allow_failure: true
   variables:
     API_LEVEL: "26"
     VIRTUAL_DEVICE: "Nexus5X"
