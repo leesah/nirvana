@@ -114,4 +114,33 @@ dependencies {
     androidTestImplementation libraries.findbugs
 }
 
+junitJacoco {
+    excludes = [
+            'name/leesah/nirvana/ui/main/*.class',
+            'name/leesah/nirvana/ui/medication/*.class',
+
+            // Following are copied from https://github.com/vanniktech/gradle-android-junit-jacoco-plugin/blob/master/src/main/groovy/com/vanniktech/android/junit/jacoco/GenerationPlugin.groovy
+            '**/R.class',
+            '**/R2.class', // ButterKnife Gradle Plugin
+            '**/R$*.class',
+            '**/R2$*.class', // ButterKnife Gradle Plugin
+            '**/*$$*',
+            '**/*$ViewInjector*.*', // Older ButterKnife Versions
+            '**/*$ViewBinder*.*', // Older ButterKnife Versions
+            '**/*_ViewBinding*.*', // Newer ButterKnife Versions
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*$Lambda$*.*', // Jacoco can not handle several "$" in class name.
+            '**/*Dagger*.*', // Dagger auto-generated code.
+            '**/*MembersInjector*.*', // Dagger auto-generated code.
+            '**/*_Provide*Factory*.*', // Dagger auto-generated code.
+            '**/*_Factory*.*', // Dagger auto-generated code.
+            '**/*$JsonObjectMapper.*', // LoganSquare auto-generated code.
+            '**/*$inlined$*.*', // Kotlin specific, Jacoco can not handle several "$" in class name.
+            '**/*$Icepick.*', // Icepick auto-generated code.
+            '**/*$StateSaver.*', // android-state auto-generated code.
+            '**/*AutoValue_*.*' // AutoValue auto-generated code.
+    ]
+}
+
 apply plugin: 'com.google.gms.google-services'
