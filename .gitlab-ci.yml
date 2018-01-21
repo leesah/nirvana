@@ -45,7 +45,7 @@ stages:
     # Wipe the secrets
     - rm --force ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json ${CI_PROJECT_DIR}/nirvana/google-services.json /tmp/firebase-crashreporting-auth-key.json
   variables:
-    GRADLE_USER_HOME: "${HOME}/.gradle"
+    GRADLE_USER_HOME: "/cache"
   cache:
     paths:
       - ${GRADLE_USER_HOME}/caches/
