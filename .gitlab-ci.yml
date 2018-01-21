@@ -50,7 +50,6 @@ stages:
     paths:
       - ${GRADLE_USER_HOME}/caches/
       - ${GRADLE_USER_HOME}/wrapper/
-      - ${GRADLE_USER_HOME}/build-cache/
 
 # Jobs that require the Google Cloud SDK
 .require-google-cloud-sdk: &require-google-cloud-sdk
