@@ -13,6 +13,7 @@ import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.widget.MedicationCard;
 import name.leesah.nirvana.ui.widget.TimedDosageCard;
 
+import static android.text.TextUtils.isDigitsOnly;
 import static java.lang.String.format;
 import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.nurse;
@@ -32,7 +33,7 @@ public class ReminderDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_REMINDER_ID))
             reminderId = intent.getIntExtra(EXTRA_REMINDER_ID, 0);
-        else if  (TextUtils.isDigitsOnly(intent.getData().getLastPathSegment()))
+        else if  (isDigitsOnly(intent.getData().getLastPathSegment()))
             reminderId = Integer.valueOf(intent.getData().getLastPathSegment());
         else
             throw new IllegalArgumentException("Reminder ID missing from intent.");
@@ -47,10 +48,11 @@ public class ReminderDetailsActivity extends AppCompatActivity {
             throw new IllegalArgumentException(
                     format(US, "Medication #[%d] not recognized by pharmacist.", reminder.getMedicationId()));
 
-        MedicationCard medicationCard = (MedicationCard) findViewById(R.id.medication);
+        MedicationCard medicationCard = findViewById(R.id.medication);
         medicationCard.setMedication(medication);
+        medicationCard.hideButtons();
 
-        TimedDosageCard dosageCard = (TimedDosageCard) findViewById(R.id.dosage);
+        TimedDosageCard dosageCard = findViewById(R.id.dosage);
         dosageCard.setDosage(new TimedDosage(reminder.getTime(), reminder.getDosageAmount()));
 
         View confirm = findViewById(R.id.done_button);
