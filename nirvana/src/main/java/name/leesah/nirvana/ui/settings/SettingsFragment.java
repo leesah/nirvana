@@ -34,7 +34,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefscr_settings);
         initializeInformationSection();
-        if (isDebugToolsForceEnabled())
+        if (BuildConfig.DEBUG || isDebugToolsForceEnabled())
             initializeDebugToolsSection();
 
         treatment = findPreference(getString(R.string.pref_key_treatment));
