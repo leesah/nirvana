@@ -26,6 +26,7 @@ import name.leesah.nirvana.persistence.Nurse;
 
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+import static android.app.PendingIntent.getBroadcast;
 import static android.app.PendingIntent.getService;
 import static com.google.common.collect.Sets.union;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
@@ -86,7 +87,7 @@ public class MidnighterTest {
         Midnighter.setMidnightAlarm(context);
 
         verify(alarmManager).set(eq(RTC_WAKEUP), anyLong(), intent.capture());
-        assertThat(intent.getValue(), equalTo(getService(context, REQUEST_CODE,
+        assertThat(intent.getValue(), equalTo(getBroadcast(context, REQUEST_CODE,
                 new Intent(context, Midnighter.class)
                         .setAction(ACTION_SET_REMINDERS), FLAG_UPDATE_CURRENT)));
         verifyNoMoreInteractions(alarmManager);

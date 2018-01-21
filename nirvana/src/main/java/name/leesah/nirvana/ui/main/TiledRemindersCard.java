@@ -29,6 +29,7 @@ import name.leesah.nirvana.ui.reminder.ReminderDetailsActivity;
 
 import static java.util.Comparator.comparing;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
+import static name.leesah.nirvana.ui.reminder.BellRinger.EXTRA_REMINDER_ID;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.ListViewHeightOptimizer.optimize;
 
@@ -123,7 +124,7 @@ public class TiledRemindersCard extends FrameLayout {
             FirebaseAnalytics.getInstance(getContext()).logEvent("reminder_view_details", params);
 
             getContext().startActivity(new Intent(getContext(), ReminderDetailsActivity.class)
-                    .putExtra(ReminderDetailsActivity.EXTRA_REMINDER_ID, reminder.getId()));
+                    .putExtra(EXTRA_REMINDER_ID, reminder.getId()));
         }
 
     }

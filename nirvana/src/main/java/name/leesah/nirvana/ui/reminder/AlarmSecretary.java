@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -26,7 +25,6 @@ import static org.joda.time.format.DateTimeFormat.longDateTime;
 
 public class AlarmSecretary {
     private static final String TAG = AlarmSecretary.class.getSimpleName();
-    private static final String REMINDER_RUI_TEMPLATE = "https://nirvana.leesah.name/reminder/%d";
 
     private AlarmManager alarmManager;
 
@@ -52,13 +50,10 @@ public class AlarmSecretary {
 
     private PendingIntent buildIntent(Reminder reminder, Context context) {
         Intent intent = new Intent(context, BellRinger.class)
-                .setData(uriOf(reminder))
+                .setData((reminder.getUri()))
                 .setAction(ACTION_SHOW_REMINDER)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
         return getBroadcast(context, uniqueInt(), intent, FLAG_UPDATE_CURRENT);
     }
 
-    private Uri uriOf(Reminder reminder) {
-        return Uri.parse(format(getDefault(), REMINDER_RUI_TEMPLATE, reminder.getId()));
-    }
 }

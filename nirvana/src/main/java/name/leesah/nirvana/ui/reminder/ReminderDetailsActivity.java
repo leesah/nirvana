@@ -18,10 +18,10 @@ import static java.util.Locale.US;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.ui.reminder.BellRinger.confirmReminder;
+import static name.leesah.nirvana.ui.reminder.BellRinger.EXTRA_REMINDER_ID;
 
 public class ReminderDetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_REMINDER_ID = "name.leesah.nirvana:extra:REMINDER_ID";
     private int reminderId;
 
     @Override

@@ -17,15 +17,12 @@ import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 
 public class BellRinger extends BroadcastReceiver {
 
-    private static final String TAG = BellRinger.class.getSimpleName();
-
+    public static final String EXTRA_REMINDER_ID = "name.leesah.nirvana.ui.extra.REMINDER";
     public static final String ACTION_SHOW_REMINDER = "name.leesah.nirvana:action:SHOW_REMINDER";
     public static final String ACTION_CONFIRM_REMINDER = "name.leesah.nirvana:action:CONFIRM_REMINDER";
-
-    static final String EXTRA_REMINDER_ID = "name.leesah.nirvana.ui.extra.REMINDER";
-
     public static final String NOTIFICATION_TAG = "name.leesah.nirvana.ui.notification.REMINDER";
 
+    private static final String TAG = BellRinger.class.getSimpleName();
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent != null) {
@@ -99,7 +96,7 @@ public class BellRinger extends BroadcastReceiver {
     }
 
     public static void confirmReminder(Context context, int reminderId) {
-        context.startService(
+        context.sendBroadcast(
                 new Intent(context, BellRinger.class)
                         .setAction(ACTION_CONFIRM_REMINDER)
                         .putExtra(EXTRA_REMINDER_ID, reminderId));

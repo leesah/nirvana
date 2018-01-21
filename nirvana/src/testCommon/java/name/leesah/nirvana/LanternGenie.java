@@ -41,6 +41,7 @@ import name.leesah.nirvana.persistence.Therapist;
 import name.leesah.nirvana.ui.reminder.AlarmSecretary;
 import name.leesah.nirvana.ui.reminder.BellRinger;
 
+import static android.app.PendingIntent.getBroadcast;
 import static android.content.Context.MODE_PRIVATE;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.google.common.collect.Sets.newHashSet;
@@ -271,7 +272,7 @@ public class LanternGenie {
     private static void cancelAllAlarms(Context context) {
         Intent intent = new Intent(context, BellRinger.class)
                 .setAction(ACTION_SHOW_REMINDER);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+        PendingIntent pendingIntent = getBroadcast(context, 0, intent, 0);
         context.getSystemService(AlarmManager.class).cancel(pendingIntent);
     }
 

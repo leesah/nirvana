@@ -1,5 +1,7 @@
 package name.leesah.nirvana.model.reminder;
 
+import android.net.Uri;
+
 import com.google.common.base.MoreObjects;
 
 import org.joda.time.DateTime;
@@ -8,6 +10,8 @@ import org.joda.time.LocalTime;
 
 import java.util.Objects;
 
+import static java.lang.String.format;
+import static java.util.Locale.getDefault;
 import static name.leesah.nirvana.model.reminder.Reminder.State.NOTIFIED;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
@@ -17,6 +21,8 @@ import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
  */
 
 public class Reminder {
+
+    private static final String RUI_TEMPLATE = "https://nirvana.leesah.name/reminder/%d";
 
     public enum State {
         PLANNED,
@@ -86,6 +92,10 @@ public class Reminder {
 
     public int getNotificationId() {
         return notificationId;
+    }
+
+    public Uri getUri() {
+        return Uri.parse(format(getDefault(), RUI_TEMPLATE, getId()));
     }
 
     public void setNotified(int notificationId) {
