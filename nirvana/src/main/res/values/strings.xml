@@ -50,6 +50,7 @@
     <string name="medication_repeating_days_of_week">Days of week</string>
     <string name="medication_reminding_certain_hours">At certain hours</string>
     <string name="medication_reminding_every_n_hours">Every n hours</string>
+    <string name="medication_reminding_n_times_a_day">N times a day</string>
     <string name="medication_starting_switch_text_on" />
     <string name="medication_starting_switch_text_off" />
     <string name="medication_starting_relative_immediately">Do not delay</string>
@@ -163,5 +164,6 @@
         <item quantity="other">%d cycles in total</item>
     </plurals>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://nirvana.leesah.name\",\n  }\n}]</string>
+    <string name="feature_in_development">I am still working on this feature. Please stay tuned.</string>
 
 </resources>

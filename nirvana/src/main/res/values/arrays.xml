@@ -18,6 +18,7 @@
     <string-array name="medication_reminding_strategies">
         <item>@string/medication_reminding_certain_hours</item>
         <item>@string/medication_reminding_every_n_hours</item>
+        <item>@string/medication_reminding_n_times_a_day</item>
     </string-array>
 
     <string-array name="medication_stopping_strategies">

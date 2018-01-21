@@ -12,12 +12,16 @@ import android.widget.TimePicker;
 
 import org.joda.time.LocalTime;
 
+import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;
 
+import static name.leesah.nirvana.BuildConfig.DEBUG;
+import static name.leesah.nirvana.R.layout.every_n_hours;
+import static name.leesah.nirvana.R.layout.in_development;
 import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_VALUES;
 
 public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
@@ -29,16 +33,16 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.every_n_hours, container, false);
+        return inflater.inflate(DEBUG ? every_n_hours : in_development, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        amount = (NumberPicker) view.findViewById(R.id.amount);
-        unit = (TextView) view.findViewById(R.id.unit);
-        n = (NumberPicker) view.findViewById(R.id.every_n);
-        firstDoseTime = (TimePicker) view.findViewById(R.id.first_dose_time);
+        amount = view.findViewById(R.id.amount);
+        unit = view.findViewById(R.id.unit);
+        n = view.findViewById(R.id.every_n);
+        firstDoseTime = view.findViewById(R.id.first_dose_time);
     }
 
     @Override

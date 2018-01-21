@@ -15,6 +15,10 @@ import name.leesah.nirvana.model.medication.repeating.WithInterval;
 import name.leesah.nirvana.ui.medication.MedicationActivity;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;
 
+import static android.R.id.custom;
+import static name.leesah.nirvana.R.xml.prefscr_medication_repeating_every_n_days;
+import static name.leesah.nirvana.ui.medication.MedicationActivity.STAGING;
+
 /**
  * Created by sah on 2017-04-16.
  */
@@ -27,7 +31,7 @@ public class WithIntervalEditFragment extends StrategyEditFragment.Repeating {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         FrameLayout frameLayout = new FrameLayout(getContext());
-        frameLayout.setId(android.R.id.custom);
+        frameLayout.setId(custom);
         return frameLayout;
     }
 
@@ -35,7 +39,7 @@ public class WithIntervalEditFragment extends StrategyEditFragment.Repeating {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.custom, innerFragment)
+                .replace(custom, innerFragment)
                 .commit();
         setSaveButtonEnabled(true);
     }
@@ -57,8 +61,8 @@ public class WithIntervalEditFragment extends StrategyEditFragment.Repeating {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.prefscr_medication_repeating_every_n_days);
-            getPreferenceManager().setSharedPreferencesName(MedicationActivity.STAGING);
+            addPreferencesFromResource(prefscr_medication_repeating_every_n_days);
+            getPreferenceManager().setSharedPreferencesName(STAGING);
         }
 
     }
