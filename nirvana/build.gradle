@@ -22,7 +22,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 26
         versionCode versionProperties['versionCode'].toInteger()
-        versionName "SH-${new Date().format('yyyyMMddHHmm')}"
+        versionName "SH${new Date().format('yyMMddHHmm')}"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         playAccountConfig = playAccountConfigs.defaultAccountConfig
