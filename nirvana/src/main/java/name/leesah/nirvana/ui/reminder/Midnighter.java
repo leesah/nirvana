@@ -17,6 +17,7 @@ import org.joda.time.Minutes;
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static android.app.PendingIntent.getBroadcast;
+import static android.content.Intent.ACTION_BOOT_COMPLETED;
 import static java.lang.String.format;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
@@ -38,6 +39,7 @@ public class Midnighter extends BroadcastReceiver {
 
             switch (action) {
                 case ACTION_SET_REMINDERS:
+                case ACTION_BOOT_COMPLETED:
                     setMidnightAlarm(context);
                     nurse(context).scheduleForTheRestOfToday();
                     break;
