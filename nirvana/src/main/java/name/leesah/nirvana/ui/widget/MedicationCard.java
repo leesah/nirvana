@@ -14,6 +14,7 @@ import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 
 import static name.leesah.nirvana.R.drawable.ic_capsule;
+import static name.leesah.nirvana.R.drawable.ic_drop;
 import static name.leesah.nirvana.R.drawable.ic_injection;
 import static name.leesah.nirvana.R.drawable.ic_tablet;
 
@@ -53,14 +54,17 @@ public class MedicationCard extends FrameLayout {
         reminding.setText(medication.getRemindingStrategy().toString(getContext()));
         repeating.setText(medication.getRepeatingStrategy().toString(getContext()));
         switch (medication.getForm()) {
-            case CAPSULE:
-                dosageForm.setImageResource(ic_capsule);
-                break;
             case TABLET:
                 dosageForm.setImageResource(ic_tablet);
                 break;
+            case CAPSULE:
+                dosageForm.setImageResource(ic_capsule);
+                break;
             case INJECTION:
                 dosageForm.setImageResource(ic_injection);
+                break;
+            case DROP:
+                dosageForm.setImageResource(ic_drop);
                 break;
         }
     }

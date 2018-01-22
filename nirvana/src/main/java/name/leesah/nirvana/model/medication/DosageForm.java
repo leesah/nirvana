@@ -15,7 +15,7 @@ import static java.util.EnumSet.allOf;
  */
 @Keep
 public enum DosageForm {
-    TABLET, CAPSULE, INJECTION;
+    TABLET, CAPSULE, INJECTION, DROP;
 
     public String getName(Context context) {
         Resources resources = context.getResources();

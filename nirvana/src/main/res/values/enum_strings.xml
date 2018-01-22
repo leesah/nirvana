@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tablet">Tablet</string>
-    <string name="injection">Injection</string>
     <string name="capsule">Capsule</string>
+    <string name="injection">Injection</string>
+    <string name="drop">Drop</string>
 
     <plurals name="tablet">
         <item quantity="one">tablet</item>
         <item quantity="other">tablets</item>
     </plurals>
+    <plurals name="capsule">
+        <item quantity="one">capsule</item>
+        <item quantity="other">capsules</item>
+    </plurals>
     <plurals name="injection">
         <item quantity="one">injection</item>
         <item quantity="other">injections</item>
     </plurals>
-    <plurals name="capsule">
-        <item quantity="one">capsule</item>
-        <item quantity="other">capsules</item>
+    <plurals name="drop">
+        <item quantity="one">drop</item>
+        <item quantity="other">drops</item>
     </plurals>
 
     <plurals name="tablet_dosage_formatter">

@@ -30,6 +30,7 @@
         <item>@string/tablet</item>
         <item>@string/capsule</item>
         <item>@string/injection</item>
+        <item>@string/drop</item>
     </string-array>
 
 </resources>
