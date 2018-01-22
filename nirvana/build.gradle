@@ -116,6 +116,7 @@ dependencies {
 
 junitJacoco {
     excludes = [
+            'name/leesah/nirvana/DebugTools.class',
             'name/leesah/nirvana/ui/main/*.class',
             'name/leesah/nirvana/ui/medication/*.class',
 
