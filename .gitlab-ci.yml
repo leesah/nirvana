@@ -179,7 +179,7 @@ release:tag:
     - git config --global user.name "GitLab-CI"
   script:
     - sed --regexp-extended --in-place 's/^(versionCode=)([0-9]+)$/echo "\1$((\2+1))"/ge' ${CI_PROJECT_DIR}/version.properties
-    - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "[GitLab-CI] Stepping \1 to \2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} commit --message="{}" ${CI_PROJECT_DIR}/version.properties
+    - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "Step \1 for release-\2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} commit --message="{}" ${CI_PROJECT_DIR}/version.properties
     - sed 's/versionCode=/release-/' version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} tag {}
     - echo ${CI_REPOSITORY_URL} | sed --regexp-extended 's/^(.*)gitlab-ci-token:.*(@.*)$/echo "\1${GITLAB_USER_LOGIN}:${GITLAB_ACCESS_TOKEN}\2"/ge' | xargs -I{} git -C ${CI_PROJECT_DIR} push --tags {} HEAD:master
   <<: *run-nightly
