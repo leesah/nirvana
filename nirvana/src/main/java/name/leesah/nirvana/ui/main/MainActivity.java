@@ -22,6 +22,7 @@ import static name.leesah.nirvana.R.color.accent;
 import static name.leesah.nirvana.R.string.notification_channel_description_reminder;
 import static name.leesah.nirvana.R.string.notification_channel_id_reminder;
 import static name.leesah.nirvana.R.string.notification_channel_name_reminder;
+import static name.leesah.nirvana.ui.reminder.Midnighter.setMidnightAlarm;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,13 +38,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeNotificationChannel();
         initializeSettingsFragment();
-
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this::onNavigation);
 
         showDefaultView();
+
+        setMidnightAlarm(this);
+        initializeNotificationChannel();
     }
 
     private void initializeNotificationChannel() {
