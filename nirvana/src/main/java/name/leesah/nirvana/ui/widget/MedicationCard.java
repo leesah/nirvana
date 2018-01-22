@@ -13,6 +13,10 @@ import android.widget.TextView;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 
+import static name.leesah.nirvana.R.drawable.ic_capsule;
+import static name.leesah.nirvana.R.drawable.ic_injection;
+import static name.leesah.nirvana.R.drawable.ic_tablet;
+
 /**
  * Created by sah on 2017-04-19.
  */
@@ -32,15 +36,15 @@ public class MedicationCard extends FrameLayout {
         super(context, attrs);
 
         inflate(getContext(), R.layout.medication_card, this);
-        name = (TextView) findViewById(R.id.name);
-        manufacturer = (TextView) findViewById(R.id.manufacturer);
-        repeating = (TextView) findViewById(R.id.repeating);
-        reminding = (TextView) findViewById(R.id.reminding);
-        dosageForm = (ImageView) findViewById(R.id.icon);
+        name = findViewById(R.id.name);
+        manufacturer = findViewById(R.id.manufacturer);
+        repeating = findViewById(R.id.repeating);
+        reminding = findViewById(R.id.reminding);
+        dosageForm = findViewById(R.id.icon);
         buttonBar = findViewById(R.id.button_bar);
-        edit = (Button) findViewById(R.id.edit_button);
-        delete = (Button) findViewById(R.id.delete_button);
-        cancel = (Button) findViewById(R.id.cancel_button);
+        edit = findViewById(R.id.edit_button);
+        delete = findViewById(R.id.delete_button);
+        cancel = findViewById(R.id.cancel_button);
     }
 
     public void setMedication(@NonNull Medication medication) {
@@ -50,10 +54,13 @@ public class MedicationCard extends FrameLayout {
         repeating.setText(medication.getRepeatingStrategy().toString(getContext()));
         switch (medication.getForm()) {
             case CAPSULE:
-                dosageForm.setImageResource(R.drawable.ic_capsule);
+                dosageForm.setImageResource(ic_capsule);
                 break;
             case TABLET:
-                dosageForm.setImageResource(R.drawable.ic_tablet);
+                dosageForm.setImageResource(ic_tablet);
+                break;
+            case INJECTION:
+                dosageForm.setImageResource(ic_injection);
                 break;
         }
     }

@@ -19,6 +19,7 @@ import static android.graphics.drawable.Icon.createWithResource;
 import static android.os.Build.VERSION.SDK_INT;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
 import static name.leesah.nirvana.R.drawable.ic_capsule;
+import static name.leesah.nirvana.R.drawable.ic_injection;
 import static name.leesah.nirvana.R.drawable.ic_reminder_status_active;
 import static name.leesah.nirvana.R.drawable.ic_reminder_status_done;
 import static name.leesah.nirvana.R.drawable.ic_tablet;
@@ -87,6 +88,8 @@ class NotificationBuilder extends Notification.Builder {
                 return createWithResource(context, ic_tablet);
             case CAPSULE:
                 return createWithResource(context, ic_capsule);
+            case INJECTION:
+                return createWithResource(context, ic_injection);
             default:
                 return createWithResource(context, ic_reminder_status_active);
         }
