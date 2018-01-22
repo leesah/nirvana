@@ -69,8 +69,6 @@ stages:
 .run-firebase-instrumental-test: &run-firebase-instrumental-test
   dependencies:
     - assemble:debug
-  only:
-    - schedules
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type instrumentation
@@ -83,8 +81,6 @@ stages:
 .run-firebase-robo-test: &run-firebase-robo-test
   dependencies:
     - assemble:debug
-  only:
-    - schedules
   script:
     - >
         ${GCLOUD_SDK_ROOT}/bin/gcloud firebase test android run --project nirvana-app --type robo
@@ -92,25 +88,33 @@ stages:
         --device model=${VIRTUAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
         --device model=${PHYSICAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
 
-# Assemble -debug.apk & -debug-androidTest.apk
-assemble:debug:
-  stage: assemble
+# Jobs that run on every pushe
+.run-on-push: &run-on-push
   only:
     - branches
     - schedules
+  except:
+    - tags
+
+# Jobs that run only nightly
+.run-nightly: &run-nightly
+  only:
+    - schedules
+
+# Assemble -debug.apk & -debug-androidTest.apk
+assemble:debug:
+  stage: assemble
   script:
     - ${CI_PROJECT_DIR}/gradlew assembleDebug assembleDebugAndroidTest
   artifacts:
     paths:
     - ${APK_DIR}
   <<: *require-android-sdk
+  <<: *run-on-push
 
 # Run local unit tests
 test:unit:
   stage: test
-  only:
-    - branches
-    - schedules
   script:
     - ${CI_PROJECT_DIR}/gradlew jacocoTestReportDebug
     - cat "${JACOCO_REPORT_DIR}/index.html"
@@ -118,6 +122,7 @@ test:unit:
     paths:
     - ${JACOCO_REPORT_DIR}
   <<: *require-android-sdk
+  <<: *run-on-push
 
 # Run instrumental tests on Firebase against API 24
 test:instrumental:api24:
@@ -128,6 +133,7 @@ test:instrumental:api24:
     PHYSICAL_DEVICE: "herolte"
   <<: *require-google-cloud-sdk
   <<: *run-firebase-instrumental-test
+  <<: *run-nightly
 
 # Run instrumental tests on Firebase against API 26
 test:instrumental:api26:
@@ -138,6 +144,7 @@ test:instrumental:api26:
     PHYSICAL_DEVICE: "sailfish"
   <<: *require-google-cloud-sdk
   <<: *run-firebase-instrumental-test
+  <<: *run-nightly
 
 # Run robo tests on Firebase against API 24
 test:robo:api24:
@@ -149,6 +156,7 @@ test:robo:api24:
     PHYSICAL_DEVICE: "sailfish"
   <<: *require-google-cloud-sdk
   <<: *run-firebase-robo-test
+  <<: *run-nightly
 
 # Run robo tests on Firebase against API 26
 test:robo:api26:
@@ -160,12 +168,11 @@ test:robo:api26:
     PHYSICAL_DEVICE: "sailfish"
   <<: *require-google-cloud-sdk
   <<: *run-firebase-robo-test
+  <<: *run-nightly
 
 # Tag a release
 release:tag:
   stage: release
-  only:
-    - schedules
   before_script:
     - apt-get -qq update --yes && apt-get -qq install --yes sed git
     - git config --global user.email "ci@leesah.name"
@@ -175,6 +182,7 @@ release:tag:
     - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "[GitLab-CI] Stepping \1 to \2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} commit --message="{}" ${CI_PROJECT_DIR}/version.properties
     - sed 's/versionCode=/release-/' version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} tag {}
     - echo ${CI_REPOSITORY_URL} | sed --regexp-extended 's/^(.*)gitlab-ci-token:.*(@.*)$/echo "\1${GITLAB_USER_LOGIN}:${GITLAB_ACCESS_TOKEN}\2"/ge' | xargs -I{} git -C ${CI_PROJECT_DIR} push --tags {} HEAD:master
+  <<: *run-nightly
 
 # Release to Google Play alpha track
 release:alpha:
