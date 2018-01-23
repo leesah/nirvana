@@ -9,7 +9,6 @@ variables:
   ANDROID_HOME: "${ANDROID_SDK_ROOT}"
   GCLOUD_SDK_ROOT: "/opt/google-cloud-sdk"
   APK_DIR: "${CI_PROJECT_DIR}/nirvana/build/outputs/apk"
-  JACOCO_REPORT_DIR: "${CI_PROJECT_DIR}/nirvana/build/reports/jacoco/debug"
 
   GIT_SUBMODULE_STRATEGY: recursive
 
@@ -115,8 +114,10 @@ assemble:debug:
 # Run local unit tests
 test:unit:
   stage: test
+  variables:
+      JACOCO_REPORT_DIR: "${CI_PROJECT_DIR}/nirvana/build/reports/jacoco/jacocoTestDebugUnitTestReport/html"
   script:
-    - ${CI_PROJECT_DIR}/gradlew jacocoTestReportDebug
+    - ${CI_PROJECT_DIR}/gradlew jacocoTestDebugUnitTestReport
     - cat "${JACOCO_REPORT_DIR}/index.html"
   artifacts:
     paths:
