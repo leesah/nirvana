@@ -9,6 +9,7 @@ import name.leesah.nirvana.model.medication.DosageForm;
 
 import static java.util.Arrays.asList;
 import static name.leesah.nirvana.model.medication.DosageForm.CAPSULE;
+import static name.leesah.nirvana.model.medication.DosageForm.DROP;
 import static name.leesah.nirvana.model.medication.DosageForm.INJECTION;
 import static name.leesah.nirvana.model.medication.DosageForm.TABLET;
 import static name.leesah.nirvana.model.medication.DosageForm.valueOf;
@@ -19,7 +20,7 @@ import static name.leesah.nirvana.model.medication.DosageForm.valueOf;
 
 public class DosageFormPreference extends ListPreference {
 
-    private DosageForm enumValues[] = new DosageForm[]{TABLET, CAPSULE, INJECTION};
+    private DosageForm enumValues[] = new DosageForm[]{TABLET, CAPSULE, INJECTION, DROP};
 
     public DosageFormPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
