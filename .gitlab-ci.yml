@@ -90,7 +90,6 @@ stages:
 .run-on-push: &run-on-push
   only:
     - branches
-    - schedules
   except:
     - tags
 
