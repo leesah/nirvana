@@ -26,7 +26,6 @@ stages:
   before_script:
     - *apt-get-packages
     # Install Android SDK
-    - wget --quiet --output-document=- https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip | bsdtar --extract --directory=${ANDROID_SDK_ROOT} --file=-
     - mkdir --parents ~/.android ${ANDROID_SDK_ROOT}/licenses/
     - echo "count=0" > ~/.android/repositories.cfg
     - echo d56f5187479451eabf01fb78af6dfcb131a6481e > ${ANDROID_SDK_ROOT}/licenses/android-sdk-license
@@ -34,6 +33,7 @@ stages:
     - echo 33b6a2b64607f11b759f320ef9dff4ae5c47d97a > ${ANDROID_SDK_ROOT}/licenses/google-gdk-license
     - echo 601085b94cd77f0b54ff86406957099ebe79c4d6 > ${ANDROID_SDK_ROOT}/licenses/android-googletv-license
     - echo e9acab5b5fbb560a72cfaecce8946896ff6aab9d > ${ANDROID_SDK_ROOT}/licenses/mips-android-sysimage-license
+    - wget --quiet --output-document=- https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip | bsdtar --extract --directory=${ANDROID_SDK_ROOT} --file=-
     - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platforms;android-${TARGET_SDK}" "extras;google;google_play_services" "extras;google;m2repository" "extras;android;m2repository"
     # Secrets
     - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.properties
