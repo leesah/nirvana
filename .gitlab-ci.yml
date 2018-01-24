@@ -19,7 +19,7 @@ stages:
   - test
   - release
 
-.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar
+.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget bsdtar tar
 
 # Jobs that require the Android SDK
 .requires-android-sdk: &requires-android-sdk
