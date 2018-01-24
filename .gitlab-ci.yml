@@ -85,7 +85,7 @@ stages:
   <<: *uses-debug-apk
   stage: test
   script:
-    - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "tools" "emulator" "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
+    - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platform-tools" "tools" "emulator" "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
     - echo no | ${ANDROID_SDK_ROOT}/tools/bin/avdmanager --silent create avd --name Lavigne --package "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
     - ${ANDROID_SDK_ROOT}/emulator/emulator -avd Lavigne -no-audio -no-window &
     - wget --quiet --output-document=- ${WAIT_FOR_EMULATOR} | bash
