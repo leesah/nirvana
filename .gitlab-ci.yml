@@ -88,7 +88,7 @@ stages:
     - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "tools" "emulator" "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
     - echo no | ${ANDROID_SDK_ROOT}/tools/bin/avdmanager --silent create avd --name Lavigne --package "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
     - ${ANDROID_SDK_ROOT}/emulator/emulator -avd Lavigne -no-audio -no-window &
-    - wget --quiet --output-document=- ${WAIT_FOR_EMULATOR} | sh
+    - wget --quiet --output-document=- ${WAIT_FOR_EMULATOR} | bash
     - adb devices
     - adb shell settings put global window_animation_scale 0
     - adb shell settings put global transition_animation_scale 0
@@ -96,7 +96,7 @@ stages:
     - adb shell input keyevent 82
     - ${CI_PROJECT_DIR}/gradlew createDebugCoverageReport
     - cat "${CI_PROJECT_DIR}/nirvana/build/reports/coverage/debug/index.html"
-    - wget --quiet --output-document=- ${STOP_EMULATOR} | sh
+    - wget --quiet --output-document=- ${STOP_EMULATOR} | bash
   artifacts:
     paths:
     - ${CI_PROJECT_DIR}/nirvana/build/reports/androidTests/connected
