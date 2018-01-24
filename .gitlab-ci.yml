@@ -9,6 +9,7 @@ variables:
   ANDROID_HOME: "${ANDROID_SDK_ROOT}"
   GCLOUD_SDK_ROOT: "/opt/google-cloud-sdk"
   APK_DIR: "${CI_PROJECT_DIR}/nirvana/build/outputs/apk"
+  GRADLE_USER_HOME: "${CI_PROJECT_DIR}/.gradle"
 
   GIT_SUBMODULE_STRATEGY: recursive
 
@@ -43,8 +44,6 @@ stages:
   after_script:
     # Wipe the secrets
     - rm --force ${CI_PROJECT_DIR}/keystore.properties ${CI_PROJECT_DIR}/nirvana/play-publish-auth-key.json ${CI_PROJECT_DIR}/nirvana/google-services.json /tmp/firebase-crashreporting-auth-key.json
-  variables:
-    GRADLE_USER_HOME: "${CI_PROJECT_DIR}/.gradle"
   cache:
     paths:
       - ${GRADLE_USER_HOME}/wrapper
