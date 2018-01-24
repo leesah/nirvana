@@ -87,7 +87,7 @@ stages:
   script:
     - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "tools" "emulator" "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
     - ${ANDROID_SDK_ROOT}/tools/bin/avdmanager --silent create avd --name Lavigne --package "system-images;android-${API_LEVEL};google_apis;${ABI_ARCH}"
-    - ${ANDROID_SDK_ROOT}/emulator/emulator -avd Lavigne -no-audio -no-window &
+    - echo no | ${ANDROID_SDK_ROOT}/emulator/emulator -avd Lavigne -no-audio -no-window &
     - wget --quiet --output-document=- ${WAIT_FOR_EMULATOR} | sh
     - adb devices
     - adb shell settings put global window_animation_scale 0
