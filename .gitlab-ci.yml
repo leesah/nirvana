@@ -91,6 +91,7 @@ stages:
   only:
     - branches
   except:
+    - schedules
     - tags
 
 # Jobs that run only nightly
