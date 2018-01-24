@@ -19,7 +19,7 @@ stages:
   - test
   - release
 
-.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget bsdtar tar
+.apt-get-packages: &apt-get-packages apt-get -qq update --yes && apt-get -qq install --yes wget unzip tar
 
 # Jobs that require the Android SDK
 .requires-android-sdk: &requires-android-sdk
@@ -33,7 +33,8 @@ stages:
     - echo 33b6a2b64607f11b759f320ef9dff4ae5c47d97a > ${ANDROID_SDK_ROOT}/licenses/google-gdk-license
     - echo 601085b94cd77f0b54ff86406957099ebe79c4d6 > ${ANDROID_SDK_ROOT}/licenses/android-googletv-license
     - echo e9acab5b5fbb560a72cfaecce8946896ff6aab9d > ${ANDROID_SDK_ROOT}/licenses/mips-android-sysimage-license
-    - wget --quiet --output-document=- https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip | bsdtar --extract --directory=${ANDROID_SDK_ROOT} --file=-
+    - wget --quiet --output-document=/tmp/android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS_VERSION}.zip
+    - unzip /tmp/android-sdk.zip -d ${ANDROID_SDK_ROOT}
     - ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platforms;android-${TARGET_SDK}" "extras;google;google_play_services" "extras;google;m2repository" "extras;android;m2repository"
     # Secrets
     - echo ${APK_SIGNING_INFORMATION} > ${CI_PROJECT_DIR}/keystore.properties
