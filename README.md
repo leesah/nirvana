@@ -1,4 +1,4 @@
-# Nevermind [![build status](https://gitlab.com/sah/nirvana/badges/master/build.svg)](https://gitlab.com/sah/nirvana/commits/master) [![coverage report](https://gitlab.com/sah/nirvana/badges/master/coverage.svg)](https://gitlab.com/sah/nirvana/commits/master)[![Build Status](https://www.bitrise.io/app/0deffb74b7a26ea9/status.svg?token=FLxzXgpE5Toh-4UCk6vDkg&branch=master)](https://www.bitrise.io/app/0deffb74b7a26ea9)
+# Nevermind [![build status](https://gitlab.com/sah/nirvana/badges/master/build.svg)](https://gitlab.com/sah/nirvana/commits/master) [![coverage report](https://gitlab.com/sah/nirvana/badges/master/coverage.svg)](https://gitlab.com/sah/nirvana/commits/master)[![Build Status](https://www.bitrise.io/app/0deffb74b7a26ea9/status.svg?token=FLxzXgpE5Toh-4UCk6vDkg&branch=master)](https://www.bitrise.io/app/0deffb74b7a26ea9)[![codecov](https://codecov.io/gl/sah/nirvana/branch/master/graph/badge.svg)](https://codecov.io/gl/sah/nirvana)
 
 A medicine reminder with cycled treatment support
 
