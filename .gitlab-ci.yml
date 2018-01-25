@@ -171,8 +171,8 @@ test:robo:api26:
   <<: *run-firebase-robo-test
   <<: *run-nightly
 
-# Tag a release
-release:tag:
+# Release to Google Play alpha track
+release:alpha:
   stage: release
   before_script:
     - apt-get -qq update --yes && apt-get -qq install --yes sed git
@@ -180,17 +180,9 @@ release:tag:
     - git config --global user.name "GitLab-CI"
   script:
     - sed --regexp-extended --in-place 's/^(versionCode=)([0-9]+)$/echo "\1$((\2+1))"/ge' ${CI_PROJECT_DIR}/version.properties
-    - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "Step \1 for release-\2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} commit --message="{}" ${CI_PROJECT_DIR}/version.properties
+    - sed --regexp-extended 's/^(versionCode)=([0-9]+)$/echo "Step \1 for release-\2"/ge' ${CI_PROJECT_DIR}/version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} commit --message="{}" --message="[skip ci]" ${CI_PROJECT_DIR}/version.properties
     - sed 's/versionCode=/release-/' version.properties | xargs -I{} git -C ${CI_PROJECT_DIR} tag {}
     - echo ${CI_REPOSITORY_URL} | sed --regexp-extended 's/^(.*)gitlab-ci-token:.*(@.*)$/echo "\1${GITLAB_USER_LOGIN}:${GITLAB_ACCESS_TOKEN}\2"/ge' | xargs -I{} git -C ${CI_PROJECT_DIR} push --tags {} HEAD:master
-  <<: *run-nightly
-
-# Release to Google Play alpha track
-release:alpha:
-  stage: release
-  only:
-    - /^release-[0-9]+$/
-  script:
     - ${CI_PROJECT_DIR}/gradlew -PFirebaseServiceAccountFilePath=/tmp/firebase-crashreporting-auth-key.json clean assembleRelease publishApkRelease firebaseUploadReleaseProguardMapping
   artifacts:
     expire_in: 1 week
@@ -198,3 +190,4 @@ release:alpha:
     - ${APK_DIR}
     - ${CI_PROJECT_DIR}/nirvana/build/outputs/mapping
   <<: *require-android-sdk
+  <<: *run-nightly
