@@ -74,6 +74,8 @@ stages:
         --test ${APK_DIR}/androidTest/debug/nirvana-debug-androidTest.apk
         --device model=${VIRTUAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
         --device model=${PHYSICAL_DEVICE},version=${API_LEVEL},locale=en,orientation=portrait
+        --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec
+        --directories-to-pull=/sdcard
 
 # Jobs that run robo tests on Firebase
 .run-firebase-robo-test: &run-firebase-robo-test
