@@ -15,12 +15,14 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.Medication;
 import name.leesah.nirvana.model.reminder.Reminder;
 
 import static android.app.Activity.RESULT_OK;
+import static java.util.stream.Collectors.toSet;
 import static name.leesah.nirvana.PhoneBook.alarmSecretary;
 import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.pharmacist;
@@ -88,11 +90,16 @@ public class MedicationFragment extends PreferenceFragment implements SharedPref
         Medication medication = Medication.Builder.buildFromStaged(c);
         pharmacist(c).save(medication);
 
-        Set<Reminder> reminders = reminderMaker(c).createReminders(medication, today());
+        Set<Reminder> restOfDay = reminderMaker(c)
+                .createReminders(medication, today()).stream()
+                .filter(isUpcoming())
+                .collect(toSet());
         Set<Reminder> deprecated = nurse(c).replace(
                 isOf(medication).and(isUpcoming()),
-                reminders);
-        reminders.forEach(alarmSecretary(c)::setAlarm);
+                restOfDay);
+
+        restOfDay.forEach(alarmSecretary(c)::setAlarm);
+
         deprecated.stream()
                 .filter(reminder -> reminder.getState().equals(NOTIFIED))
                 .forEach(reminder -> getContext().getSystemService(NotificationManager.class)
