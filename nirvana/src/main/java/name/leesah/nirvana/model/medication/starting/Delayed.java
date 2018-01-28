@@ -7,7 +7,10 @@ import org.joda.time.Period;
 
 import java.util.Objects;
 
+import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.Treatment;
+
+import static org.joda.time.format.PeriodFormat.wordBased;
 
 /**
  * Created by sah on 2017-04-21.
@@ -28,7 +31,7 @@ public class Delayed implements StartingStrategy {
 
     @Override
     public String toString(Context context) {
-        return null;
+        return context.getString(R.string.to_string_starting_after_period, wordBased().print(period));
     }
 
     @Override

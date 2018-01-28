@@ -9,14 +9,13 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import org.joda.time.Period;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
+import org.joda.time.format.PeriodFormat;
 
-import name.leesah.nirvana.R;
 import name.leesah.nirvana.ui.widget.PeriodPicker;
 
 import static name.leesah.nirvana.utils.DateTimeHelper.toPeriod;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
+import static org.joda.time.format.PeriodFormat.wordBased;
 
 /**
  * Created by sah on 2016-12-10.
@@ -27,18 +26,12 @@ public class PeriodPreference extends DialogPreference {
     private static final String TAG = PeriodPreference.class.getSimpleName();
 
     private final PeriodPicker periodPicker;
-    private final PeriodFormatter periodFormatter;
 
     private String value = null;
 
     public PeriodPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         periodPicker = new PeriodPicker(context, attrs);
-        periodFormatter = new PeriodFormatterBuilder()
-                .appendMonths().appendSuffix(" ").appendSuffix(context.getString(R.string.month), context.getString(R.string.months))
-                .appendWeeks().appendSuffix(" ").appendSuffix(context.getString(R.string.week), context.getString(R.string.weeks))
-                .appendDays().appendSuffix(" ").appendSuffix(context.getString(R.string.day), context.getString(R.string.days))
-                .toFormatter();
     }
 
     @Override
@@ -84,7 +77,7 @@ public class PeriodPreference extends DialogPreference {
     @Override
     public void setSummary(CharSequence original) {
         super.setSummary(original == null ?
-                null : periodFormatter.print(toPeriod(original)));
+                null : wordBased().print(toPeriod(original)));
     }
 
     public void setPeriod(@NonNull Period period) {

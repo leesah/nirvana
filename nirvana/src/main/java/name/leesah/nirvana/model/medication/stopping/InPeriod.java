@@ -10,7 +10,9 @@ import java.util.Objects;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.treatment.Treatment;
 
+import static name.leesah.nirvana.R.string.to_string_stopping_after_period;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
+import static org.joda.time.format.PeriodFormat.wordBased;
 
 /**
  * Created by sah on 2017-04-21.
@@ -31,7 +33,7 @@ public class InPeriod implements StoppingStrategy {
 
     @Override
     public String toString(Context context) {
-        return context.getString(R.string.to_string_stopping_after_period, toText(period));
+        return context.getString(to_string_stopping_after_period, wordBased().print(period));
     }
 
     @Override

@@ -69,6 +69,7 @@
     <string name="to_string_medication_repeating_every_n_days">Every %d days</string>
     <string name="to_string_medication_repeating_days_of_week">Every week on %s</string>
     <string name="to_string_starting_immediately">Do not delay</string>
+    <string name="to_string_starting_after_period">Delay for %s</string>
     <string name="to_string_stopping_after_period">Stop in %s</string>
 
     <!-- Medication preference titles & summaries-->
