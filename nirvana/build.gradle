@@ -123,6 +123,10 @@ dependencies {
     androidTestImplementation libraries.findbugs
 }
 
+jacoco {
+    toolVersion = "0.7.9"
+}
+
 jacocoAndroidUnitTestReport {
     excludes += [
             'name/leesah/nirvana/DebugTools.class',
