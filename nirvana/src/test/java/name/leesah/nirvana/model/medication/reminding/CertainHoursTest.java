@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,25 +27,25 @@ import static name.leesah.nirvana.LanternGenie.randomMedication;
 import static name.leesah.nirvana.model.reminder.Reminder.State.PLANNED;
 import static name.leesah.nirvana.utils.DateTimeHelper.toText;
 import static name.leesah.nirvana.utils.DateTimeHelper.today;
+import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class CertainHoursTest {
     private RemindingStrategy model;
     private ArrayMap<String, TimedDosage> dosages;
     private Random random;
     private Medication medication;
     private LocalDate today;
-    private Context context;
 
     @Before
     public void setUp() throws Exception {
         random = new Random();
         today = today();
-        context = RuntimeEnvironment.application.getApplicationContext();
+        Context context = application.getApplicationContext();
 
         dosages = new ArrayMap<>();
         range(0, random.nextInt(4)).forEach(x -> addRandomDosage());

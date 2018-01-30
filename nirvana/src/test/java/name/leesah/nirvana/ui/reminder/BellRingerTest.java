@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.model.reminder.Reminder;
 
@@ -37,7 +38,7 @@ import static org.robolectric.Shadows.shadowOf;
  * Created by sah on 2017-04-07.
  */
 @RunWith(RobolectricTestRunner.class)
-//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class BellRingerTest {
 
     private Context context;

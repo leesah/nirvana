@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,7 +34,7 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class PharmacistTest {
     public static final int ZERO = 0;
     public static final int RANDOM_INT_MAX_VALUE = 8;

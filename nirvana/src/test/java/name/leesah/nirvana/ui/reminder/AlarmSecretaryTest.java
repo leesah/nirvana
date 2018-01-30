@@ -13,6 +13,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.model.reminder.Reminder;
 
@@ -31,7 +32,7 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-20.
  */
 @RunWith(RobolectricTestRunner.class)
-//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class AlarmSecretaryTest {
 
     @Spy

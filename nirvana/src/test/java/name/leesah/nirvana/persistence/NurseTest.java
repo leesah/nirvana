@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -63,7 +64,7 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class NurseTest {
 
     private Gson gson = getGson();

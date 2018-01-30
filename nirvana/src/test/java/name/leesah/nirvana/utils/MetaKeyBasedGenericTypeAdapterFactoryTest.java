@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Type;
 
@@ -39,7 +40,7 @@ import static org.junit.Assert.assertThat;
  * Created by sah on 2016-12-05.
  */
 @RunWith(RobolectricTestRunner.class)
-//TODO: @Config(manifest = Config.NONE, sdk = {24, 25, 26})
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class MetaKeyBasedGenericTypeAdapterFactoryTest {
 
     @Before

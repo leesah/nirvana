@@ -4,26 +4,29 @@ import android.content.Context;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.ui.widget.LimitedMinutesTimePicker;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2017-04-16.
  */
+@RunWith(RobolectricTestRunner.class)
+@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class LimitedMinutesTimePickerTest {
-    @Mock
-    private Context context;
     private LimitedMinutesTimePicker picker;
 
     @Before
     public void setUp() throws Exception {
-        initMocks(this);
-        picker = new LimitedMinutesTimePicker(context, null);
+        picker = new LimitedMinutesTimePicker(application.getApplicationContext(), null);
     }
 
     @Test
