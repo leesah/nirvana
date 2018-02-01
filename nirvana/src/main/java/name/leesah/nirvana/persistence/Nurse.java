@@ -206,12 +206,6 @@ public class Nurse extends DataHolder {
             return new Reminder(cached);
     }
 
-    @Nullable
-    public boolean hasReminder(@NonNull Reminder target) {
-        loadCacheIfNeeded();
-        return cache.containsValue(target);
-    }
-
     @NonNull
     public static Predicate<Reminder> isUpcoming() {
         return reminder -> now().minus(Minutes.ONE).isBefore(reminder.getPlannedTime());
