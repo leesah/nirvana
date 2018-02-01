@@ -117,7 +117,6 @@ test:unit:
   stage: test
   script:
     - ${CI_PROJECT_DIR}/gradlew jacocoTestDebugUnitTestReport
-    - bash <(curl -s https://codecov.io/bash) -t ${CODECOV_UPLOAD_TOKEN}
   artifacts:
     expire_in: 1 week
     paths:
