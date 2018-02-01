@@ -14,11 +14,14 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowNotificationManager;
 
+import java.util.Collections;
+
 import name.leesah.nirvana.model.reminder.Reminder;
 import name.leesah.nirvana.persistence.Nurse;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static java.util.Collections.emptySet;
 import static name.leesah.nirvana.LanternGenie.everythingVanishes;
 import static name.leesah.nirvana.LanternGenie.hire;
 import static name.leesah.nirvana.LanternGenie.randomReminder;
@@ -32,8 +35,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -51,6 +57,7 @@ public class BellRingerTest {
     private Context context;
     private Nurse nurse;
     private Reminder reminder;
+    private ShadowNotificationManager notificationManager;
 
     @Before
     public void setUp() throws Exception {
@@ -59,6 +66,7 @@ public class BellRingerTest {
         nurse = spy(new Nurse(context));
         hire(nurse);
         reminder = randomReminder(context, true, today());
+        notificationManager = shadowOf(context.getSystemService(NotificationManager.class));
     }
 
     @After
@@ -67,7 +75,7 @@ public class BellRingerTest {
     }
 
     @Test
-    public void showReminders() throws Exception {
+    public void validReminderIsShown() throws Exception {
         show(reminder);
 
         ArgumentCaptor<Integer> notificationIdCaptor = ArgumentCaptor.forClass(Integer.class);
@@ -79,14 +87,32 @@ public class BellRingerTest {
     }
 
     @Test
-    public void confirmReminders() throws Exception {
+    public void expiredReminderIsIgnored() throws Exception {
+        nurse.replace(r -> true, emptySet());
+
+        show(reminder);
+
+        verify(nurse).getReminder(reminder.getId());
+        verify(nurse, never()).setNotified(anyInt(), anyInt());
+        assertThat(notificationManager.getAllNotifications(), is(empty()));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void invalidIntentTriggersException() throws Exception {
+        Intent intent = new Intent(context, BellRinger.class)
+                .setAction(ACTION_SHOW_REMINDER);
+        new BellRingerWrapper().startWithIntent(intent);
+    }
+
+    @Test
+    public void shownReminderIsConfirmed() throws Exception {
         show(reminder);
         int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
 
         confirm(reminder);
 
         verify(nurse).setDone(reminder.getId());
-        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(nullValue()));
+        assertThat(notificationManager.getNotification(NOTIFICATION_TAG, notificationId), is(nullValue()));
     }
 
     private void show(Reminder reminder) {
@@ -97,7 +123,7 @@ public class BellRingerTest {
     }
 
     private void confirm(Reminder reminder) {
-        Intent intent = new Intent(context, Midnighter.class)
+        Intent intent = new Intent(context, BellRinger.class)
                 .setAction(ACTION_CONFIRM_REMINDER)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
         new BellRingerWrapper().startWithIntent(intent);
