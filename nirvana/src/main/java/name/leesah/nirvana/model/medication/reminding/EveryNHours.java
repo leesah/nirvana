@@ -37,7 +37,7 @@ public class EveryNHours implements RemindingStrategy {
 
     public EveryNHours(TimedDosage firstDose, int n) {
         if (!VALID_VALUES.contains(n)
-                || firstDose.getTimeOfDay().minusHours(n).isBefore(firstDose.getTimeOfDay()))
+                || firstDose.getTimeOfDay().plusHours(n).isBefore(firstDose.getTimeOfDay()))
             throw new IllegalArgumentException(format(US, "Illogical values for %s model: firstDosage=[%s], n=[%d].",
                     EveryNHours.class.getSimpleName(), firstDose, n));
 
@@ -58,8 +58,7 @@ public class EveryNHours implements RemindingStrategy {
         List<Integer> hours = new ArrayList<>(accumulator);
         hours.add(since);
         int next = since + interval;
-        if (next > 24) return hours;
-        else return calculateHoursTillMidnight(next, interval, hours);
+        return next >= 24 ? hours : calculateHoursTillMidnight(next, interval, hours);
     }
 
     public TimedDosage getFirstDose() {
