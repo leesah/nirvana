@@ -128,11 +128,9 @@ jacoco {
 }
 
 jacocoAndroidUnitTestReport {
-    excludes += [
-            'name/leesah/nirvana/DebugTools.class',
-            'name/leesah/nirvana/ui/main/*.class',
-            'name/leesah/nirvana/ui/medication/*.class',
-    ]
+    csv.enabled false
+    html.enabled false
+    xml.enabled true
 }
 
 apply plugin: 'com.google.gms.google-services'

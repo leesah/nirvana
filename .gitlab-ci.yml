@@ -115,15 +115,13 @@ assemble:debug:
 # Run local unit tests
 test:unit:
   stage: test
-  variables:
-      JACOCO_REPORT_DIR: "${CI_PROJECT_DIR}/nirvana/build/reports/jacoco/jacocoTestDebugUnitTestReport/html"
   script:
     - ${CI_PROJECT_DIR}/gradlew jacocoTestDebugUnitTestReport
-    - cat "${JACOCO_REPORT_DIR}/index.html"
+    - bash <(curl -s https://codecov.io/bash) -t ${CODECOV_UPLOAD_TOKEN}
   artifacts:
     expire_in: 1 week
     paths:
-    - ${JACOCO_REPORT_DIR}
+    - ${CI_PROJECT_DIR}/nirvana/build/reports/jacoco/
   <<: *require-android-sdk
   <<: *run-on-push
 
