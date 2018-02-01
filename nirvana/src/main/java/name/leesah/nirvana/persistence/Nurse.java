@@ -237,4 +237,7 @@ public class Nurse extends DataHolder {
                 .collect(joining(lineSeparator(), lineSeparator(), lineSeparator()));
     }
 
+    public void invalidateCache() {
+        cache = null;
+    }
 }

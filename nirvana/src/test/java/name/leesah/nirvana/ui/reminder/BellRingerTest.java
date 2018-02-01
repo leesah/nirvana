@@ -8,11 +8,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowNotificationManager;
 
 import name.leesah.nirvana.model.reminder.Reminder;
+import name.leesah.nirvana.persistence.Nurse;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -29,6 +32,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.robolectric.RuntimeEnvironment.application;
@@ -42,17 +49,15 @@ import static org.robolectric.Shadows.shadowOf;
 public class BellRingerTest {
 
     private Context context;
+    private Nurse nurse;
     private Reminder reminder;
-    // TODO: mock nurse
-    @Mock
-    private AlarmSecretary alarmSecretary;
 
     @Before
     public void setUp() throws Exception {
-        initMocks(this);
         context = application.getApplicationContext();
-        hire(alarmSecretary);
 
+        nurse = spy(new Nurse(context));
+        hire(nurse);
         reminder = randomReminder(context, true, today());
     }
 
@@ -64,10 +69,13 @@ public class BellRingerTest {
     @Test
     public void showReminders() throws Exception {
         show(reminder);
-        int notificationId = nurse(context).getReminder(reminder.getId()).getNotificationId();
 
-        assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(notNullValue()));
-        verifyNoMoreInteractions(alarmSecretary);
+        ArgumentCaptor<Integer> notificationIdCaptor = ArgumentCaptor.forClass(Integer.class);
+        verify(nurse).getReminder(reminder.getId());
+        verify(nurse).setNotified(eq(reminder.getId()), notificationIdCaptor.capture());
+
+        ShadowNotificationManager notificationManager = shadowOf(context.getSystemService(NotificationManager.class));
+        assertThat(notificationManager.getNotification(NOTIFICATION_TAG, notificationIdCaptor.getValue()), is(notNullValue()));
     }
 
     @Test
@@ -77,18 +85,8 @@ public class BellRingerTest {
 
         confirm(reminder);
 
+        verify(nurse).setDone(reminder.getId());
         assertThat(shadowOf(context.getSystemService(NotificationManager.class)).getNotification(NOTIFICATION_TAG, notificationId), is(nullValue()));
-        verifyNoMoreInteractions(alarmSecretary);
-    }
-
-    @Test
-    public void showReminderDetails() {
-        show(reminder);
-
-        showDetails(reminder);
-
-        // TODO: verify activity started
-        verifyNoMoreInteractions(alarmSecretary);
     }
 
     private void show(Reminder reminder) {
@@ -103,12 +101,6 @@ public class BellRingerTest {
                 .setAction(ACTION_CONFIRM_REMINDER)
                 .putExtra(EXTRA_REMINDER_ID, reminder.getId());
         new BellRingerWrapper().startWithIntent(intent);
-    }
-
-    private void showDetails(Reminder reminder) {
-        Intent intent = new Intent(context, ReminderDetailsActivity.class)
-                .setFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK)
-                .putExtra(EXTRA_REMINDER_ID, reminder.getId());
     }
 
     private class BellRingerWrapper extends BellRinger {

@@ -60,6 +60,7 @@ import static name.leesah.nirvana.PhoneBook.hireNurse;
 import static name.leesah.nirvana.PhoneBook.hirePharmacist;
 import static name.leesah.nirvana.PhoneBook.hireReminderMaker;
 import static name.leesah.nirvana.PhoneBook.hireTherapist;
+import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.PhoneBook.therapist;
 import static name.leesah.nirvana.persistence.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.persistence.Pharmacist.PREFERENCE_KEY_MEDICATIONS;
@@ -180,7 +181,7 @@ public class LanternGenie {
     public static void letNurseHave(Context context, Reminder reminder) {
         Set<String> all = getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_REMINDERS, newHashSet());
         getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_REMINDERS, union(all, singleton(getGson().toJson(reminder)))).apply();
-        hireNurse(null);
+        nurse(context).invalidateCache();
     }
 
     public static String randomName() {
