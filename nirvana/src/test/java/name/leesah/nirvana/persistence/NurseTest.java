@@ -228,7 +228,8 @@ public class NurseTest {
 
         nurse.scheduleForTheRestOfToday();
 
-        hourLater.forEach(reminder -> verify(alarmSecretary).setAlarm(eq(reminder)));
+        if (now().hourOfDay().get() != 23)
+            hourLater.forEach(reminder -> verify(alarmSecretary).setAlarm(eq(reminder)));
 
         verifyNoMoreInteractions(alarmSecretary);
 
