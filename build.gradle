@@ -1,6 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.2.30'
+    ext.support_lib_version = "26.1.0" // https://developer.android.com/topic/libraries/support-library/revisions.html
+    ext.firebase_version = "11.8.0"
+    ext.espresso_version = "3.0.1" // https://developer.android.com/training/testing/espresso/setup.html
+    ext.robolectric_version = "3.4.2" // http://robolectric.org/getting-started/
+    ext.junit_version = "4.12"
+    ext.mockito_version = "2.8.47"
+
     repositories {
         google()
         jcenter()
@@ -8,16 +16,17 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
+        classpath 'io.fabric.tools:gradle:1.24.4'
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
-        classpath 'org.jacoco:org.jacoco.core:0.7.9'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
-        classpath 'io.fabric.tools:gradle:1.24.4'
+
+        //noinspection GradleDependency
+        classpath 'org.jacoco:org.jacoco.core:0.7.9'
+        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
     }
 }
 
@@ -28,67 +37,6 @@ allprojects {
         mavenCentral()
     }
 }
-
-ext {
-    support_lib_version = "26.0.2"
-    firebase_version = "11.8.0"
-    espresso_version = "3.0.1"
-    junit_version = "4.12"
-    mockito_version = "2.8.47"
-}
-
-ext.libraries = [
-        // Support library
-        // https://developer.android.com/topic/libraries/support-library/revisions.html
-        support       : [
-                appcompat_v7     : "com.android.support:appcompat-v7:$ext.support_lib_version",
-                design           : "com.android.support:design:$ext.support_lib_version",
-                cardview_v7      : "com.android.support:cardview-v7:$ext.support_lib_version",
-                annotations      : "com.android.support:support-annotations:$ext.support_lib_version",
-                recyclerview_v7  : "com.android.support:recyclerview-v7:$ext.support_lib_version",
-                constraint_layout: 'com.android.support.constraint:constraint-layout:1.0.2',
-                test             : [
-                        runner: 'com.android.support.test:runner:1.0.1',
-                        rules : 'com.android.support.test:rules:1.0.1',
-                ],
-        ],
-
-        // Firebase
-        firebase      : [
-                core       : "com.google.firebase:firebase-core:$ext.firebase_version",
-                crash      : "com.google.firebase:firebase-crash:$ext.firebase_version",
-                appindexing: "com.google.firebase:firebase-appindexing:$ext.firebase_version",
-                ads        : "com.google.firebase:firebase-ads:$ext.firebase_version",
-                crashlytics: "com.crashlytics.sdk.android:crashlytics:2.7.1@aar",
-        ],
-
-        // Espresso
-        // https://developer.android.com/training/testing/espresso/setup.html
-        espresso      : [
-                core   : "com.android.support.test.espresso:espresso-core:$ext.espresso_version",
-                contrib: "com.android.support.test.espresso:espresso-contrib:$ext.espresso_version",
-        ],
-
-        // Robolectric
-        // http://robolectric.org/getting-started/
-        robolectric   : 'org.robolectric:robolectric:3.4.2',
-
-        // JUnit, Mockito & Hamcrest
-        junit         : "junit:junit:$ext.junit_version",
-        hamcrest      : 'org.hamcrest:hamcrest-library:1.4-atlassian-1',
-        mockito       : [
-                core   : "org.mockito:mockito-core:$ext.mockito_version",
-                android: "org.mockito:mockito-android:$ext.mockito_version",
-        ],
-
-        // Utility libraries
-        gson          : 'com.google.code.gson:gson:2.8.1',
-        joda_time     : 'joda-time:joda-time:2.9.9',
-        guava         : 'com.google.guava:guava:23.0',
-        findbugs      : 'com.google.code.findbugs:jsr305:3.0.2',
-        apache_commons: [lang3: 'org.apache.commons:commons-lang3:3.6',]
-
-]
 
 task clean(type: Delete) {
     delete rootProject.buildDir
