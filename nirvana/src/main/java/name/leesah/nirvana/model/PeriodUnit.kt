@@ -1,8 +1,8 @@
-package name.leesah.nirvana.model;
+package name.leesah.nirvana.model
 
 /**
  * Created by sah on 2016-12-07.
  */
-public enum PeriodUnit {
+enum class PeriodUnit {
     DAY, WEEK, MONTH
 }
