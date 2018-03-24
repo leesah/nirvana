@@ -12,14 +12,13 @@ import android.widget.TimePicker;
 
 import org.joda.time.LocalTime;
 
-import name.leesah.nirvana.BuildConfig;
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
 import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;
 
-import static name.leesah.nirvana.BuildConfig.DEBUG;
+import static name.leesah.nirvana.DebugTools.isDeveloperModeOn;
 import static name.leesah.nirvana.R.layout.every_n_hours;
 import static name.leesah.nirvana.R.layout.in_development;
 import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_VALUES;
@@ -33,7 +32,7 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(DEBUG ? every_n_hours : in_development, container, false);
+        return inflater.inflate(isDeveloperModeOn(getContext()) ? every_n_hours : in_development, container, false);
     }
 
     @Override

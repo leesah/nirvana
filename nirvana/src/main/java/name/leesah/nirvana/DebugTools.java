@@ -74,4 +74,8 @@ public class DebugTools {
         Toast.makeText(context, "Done.", Toast.LENGTH_SHORT).show();
 
     }
+
+    public static boolean isDeveloperModeOn(Context context) {
+        return BuildConfig.DEBUG || getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.pref_key_developer_mode), false);
+    }
 }

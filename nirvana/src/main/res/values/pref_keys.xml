@@ -24,6 +24,6 @@
     <!-- Others -->
     <string name="pref_key_about">name.leesah.nirvana:pref:key:ABOUT</string>
     <string name="pref_key_strategies">name.leesah.name:pref:key:STRATEGIES</string>
-    <string name="pref_key_debug_tools_force_enabled">name.leesah.name:pref:key:DEBUG_TOOLS_FORCE_ENABLED</string>
+    <string name="pref_key_developer_mode">name.leesah.name:pref:key:DEVELOPER_MODE</string>
 
 </resources>
