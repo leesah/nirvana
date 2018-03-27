@@ -1,4 +1,4 @@
-# Nevermind [![Build Status](https://www.bitrise.io/app/79f77e5d92248825/status.svg?token=S0bO3G0jHlGJhL0QfGIJiw&branch=master)](https://www.bitrise.io/app/79f77e5d92248825) [![codecov](https://codecov.io/gl/sah/nirvana/branch/master/graph/badge.svg)](https://codecov.io/gl/sah/nirvana)
+# Nevermind [![Build Status](https://www.bitrise.io/app/79f77e5d92248825/status.svg?token=S0bO3G0jHlGJhL0QfGIJiw&branch=master)](https://www.bitrise.io/app/79f77e5d92248825) [![codecov](https://codecov.io/gh/leesah/nirvana/branch/master/graph/badge.svg)](https://codecov.io/gh/leesah/nirvana)
 
 A medicine reminder with cycled treatment support
 
