@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.firebase.firebase-crash'
 apply plugin: 'io.fabric'
 apply plugin: 'jacoco-android'
 
@@ -67,7 +66,6 @@ dependencies {
 
     // Firebase
     implementation "com.google.firebase:firebase-core:$firebase_version"
-    implementation "com.google.firebase:firebase-crash:$firebase_version"
     implementation "com.google.firebase:firebase-appindexing:$firebase_version"
     implementation "com.google.firebase:firebase-ads:$firebase_version"
     implementation ("com.crashlytics.sdk.android:crashlytics:2.7.1@aar") {transitive = true}
