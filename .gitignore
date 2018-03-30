@@ -12,7 +12,6 @@
 bin/
 gen/
 out/
-*/release/output.json
 
 # Gradle files
 .gradle/
@@ -33,19 +32,18 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# Intellij
+# IntelliJ
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
+.idea/caches
 .idea/dictionaries
 .idea/libraries
 
 # Keystore files
-*.jks
-
-# Signing information
-keystore.properties
+# Uncomment the following line if you do not want to check your keystore files in.
+#*.jks
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
@@ -58,5 +56,9 @@ freeline.py
 freeline/
 freeline_project_description.json
 
-# Google Play Plublish API authentication key for gradle-play-publisher plugin 
-play-publish-auth-key.json
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
