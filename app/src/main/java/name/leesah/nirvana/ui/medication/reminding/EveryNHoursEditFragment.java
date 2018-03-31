@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import org.joda.time.LocalTime;
+
+import java.util.List;
 
 import name.leesah.nirvana.R;
 import name.leesah.nirvana.model.medication.reminding.EveryNHours;
@@ -23,11 +24,12 @@ import static name.leesah.nirvana.DebugTools.isDeveloperModeOn;
 import static name.leesah.nirvana.R.layout.every_n_hours;
 import static name.leesah.nirvana.R.layout.in_development;
 import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_VALUES;
+import static name.leesah.nirvana.model.medication.reminding.EveryNHours.isCombinationLogical;
 
 public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
 
     private NumberPicker amount;
-    private NumberPicker n;
+    private NumberPicker interval;
     private TimePicker firstDoseTime;
 
     @Override
@@ -39,20 +41,42 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         amount = view.findViewById(R.id.amount);
-        n = view.findViewById(R.id.every_n);
+        interval = view.findViewById(R.id.every_n);
         firstDoseTime = view.findViewById(R.id.first_dose_time);
 
         amount.setMinValue(1);
         amount.setMaxValue(99);
-        n.setMinValue(0);
-        n.setMaxValue(VALID_VALUES.size() - 1);
-        n.setDisplayedValues(validValuesAsStringArray());
+        interval.setMinValue(0);
+        firstDoseTime.setOnTimeChangedListener((v, h, m) -> refreshN(new LocalTime(h, m)));
+        refreshN(LocalTime.now());
+    }
 
+    private void refreshN(LocalTime selectedTime) {
+        List<Integer> validIntervals = VALID_VALUES.stream()
+                .filter(n -> isCombinationLogical(selectedTime, n))
+                .collect(toList());
+
+        if (validIntervals.isEmpty()) {
+            updateIntervalWidget(VALID_VALUES);
+            interval.setEnabled(false);
+        } else {
+            updateIntervalWidget(validIntervals);
+            interval.setEnabled(true);
+        }
+    }
+
+    private void updateIntervalWidget(List<Integer> validIntervals) {
+        interval.setMaxValue(0);
+        interval.setDisplayedValues(valuesAsStringArray(validIntervals));
+        interval.setMaxValue(validIntervals.size() - 1);
     }
 
     @NonNull
-    private String[] validValuesAsStringArray() {
-        return VALID_VALUES.stream().map(String::valueOf).collect(toList()).toArray(new String[]{});
+    private String[] valuesAsStringArray(List<Integer> values) {
+        return values.stream()
+                .map(String::valueOf)
+                .collect(toList())
+                .toArray(new String[]{});
     }
 
     @Override
@@ -61,7 +85,7 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
         LocalTime timeOfDay = new LocalTime(0)
                 .withHourOfDay(firstDoseTime.getHour())
                 .withMinuteOfHour(firstDoseTime.getMinute());
-        Integer everyN = VALID_VALUES.get(n.getValue());
+        Integer everyN = VALID_VALUES.get(interval.getValue());
 
         return new EveryNHours(
                 new TimedDosage(timeOfDay, amount.getValue()),
@@ -72,7 +96,7 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
     protected void updateView(RemindingStrategy strategy) {
         EveryNHours enh = (EveryNHours) strategy;
         amount.setValue(enh.getFirstDose().getAmount());
-        n.setValue(enh.getN());
+        interval.setValue(enh.getInterval());
         firstDoseTime.setHour(enh.getFirstDose().getTimeOfDay().getHourOfDay());
         firstDoseTime.setMinute(enh.getFirstDose().getTimeOfDay().getMinuteOfHour());
     }
