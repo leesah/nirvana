@@ -43,6 +43,7 @@ android {
             jacoco {
                 includeNoLocationClasses = true
             }
+            jvmArgs '-noverify' // https://stackoverflow.com/questions/32315978/jvm-options-in-android-when-run-gradlew-test/37593189#37593189
         }
     }
     sourceSets {
@@ -86,8 +87,8 @@ dependencies {
     androidTestImplementation "org.hamcrest:hamcrest-library:1.4-atlassian-1"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 
-    androidTestImplementation "com.android.support.test:runner:1.0.2-alpha1"
-    androidTestImplementation "com.android.support.test:rules:1.0.2-alpha1"
+    androidTestImplementation "com.android.support.test:runner:1.0.1"
+    androidTestImplementation "com.android.support.test:rules:1.0.1"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
 
