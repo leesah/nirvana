@@ -18,6 +18,7 @@ import name.leesah.nirvana.model.medication.reminding.RemindingStrategy;
 import name.leesah.nirvana.model.reminder.TimedDosage;
 import name.leesah.nirvana.ui.medication.StrategyEditFragment;
 
+import static java.util.stream.Collectors.toList;
 import static name.leesah.nirvana.DebugTools.isDeveloperModeOn;
 import static name.leesah.nirvana.R.layout.every_n_hours;
 import static name.leesah.nirvana.R.layout.in_development;
@@ -26,7 +27,6 @@ import static name.leesah.nirvana.model.medication.reminding.EveryNHours.VALID_V
 public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
 
     private NumberPicker amount;
-    private TextView unit;
     private NumberPicker n;
     private TimePicker firstDoseTime;
 
@@ -39,9 +39,20 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         amount = view.findViewById(R.id.amount);
-        unit = view.findViewById(R.id.unit);
         n = view.findViewById(R.id.every_n);
         firstDoseTime = view.findViewById(R.id.first_dose_time);
+
+        amount.setMinValue(1);
+        amount.setMaxValue(99);
+        n.setMinValue(0);
+        n.setMaxValue(VALID_VALUES.size() - 1);
+        n.setDisplayedValues(validValuesAsStringArray());
+
+    }
+
+    @NonNull
+    private String[] validValuesAsStringArray() {
+        return VALID_VALUES.stream().map(String::valueOf).collect(toList()).toArray(new String[]{});
     }
 
     @Override

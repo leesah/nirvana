@@ -167,4 +167,9 @@
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://nirvana.leesah.name\",\n  }\n}]</string>
     <string name="feature_in_development">I am still working on this feature. Please stay tuned.</string>
 
+    <!-- Reminding: Every N Hours -->
+    <string name="amount">Amount</string>
+    <string name="interval">Interval</string>
+    <string name="starting_at">Starting at</string>
+
 </resources>
