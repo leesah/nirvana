@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="4dp">
 
         <LinearLayout
@@ -52,13 +53,13 @@
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 android:paddingStart="?android:attr/listPreferredItemPaddingStart">
 
-            <TextView
-                android:id="@+id/note"
-                style="@style/VerticallyCenteredTextView.ReminderCard.Primary.Note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                tools:text="No more intakes today." />
+                <TextView
+                    android:id="@+id/note"
+                    style="@style/VerticallyCenteredTextView.ReminderCard.Primary.Note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    tools:text="No more intakes today." />
 
             </FrameLayout>
 

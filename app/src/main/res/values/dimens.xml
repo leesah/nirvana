@@ -10,5 +10,6 @@
     <dimen name="dosage_list_button_padding">8dp</dimen>
     <dimen name="text_size">16sp</dimen>
     <dimen name="medication_icon_size">64dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
 
 </resources>
