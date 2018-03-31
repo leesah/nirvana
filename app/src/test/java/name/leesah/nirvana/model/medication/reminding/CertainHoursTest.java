@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,7 +31,6 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class CertainHoursTest {
     private RemindingStrategy model;
     private ArrayMap<String, TimedDosage> dosages;

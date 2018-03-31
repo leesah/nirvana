@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.ArrayMap;
 
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 
 import org.joda.time.LocalDate;
@@ -15,7 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -38,7 +36,6 @@ import static name.leesah.nirvana.LanternGenie.randomReminder;
 import static name.leesah.nirvana.LanternGenie.randomReminders;
 import static name.leesah.nirvana.LanternGenie.randomRemindersAnHourAgo;
 import static name.leesah.nirvana.LanternGenie.randomRemindersAnHourLater;
-import static name.leesah.nirvana.PhoneBook.nurse;
 import static name.leesah.nirvana.persistence.Nurse.PREFERENCE_KEY_REMINDERS;
 import static name.leesah.nirvana.persistence.Nurse.isFor;
 import static name.leesah.nirvana.utils.AdaptedGsonFactory.getGson;
@@ -46,31 +43,24 @@ import static name.leesah.nirvana.utils.DateTimeHelper.today;
 import static name.leesah.nirvana.utils.IdentityHelper.uniqueInt;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.isIn;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.joda.time.LocalTime.now;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.notNull;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.robolectric.RuntimeEnvironment.application;
 
 /**
  * Created by sah on 2017-04-06.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class NurseTest {
 
     private Gson gson = getGson();

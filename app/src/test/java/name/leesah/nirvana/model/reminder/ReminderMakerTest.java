@@ -7,7 +7,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import static org.robolectric.RuntimeEnvironment.application;
 
@@ -15,7 +14,6 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-29.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class ReminderMakerTest {
     private Context context;
 

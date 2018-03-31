@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import static name.leesah.nirvana.ui.widget.LimitedMinutesTimePicker.roundUpMinute;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,7 +14,6 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2017-04-16.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class LimitedMinutesTimePickerTest {
     private LimitedMinutesTimePicker picker;
 

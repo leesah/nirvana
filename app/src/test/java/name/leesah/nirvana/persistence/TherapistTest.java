@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import name.leesah.nirvana.LanternGenie;
 import name.leesah.nirvana.R;
@@ -35,7 +34,6 @@ import static org.robolectric.RuntimeEnvironment.application;
  * Created by sah on 2016-12-14.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = {24, 25, 26})
 public class TherapistTest {
     private SharedPreferences preferences;
     private Resources resources;
