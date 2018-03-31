@@ -7,7 +7,7 @@ def versionProperties = new Properties()
 versionProperties.load(new FileInputStream(rootProject.file('version.properties')))
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId 'name.leesah.nirvana'
