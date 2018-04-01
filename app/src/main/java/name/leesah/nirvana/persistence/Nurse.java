@@ -55,6 +55,10 @@ public class Nurse extends DataHolder {
                 .forEach(reminder -> alarmSecretary(context).setAlarm(reminder));
     }
 
+    public void rescheduleForTheRestOfToday(Medication medication) {
+
+    }
+
     public void add(Reminder reminder) {
         replace(reminder::equals, singleton(reminder));
     }

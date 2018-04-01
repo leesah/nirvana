@@ -112,6 +112,16 @@ public class Medication implements Comparable<Medication>{
         return this.getName().compareTo(that.name);
     }
 
+    public Medication with(StartingStrategy strategy) {
+        return new Medication(id, name, manufacturer, form,
+                remindingStrategy, repeatingStrategy, strategy, stoppingStrategy);
+    }
+
+    public Medication with(StoppingStrategy strategy) {
+        return new Medication(id, name, manufacturer, form,
+                remindingStrategy, repeatingStrategy, startingStrategy, strategy);
+    }
+
     /**
      * Created by sah on 2016-12-07.
      */

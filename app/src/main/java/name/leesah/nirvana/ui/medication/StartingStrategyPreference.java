@@ -61,12 +61,12 @@ public class StartingStrategyPreference extends CheckableDialogPreference {
         StartingStrategy strategy = delegate.getValue();
 
         if (relativeMode) {
-            periodPicker = (PeriodPicker) view.findViewById(R.id.period_picker);
-            if (relativeMode && strategy instanceof Delayed)
+            periodPicker = view.findViewById(R.id.period_picker);
+            if (strategy instanceof Delayed)
                 periodPicker.setPeriod(((Delayed) strategy).getPeriod());
 
         } else {
-            datePicker = (DatePicker) view.findViewById(R.id.date_picker);
+            datePicker = view.findViewById(R.id.date_picker);
             if (strategy instanceof ExactDate) {
                 LocalDate startDate = ((ExactDate) strategy).getStartDate();
                 datePicker.updateDate(
