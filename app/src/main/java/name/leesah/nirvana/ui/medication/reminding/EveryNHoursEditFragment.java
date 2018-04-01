@@ -59,9 +59,11 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
         if (validIntervals.isEmpty()) {
             updateIntervalWidget(VALID_VALUES);
             interval.setEnabled(false);
+            setSaveButtonEnabled(false);
         } else {
             updateIntervalWidget(validIntervals);
             interval.setEnabled(true);
+            setSaveButtonEnabled(true);
         }
     }
 
@@ -85,11 +87,9 @@ public class EveryNHoursEditFragment extends StrategyEditFragment.Reminding {
         LocalTime timeOfDay = new LocalTime(0)
                 .withHourOfDay(firstDoseTime.getHour())
                 .withMinuteOfHour(firstDoseTime.getMinute());
-        Integer everyN = VALID_VALUES.get(interval.getValue());
-
-        return new EveryNHours(
-                new TimedDosage(timeOfDay, amount.getValue()),
-                everyN);
+        TimedDosage firstDose = new TimedDosage(timeOfDay, amount.getValue());
+        Integer interval = VALID_VALUES.get(this.interval.getValue());
+        return new EveryNHours(firstDose, interval);
     }
 
     @Override
