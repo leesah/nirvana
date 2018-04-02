@@ -76,6 +76,7 @@ public class MainActivityBackwardsNavigationTest {
         {
             onData(withTitle(R.string.pref_title_treatment)).perform(click());
             onData(withTitle(R.string.pref_title_treatment_enabled)).perform(click());
+            onView(withText(android.R.string.ok)).perform(click());
             {
                 onView(withText(R.string.pref_title_treatment_recurring)).perform(click());
                 onView(withId(R.id.details_container)).check(matches(not(doesNotExist())));

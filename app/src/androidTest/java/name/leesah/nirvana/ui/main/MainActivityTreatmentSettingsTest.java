@@ -99,6 +99,9 @@ public class MainActivityTreatmentSettingsTest {
         onView(switchWidgetBesidesTitle(R.string.pref_title_treatment_enabled))
                 .perform(setChecked(true));
 
+        onView(withText(android.R.string.ok))
+                .perform(click());
+
         assertThat(
                 sharedPreferences.getString(
                         context.getString(R.string.pref_key_treatment_first_day), null),
@@ -123,6 +126,9 @@ public class MainActivityTreatmentSettingsTest {
         onView(switchWidgetBesidesTitle(R.string.pref_title_treatment_enabled))
                 .perform(setChecked(true));
 
+        onView(withText(android.R.string.ok))
+                .perform(click());
+
         onView(withText(R.string.pref_title_treatment_recurring)).perform(click());
 
         onView(withText(R.string.pref_title_treatment_recurring_n_times)).perform(click());
@@ -143,6 +149,9 @@ public class MainActivityTreatmentSettingsTest {
     public void treatmentRecursUntilDate() throws Exception {
         onView(switchWidgetBesidesTitle(R.string.pref_title_treatment_enabled))
                 .perform(setChecked(true));
+
+        onView(withText(android.R.string.ok))
+                .perform(click());
 
         onView(withText(R.string.pref_title_treatment_recurring)).perform(click());
         {
